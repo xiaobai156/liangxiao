@@ -1,0 +1,1744 @@
+[
+  {
+    "name": "金多宝",
+    "pick": "top",
+    "url": "https://993345.com/jysx.aspx?ContentType=js",
+    "payload": "page",
+    "title": "【\\s*金多宝\\s*】\\s*绝杀二肖",
+    "record": "(?P<period>\\d{3})\\s*期\\s*[:：]?\\s*绝杀二肖\\s*[【〖]\\s*(?P<zodiac>[牛马羊鸡狗猪鼠虎兔龙蛇猴]{2})\\s*[】〗]\\s*开\\s*[:：]?\\s*(?P<open>[^ 中准]+)"
+  },
+  {
+    "name": "桃花吹谢",
+    "pick": "top",
+    "url": "https://akqasqa.drr11-soh5x-jcaafg.xyz:16677/",
+    "payload": "scripts",
+    "keywords": [
+      "桃花吹谢",
+      "绝杀二肖"
+    ],
+    "title": "桃花吹谢\\s*（\\s*绝杀二肖\\s*）",
+    "stop": "\\s[^\\s]{4,12}（[^）]+）",
+    "record": "(?P<period>\\d{3})\\s*期\\s*\\(\\s*绝杀二肖\\s*\\)\\s*✺\\s*(?P<zodiac>[牛马羊鸡狗猪鼠虎兔龙蛇猴]{2})\\s*✺\\s*开\\s*[:：]?\\s*(?P<open>[^ 准中错]+)"
+  },
+  {
+    "name": "百姓网禁杀",
+    "pick": "top",
+    "url": "https://fbgbfg.www27521c.com:8443/bbs/jin2x.js",
+    "payload": "page",
+    "title": "百姓网.*?禁\\s*杀②肖",
+    "record": "(?P<period>\\d{3})\\s*期\\s*禁\\s*杀②肖\\s*【\\s*(?P<zodiac>[牛马羊鸡狗猪鼠虎兔龙蛇猴]{2})\\s*】\\s*开\\s*[:：]?\\s*(?P<open>[^ 准中错]+)"
+  },
+  {
+    "name": "百彩通",
+    "pick": "bottom",
+    "url": "https://a.909922.com/js2x.aspx?ContentType=js",
+    "payload": "page",
+    "title": "澳门百彩通\\s*【\\s*绝杀二肖\\s*】",
+    "record": "(?P<period>\\d{3})\\s*期\\s*[:：]\\s*绝杀二肖\\s*【\\s*(?P<zodiac>[牛马羊鸡狗猪鼠虎兔龙蛇猴]{2})\\s*】\\s*开\\s*[:：]?\\s*(?P<open>[^ 准中错]+)"
+  },
+  {
+    "name": "曹国舅",
+    "pick": "top",
+    "url": "https://fgojas.dvbeo-9e4rq-scgpzt.xyz:16677/",
+    "payload": "scripts",
+    "keywords": [
+      "曹国舅",
+      "死杀二肖"
+    ],
+    "title": "曹国舅\\s*『\\s*死杀二肖\\s*』",
+    "stop": "\\s曹国舅\\s*『(?!\\s*死杀二肖\\s*』)",
+    "record": "(?P<period>\\d{3})\\s*期\\s*死杀二肖\\s*[【〖]\\s*(?P<zodiac>[牛马羊鸡狗猪鼠虎兔龙蛇猴]\\s*[-－]?\\s*[牛马羊鸡狗猪鼠虎兔龙蛇猴])\\s*[】〗]\\s*开\\s*[:：]?\\s*(?P<open>[^ 准中错]+)"
+  },
+  {
+    "name": "自然而然",
+    "pick": "顶部",
+    "url": "https://dslzhw.g6bwp-006p4-uzcadn.xyz:16677/topic/435120.html",
+    "parser": "ziranziran_top",
+    "payload": "page_and_scripts",
+    "title": "自然而然"
+  },
+  {
+    "name": "只是有点帅",
+    "pick": "top",
+    "url": "https://88.62782d.com:1888/",
+    "payload": "page",
+    "title": "只是有点帅\\s*【\\s*稳杀二肖\\s*】",
+    "stop": "\\s(?:本站出品|目中无人|大财神|买港、澳六合彩)",
+    "record": "(?P<period>\\d{3})\\s*期\\s*绝杀二肖\\s*[:：]\\s*【\\s*(?P<zodiac>[牛马羊鸡狗猪鼠虎兔龙蛇猴]{2})\\s*】\\s*开\\s*[:：]?\\s*(?P<open>[^ 准中错]+)"
+  },
+  {
+    "name": "精忠报国",
+    "pick": "尾部",
+    "url": "https://993345.com/gsb1.aspx?id=3243",
+    "parser": "jingzhongbaoguo_tail",
+    "payload": "page_and_scripts",
+    "title": "精忠报国"
+  },
+  {
+    "name": "女娲补天",
+    "pick": "尾部",
+    "url": "https://993345.com/gsb1.aspx?id=3238",
+    "parser": "nuwabutiantail",
+    "payload": "page_and_scripts",
+    "title": "女娲补天"
+  },
+  {
+    "name": "专心致志",
+    "pick": "顶部",
+    "url": "https://xoxtpupt.bvptr-i3mv8-pbjxin.work:17455/topic/226532.html",
+    "parser": "site_scoped_two_zodiac",
+    "payload": "browser_rendered_page",
+    "title": "专心致志"
+  },
+  {
+    "name": "心里有底",
+    "pick": "顶部",
+    "url": "https://myvvqq.4cgus-6vlme-hcuthd.work/topic/216270.html",
+    "parser": "site_scoped_two_zodiac",
+    "payload": "browser_rendered_page",
+    "title": "心里有底"
+  },
+  {
+    "name": "人不聊生",
+    "pick": "尾部",
+    "url": "https://pykzjitu.mvtre-w938p-xmiuyz.xyz:16677/topic/451627.html",
+    "parser": "site_scoped_two_zodiac",
+    "payload": "page_and_scripts",
+    "title": "人不聊生"
+  },
+  {
+    "name": "一丘之貉",
+    "pick": "顶部",
+    "url": "https://kxhnibht.49x6o-xyonh-swqkpv.xyz:16677/topic/263561.html",
+    "parser": "site_scoped_two_zodiac",
+    "payload": "page_and_scripts",
+    "title": "一丘之貉"
+  },
+  {
+    "name": "染泪丹青",
+    "pick": "尾部",
+    "url": "https://fbgbfg.www27521c.com:8443/gsb/am73.html",
+    "parser": "site_scoped_two_zodiac",
+    "payload": "page_and_scripts",
+    "title": "染泪丹青"
+  },
+  {
+    "name": "离岸观潮",
+    "pick": "尾部",
+    "url": "https://fbgbfg.www27521c.com:8443/gsb/am15.html",
+    "parser": "site_scoped_two_zodiac",
+    "payload": "page_and_scripts",
+    "title": "离岸观潮"
+  },
+  {
+    "name": "道士出山",
+    "pick": "尾部",
+    "url": "https://111.246004.com:9066/Article.Aspx?ListId=247&id=53523",
+    "parser": "site_scoped_two_zodiac",
+    "payload": "page_and_scripts",
+    "title": "道士出山"
+  },
+  {
+    "name": "百彩通第二",
+    "pick": "尾部",
+    "url": "https://a.909922.com/gsb.aspx?id=amsmh005",
+    "parser": "named_block",
+    "payload": "page",
+    "title": "澳门百彩通\\s*909922\\.com\\s*绝杀二肖",
+    "record": "(?P<period>\\d{3})\\s*期\\s*[:：]?\\s*绝杀二肖\\s*[【\\[]\\s*(?P<zodiac>[牛马羊鸡狗猪鼠虎兔龙蛇猴]\\s*[-－、，,。.]?\\s*[牛马羊鸡狗猪鼠虎兔龙蛇猴])\\s*[】\\]]\\s*[开開]\\s*[:：]?\\s*(?P<open>[^\\s准中错赢对]+)"
+  },
+  {
+    "name": "火云邪神",
+    "pick": "顶部",
+    "url": "https://www.336868.com/art_zhuanqu/217.html",
+    "parser": "site_scoped_two_zodiac",
+    "payload": "page_and_scripts",
+    "title": "火云邪神"
+  },
+  {
+    "name": "菁华浮梦",
+    "pick": "顶部",
+    "url": "https://www.336868.com/art_zhuanqu/183.html",
+    "parser": "site_scoped_two_zodiac",
+    "payload": "page_and_scripts",
+    "title": "菁华浮梦"
+  },
+  {
+    "name": "陪你入睡",
+    "pick": "顶部",
+    "url": "https://www.336868.com/art_zhuanqu/180.html",
+    "parser": "site_scoped_two_zodiac",
+    "payload": "page_and_scripts",
+    "title": "陪你入睡"
+  },
+  {
+    "name": "小鹿乱撞",
+    "pick": "顶部",
+    "url": "https://www.336868.com/art_zhuanqu/172.html",
+    "parser": "site_scoped_two_zodiac",
+    "payload": "page_and_scripts",
+    "title": "小鹿乱撞"
+  },
+  {
+    "name": "惟于莽莽",
+    "pick": "顶部",
+    "url": "https://www.336868.com/art_zhuanqu/198.html",
+    "parser": "site_scoped_two_zodiac",
+    "payload": "page_and_scripts",
+    "title": "惟于莽莽"
+  },
+  {
+    "name": "金道",
+    "pick": "顶部",
+    "url": "https://www.336868.com/art_zhuanqu/8026.html",
+    "parser": "site_scoped_two_zodiac",
+    "payload": "page_and_scripts",
+    "title": "金道"
+  },
+  {
+    "name": "探讨资料",
+    "pick": "尾部",
+    "url": "https://bbs03.836386.cyou/bbs/topic.php?id=18258",
+    "parser": "named_block",
+    "payload": "page_and_scripts",
+    "title": "探讨资料",
+    "stop": "\\s*下一贴\\s*[：:]",
+    "record": "(?P<period>\\d{3})\\s*期\\s*[:：]?\\s*🤘\\s*『\\s*探讨资料\\s*』\\s*🤘\\s*绝杀②肖\\s*🤘\\s*[【\\[]\\s*(?P<zodiac>[牛马羊鸡狗猪鼠虎兔龙蛇猴]\\s*[-－、，,。.]?\\s*[牛马羊鸡狗猪鼠虎兔龙蛇猴])\\s*[】\\]]\\s*[开開]\\s*[:：]?\\s*(?P<open>[^\\s准中错赢对]+)"
+  },
+  {
+    "name": "互帮互助",
+    "pick": "顶部",
+    "url": "https://hbwtl.ydiu6-pom20-zexnea.xyz/topic/430709.html",
+    "parser": "site_scoped_two_zodiac",
+    "payload": "page_and_scripts",
+    "title": "互帮互助"
+  },
+  {
+    "name": "科方东文",
+    "pick": "尾部",
+    "url": "https://jnf52f.a3ds1-gzs2r-jsppci.work/topic/206635.html",
+    "parser": "site_scoped_two_zodiac",
+    "payload": "page_and_scripts",
+    "title": "网红帖\\s*\\d{3}\\s*期\\s*:\\s*【\\s*绝杀二肖\\s*】\\s*作者\\s*:\\s*科方东文",
+    "stop": "\\s(?:高手贴|高手帖|特料帖|民间帖|福建资料|上一篇|下一篇|鸿蒙娱乐城)"
+  },
+  {
+    "name": "狙击杀手",
+    "pick": "尾部",
+    "url": "https://dhqjbz.uxec9-jxs3h-fomubo.work:16677/topic/250852.html",
+    "parser": "site_scoped_two_zodiac",
+    "payload": "page_and_scripts",
+    "title": "狙击杀手"
+  },
+  {
+    "name": "人间改岁",
+    "pick": "顶部",
+    "url": "https://mm.676626m.com:1888/bbs/8026",
+    "parser": "site_scoped_two_zodiac",
+    "payload": "page_and_scripts",
+    "title": "人间改岁"
+  },
+  {
+    "name": "欢聚一堂",
+    "pick": "顶部",
+    "url": "https://qdufkx.sjb5z-pi4k6-jlhnig.xyz:16677/topic/798463.html",
+    "parser": "site_scoped_two_zodiac",
+    "payload": "page_and_scripts",
+    "title": "欢聚一堂"
+  },
+  {
+    "name": "安居乐业",
+    "pick": "顶部",
+    "url": "https://qdufkx.sjb5z-pi4k6-jlhnig.xyz:16677/topic/798167.html",
+    "parser": "site_scoped_two_zodiac",
+    "payload": "page_and_scripts",
+    "title": "安居乐业"
+  },
+  {
+    "name": "锐不可当",
+    "pick": "尾部",
+    "url": "https://xuknerw.fu5qv-a7f7o-nxmebt.work:16633/topic/466129.html",
+    "parser": "site_scoped_two_zodiac",
+    "payload": "page_and_scripts",
+    "title": "锐不可当"
+  },
+  {
+    "name": "积少成多第二",
+    "pick": "尾部",
+    "url": "https://huqtzej.vvlq2-j4i8n-lisghq.xyz:16677/topic/281517.html",
+    "parser": "site_scoped_two_zodiac",
+    "payload": "page_and_scripts",
+    "title": "积少成多\\s*发表于"
+  },
+  {
+    "name": "六合头条",
+    "pick": "顶部",
+    "url": "https://yioznkua.snfqn-48psf-vctwsw.xyz:16677/topic/246165.html",
+    "parser": "liuhe_toutiao_linked_top",
+    "payload": "page_and_scripts",
+    "title": "六合头条.*?精品帖\\s*\\d{3}\\s*期\\s*【\\s*绝杀两肖\\s*】\\s*绝对好料",
+    "record": "(?P<period>\\d{3})\\s*期\\s*绝杀两肖\\s*[【\\[]\\s*(?P<zodiac>[牛马羊鸡狗猪鼠虎兔龙蛇猴]\\s*[-－、，,。.]?\\s*[牛马羊鸡狗猪鼠虎兔龙蛇猴])\\s*[】\\]]\\s*[开開]\\s*[:：]?\\s*(?P<open>[^\\s准中错赢对]+)",
+    "linked_document_pattern": "https://xia\\d+\\.cosds\\.ahsccn\\.com/upload/script/08/"
+  },
+  {
+    "name": "超级稳定",
+    "pick": "顶部",
+    "url": "https://xmdrbud.eqpr2-6tpvi-pjqztv.xyz:16677/topic/320715.html",
+    "parser": "site_scoped_two_zodiac",
+    "payload": "page_and_scripts",
+    "title": "超级稳定"
+  },
+  {
+    "name": "澳門男人味",
+    "pick": "顶部",
+    "url": "https://rmrcjqk.6ln2t-46k8t-kuthoe.xyz:16677/",
+    "parser": "named_block",
+    "payload": "page_and_scripts",
+    "title": "澳[門门]男人味【稳杀②肖】实力证明",
+    "record": "(?P<period>\\d{3})\\s*期\\s*[:：]?\\s*稳杀②肖\\s*『\\s*(?P<zodiac>[牛马羊鸡狗猪鼠虎兔龙蛇猴]\\s*[-－、，,。.]?\\s*[牛马羊鸡狗猪鼠虎兔龙蛇猴])\\s*』\\s*[开開]\\s*[:：]?\\s*(?P<open>[^\\s准中错赢对]+)"
+  },
+  {
+    "name": "白蛇",
+    "pick": "顶部",
+    "url": "https://ocnrhq.du156-vb27w-tmhsed.xyz:16677/",
+    "parser": "named_block",
+    "payload": "page_and_scripts",
+    "title": "白蛇传\\s*【绝杀二肖】\\s*→",
+    "record": "(?P<period>\\d{3})\\s*期\\s*[:：]?\\s*绝杀二肖\\s*[【\\[]\\s*(?P<zodiac>[牛马羊鸡狗猪鼠虎兔龙蛇猴]\\s*[-－、，,。.]?\\s*[牛马羊鸡狗猪鼠虎兔龙蛇猴])\\s*[】\\]]\\s*[开開]\\s*[:：]?\\s*(?P<open>[^\\s准中错赢对]+)"
+  },
+  {
+    "name": "大上海",
+    "pick": "顶部",
+    "url": "https://dukvjyhp.348fb-hdg3z-ipblfe.xyz:17466/",
+    "parser": "named_block",
+    "payload": "page_and_scripts",
+    "title": "大上海『稳杀二肖』",
+    "record": "(?P<period>\\d{3})\\s*期\\s*杀二肖\\s*[【\\[]\\s*(?P<zodiac>[牛马羊鸡狗猪鼠虎兔龙蛇猴]\\s*[-－、，,。.]?\\s*[牛马羊鸡狗猪鼠虎兔龙蛇猴])\\s*[】\\]]\\s*[开開]\\s*[:：]?\\s*(?P<open>[^\\s准中错赢对]+)"
+  },
+  {
+    "name": "九龙论坛",
+    "pick": "顶部",
+    "url": "https://wrbavfzg.e0fjk-5tc7b-mqquzq.work:16677/#am",
+    "parser": "jiulong_forum_top",
+    "payload": "page_and_scripts",
+    "title": "九龙论坛\\s*『\\s*绝杀二肖\\s*』",
+    "record": "(?P<period>\\d{3})\\s*期\\s*[：:]?\\s*(?:杀\\s*)?[【〖]\\s*杀\\s*(?:二|两|2|２|②)\\s*肖\\s*[→>]\\s*(?P<zodiac>[牛马羊鸡狗猪鼠虎兔龙蛇猴]{2})\\s*[】〗]\\s*开\\s*[:：]?\\s*(?P<open>[^ 准中错]+)"
+  },
+  {
+    "name": "六合宝典",
+    "pick": "顶部",
+    "url": "https://aq14f.2gdkh-2qrjm-hxaxji.xyz/",
+    "parser": "liuhebadian_tail",
+    "payload": "page_and_scripts"
+  },
+  {
+    "name": "手起刀落",
+    "pick": "顶部",
+    "url": "https://nxesrklm.a3ds1-gzs2r-jsppci.work:16677/#am",
+    "parser": "shouqi_daoluo_top",
+    "payload": "page_and_scripts",
+    "title": "手起刀落"
+  },
+  {
+    "name": "武林高手",
+    "pick": "顶部",
+    "url": "https://gymmgzx.ef7xd-dl2r4-dqxbyc.xyz:16633/",
+    "parser": "wulin_gaoshou_linked_top",
+    "payload": "page_and_scripts",
+    "title": "武林高手\\s*\\d{3}\\s*期\\s*《\\s*绝杀两肖\\s*》",
+    "record": "(?P<period>\\d{3})\\s*期\\s*[:：]?\\s*绝杀两肖\\s*[【\\[]\\s*(?P<zodiac>[牛马羊鸡狗猪鼠虎兔龙蛇猴]\\s*[-－、，,。.]?\\s*[牛马羊鸡狗猪鼠虎兔龙蛇猴])\\s*[】\\]]\\s*[开開]\\s*[:：]?\\s*(?P<open>[^\\s准中错赢对]+)",
+    "linked_document_pattern": "https://xia\\d+\\.cosds\\.ahsccn\\.com/upload/script/08/"
+  },
+  {
+    "name": "玄机阁",
+    "pick": "顶部",
+    "url": "https://aqlvuvz.kkr58-ayern-biiohi.xyz:16677/",
+    "parser": "named_block",
+    "payload": "page_and_scripts",
+    "title": "49玄机阁【必杀二肖】",
+    "record": "(?P<period>\\d{3})\\s*期\\s*[:：]?\\s*稳杀\\(2\\)肖\\s*[【\\[]\\s*(?P<zodiac>[牛马羊鸡狗猪鼠虎兔龙蛇猴]\\s*[-－、，,。.]?\\s*[牛马羊鸡狗猪鼠虎兔龙蛇猴])\\s*[】\\]]\\s*[开開]\\s*[:：]?\\s*(?P<open>[^\\s准中错赢对]+)"
+  },
+  {
+    "name": "反反复复",
+    "pick": "尾部",
+    "url": "https://ykkpjdgv.d1ju4-kbfjr-zexdzd.xyz:16677/topic/681956.html",
+    "payload": "page_and_scripts",
+    "title": "反反复复\\s*发表于",
+    "stop": "\\s上一篇：|\\s下一篇：",
+    "record": "(?P<period>\\d{3})\\s*期[^期]{0,90}?(?:绝\\s*杀|稳\\s*杀|精\\s*杀|无错\\s*杀|砍\\s*杀|杀)\\s*(?:二|两|2|２|②)\\s*肖[^期]{0,50}?[【〖\\[（(《『〈◢]\\s*(?P<zodiac>[牛马羊鸡狗猪鼠虎兔龙蛇猴]\\s*[-－、,，.。· ]?\\s*[牛马羊鸡狗猪鼠虎兔龙蛇猴])\\s*[】〗\\]）)》』〉◣]\\s*(?:←|[~～_\\-－—|]*)\\s*(?:开|開)\\s*[:：]?\\s*(?P<open>[^\\s准中错赢对↑√]+)"
+  },
+  {
+    "name": "来情去意",
+    "pick": "顶部",
+    "url": "https://ykkpjdgv.d1ju4-kbfjr-zexdzd.xyz:16677/topic/681954.html",
+    "parser": "site_scoped_two_zodiac",
+    "payload": "page_and_scripts",
+    "title": "来情去意"
+  },
+  {
+    "name": "金多宝第二",
+    "pick": "尾部",
+    "url": "https://993345.com/bbs.aspx?id=021",
+    "parser": "jinduobao_second_tail",
+    "payload": "page_and_scripts",
+    "title": "金多宝【杀2肖2尾】"
+  },
+  {
+    "name": "澳姜太公",
+    "pick": "顶部",
+    "url": "https://mhbrhe.yng6t-7rqul-ximlot.xyz:16677/topic/336836.html",
+    "parser": "named_block",
+    "payload": "page_and_scripts",
+    "title": "澳姜太公.*?【绝杀两肖】",
+    "record": "(?P<period>\\d{3})\\s*期\\s*【\\s*绝杀两肖\\s*】\\s*[【\\[]\\s*(?P<zodiac>[牛马羊鸡狗猪鼠虎兔龙蛇猴]\\s*[-－、，,。.]?\\s*[牛马羊鸡狗猪鼠虎兔龙蛇猴])\\s*[】\\]]\\s*[开開]\\s*[:：]?\\s*(?P<open>[^\\s准中错赢对]+)"
+  },
+  {
+    "name": "有喜有忧",
+    "pick": "尾部",
+    "url": "https://kcyeko.bzx7a-tl1us-cfcaei.xyz:16677/topic/610833.html",
+    "parser": "site_scoped_two_zodiac",
+    "payload": "page_and_scripts",
+    "title": "有喜有忧"
+  },
+  {
+    "name": "诸葛忘机",
+    "pick": "顶部",
+    "url": "https://msbqxti.zhx2n-7v5x3-ivdpud.xyz:16677/topic/682730.html",
+    "parser": "site_scoped_two_zodiac",
+    "payload": "page_and_scripts",
+    "title": "诸葛忘机"
+  },
+  {
+    "name": "文房四宝",
+    "pick": "尾部",
+    "url": "https://xoxtpupt.bvptr-i3mv8-pbjxin.work:17455/topic/467525.html",
+    "parser": "site_scoped_two_zodiac",
+    "payload": "page_and_scripts",
+    "title": "文房四宝"
+  },
+  {
+    "name": "破除迷信",
+    "pick": "顶部",
+    "url": "https://1w4ip.78j1a-o16m1-wopsco.xyz/topic/215953.html",
+    "parser": "site_scoped_two_zodiac",
+    "payload": "page_and_scripts",
+    "title": "破除迷信"
+  },
+  {
+    "name": "前合后仰",
+    "pick": "顶部",
+    "url": "https://gboqrz.8hq17-fdt9o-uujeae.work/topic/225333.html",
+    "parser": "site_scoped_two_zodiac",
+    "payload": "page_and_scripts",
+    "title": "前合后仰"
+  },
+  {
+    "name": "七嘴八舌",
+    "pick": "顶部",
+    "url": "https://eebysckd.2go6k-y0pfv-fqbdsm.xyz:16677/topic/552348.html",
+    "parser": "site_scoped_two_zodiac",
+    "payload": "page_and_scripts",
+    "title": "七嘴八舌"
+  },
+  {
+    "name": "恍然自失",
+    "pick": "顶部",
+    "url": "https://eebysckd.2go6k-y0pfv-fqbdsm.xyz:16677/topic/625516.html",
+    "parser": "site_scoped_two_zodiac",
+    "payload": "page_and_scripts",
+    "title": "恍然自失"
+  },
+  {
+    "name": "一筹莫展",
+    "pick": "顶部",
+    "url": "https://eebysckd.2go6k-y0pfv-fqbdsm.xyz:16677/topic/626034.html",
+    "parser": "yichou_mozhan_top",
+    "payload": "page_and_scripts",
+    "title": "一筹莫展"
+  },
+  {
+    "name": "一言一句",
+    "pick": "顶部",
+    "url": "https://eebysckd.2go6k-y0pfv-fqbdsm.xyz:16677/topic/625852.html",
+    "parser": "site_scoped_two_zodiac",
+    "payload": "browser_rendered_page",
+    "title": "一言一句"
+  },
+  {
+    "name": "博闻茄子",
+    "pick": "顶部",
+    "url": "https://akqasqa.drr11-soh5x-jcaafg.xyz:16677/topic/543283.html",
+    "parser": "site_scoped_two_zodiac",
+    "payload": "page_and_scripts",
+    "title": "博闻茄子"
+  },
+  {
+    "name": "冰封绝恋",
+    "pick": "尾部",
+    "url": "https://2.www39169b.com:888/gsbl/s14.html",
+    "parser": "site_scoped_two_zodiac",
+    "payload": "page_and_scripts",
+    "title": "冰封绝恋"
+  },
+  {
+    "name": "一本万利死杀",
+    "pick": "尾部",
+    "url": "https://mflmcobome.26222hi.app:2569/htm/bbs/top010.html",
+    "parser": "yiben_wanli_sisha_bottom",
+    "payload": "page_and_scripts",
+    "title": "一本万利"
+  },
+  {
+    "name": "白姐輸盡光",
+    "pick": "顶部",
+    "url": "https://mhbrhe.yng6t-7rqul-ximlot.xyz:16677/",
+    "parser": "baijie_shujinguang_top",
+    "payload": "page_and_scripts",
+    "title": "澳门姜太公\\s*☛\\s*白姐輸盡光\\s*☚",
+    "keywords": ["白姐输尽光", "今期"]
+  },
+  {
+    "name": "熬出头儿",
+    "pick": "尾部",
+    "url": "https://111.246004.com:9066/Article.Aspx?ListId=247&id=53502",
+    "parser": "site_scoped_two_zodiac",
+    "payload": "page_and_scripts",
+    "title": "熬出头儿"
+  },
+  {
+    "name": "八二佳人",
+    "pick": "顶部",
+    "url": "https://aa.196868k.com:1888/art_zhuanqu/10754.html",
+    "parser": "named_block",
+    "payload": "page_and_scripts",
+    "title": "二八佳人【绝杀二肖】",
+    "record": "(?P<period>\\d{3})\\s*期\\s*[:：]?\\s*≮\\s*绝杀二肖\\s*≯\\s*[【\\[]\\s*(?P<zodiac>[牛马羊鸡狗猪鼠虎兔龙蛇猴]\\s*[-－、，,。.]?\\s*[牛马羊鸡狗猪鼠虎兔龙蛇猴])\\s*[】\\]]\\s*[开開]\\s*[:：]?\\s*(?P<open>[^\\s准中错赢对]+)"
+  },
+  {
+    "name": "九宫格",
+    "pick": "顶部",
+    "url": "https://aa.196868k.com:1888/art_zhuanqu/10674.html",
+    "parser": "named_block",
+    "payload": "page_and_scripts",
+    "title": "\\d{3}\\s*期\\s*【\\s*九宫绝[禁杀]二肖\\s*】",
+    "record": "(?P<period>\\d{3})\\s*期\\s*[:：]?\\s*绝杀2肖\\s*[【\\[]\\s*(?P<zodiac>[牛马羊鸡狗猪鼠虎兔龙蛇猴]\\s*[-－、，,。.]?\\s*[牛马羊鸡狗猪鼠虎兔龙蛇猴])\\s*[】\\]]\\s*[开開]\\s*[:：]?\\s*(?P<open>[^\\s准中错赢对]+)"
+  },
+  {
+    "name": "赏罚分明",
+    "pick": "顶部",
+    "url": "https://aa.196868k.com:1888/art_zhuanqu/10690.html",
+    "parser": "named_block",
+    "payload": "page_and_scripts",
+    "title": "赏罚分明.*?绝杀二肖",
+    "record": "(?P<period>\\d{3})\\s*期\\s*∵\\s*绝杀二肖\\s*∵\\s*[【\\[]\\s*(?P<zodiac>[牛马羊鸡狗猪鼠虎兔龙蛇猴]\\s*[-－、，,。.]?\\s*[牛马羊鸡狗猪鼠虎兔龙蛇猴])\\s*[】\\]]\\s*[开開]\\s*[:：]?\\s*(?P<open>[^\\s准中错赢对]+)"
+  },
+  {
+    "name": "旧人不覆",
+    "pick": "顶部",
+    "url": "https://sadoleu.rznla-fgwyr-nzqalp.xyz:16677/topic/287632.html",
+    "parser": "site_scoped_two_zodiac",
+    "payload": "page_and_scripts",
+    "title": "旧人不覆"
+  },
+  {
+    "name": "侭多侭少",
+    "pick": "顶部",
+    "url": "https://tulprhfc.wghcb-bnmgm-hyymaz.work:16655/topic/305417.html",
+    "parser": "site_scoped_two_zodiac",
+    "payload": "page_and_scripts",
+    "title": "侭多侭少"
+  },
+  {
+    "name": "智能",
+    "pick": "顶部",
+    "url": "https://jjlachsn.4fk3e-i2rpf-vgknlh.work:16677/topic/661960.html",
+    "parser": "named_block",
+    "payload": "page_and_scripts",
+    "title": "熱門高手\\s*\\d{3}\\s*期\\s*[:：]?\\s*【\\s*精品好料-\\s*绝杀二肖",
+    "record": "(?P<period>\\d{3})\\s*期\\s*[:：]?\\s*[【\\[]\\s*绝杀二肖\\s*[】\\]]\\s*[【\\[]\\s*(?P<zodiac>[牛马羊鸡狗猪鼠虎兔龙蛇猴]\\s*[-－、，,。.]?\\s*[牛马羊鸡狗猪鼠虎兔龙蛇猴])\\s*[】\\]]\\s*[开開]\\s*[:：]?\\s*(?P<open>[^\\s准中错赢对]+)"
+  },
+  {
+    "name": "琼府金穴",
+    "pick": "顶部",
+    "url": "https://iezrqhps.5don6-02xeq-rrhbps.xyz:16677/topic/559106.html",
+    "parser": "site_scoped_two_zodiac",
+    "payload": "page_and_scripts",
+    "title": "琼府金穴"
+  },
+  {
+    "name": "流合",
+    "pick": "尾部",
+    "url": "https://iezrqhps.5don6-02xeq-rrhbps.xyz:16677/topic/500614.html",
+    "parser": "liuhe_tail",
+    "payload": "page_and_scripts",
+    "title": "流合"
+  },
+  {
+    "name": "将杀两肖",
+    "pick": "尾部",
+    "url": "https://43666.886677a.app:2563/htm/bbs/top010.html",
+    "parser": "site_scoped_two_zodiac",
+    "payload": "page_and_scripts",
+    "title": "将杀两肖"
+  },
+  {
+    "name": "宿柳眠花",
+    "pick": "顶部",
+    "url": "https://kqfmnjht.ip6et-0zvu7-gpqkrf.work:16677/topic/215051.html",
+    "parser": "site_scoped_two_zodiac",
+    "payload": "page_and_scripts",
+    "title": "宿柳眠花"
+  },
+  {
+    "name": "不由自主",
+    "pick": "顶部",
+    "url": "https://gxixcfq.4hxms-k65ek-jsvqzm.xyz:16677/topic/314318.html",
+    "parser": "site_scoped_two_zodiac",
+    "payload": "page_and_scripts",
+    "title": "不由自主"
+  },
+  {
+    "name": "热火朝天",
+    "pick": "顶部",
+    "url": "https://gxixcfq.4hxms-k65ek-jsvqzm.xyz:16677/topic/314312.html",
+    "parser": "site_scoped_two_zodiac",
+    "payload": "page_and_scripts",
+    "title": "热火朝天"
+  },
+  {
+    "name": "俯拾地芥",
+    "pick": "顶部",
+    "url": "https://zdwcig.iyo4d-81klf-udwkqg.work:16677/topic/455539.html",
+    "parser": "site_scoped_two_zodiac",
+    "payload": "page_and_scripts",
+    "title": "俯拾地芥"
+  },
+  {
+    "name": "不伏烧埋",
+    "pick": "顶部",
+    "url": "https://zdwcig.iyo4d-81klf-udwkqg.work:16677/topic/455536.html",
+    "parser": "site_scoped_two_zodiac",
+    "payload": "page_and_scripts",
+    "title": "不伏烧埋"
+  },
+  {
+    "name": "老老实实",
+    "pick": "顶部",
+    "url": "https://kulipur.l5paz-a0o8v-uozmmd.xyz:16677/topic/435502.html",
+    "parser": "site_scoped_two_zodiac",
+    "payload": "page_and_scripts",
+    "title": "老老实实"
+  },
+  {
+    "name": "相辅而成",
+    "pick": "尾部",
+    "url": "https://zwhzkjo.fc4fh-otded-nvhceu.xyz:16677/topic/472645.html",
+    "parser": "xiangfu_ercheng_tail",
+    "payload": "curl_tls10_page_and_scripts",
+    "title": "相辅而成"
+  },
+  {
+    "name": "火急火燎",
+    "pick": "顶部",
+    "url": "https://cxmdjok.8wtwc-boven-glylvt.xyz:16677/topic/437750.html",
+    "parser": "site_scoped_two_zodiac",
+    "payload": "page_and_scripts",
+    "title": "火急火燎"
+  },
+  {
+    "name": "莲叶满池",
+    "pick": "顶部",
+    "url": "https://ntvjzt.gau41-qu6jy-sotyug.work:16677/topic/309350.html",
+    "parser": "site_scoped_two_zodiac",
+    "payload": "page_and_scripts",
+    "title": "莲叶满池"
+  },
+  {
+    "name": "争权夺利",
+    "pick": "顶部",
+    "url": "https://zwhzkjo.fc4fh-otded-nvhceu.xyz:16677/topic/342737.html",
+    "parser": "site_scoped_two_zodiac",
+    "payload": "page_and_scripts",
+    "title": "争权夺利"
+  },
+  {
+    "name": "徒手敬月",
+    "pick": "尾部",
+    "url": "https://dhqjbz.uxec9-jxs3h-fomubo.work:16677/topic/250670.html",
+    "parser": "site_scoped_two_zodiac",
+    "payload": "page_and_scripts",
+    "title": "徒手敬月"
+  },
+  {
+    "name": "自然和谐",
+    "pick": "顶部",
+    "url": "https://dhqjbz.uxec9-jxs3h-fomubo.work:16677/topic/458972.html",
+    "parser": "site_scoped_two_zodiac",
+    "payload": "page_and_scripts",
+    "title": "自然和谐"
+  },
+  {
+    "name": "徒手敬月第二",
+    "pick": "尾部",
+    "url": "https://dhqjbz.uxec9-jxs3h-fomubo.work:16677/topic/250854.html",
+    "parser": "site_scoped_two_zodiac",
+    "payload": "page_and_scripts",
+    "title": "徒手敬月精准杀料【绝杀②肖】"
+  },
+  {
+    "name": "魔刹石尊",
+    "pick": "尾部",
+    "url": "https://dhqjbz.uxec9-jxs3h-fomubo.work:16677/topic/250863.html",
+    "parser": "site_scoped_two_zodiac",
+    "payload": "page_and_scripts",
+    "title": "魔刹石尊"
+  },
+  {
+    "name": "广西仔",
+    "pick": "顶部",
+    "url": "https://jldzuea.0xkqd-q7ng5-boerfb.xyz:16677/topic/677572.html",
+    "parser": "guangxizai_linked_top",
+    "payload": "page_and_scripts",
+    "title": "广西仔",
+    "linked_document_pattern": "https://xia\\d+\\.cosds\\.ahsccn\\.com/upload/script/08/"
+  },
+  {
+    "name": "纷纷扬扬",
+    "pick": "顶部",
+    "url": "https://whsbrmz.qclrc-4mk42-vnxbyg.work:16677/topic/454916.html",
+    "parser": "site_scoped_two_zodiac",
+    "payload": "page_and_scripts",
+    "title": "纷纷扬扬"
+  },
+  {
+    "name": "唯利是趋",
+    "pick": "尾部",
+    "url": "https://myvvqq.30dok-2s9fd-bibfmg.work/topic/226889.html",
+    "parser": "site_scoped_two_zodiac",
+    "payload": "page_and_scripts",
+    "title": "唯利是趋"
+  },
+  {
+    "name": "不吃的猫",
+    "pick": "尾部",
+    "url": "https://lx11.www87127b.com:8443/bbs/38.html",
+    "parser": "site_scoped_two_zodiac",
+    "payload": "page_and_scripts",
+    "title": "不吃的猫"
+  },
+  {
+    "name": "白头偕老",
+    "pick": "顶部",
+    "url": "https://uhaxnrzx.q76gf-deec8-zqckeo.xyz:16677/topic/610280.html",
+    "parser": "site_scoped_two_zodiac",
+    "payload": "page_and_scripts",
+    "title": "白头偕老"
+  },
+  {
+    "name": "春华秋实",
+    "pick": "顶部",
+    "url": "https://qdufkx.sjb5z-pi4k6-jlhnig.xyz:16677/topic/798062.html",
+    "parser": "site_scoped_two_zodiac",
+    "payload": "page_and_scripts",
+    "title": "春华秋实"
+  },
+  {
+    "name": "头破血流",
+    "pick": "顶部",
+    "url": "https://ozfksr.8gd3h-8yo27-ttlqhq.xyz:16677/topic/447839.html",
+    "parser": "site_scoped_two_zodiac",
+    "payload": "page_and_scripts",
+    "title": "头破血流"
+  },
+  {
+    "name": "广东",
+    "pick": "顶部",
+    "url": "https://otsqjail.wl3tb-t1tzs-mavjyr.work:16677/topic/440134.html",
+    "parser": "guangdong_linked_top",
+    "payload": "page_and_scripts",
+    "title": "广[东東]",
+    "linked_document_pattern": "https://xia\\d+\\.cosds\\.ahsccn\\.com/upload/script/08/"
+  },
+  {
+    "name": "欧阳澜纯",
+    "pick": "顶部",
+    "url": "https://gybqxgn.wtnxq-tlmew-ozgscb.xyz:16677/topic/279287.html",
+    "parser": "site_scoped_two_zodiac",
+    "payload": "page_and_scripts",
+    "title": "欧阳澜纯"
+  },
+  {
+    "name": "白里透红",
+    "pick": "顶部",
+    "url": "https://flivjhz.4vrvi-8tdry-vrzzwk.xyz:16677/topic/540581.html",
+    "parser": "site_scoped_two_zodiac",
+    "payload": "page_and_scripts",
+    "title": "白里透红"
+  },
+  {
+    "name": "老金绝杀",
+    "pick": "顶部",
+    "url": "https://jjpifrbj.1m74k-kckgn-enmoqe.xyz:16677/topic/265079.html",
+    "parser": "site_scoped_two_zodiac",
+    "payload": "page_and_scripts",
+    "title": "老金绝杀"
+  },
+  {
+    "name": "争强好胜",
+    "pick": "顶部",
+    "url": "https://kjqba.ipvrs-9mw2c-wdnuvo.work/topic/230597.html",
+    "parser": "site_scoped_two_zodiac",
+    "payload": "page_and_scripts",
+    "title": "争强好胜"
+  },
+  {
+    "name": "陈言老套",
+    "pick": "顶部",
+    "url": "https://rh2fgz.qy6di-x0q62-zwazrw.work/topic/253958.html",
+    "parser": "site_scoped_two_zodiac",
+    "payload": "page_and_scripts",
+    "title": "陈言老套"
+  },
+  {
+    "name": "振聋发聩",
+    "pick": "顶部",
+    "url": "https://yfchnh.nsyiv-6g6l7-uwfqot.xyz:16677/topic/211593.html",
+    "parser": "zhenlong_fankui_topic",
+    "payload": "page_and_scripts"
+  },
+  {
+    "name": "完美世界",
+    "pick": "顶部",
+    "url": "https://vqxzuc.fggtp-huz0q-sbrraa.xyz:16677/topic/251181.html",
+    "parser": "site_scoped_two_zodiac",
+    "payload": "page_and_scripts",
+    "title": "完美世界"
+  },
+  {
+    "name": "乐不可支",
+    "pick": "尾部",
+    "url": "https://vqxzuc.fggtp-huz0q-sbrraa.xyz:16677/topic/251178.html",
+    "payload": "page_and_scripts",
+    "title": "乐不可支【\\s*绝杀二肖\\s*】",
+    "stop": "\\s上一篇：|\\s下一篇：",
+    "record": "(?P<period>\\d{3})\\s*期[^期]{0,90}?(?:绝\\s*杀|稳\\s*杀|精\\s*杀|无错\\s*杀|砍\\s*杀|杀)\\s*(?:二|两|2|２|②)\\s*肖[^期]{0,50}?[【〖\\[（(《『〈◢]\\s*(?P<zodiac>[牛马羊鸡狗猪鼠虎兔龙蛇猴]\\s*[-－、,，.。· ]?\\s*[牛马羊鸡狗猪鼠虎兔龙蛇猴])\\s*[】〗\\]）)》』〉◣]\\s*(?:←|[~～_\\-－—|]*)\\s*(?:开|開)\\s*[:：]?\\s*(?P<open>[^\\s准中错赢对↑√]+)"
+  },
+  {
+    "name": "旧街凉风",
+    "pick": "顶部",
+    "url": "https://vqxzuc.fggtp-huz0q-sbrraa.xyz:16677/topic/251180.html",
+    "parser": "site_scoped_two_zodiac",
+    "payload": "page_and_scripts",
+    "title": "旧街凉风"
+  },
+  {
+    "name": "奴颜媚骨",
+    "pick": "尾部",
+    "url": "https://vqxzuc.fggtp-huz0q-sbrraa.xyz:16677/topic/251259.html",
+    "parser": "nuyanmeigu_tail",
+    "payload": "page_and_scripts",
+    "title": "奴颜媚骨"
+  },
+  {
+    "name": "笑话奇谈",
+    "pick": "顶部",
+    "url": "https://ryfbdty.p4a53-f1hew-diwcrg.xyz:16677/topic/209407.html",
+    "parser": "site_scoped_two_zodiac",
+    "payload": "page_and_scripts",
+    "title": "笑话奇谈"
+  },
+  {
+    "name": "太史常不",
+    "pick": "顶部",
+    "url": "https://e7rzi6.xnlf8-6i5rn-vabarz.work/topic/240870.html",
+    "parser": "site_scoped_two_zodiac",
+    "payload": "page_and_scripts",
+    "title": "太史常不"
+  },
+  {
+    "name": "惘然若失",
+    "pick": "顶部",
+    "url": "https://t3zvj.mvtre-w938p-xmiuyz.xyz/topic/207242.html",
+    "parser": "site_scoped_two_zodiac",
+    "payload": "page_and_scripts",
+    "title": "惘然若失"
+  },
+  {
+    "name": "与虎谋皮",
+    "pick": "顶部",
+    "url": "https://wmdhoki.6su07-7lpw6-gudkzl.xyz:16677/topic/727530.html",
+    "parser": "site_scoped_two_zodiac",
+    "payload": "page_and_scripts",
+    "title": "与虎谋皮"
+  },
+  {
+    "name": "王者无心",
+    "pick": "尾部",
+    "url": "https://fjjxlve.eclrc-7oqku-atxhrs.xyz:16677/topic/445652.html",
+    "payload": "page_and_scripts",
+    "title": "\\d{3}\\s*期\\s*【\\s*王者无心\\s*】\\s*【\\s*绝杀两肖\\s*】\\s*已公开\\s*王者无心",
+    "stop": "\\s上一篇：|\\s下一篇：",
+    "record": "(?P<period>\\d{3})\\s*期[^期]{0,90}?(?:绝\\s*杀|稳\\s*杀|精\\s*杀|无错\\s*杀|砍\\s*杀|杀)\\s*(?:二|两|2|２|②)\\s*肖[^期]{0,50}?[【〖\\[（(《『〈◢]\\s*(?P<zodiac>[牛马羊鸡狗猪鼠虎兔龙蛇猴]\\s*[-－、,，.。· ]?\\s*[牛马羊鸡狗猪鼠虎兔龙蛇猴])\\s*[】〗\\]）)》』〉◣]\\s*(?:←|[~～_\\-－—|]*)\\s*(?:开|開)\\s*[:：]?\\s*(?P<open>[^\\s准中错赢对↑√]+)"
+  },
+  {
+    "name": "同心叶力",
+    "pick": "顶部",
+    "url": "https://fdybdcq.b9mav-ho5x7-zwckje.xyz:16677/topic/211571.html",
+    "parser": "site_scoped_two_zodiac",
+    "payload": "page_and_scripts",
+    "title": "同心叶力"
+  },
+  {
+    "name": "自我作古",
+    "pick": "尾部",
+    "url": "https://uonjrs.w3nth-qq7qx-yiubza.xyz:16677/topic/232154.html",
+    "parser": "site_scoped_two_zodiac",
+    "payload": "page_and_scripts",
+    "title": "自我作古"
+  },
+  {
+    "name": "一点红",
+    "pick": "尾部",
+    "url": "https://dwfoxsuz.ik1v5-stbjb-dsttyy.xyz:16677/topic/246793.html",
+    "payload": "page_and_scripts",
+    "title": "精华贴\\s*\\d{3}\\s*期\\s*【\\s*绝杀二肖\\s*】",
+    "stop": "\\s上一篇：|\\s下一篇：|\\s计划帖|\\s民间帖",
+    "record": "(?P<period>\\d{3})\\s*期[^期]{0,90}?(?:绝\\s*杀|稳\\s*杀|精\\s*杀|无错\\s*杀|砍\\s*杀|杀)\\s*(?:二|两|2|２|②)\\s*肖[^期]{0,50}?[【〖\\[（(《『〈◢]\\s*(?P<zodiac>[牛马羊鸡狗猪鼠虎兔龙蛇猴]\\s*[-－、,，.。· ]?\\s*[牛马羊鸡狗猪鼠虎兔龙蛇猴])\\s*[】〗\\]）)》』〉◣]\\s*(?:←|[~～_\\-－—|]*)\\s*(?:开|開)\\s*[:：]?\\s*(?P<open>[^\\s准中错赢对↑√]+)"
+  },
+  {
+    "name": "狀元紅",
+    "pick": "顶部",
+    "url": "https://3.www112291a.com:2053/gengxin/20.html",
+    "parser": "zhuangyuan_red_top",
+    "payload": "page_and_scripts",
+    "title": "澳门\\s*状元红\\s+狀元紅\\s*⊙\\s*[『〖【]\\s*绝杀②肖\\s*[』〗】]",
+    "record": "(?P<period>\\d{3})\\s*期\\s*[:：]?\\s*绝杀②肖\\s*❇\\s*[〖【]\\s*(?P<zodiac>[牛马羊鸡狗猪鼠虎兔龙蛇猴]\\s*[-－、,，.。· ]?\\s*[牛马羊鸡狗猪鼠虎兔龙蛇猴])\\s*[〗】]\\s*开\\s*[:：]?\\s*(?P<open>[^\\s准中错赢对↑√]+)"
+  },
+  {
+    "name": "王者九点",
+    "pick": "尾部",
+    "url": "https://iboatq.pjgpm-epbf7-lxpezb.work:16677/",
+    "parser": "wangzhejiudian_two_zodiac",
+    "payload": "page_and_scripts"
+  },
+  {
+    "name": "王者九点禁二肖图",
+    "pick": "顶部",
+    "url": "https://iboatq.pjgpm-epbf7-lxpezb.work:16677/",
+    "parser": "wangzhejiudian_forbidden_chart",
+    "payload": "page_and_scripts"
+  },
+  {
+    "name": "王者九点杀二肖图",
+    "pick": "顶部",
+    "url": "https://iboatq.pjgpm-epbf7-lxpezb.work:16677/",
+    "parser": "wangzhejiudian_kill_chart",
+    "payload": "page_and_scripts"
+  },
+  {
+    "name": "玄机网禁两肖",
+    "pick": "顶部",
+    "url": "https://shuqhbq.654o7-lyreu-rzcudi.xyz:16677/",
+    "parser": "shuqhbq_xuanji_forbidden",
+    "payload": "page_and_scripts"
+  },
+  {
+    "name": "澳门杀两肖图",
+    "pick": "顶部",
+    "url": "https://shuqhbq.654o7-lyreu-rzcudi.xyz:16677/",
+    "parser": "shuqhbq_macau_kill_chart",
+    "payload": "page_and_scripts"
+  },
+  {
+    "name": "澳门图库禁肖",
+    "pick": "顶部",
+    "url": "https://shuqhbq.654o7-lyreu-rzcudi.xyz:16677/",
+    "parser": "shuqhbq_macau_gallery_forbidden",
+    "payload": "page_and_scripts"
+  },
+  {
+    "name": "朱雀",
+    "pick": "顶部",
+    "url": "https://estsghu.t7gsm-xl1x8-uohlna.xyz:16677/",
+    "parser": "zhuque_forbidden_material",
+    "payload": "browser_rendered_page"
+  },
+  {
+    "name": "月老搭桥",
+    "pick": "尾部",
+    "url": "https://yzpbdkow.6m1ba-7p7u4-ppolcy.work:29433/article/admin/6a02c9bc8bad0a3579e9f72b?url=tdg",
+    "payload": "admin_article_api",
+    "title": "月老搭桥",
+    "record": "(?P<period>\\d{3})\\s*期[^期]{0,90}?(?:绝\\s*杀|稳\\s*杀|精\\s*杀|无错\\s*杀|砍\\s*杀|杀)\\s*(?:二|两|2|２|②)\\s*肖[^期]{0,50}?[【〖\\[（(《『〈]\\s*(?P<zodiac>[牛马羊鸡狗猪鼠虎兔龙蛇猴]\\s*[-－、,，.。· ]?\\s*[牛马羊鸡狗猪鼠虎兔龙蛇猴])\\s*[】〗\\]）)》』〉]\\s*(?:←|[~～_\\-－—|]*)\\s*(?:开|開)\\s*[:：]?\\s*(?P<open>[^\\s准中错赢对↑√]+)",
+    "api_url": "https://yzpbdkow.6m1ba-7p7u4-ppolcy.work:29433/api/proxy/landing-page-data?url=tdg"
+  },
+  {
+    "name": "民间高手",
+    "pick": "顶部",
+    "url": "https://88.62782d.com:1888/",
+    "payload": "page_and_scripts",
+    "title": "民间高手\\s*『\\s*大神来料\\s*』",
+    "stop": "更多好料请关注|莲儿妹妹",
+    "record": "(?P<period>\\d{3})\\s*期\\s*杀2肖2尾\\s*[【〖]\\s*(?P<zodiac>[牛马羊鸡狗猪鼠虎兔龙蛇猴]\\s*[-－、,，.。· ]?\\s*[牛马羊鸡狗猪鼠虎兔龙蛇猴])\\s*\\+\\s*\\d+\\s*尾\\s*[】〗]\\s*(?P<open>[√准中错]*)"
+  },
+  {
+    "name": "哼哼唧唧",
+    "pick": "顶部",
+    "url": "https://jnf52f.24607-9ftvj-loupmx.work/topic/430698.html",
+    "payload": "page_and_scripts",
+    "title": "作者\\s*[:：]\\s*哼哼唧唧",
+    "record": "(?P<period>\\d{3})\\s*期[^期]{0,80}?★\\s*绝杀\\s*★\\s*[【〖\\[（(《『〈]\\s*(?P<zodiac>[牛马羊鸡狗猪鼠虎兔龙蛇猴]\\s*[-－、,，.。· ]?\\s*[牛马羊鸡狗猪鼠虎兔龙蛇猴])\\s*[】〗\\]）)》』〉]\\s*开\\s*[:：]?\\s*(?P<open>[^\\s准中错赢对↑√]+)"
+  },
+  {
+    "name": "与民同忧",
+    "pick": "尾部",
+    "url": "https://269x6s.nz5ct-hdywm-byyuma.work/topic/226522.html",
+    "payload": "page_and_scripts",
+    "title": "作者\\s*[:：]\\s*与民同忧",
+    "record": "(?P<period>\\d{3})\\s*期\\s*[：:]?\\s*绝杀二肖\\s*〔\\s*(?P<zodiac>[牛马羊鸡狗猪鼠虎兔龙蛇猴]\\s*[-－、,，.。· ]?\\s*[牛马羊鸡狗猪鼠虎兔龙蛇猴])\\s*〕\\s*开\\s*(?P<open>[^\\s准中错赢对↑√]+)"
+  },
+  {
+    "name": "膏火之费",
+    "pick": "尾部",
+    "url": "https://jnf52f.24607-9ftvj-loupmx.work/topic/226517.html",
+    "parser": "gaohuo_zhifei_topic",
+    "payload": "page_and_scripts"
+  },
+  {
+    "name": "故态复萌",
+    "pick": "顶部",
+    "url": "https://kqfmnjht.ip6et-0zvu7-gpqkrf.work:16677/topic/222782.html",
+    "payload": "page_and_scripts",
+    "title": "作者\\s*[:：]\\s*故态复萌",
+    "record": "(?P<period>\\d{3})\\s*期[^期]{0,90}?(?:绝\\s*杀|稳\\s*杀|精\\s*杀|无错\\s*杀|砍\\s*杀|杀)\\s*(?:二|两|2|２|②)\\s*肖[^期]{0,50}?[【〖\\[（(《『〈]\\s*(?P<zodiac>[牛马羊鸡狗猪鼠虎兔龙蛇猴]\\s*[-－、,，.。· ]?\\s*[牛马羊鸡狗猪鼠虎兔龙蛇猴])\\s*[】〗\\]）)》』〉]\\s*(?:←|[~～_\\-－—|]*)\\s*(?:开|開)\\s*[:：]?\\s*(?P<open>[^\\s准中错赢对↑√]+)"
+  },
+  {
+    "name": "守株待兔",
+    "pick": "顶部",
+    "url": "https://jogavu.6bl6s-ilo1w-yfnvvl.work:16677/topic/678126.html",
+    "payload": "page_and_scripts",
+    "title": "守株待兔\\s*【\\s*绝杀二肖\\s*】",
+    "record": "(?P<period>\\d{3})\\s*期[^期]{0,90}?(?:绝\\s*杀|稳\\s*杀|精\\s*杀|无错\\s*杀|砍\\s*杀|杀)\\s*(?:二|两|2|２|②)\\s*肖[^期]{0,50}?[【〖\\[（(《『〈]\\s*(?P<zodiac>[牛马羊鸡狗猪鼠虎兔龙蛇猴]\\s*[-－、,，.。· ]?\\s*[牛马羊鸡狗猪鼠虎兔龙蛇猴])\\s*[】〗\\]）)》』〉]\\s*(?:←|[~～_\\-－—|]*)\\s*(?:开|開)\\s*[:：]?\\s*(?P<open>[^\\s准中错赢对↑√]+)"
+  },
+  {
+    "name": "众多非一",
+    "pick": "顶部",
+    "url": "https://gxixcfq.4hxms-k65ek-jsvqzm.xyz:16677/topic/276911.html",
+    "parser": "zhongduo_feiyi_top",
+    "payload": "page_and_scripts",
+    "title": "众多非一\\s*【\\s*稳杀二肖\\s*】",
+    "record": "(?P<period>\\d{3})\\s*期[^期]{0,90}?(?:绝\\s*杀|稳\\s*杀|精\\s*杀|无错\\s*杀|砍\\s*杀|杀)\\s*(?:二|两|2|２|②)\\s*肖[^期]{0,50}?[【〖\\[（(《『〈]\\s*(?P<zodiac>[牛马羊鸡狗猪鼠虎兔龙蛇猴]\\s*[-－、,，.。· ]?\\s*[牛马羊鸡狗猪鼠虎兔龙蛇猴])\\s*[】〗\\]）)》』〉]\\s*(?:←|[~～_\\-－—|]*)\\s*(?:开|開)\\s*[:：]?\\s*(?P<open>[^\\s准中错赢对↑√]+)"
+  },
+  {
+    "name": "呻吟成瘾",
+    "pick": "尾部",
+    "url": "https://vds8y.2wu98-q1kie-wjsdjo.xyz/topic/384835.html",
+    "payload": "page_and_scripts",
+    "title": "〖\\s*绝杀二肖\\s*〗",
+    "record": "(?P<period>\\d{3})\\s*期[^期]{0,90}?(?:绝\\s*杀|稳\\s*杀|精\\s*杀|无错\\s*杀|砍\\s*杀|杀)\\s*(?:二|两|2|２|②)\\s*肖[^期]{0,50}?[【〖\\[（(《『〈]\\s*(?P<zodiac>[牛马羊鸡狗猪鼠虎兔龙蛇猴]\\s*[-－、,，.。· ]?\\s*[牛马羊鸡狗猪鼠虎兔龙蛇猴])\\s*[】〗\\]）)》』〉]\\s*(?:←|[~～_\\-－—|]*)\\s*(?:开|開)\\s*[:：]?\\s*(?P<open>[^\\s准中错赢对↑√]+)"
+  },
+  {
+    "name": "鹏程万里",
+    "pick": "顶部",
+    "url": "https://bqipgah.pvib6-ptrqe-ihcefh.xyz:16677/topic/268616.html",
+    "payload": "page_and_scripts",
+    "title": "鹏程万里",
+    "record": "(?P<period>\\d{3})\\s*期[^期]{0,90}?(?:绝\\s*杀|稳\\s*杀|精\\s*杀|无错\\s*杀|砍\\s*杀|杀)\\s*(?:二|两|2|２|②)\\s*肖[^期]{0,50}?[【〖\\[（(《『〈]\\s*(?P<zodiac>[牛马羊鸡狗猪鼠虎兔龙蛇猴]\\s*[-－、,，.。· ]?\\s*[牛马羊鸡狗猪鼠虎兔龙蛇猴])\\s*[】〗\\]）)》』〉]\\s*(?:←|[~～_\\-－—|]*)\\s*(?:开|開)\\s*[:：]?\\s*(?P<open>[^\\s准中错赢对↑√]+)"
+  },
+  {
+    "name": "马票",
+    "pick": "顶部",
+    "url": "https://cxmdjok.8wtwc-boven-glylvt.xyz:16677/",
+    "payload": "page_and_scripts",
+    "title": "澳门马票\\s*【\\s*稳杀二肖\\s*】\\s*899916a\\.com",
+    "record": "(?P<period>\\d{3})\\s*期\\s*绝杀二肖\\s*[:：]\\s*[【〖]\\s*(?P<zodiac>[牛马羊鸡狗猪鼠虎兔龙蛇猴]\\s*[-－、,，.。· ]?\\s*[牛马羊鸡狗猪鼠虎兔龙蛇猴])\\s*[】〗]\\s*开\\s*[:：]?\\s*(?P<open>[^\\s准中错赢对↑√]+)"
+  },
+  {
+    "name": "踏雪无痕",
+    "pick": "顶部",
+    "url": "https://ntvjzt.gau41-qu6jy-sotyug.work:16677/",
+    "parser": "taxue_wuhen_top",
+    "payload": "browser_rendered_page",
+    "title": "澳门\\s*踏雪无痕\\s*『\\s*绝\\s*杀\\s*二\\s*肖\\s*』",
+    "record": "(?P<period>\\d{3})\\s*期[^期]{0,90}?(?:绝\\s*杀|稳\\s*杀|精\\s*杀|无错\\s*杀|砍\\s*杀|杀)\\s*(?:二|两|2|２|②)\\s*肖[^期]{0,50}?[【〖\\[（(《『〈]\\s*(?P<zodiac>[牛马羊鸡狗猪鼠虎兔龙蛇猴]\\s*[-－、,，.。· ]?\\s*[牛马羊鸡狗猪鼠虎兔龙蛇猴])\\s*[】〗\\]）)》』〉]\\s*(?:←|[~～_\\-－—|]*)\\s*(?:开|開)\\s*[:：]?\\s*(?P<open>[^\\s准中错赢对↑√]+)"
+  },
+  {
+    "name": "雷锋一",
+    "pick": "顶部",
+    "url": "https://dvglkfp.mueyy-uiuci-vtqiod.work:16677/topic/368875.html",
+    "payload": "page_and_scripts",
+    "title": "杀料榜\\s*\\d{3}\\s*期\\s*【\\s*绝杀二肖\\s*】",
+    "record": "(?P<period>\\d{3})\\s*期[^期]{0,90}?(?:绝\\s*杀|稳\\s*杀|精\\s*杀|无错\\s*杀|砍\\s*杀|杀)\\s*(?:二|两|2|２|②)\\s*肖[^期]{0,50}?[【〖\\[（(《『〈]\\s*(?P<zodiac>[牛马羊鸡狗猪鼠虎兔龙蛇猴]\\s*[-－、,，.。· ]?\\s*[牛马羊鸡狗猪鼠虎兔龙蛇猴])\\s*[】〗\\]）)》』〉]\\s*(?:←|[~～_\\-－—|]*)\\s*(?:开|開)\\s*[:：]?\\s*(?P<open>[^\\s准中错赢对↑√]+)"
+  },
+  {
+    "name": "雷锋二",
+    "pick": "顶部",
+    "url": "https://dvglkfp.mueyy-uiuci-vtqiod.work:16677/topic/453715.html",
+    "payload": "page_and_scripts",
+    "title": "杀料榜\\s*\\d{3}\\s*期\\s*【\\s*稳杀二肖\\s*】",
+    "record": "(?P<period>\\d{3})\\s*期[^期]{0,90}?(?:绝\\s*杀|稳\\s*杀|精\\s*杀|无错\\s*杀|砍\\s*杀|杀)\\s*(?:二|两|2|２|②)\\s*肖[^期]{0,50}?[【〖\\[（(《『〈]\\s*(?P<zodiac>[牛马羊鸡狗猪鼠虎兔龙蛇猴]\\s*[-－、,，.。· ]?\\s*[牛马羊鸡狗猪鼠虎兔龙蛇猴])\\s*[】〗\\]）)》』〉]\\s*(?:←|[~～_\\-－—|]*)\\s*(?:开|開)\\s*[:：]?\\s*(?P<open>[^\\s准中错赢对↑√]+)"
+  },
+  {
+    "name": "千古绝唱",
+    "pick": "尾部",
+    "url": "https://bdxufda.po4ai-dqhr0-mljzdr.work:16655/topic/209866.html",
+    "payload": "page_and_scripts",
+    "title": "千古绝唱\\s*【\\s*绝杀二肖\\s*】",
+    "record": "(?P<period>\\d{3})\\s*期[^期]{0,90}?(?:绝\\s*杀|稳\\s*杀|精\\s*杀|无错\\s*杀|砍\\s*杀|杀)\\s*(?:二|两|2|２|②)\\s*肖[^期]{0,50}?[【〖\\[（(《『〈]\\s*(?P<zodiac>[牛马羊鸡狗猪鼠虎兔龙蛇猴]\\s*[-－、,，.。· ]?\\s*[牛马羊鸡狗猪鼠虎兔龙蛇猴])\\s*[】〗\\]）)》』〉]\\s*(?:←|[~～_\\-－—|]*)\\s*(?:开|開)\\s*[:：]?\\s*(?P<open>[^\\s准中错赢对↑√]+)"
+  },
+  {
+    "name": "枪打天下",
+    "pick": "尾部",
+    "url": "https://myvvqq.30dok-2s9fd-bibfmg.work/",
+    "payload": "page_and_scripts",
+    "title": "枪打天下\\s*[（(]\\s*绝杀二肖\\s*[）)]",
+    "record": "(?P<period>\\d{3})\\s*期\\s*稳杀二肖\\s*[（(]\\s*(?P<zodiac>[牛马羊鸡狗猪鼠虎兔龙蛇猴]\\s*[-－、,，.。· ]?\\s*[牛马羊鸡狗猪鼠虎兔龙蛇猴])\\s*[）)]\\s*开\\s*(?P<open>[^\\s准中错赢对↑√]+)"
+  },
+  {
+    "name": "同床异梦",
+    "pick": "尾部",
+    "url": "https://ofxhqgor.li0cj-4esgz-npswxa.xyz/view.php?id=521",
+    "payload": "page_and_scripts",
+    "title": "同床异梦",
+    "record": "(?P<period>\\d{3})\\s*期[^期]{0,90}?(?:绝\\s*杀|稳\\s*杀|精\\s*杀|无错\\s*杀|砍\\s*杀|杀)\\s*(?:二|两|2|２|②)\\s*肖[^期]{0,50}?[【〖\\[（(《『〈]\\s*(?P<zodiac>[牛马羊鸡狗猪鼠虎兔龙蛇猴]\\s*[-－、,，.。· ]?\\s*[牛马羊鸡狗猪鼠虎兔龙蛇猴])\\s*[】〗\\]）)》』〉]\\s*(?:←|[~～_\\-－—|]*)\\s*(?:开|開)\\s*[:：]?\\s*(?P<open>[^\\s准中错赢对↑√]+)"
+  },
+  {
+    "name": "一言中的",
+    "pick": "顶部",
+    "url": "https://qhfsrngx.x9mcp-vrrqh-dzqfro.xyz:16677/topic/451167.html",
+    "payload": "page_and_scripts",
+    "title": "作者\\s*[:：]\\s*一言中的",
+    "record": "(?P<period>\\d{3})\\s*期[^期]{0,90}?(?:绝\\s*杀|稳\\s*杀|精\\s*杀|无错\\s*杀|砍\\s*杀|杀)\\s*(?:二|两|2|２|②)\\s*肖[^期]{0,50}?[【〖\\[（(《『〈]\\s*(?P<zodiac>[牛马羊鸡狗猪鼠虎兔龙蛇猴]\\s*[-－、,，.。· ]?\\s*[牛马羊鸡狗猪鼠虎兔龙蛇猴])\\s*[】〗\\]）)》』〉]\\s*(?:←|[~～_\\-－—|]*)\\s*(?:开|開)\\s*[:：]?\\s*(?P<open>[^\\s准中错赢对↑√]+)"
+  },
+  {
+    "name": "舞文弄墨",
+    "pick": "尾部",
+    "url": "https://kxglojup.fao5v-9u0oz-okhubb.work:16677/topic/468203.html",
+    "payload": "page_and_scripts",
+    "title": "舞文弄墨",
+    "record": "(?P<period>\\d{3})\\s*期[^期]{0,90}?(?:绝\\s*杀|稳\\s*杀|精\\s*杀|无错\\s*杀|砍\\s*杀|杀)\\s*(?:二|两|2|２|②)\\s*肖[^期]{0,50}?[【〖\\[（(《『〈]\\s*(?P<zodiac>[牛马羊鸡狗猪鼠虎兔龙蛇猴]\\s*[-－、,，.。· ]?\\s*[牛马羊鸡狗猪鼠虎兔龙蛇猴])\\s*[】〗\\]）)》』〉]\\s*(?:←|[~～_\\-－—|]*)\\s*(?:开|開)\\s*[:：]?\\s*(?P<open>[^\\s准中错赢对↑√]+)"
+  },
+  {
+    "name": "酒有别肠",
+    "pick": "顶部",
+    "url": "https://mjnrsqwu.c3kef-jhnm5-opjvvz.xyz:16677/topic/227117.html",
+    "payload": "page_and_scripts",
+    "title": "作者\\s*[:：]\\s*酒有别肠",
+    "record": "(?P<period>\\d{3})\\s*期[^期]{0,90}?(?:绝\\s*杀|稳\\s*杀|精\\s*杀|无错\\s*杀|砍\\s*杀|杀)\\s*(?:二|两|2|２|②)\\s*肖[^期]{0,50}?[【〖\\[（(《『〈]\\s*(?P<zodiac>[牛马羊鸡狗猪鼠虎兔龙蛇猴]\\s*[-－、,，.。· ]?\\s*[牛马羊鸡狗猪鼠虎兔龙蛇猴])\\s*[】〗\\]）)》』〉]\\s*(?:←|[~～_\\-－—|]*)\\s*(?:开|開)\\s*[:：]?\\s*(?P<open>[^\\s准中错赢对↑√]+)"
+  },
+  {
+    "name": "神人共愤",
+    "pick": "顶部",
+    "url": "https://mjnrsqwu.c3kef-jhnm5-opjvvz.xyz:16677/topic/211150.html",
+    "payload": "page_and_scripts",
+    "title": "作者\\s*[:：]\\s*神人共愤",
+    "record": "(?P<period>\\d{3})\\s*期\\s*[：:]?\\s*→\\s*绝杀\\s*←\\s*[【〖]\\s*(?P<zodiac>[牛马羊鸡狗猪鼠虎兔龙蛇猴]\\s*[-－、,，.。· ]?\\s*[牛马羊鸡狗猪鼠虎兔龙蛇猴])\\s*[】〗]\\s*开\\s*[:：]?\\s*(?P<open>[^\\s准中错赢对↑√]+)"
+  },
+  {
+    "name": "口有同嗜",
+    "pick": "尾部",
+    "url": "https://uhaxnrzx.q76gf-deec8-zqckeo.xyz:16677/topic/615700.html",
+    "payload": "page_and_scripts",
+    "title": "口有同嗜\\s*发表于",
+    "record": "(?P<period>\\d{3})\\s*期[^期]{0,90}?(?:绝\\s*杀|稳\\s*杀|精\\s*杀|无错\\s*杀|砍\\s*杀|杀)\\s*(?:二|两|2|２|②)\\s*肖[^期]{0,50}?[【〖\\[（(《『〈◢]\\s*(?P<zodiac>[牛马羊鸡狗猪鼠虎兔龙蛇猴]\\s*[-－、,，.。· ]?\\s*[牛马羊鸡狗猪鼠虎兔龙蛇猴])\\s*[】〗\\]）)》』〉◣]\\s*(?:←|[~～_\\-－—|]*)\\s*(?:开|開)\\s*[:：]?\\s*(?P<open>[^\\s准中错赢对↑√]+)",
+    "stop": "\\s上一篇：|\\s下一篇："
+  },
+  {
+    "name": "金科玉律",
+    "pick": "顶部",
+    "url": "https://ldxzuj.sgv53-iyx8f-wocoff.work:16677/topic/440109.html",
+    "payload": "page_and_scripts",
+    "title": "作者\\s*[:：]\\s*金科玉律",
+    "record": "(?P<period>\\d{3})\\s*期[^期]{0,90}?(?:绝\\s*杀|稳\\s*杀|精\\s*杀|无错\\s*杀|砍\\s*杀|杀)\\s*(?:二|两|2|２|②)\\s*肖[^期]{0,50}?[【〖\\[（(《『〈]\\s*(?P<zodiac>[牛马羊鸡狗猪鼠虎兔龙蛇猴]\\s*[-－、,，.。· ]?\\s*[牛马羊鸡狗猪鼠虎兔龙蛇猴])\\s*[】〗\\]）)》』〉]\\s*(?:←|[~～_\\-－—|]*)\\s*(?:开|開)\\s*[:：]?\\s*(?P<open>[^\\s准中错赢对↑√]+)"
+  },
+  {
+    "name": "一箭双雕",
+    "pick": "顶部",
+    "url": "https://hnzbrzl.2n783-iuaof-dczvqm.xyz/topic/764776.html",
+    "payload": "page_and_scripts",
+    "title": "绝杀区\\s*\\d{3}\\s*期\\s*【\\s*绝杀二肖\\s*】",
+    "record": "(?P<period>\\d{3})\\s*期\\s*[【〖]\\s*绝杀二肖\\s*[】〗]\\s*~\\s*(?P<zodiac>[牛马羊鸡狗猪鼠虎兔龙蛇猴]\\s*[-－、,，.。· ]?\\s*[牛马羊鸡狗猪鼠虎兔龙蛇猴])\\s*~\\s*开\\s*(?P<open>[^\\s准中错赢对↑√]+)"
+  },
+  {
+    "name": "绘声绘色",
+    "pick": "顶部",
+    "url": "https://bouxeto.evrcg-2aasr-pflslr.xyz:16677/topic/328420.html",
+    "payload": "page_and_scripts",
+    "title": "绘声绘色",
+    "record": "(?P<period>\\d{3})\\s*期[^期]{0,90}?(?:绝\\s*杀|稳\\s*杀|精\\s*杀|无错\\s*杀|砍\\s*杀|杀)\\s*(?:二|两|2|２|②)\\s*肖[^期]{0,50}?[【〖\\[（(《『〈]\\s*(?P<zodiac>[牛马羊鸡狗猪鼠虎兔龙蛇猴]\\s*[-－、,，.。· ]?\\s*[牛马羊鸡狗猪鼠虎兔龙蛇猴])\\s*[】〗\\]）)》』〉]\\s*(?:←|[~～_\\-－—|]*)\\s*(?:开|開)\\s*[:：]?\\s*(?P<open>[^\\s准中错赢对↑√]+)"
+  },
+  {
+    "name": "绝对好料",
+    "pick": "顶部",
+    "url": "https://yioznkua.snfqn-48psf-vctwsw.xyz:16677/topic/246165.html",
+    "payload": "page_and_scripts",
+    "title": "绝对好料",
+    "record": "(?P<period>\\d{3})\\s*期[^期]{0,90}?(?:绝\\s*杀|稳\\s*杀|精\\s*杀|无错\\s*杀|砍\\s*杀|杀)\\s*(?:二|两|2|２|②)\\s*肖[^期]{0,50}?[【〖\\[（(《『〈]\\s*(?P<zodiac>[牛马羊鸡狗猪鼠虎兔龙蛇猴]\\s*[-－、,，.。· ]?\\s*[牛马羊鸡狗猪鼠虎兔龙蛇猴])\\s*[】〗\\]）)》』〉]\\s*(?:←|[~～_\\-－—|]*)\\s*(?:开|開)\\s*[:：]?\\s*(?P<open>[^\\s准中错赢对↑√]+)"
+  },
+  {
+    "name": "对好料",
+    "pick": "顶部",
+    "url": "https://yioznkua.snfqn-48psf-vctwsw.xyz:16677/topic/246166.html",
+    "payload": "page_and_scripts",
+    "title": "精品帖\\s*\\d{3}\\s*期\\s*【\\s*绝杀二肖\\s*】\\s*绝对好料",
+    "record": "(?P<period>\\d{3})\\s*期[^期]{0,90}?(?:绝\\s*杀|稳\\s*杀|精\\s*杀|无错\\s*杀|砍\\s*杀|杀)\\s*(?:二|两|2|２|②)\\s*肖[^期]{0,50}?[【〖\\[（(《『〈]\\s*(?P<zodiac>[牛马羊鸡狗猪鼠虎兔龙蛇猴]\\s*[-－、,，.。· ]?\\s*[牛马羊鸡狗猪鼠虎兔龙蛇猴])\\s*[】〗\\]）)》』〉]\\s*(?:←|[~～_\\-－—|]*)\\s*(?:开|開)\\s*[:：]?\\s*(?P<open>[^\\s准中错赢对↑√]+)"
+  },
+  {
+    "name": "竞相开",
+    "pick": "顶部",
+    "url": "https://zqliou.kify1-fbyi6-lmeykn.xyz:16677/topic/309621.html",
+    "payload": "page_and_scripts",
+    "title": "竞相开放",
+    "record": "(?P<period>\\d{3})\\s*期[^期]{0,90}?(?:绝\\s*杀|稳\\s*杀|精\\s*杀|无错\\s*杀|砍\\s*杀|杀)\\s*(?:二|两|2|２|②)\\s*肖[^期]{0,50}?[【〖\\[（(《『〈]\\s*(?P<zodiac>[牛马羊鸡狗猪鼠虎兔龙蛇猴]\\s*[-－、,，.。· ]?\\s*[牛马羊鸡狗猪鼠虎兔龙蛇猴])\\s*[】〗\\]）)》』〉]\\s*(?:←|[~～_\\-－—|]*)\\s*(?:开|開)\\s*[:：]?\\s*(?P<open>[^\\s准中错赢对↑√]+)"
+  },
+  {
+    "name": "人心如镜",
+    "pick": "尾部",
+    "url": "https://ninbwa.7bmc7-mxwy9-uwkcem.xyz:16677/topic/472200.html",
+    "payload": "page_and_scripts",
+    "title": "→\\s*绝杀二肖\\s*←",
+    "record": "(?P<period>\\d{3})\\s*期[^期]{0,90}?(?:绝\\s*杀|稳\\s*杀|精\\s*杀|无错\\s*杀|砍\\s*杀|杀)\\s*(?:二|两|2|２|②)\\s*肖[^期]{0,50}?[【〖\\[（(《『〈]\\s*(?P<zodiac>[牛马羊鸡狗猪鼠虎兔龙蛇猴]\\s*[-－、,，.。· ]?\\s*[牛马羊鸡狗猪鼠虎兔龙蛇猴])\\s*[】〗\\]）)》』〉]\\s*(?:←|[~～_\\-－—|]*)\\s*(?:开|開)\\s*[:：]?\\s*(?P<open>[^\\s准中错赢对↑√]+)"
+  },
+  {
+    "name": "相见恨晚",
+    "pick": "顶部",
+    "url": "https://hqukoej.4r7ey-l73ae-clkcxs.xyz:16677/topic/280629.html",
+    "payload": "page_and_scripts",
+    "title": "相见恨晚",
+    "record": "(?P<period>\\d{3})\\s*期\\s*《\\s*绝杀\\s*2\\s*肖\\s*》\\s*☆\\s*(?P<zodiac>[牛马羊鸡狗猪鼠虎兔龙蛇猴]\\s*[-－、,，.。· ]?\\s*[牛马羊鸡狗猪鼠虎兔龙蛇猴])\\s*☆\\s*开\\s*(?P<open>[^\\s准中错赢对↑√]+)"
+  },
+  {
+    "name": "北海紫陌",
+    "pick": "顶部",
+    "url": "https://yaaxgud.xg0eu-qjubd-yneksw.xyz:16677/",
+    "payload": "page_and_scripts",
+    "title": "北海紫陌\\s*『\\s*砍杀②肖\\s*』",
+    "record": "(?P<period>\\d{3})\\s*期[^期]{0,90}?(?:绝\\s*杀|稳\\s*杀|精\\s*杀|无错\\s*杀|砍\\s*杀|杀)\\s*(?:二|两|2|２|②)\\s*肖[^期]{0,50}?[【〖\\[（(《『〈]\\s*(?P<zodiac>[牛马羊鸡狗猪鼠虎兔龙蛇猴]\\s*[-－、,，.。· ]?\\s*[牛马羊鸡狗猪鼠虎兔龙蛇猴])\\s*[】〗\\]）)》』〉]\\s*(?:←|[~～_\\-－—|]*)\\s*(?:开|開)\\s*[:：]?\\s*(?P<open>[^\\s准中错赢对↑√]+)"
+  },
+  {
+    "name": "澳门-白虎",
+    "pick": "顶部",
+    "url": "https://cdgiyg.h2xwn-eq86t-ibfeex.work:16677/#am",
+    "payload": "page_and_scripts",
+    "title": "澳门-白虎\\s*『\\s*绝杀二肖\\s*』",
+    "record": "(?P<period>\\d{3})\\s*期[^期]{0,90}?(?:绝\\s*杀|稳\\s*杀|精\\s*杀|无错\\s*杀|砍\\s*杀|杀)\\s*(?:二|两|2|２|②)\\s*肖[^期]{0,50}?[【〖\\[（(《『〈]\\s*(?P<zodiac>[牛马羊鸡狗猪鼠虎兔龙蛇猴]\\s*[-－、,，.。· ]?\\s*[牛马羊鸡狗猪鼠虎兔龙蛇猴])\\s*[】〗\\]）)》』〉]\\s*(?:←|[~～_\\-－—|]*)\\s*(?:开|開)\\s*[:：]?\\s*(?P<open>[^\\s准中错赢对↑√]+)"
+  },
+  {
+    "name": "没忍住啊",
+    "pick": "顶部",
+    "url": "https://ryfbdty.p4a53-f1hew-diwcrg.xyz:16677/topic/226296.html",
+    "payload": "page_and_scripts",
+    "title": "高手贴\\s*\\d{3}\\s*期\\s*[:：]?\\s*\\[\\s*绝杀二肖\\s*\\]━\\s*118060[a-z]\\.com",
+    "record": "(?P<period>\\d{3})\\s*期[^期]{0,90}?(?:绝\\s*杀|稳\\s*杀|精\\s*杀|无错\\s*杀|砍\\s*杀|杀)\\s*(?:二|两|2|２|②)\\s*肖[^期]{0,50}?[【〖\\[（(《『〈]\\s*(?P<zodiac>[牛马羊鸡狗猪鼠虎兔龙蛇猴]\\s*[-－、,，.。· ]?\\s*[牛马羊鸡狗猪鼠虎兔龙蛇猴])\\s*[】〗\\]）)》』〉]\\s*(?:←|[~～_\\-－—|]*)\\s*(?:开|開)\\s*[:：]?\\s*(?P<open>[^\\s准中错赢对↑√]+)"
+  },
+  {
+    "name": "最美记忆",
+    "pick": "顶部",
+    "url": "https://hhsmgw.rcl5b-akta2-ylzzwv.xyz:16677/topic/328434.html",
+    "payload": "page_and_scripts",
+    "title": "最美记忆",
+    "record": "(?P<period>\\d{3})\\s*期[^期]{0,90}?(?:绝\\s*杀|稳\\s*杀|精\\s*杀|无错\\s*杀|砍\\s*杀|杀)\\s*(?:二|两|2|２|②)\\s*肖[^期]{0,50}?[【〖\\[（(《『〈]\\s*(?P<zodiac>[牛马羊鸡狗猪鼠虎兔龙蛇猴]\\s*[-－、,，.。· ]?\\s*[牛马羊鸡狗猪鼠虎兔龙蛇猴])\\s*[】〗\\]）)》』〉]\\s*(?:←|[~～_\\-－—|]*)\\s*(?:开|開)\\s*[:：]?\\s*(?P<open>[^\\s准中错赢对↑√]+)"
+  },
+  {
+    "name": "雁落沙滩",
+    "pick": "顶部",
+    "url": "https://xxn08n.s80sr-rxe8g-wbvqjh.work/topic/216108.html",
+    "payload": "page_and_scripts",
+    "title": "作者\\s*[:：]\\s*雁落沙滩",
+    "record": "(?P<period>\\d{3})\\s*期[^期]{0,90}?(?:绝\\s*杀|稳\\s*杀|精\\s*杀|无错\\s*杀|砍\\s*杀|杀)\\s*(?:二|两|2|２|②)\\s*肖[^期]{0,50}?[【〖\\[（(《『〈]\\s*(?P<zodiac>[牛马羊鸡狗猪鼠虎兔龙蛇猴]\\s*[-－、,，.。· ]?\\s*[牛马羊鸡狗猪鼠虎兔龙蛇猴])\\s*[】〗\\]）)》』〉]\\s*(?:←|[~～_\\-－—|]*)\\s*(?:开|開)\\s*[:：]?\\s*(?P<open>[^\\s准中错赢对↑√]+)"
+  },
+  {
+    "name": "万里长城",
+    "pick": "顶部",
+    "url": "https://wmdhoki.6su07-7lpw6-gudkzl.xyz:16677/topic/727499.html",
+    "payload": "page_and_scripts",
+    "title": "万里长城",
+    "record": "(?P<period>\\d{3})\\s*期[^期]{0,90}?(?:绝\\s*杀|稳\\s*杀|精\\s*杀|无错\\s*杀|砍\\s*杀|杀)\\s*(?:二|两|2|２|②)\\s*肖[^期]{0,50}?[【〖\\[（(《『〈]\\s*(?P<zodiac>[牛马羊鸡狗猪鼠虎兔龙蛇猴]\\s*[-－、,，.。· ]?\\s*[牛马羊鸡狗猪鼠虎兔龙蛇猴])\\s*[】〗\\]）)》』〉]\\s*(?:←|[~～_\\-－—|]*)\\s*(?:开|開)\\s*[:：]?\\s*(?P<open>[^\\s准中错赢对↑√]+)"
+  },
+  {
+    "name": "繁忙棒球",
+    "pick": "尾部",
+    "url": "https://qvuuqqs.8imf7-hteuh-ylwuqv.xyz/#/users/3978",
+    "parser": "tuku_user_forums_two_zodiac",
+    "payload": "tuku_user_forums",
+    "title": "绝杀二肖"
+  },
+  {
+    "name": "寸草不生",
+    "pick": "顶部",
+    "url": "https://qvuuqqs.8imf7-hteuh-ylwuqv.xyz/#/users/116174",
+    "parser": "tuku_user_forums_precise_two_zodiac",
+    "payload": "tuku_user_forums"
+  },
+  {
+    "name": "富贵可得",
+    "pick": "尾部",
+    "url": "https://ztpqrap.m8sbq-na911-wmojzb.work:29444/article/admin/6a2d9104394c9f8f7ed188ba?url=gsw",
+    "parser": "fugui_kede_admin_article",
+    "payload": "admin_article_api",
+    "api_url": "https://ztpqrap.m8sbq-na911-wmojzb.work:29444/api/proxy/landing-page-data?url=gsw"
+  },
+  {
+    "name": "勤能补拙",
+    "pick": "尾部",
+    "url": "https://8818.www71986a.com/read.php?tid=563",
+    "parser": "qinneng_buzhuo_read_page",
+    "payload": "browser_rendered_page"
+  },
+  {
+    "name": "老大主",
+    "pick": "尾部",
+    "url": "https://drmthln.beqj8-tntx4-ukbetl.xyz:16677/",
+    "parser": "laodazhu_ten_zodiac_complement",
+    "payload": "curl_tls10_page_and_scripts"
+  },
+  {
+    "name": "捕风捉影",
+    "pick": "顶部",
+    "url": "https://asilnwgq.vrwy5-3gm7i-cdtcvs.xyz:17477/topic/371379.html",
+    "parser": "bufeng_zhuoying_topic",
+    "payload": "page_and_scripts"
+  },
+  {
+    "name": "碎银几两",
+    "pick": "顶部",
+    "url": "https://jogavu.6bl6s-ilo1w-yfnvvl.work:16677/topic/678134.html",
+    "parser": "suiyin_jiliang_ten_zodiac_complement",
+    "payload": "page_and_scripts"
+  },
+  {
+    "name": "无忧无虑",
+    "pick": "顶部",
+    "url": "https://jjlachsn.4fk3e-i2rpf-vgknlh.work:16677/topic/649646.html",
+    "parser": "wuyou_wulv_topic",
+    "payload": "page_and_scripts"
+  },
+  {
+    "name": "披沙捡金",
+    "pick": "尾部",
+    "url": "https://drxgkjt.uu1oc-eyjpt-uxyccu.xyz:29400/article/manager/6a33e97adfa16552b923d418?url=jyb",
+    "parser": "manager_article_two_zodiac",
+    "payload": "admin_article_api",
+    "api_url": "https://drxgkjt.uu1oc-eyjpt-uxyccu.xyz:29400/api/proxy/landing-page-data?url=jyb"
+  },
+  {
+    "name": "梦寐以求",
+    "pick": "尾部",
+    "url": "https://drxgkjt.uu1oc-eyjpt-uxyccu.xyz:29400/article/manager/6a33e49fdfa16552b923d264?url=jyb",
+    "parser": "manager_article_two_zodiac",
+    "payload": "admin_article_api",
+    "api_url": "https://drxgkjt.uu1oc-eyjpt-uxyccu.xyz:29400/api/proxy/landing-page-data?url=jyb"
+  },
+  {
+    "name": "霸王传奇",
+    "pick": "尾部",
+    "url": "https://nwrkkmv.rx287-rkrai-jsjccc.xyz:29499/article/manager/6a33d2d2dfa16552b923d0af?url=ggz",
+    "parser": "manager_article_two_zodiac",
+    "payload": "admin_article_api",
+    "api_url": "https://nwrkkmv.rx287-rkrai-jsjccc.xyz:29499/api/proxy/landing-page-data?url=ggz"
+  },
+  {
+    "name": "粉色樱花",
+    "pick": "尾部",
+    "url": "https://hcsuuoy.nimo7-9bgj4-fmspxt.xyz:29466/article/manager/6a31451a9f83cbadb83797d9?url=cww",
+    "parser": "manager_article_two_zodiac",
+    "payload": "admin_article_api",
+    "api_url": "https://hcsuuoy.nimo7-9bgj4-fmspxt.xyz:29466/api/proxy/landing-page-data?url=cww"
+  },
+  {
+    "name": "彻头彻尾",
+    "pick": "尾部",
+    "url": "https://xjsjbkv.b3e4x-wxhjo-lbdbjg.xyz:29477/article/manager/6a323a63549767728892cb19?url=jbx",
+    "parser": "manager_article_two_zodiac",
+    "payload": "admin_article_api",
+    "api_url": "https://xjsjbkv.b3e4x-wxhjo-lbdbjg.xyz:29477/api/proxy/landing-page-data?url=jbx"
+  },
+  {
+    "name": "金禅彩票",
+    "pick": "尾部",
+    "url": "https://xjsjbkv.b3e4x-wxhjo-lbdbjg.xyz:29477/article/manager/6a324276f21d7a093399ef17?url=jbx",
+    "parser": "manager_article_two_zodiac",
+    "payload": "admin_article_api",
+    "api_url": "https://xjsjbkv.b3e4x-wxhjo-lbdbjg.xyz:29477/api/proxy/landing-page-data?url=jbx"
+  },
+  {
+    "name": "光彩夺目",
+    "pick": "尾部",
+    "url": "https://xjsjbkv.b3e4x-wxhjo-lbdbjg.xyz:29477/article/manager/6a324da4d2455bc872d9a632?url=jbx",
+    "parser": "manager_article_two_zodiac",
+    "payload": "admin_article_api",
+    "api_url": "https://xjsjbkv.b3e4x-wxhjo-lbdbjg.xyz:29477/api/proxy/landing-page-data?url=jbx"
+  },
+  {
+    "name": "冲上云霄",
+    "pick": "尾部",
+    "url": "https://xjsjbkv.b3e4x-wxhjo-lbdbjg.xyz:29477/article/manager/6a342366dfa16552b92413c6?url=jbx",
+    "parser": "manager_article_two_zodiac",
+    "payload": "admin_article_api",
+    "api_url": "https://xjsjbkv.b3e4x-wxhjo-lbdbjg.xyz:29477/api/proxy/landing-page-data?url=jbx"
+  },
+  {
+    "name": "不容置疑",
+    "pick": "尾部",
+    "url": "https://xjsjbkv.b3e4x-wxhjo-lbdbjg.xyz:29477/article/manager/6a3270bf3a4bb06f16af372f?url=jbx",
+    "parser": "manager_article_two_zodiac",
+    "payload": "admin_article_api",
+    "api_url": "https://xjsjbkv.b3e4x-wxhjo-lbdbjg.xyz:29477/api/proxy/landing-page-data?url=jbx"
+  },
+  {
+    "name": "精妙绝伦",
+    "pick": "尾部",
+    "url": "https://xjsjbkv.b3e4x-wxhjo-lbdbjg.xyz:29477/article/manager/6a32761ac50767750c400789?url=jbx",
+    "parser": "manager_article_two_zodiac",
+    "payload": "admin_article_api",
+    "api_url": "https://xjsjbkv.b3e4x-wxhjo-lbdbjg.xyz:29477/api/proxy/landing-page-data?url=jbx"
+  },
+  {
+    "name": "眉飞色舞",
+    "pick": "尾部",
+    "url": "https://hquomm.20t3f-0yztv-jiozun.xyz:29444/article/manager/6a329eaa887a9b338e851fde?url=dgd",
+    "parser": "meifeise_wu_manager_article",
+    "payload": "admin_article_api",
+    "api_url": "https://hquomm.20t3f-0yztv-jiozun.xyz:29444/api/proxy/landing-page-data?url=dgd"
+  },
+  {
+    "name": "烟雨扶苏",
+    "pick": "顶部",
+    "url": "https://mxiscni.nkh6s-vfni4-lwgfvw.xyz:16677/topic/257907.html",
+    "parser": "yanyu_fusu_list_detail",
+    "payload": "topic_list_detail"
+  },
+  {
+    "name": "六合道人",
+    "pick": "尾部",
+    "url": "https://fymxwnyg.ttmzc-muvns-udlfln.work:29455/article/manager/6a096e64291caff3edcb8bff?url=lhbd",
+    "parser": "liuhe_daoren_admin_article",
+    "payload": "admin_article_api",
+    "api_url": "https://fymxwnyg.ttmzc-muvns-udlfln.work:29455/api/proxy/landing-page-data?url=lhbd"
+  },
+  {
+    "name": "花颜月貌",
+    "pick": "尾部",
+    "url": "https://aszmkf.c3z3l-qrlqm-mwgccr.work:29411/article/manager/6a0839c808adb5ed7357effe?url=lhw",
+    "parser": "huayan_yuemao_admin_article",
+    "payload": "admin_article_api",
+    "api_url": "https://aszmkf.c3z3l-qrlqm-mwgccr.work:29411/api/proxy/landing-page-data?url=lhw"
+  },
+  {
+    "name": "夜夜笙财",
+    "pick": "尾部",
+    "url": "https://knfoaep.ivqs8-1depw-yoirtw.xyz:29444/article/manager/6a095246291caff3edcb8a31?url=lf",
+    "parser": "yeyeshengcai_admin_article",
+    "payload": "admin_article_api",
+    "api_url": "https://knfoaep.ivqs8-1depw-yoirtw.xyz:29444/api/proxy/landing-page-data?url=lf"
+  },
+  {
+    "name": "月白风清",
+    "pick": "尾部",
+    "url": "https://dgjdlk.0hrwo-8qjsc-spwvba.xyz:29411/article/manager/6a12df0d741e3e91a04e5223?url=cf",
+    "parser": "yuebaifengqing_admin_article",
+    "payload": "admin_article_api",
+    "api_url": "https://dgjdlk.0hrwo-8qjsc-spwvba.xyz:29411/api/proxy/landing-page-data?url=cf"
+  },
+  {
+    "name": "阳春彩虹",
+    "pick": "尾部",
+    "url": "https://8818.www19753a.com/read.php?tid=639",
+    "parser": "yangchun_caihong_read_page",
+    "payload": "browser_rendered_page"
+  },
+  {
+    "name": "无所畏惧",
+    "pick": "尾部",
+    "url": "https://8818.www73261a.com/read.php?tid=441",
+    "parser": "wusuoweiju_read_page",
+    "payload": "browser_rendered_page"
+  },
+  {
+    "name": "真龙活现",
+    "pick": "尾部",
+    "url": "https://mbsqhpk.8ivvt-u3cx5-enwlld.xyz:29400/article/manager/6a33d2c6dfa16552b923d0ad?url=lhzj",
+    "parser": "zhenlong_huoxian_admin_article",
+    "payload": "admin_article_api",
+    "api_url": "https://mbsqhpk.8ivvt-u3cx5-enwlld.xyz:29400/api/proxy/landing-page-data?url=lhzj"
+  },
+  {
+    "name": "六合中心",
+    "pick": "尾部",
+    "url": "https://utklnwvn.xt8d7-kd9kc-csprqr.work:29488/article/manager/6a0445354ea5c20141013e7c?url=qdz",
+    "parser": "liuhe_zhongxin_manager_article",
+    "payload": "admin_article_api",
+    "api_url": "https://utklnwvn.xt8d7-kd9kc-csprqr.work:29488/api/proxy/landing-page-data?url=qdz"
+  },
+  {
+    "name": "白手起家",
+    "pick": "尾部",
+    "url": "https://ymkakun.dwgml-7jbcy-ohrbrq.xyz:16677/topic/547564.html",
+    "parser": "baishou_qijia_tail",
+    "payload": "page_and_scripts"
+  },
+  {
+    "name": "金宝码王",
+    "pick": "尾部",
+    "url": "https://yzpbdkow.6m1ba-7p7u4-ppolcy.work:29433/article/manager/6a695d022822d465035c94cf?url=tdg",
+    "parser": "jinbao_mawang_manager_article",
+    "payload": "admin_article_api",
+    "api_url": "https://yzpbdkow.6m1ba-7p7u4-ppolcy.work:29433/api/proxy/landing-page-data?url=tdg"
+  },
+  {
+    "name": "如神探讨",
+    "pick": "尾部",
+    "url": "https://hl.90216a.com/read.php?tid=751",
+    "parser": "rushen_tantao_read_page",
+    "payload": "page"
+  },
+  {
+    "name": "玄机天书",
+    "pick": "尾部",
+    "url": "https://mbsqhpk.8ivvt-u3cx5-enwlld.xyz:29400/article/manager/6a33d28bdfa16552b923d0a5?url=lhzj",
+    "parser": "xuanji_tianshu_admin_article",
+    "payload": "admin_article_api",
+    "api_url": "https://mbsqhpk.8ivvt-u3cx5-enwlld.xyz:29400/api/proxy/landing-page-data?url=lhzj"
+  },
+  {
+    "name": "斗转星移",
+    "pick": "top",
+    "url": "https://a.ttss.vip/list.aspx?id=79&page=1",
+    "parser": "named_block",
+    "payload": "topic_list_detail",
+    "title": "斗转星移\\s*[【〖\\[]\\s*绝\\s*杀\\s*(?:二|两|2|２|②)\\s*肖\\s*[】〗\\]]",
+    "record": "(?P<period>\\d{3})\\s*期\\s*斗转星移\\s*[:：]?\\s*[【〖\\[]\\s*(?P<zodiac>[牛马羊鸡狗鼠虎兔龙蛇猴]\\s*[-－、，,。.]?\\s*[牛马羊鸡狗鼠虎兔龙蛇猴])\\s*[】〗\\]]\\s*[开開]\\s*[:：]?\\s*(?P<open>[^\\s准中错赢对]+)"
+  },
+  {
+    "name": "催人奋进",
+    "pick": "top",
+    "url": "https://dh-nwsm-0806.yqs01490156c.app/gst/20.htm",
+    "parser": "site_scoped_two_zodiac",
+    "payload": "page",
+    "title": "催人奋进"
+  },
+  {
+    "name": "发奋图强",
+    "pick": "top",
+    "url": "https://dh-nwsm-0806.yqs01490156c.app/gsb/11.htm",
+    "parser": "site_scoped_two_zodiac",
+    "payload": "page",
+    "title": "发奋图强"
+  },
+  {
+    "name": "志在四方",
+    "pick": "top",
+    "url": "https://dh-nwsm-0806.yqs01490156c.app/gst/58.htm",
+    "parser": "site_scoped_two_zodiac",
+    "payload": "page",
+    "title": "志在四方"
+  },
+  {
+    "name": "周大发财",
+    "pick": "top",
+    "url": "https://dh-nwsm-0806.yqs01490156c.app/cm/cm101.html",
+    "parser": "site_scoped_two_zodiac",
+    "payload": "page",
+    "title": "周大发财"
+  },
+  {
+    "name": "超越自我",
+    "pick": "bottom",
+    "url": "https://cahgjib.5blx9-z8506-ekiwxc.work:29488/article/manager/6a1446e9bf0a6cb1dd38fbad?url=lqz",
+    "parser": "manager_article_two_zodiac",
+    "payload": "admin_article_api",
+    "api_url": "https://cahgjib.5blx9-z8506-ekiwxc.work:29488/api/proxy/landing-page-data?url=lqz"
+  },
+  {
+    "name": "四季如春",
+    "pick": "bottom",
+    "url": "https://pgyzulb.iwnn7-gyyip-pnpfqv.work:29477/article/manager/6a153c328be59b17287c6ceb?url=bflc",
+    "parser": "manager_article_two_zodiac",
+    "payload": "admin_article_api",
+    "api_url": "https://pgyzulb.iwnn7-gyyip-pnpfqv.work:29477/api/proxy/landing-page-data?url=bflc"
+  },
+  {
+    "name": "原原本本",
+    "pick": "bottom",
+    "url": "https://pgyzulb.iwnn7-gyyip-pnpfqv.work:29477/article/manager/6a153eb8d9d9fc2cea52419b?url=bflc",
+    "parser": "manager_article_two_zodiac",
+    "payload": "admin_article_api",
+    "api_url": "https://pgyzulb.iwnn7-gyyip-pnpfqv.work:29477/api/proxy/landing-page-data?url=bflc"
+  },
+  {
+    "name": "会员福利",
+    "pick": "bottom",
+    "url": "https://sheuzjss.tgpcj-9w0vl-mwyhly.work:29422/article/manager/6a0458354ea5c20141013eb4?url=zfw",
+    "parser": "manager_article_two_zodiac",
+    "payload": "admin_article_api",
+    "api_url": "https://sheuzjss.tgpcj-9w0vl-mwyhly.work:29422/api/proxy/landing-page-data?url=zfw"
+  },
+  {
+    "name": "其乐融融",
+    "pick": "bottom",
+    "url": "https://sheuzjss.tgpcj-9w0vl-mwyhly.work:29422/article/manager/6a62b371b3f65fed7d61cb4b?url=zfw",
+    "parser": "manager_article_two_zodiac",
+    "payload": "admin_article_api",
+    "api_url": "https://sheuzjss.tgpcj-9w0vl-mwyhly.work:29422/api/proxy/landing-page-data?url=zfw"
+  },
+  {
+    "name": "澳门马头",
+    "pick": "bottom",
+    "url": "https://qgyhdauu.avht7-lah7b-oavfmr.work:29444/article/manager/6a6c7d332822d465035d6d7e?url=wzw",
+    "parser": "manager_article_two_zodiac",
+    "payload": "admin_article_api",
+    "api_url": "https://qgyhdauu.avht7-lah7b-oavfmr.work:29444/api/proxy/landing-page-data?url=wzw"
+  },
+  {
+    "name": "极目远眺",
+    "pick": "bottom",
+    "url": "https://uqdccnri.oy2bh-swrfr-gvzxkk.work:29499/article/manager/6a03354dcd2fbc900f6db83a?url=lcz",
+    "parser": "manager_article_two_zodiac",
+    "payload": "admin_article_api",
+    "api_url": "https://uqdccnri.oy2bh-swrfr-gvzxkk.work:29499/api/proxy/landing-page-data?url=lcz"
+  },
+  {
+    "name": "再创六合",
+    "pick": "bottom",
+    "url": "https://uqdccnri.oy2bh-swrfr-gvzxkk.work:29499/article/manager/6a03230a56a1d26b7774455f?url=lcz",
+    "parser": "manager_article_two_zodiac",
+    "payload": "admin_article_api",
+    "api_url": "https://uqdccnri.oy2bh-swrfr-gvzxkk.work:29499/api/proxy/landing-page-data?url=lcz"
+  },
+  {
+    "name": "马会综合",
+    "pick": "bottom",
+    "url": "https://herymche.x6l2j-h6kfu-qdresg.work:29466/article/manager/6a0452024ea5c20141013e9a?url=txbb",
+    "parser": "manager_article_two_zodiac",
+    "payload": "admin_article_api",
+    "api_url": "https://herymche.x6l2j-h6kfu-qdresg.work:29466/api/proxy/landing-page-data?url=txbb"
+  },
+  {
+    "name": "百紫千红",
+    "pick": "bottom",
+    "url": "https://herymche.x6l2j-h6kfu-qdresg.work:29466/article/manager/6a043cad4ea5c20141013e55?url=txbb",
+    "parser": "manager_article_two_zodiac",
+    "payload": "admin_article_api",
+    "api_url": "https://herymche.x6l2j-h6kfu-qdresg.work:29466/api/proxy/landing-page-data?url=txbb"
+  },
+  {
+    "name": "心情愉悦",
+    "pick": "bottom",
+    "url": "https://asmfkb.dfkxu-0rwnp-wevqzo.work:29466/article/manager/6a106fb2e55f3de51a257209?url=fcw",
+    "parser": "manager_article_two_zodiac",
+    "payload": "admin_article_api",
+    "api_url": "https://asmfkb.dfkxu-0rwnp-wevqzo.work:29466/api/proxy/landing-page-data?url=fcw"
+  },
+  {
+    "name": "神机妙算",
+    "pick": "bottom",
+    "url": "https://asmfkb.dfkxu-0rwnp-wevqzo.work:29466/article/manager/6a4b0f8f57dc857ae1c0289a?url=fcw",
+    "parser": "manager_article_two_zodiac",
+    "payload": "admin_article_api",
+    "api_url": "https://asmfkb.dfkxu-0rwnp-wevqzo.work:29466/api/proxy/landing-page-data?url=fcw"
+  },
+  {
+    "name": "实力巨献",
+    "pick": "bottom",
+    "url": "https://asmfkb.dfkxu-0rwnp-wevqzo.work:29466/article/manager/6a09b3e6291caff3edcb90a7?url=fcw",
+    "parser": "manager_article_two_zodiac",
+    "payload": "admin_article_api",
+    "api_url": "https://asmfkb.dfkxu-0rwnp-wevqzo.work:29466/api/proxy/landing-page-data?url=fcw"
+  },
+  {
+    "name": "一笔抹杀",
+    "pick": "bottom",
+    "url": "https://sndaygl.egjtc-sgs8w-taclan.work:29400/article/manager/6a140a07597e16d57eacb49b?url=nmw",
+    "parser": "manager_article_two_zodiac",
+    "payload": "admin_article_api",
+    "api_url": "https://sndaygl.egjtc-sgs8w-taclan.work:29400/api/proxy/landing-page-data?url=nmw"
+  },
+  {
+    "name": "起早摸黑",
+    "pick": "bottom",
+    "url": "https://sndaygl.egjtc-sgs8w-taclan.work:29400/article/manager/6a140d934346bc68aea4ef37?url=nmw",
+    "parser": "manager_article_two_zodiac",
+    "payload": "admin_article_api",
+    "api_url": "https://sndaygl.egjtc-sgs8w-taclan.work:29400/api/proxy/landing-page-data?url=nmw"
+  },
+  {
+    "name": "最猛夺彩",
+    "pick": "bottom",
+    "url": "https://ztpqrap.m8sbq-na911-wmojzb.work:29444/article/manager/6a1450cb597e16d57eacb699?url=gsw",
+    "parser": "manager_article_two_zodiac",
+    "payload": "admin_article_api",
+    "api_url": "https://ztpqrap.m8sbq-na911-wmojzb.work:29444/api/proxy/landing-page-data?url=gsw"
+  },
+  {
+    "name": "飘香一剑",
+    "pick": "bottom",
+    "url": "https://ifnkblf.e4kce-krr7o-vuvqhd.work:29411/article/manager/6a145e517b484ee0e062924d?url=scyd",
+    "parser": "manager_article_two_zodiac",
+    "payload": "admin_article_api",
+    "api_url": "https://ifnkblf.e4kce-krr7o-vuvqhd.work:29411/api/proxy/landing-page-data?url=scyd"
+  },
+  {
+    "name": "塞纳河畔",
+    "pick": "bottom",
+    "url": "https://plwyrcj.4ai8j-p62x5-pnsukp.work:29411/article/manager/6a1721a81d09553bfe753e03?url=gjp",
+    "parser": "manager_article_two_zodiac",
+    "payload": "admin_article_api",
+    "api_url": "https://plwyrcj.4ai8j-p62x5-pnsukp.work:29411/api/proxy/landing-page-data?url=gjp"
+  },
+  {
+    "name": "神童网料",
+    "pick": "bottom",
+    "url": "https://fymxwnyg.ttmzc-muvns-udlfln.work:29455/article/manager/6a096b5f291caff3edcb8b9e?url=lhbd",
+    "parser": "manager_article_two_zodiac",
+    "payload": "admin_article_api",
+    "api_url": "https://fymxwnyg.ttmzc-muvns-udlfln.work:29455/api/proxy/landing-page-data?url=lhbd"
+  },
+  {
+    "name": "曲尽其妙",
+    "pick": "bottom",
+    "url": "https://18118.73829.com/read.php?tid=473",
+    "parser": "site_scoped_two_zodiac",
+    "payload": "page",
+    "title": "曲尽其妙"
+  },
+  {
+    "name": "官网透码",
+    "pick": "bottom",
+    "url": "https://aszmkf.c3z3l-qrlqm-mwgccr.work:29411/article/manager/6a0833cc08adb5ed7357ef83?url=lhw",
+    "parser": "manager_article_two_zodiac",
+    "payload": "admin_article_api",
+    "api_url": "https://aszmkf.c3z3l-qrlqm-mwgccr.work:29411/api/proxy/landing-page-data?url=lhw"
+  },
+  {
+    "name": "马上有钱",
+    "pick": "bottom",
+    "url": "https://jkofyya.6sf58-wbz5a-thviwx.work:29477/article/manager/6a13e385741e3e91a04e5954?url=jbp",
+    "parser": "manager_article_two_zodiac",
+    "payload": "admin_article_api",
+    "api_url": "https://jkofyya.6sf58-wbz5a-thviwx.work:29477/api/proxy/landing-page-data?url=jbp"
+  },
+  {
+    "name": "少女臆想",
+    "pick": "bottom",
+    "url": "https://jusbfyu.mkdwi-xa2ua-rsovan.work:29422/article/manager/6a322f04f21d7a093399eeac?url=hjc",
+    "parser": "manager_article_two_zodiac",
+    "payload": "admin_article_api",
+    "api_url": "https://jusbfyu.mkdwi-xa2ua-rsovan.work:29422/api/proxy/landing-page-data?url=hjc"
+  },
+  {
+    "name": "风雨无阻",
+    "pick": "bottom",
+    "url": "https://dgjdlk.0hrwo-8qjsc-spwvba.xyz:29411/article/manager/6a12d7686cb8d34478078ae8?url=cf",
+    "parser": "manager_article_two_zodiac",
+    "payload": "admin_article_api",
+    "api_url": "https://dgjdlk.0hrwo-8qjsc-spwvba.xyz:29411/api/proxy/landing-page-data?url=cf"
+  },
+  {
+    "name": "黄大仙道",
+    "pick": "bottom",
+    "url": "https://hl.www25195a.com/read.php?tid=684",
+    "parser": "site_scoped_two_zodiac",
+    "payload": "page",
+    "title": "黄大仙道"
+  }
+]

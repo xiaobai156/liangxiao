@@ -1,0 +1,99 @@
+from __future__ import annotations
+
+import html
+import re
+from urllib.parse import unquote, urljoin, urlparse
+
+from domain.identity import detail_record_identity
+from domain.models import DocumentBundle, PayloadDocument, Site
+
+
+def expected_record_id(site: Site) -> str:
+    if site.payload == "admin_article_api":
+        match = re.search(r"/article/(?:admin|manager)/([^/?#]+)", urlparse(site.url).path, flags=re.I)
+        return match.group(1) if match else ""
+    if site.payload == "tuku_user_forums":
+        match = re.search(r"/users/(\d+)", urlparse(site.url).fragment)
+        return f"user:{match.group(1)}" if match else ""
+    if site.payload == "topic_list_detail":
+        return ""
+    return detail_record_identity(site.url)
+
+
+def validate_bundle_boundaries(bundle: DocumentBundle, site: Site) -> None:
+    expected = expected_record_id(site)
+    if not expected:
+        return
+    missing = [document.label for document in bundle.documents if not document.record_id]
+    if missing:
+        raise ValueError(f"记录边界缺失：目标为{expected}，文档未绑定：{','.join(missing)}")
+    mismatched = sorted({document.record_id for document in bundle.documents if document.record_id != expected})
+    if mismatched:
+        label = "文章ID" if site.payload == "admin_article_api" else "用户ID"
+        raise ValueError(f"{label}边界冲突：目标边界为{expected}，文档含{','.join(mismatched)}")
+
+
+def validate_document_relationships(bundle: DocumentBundle) -> None:
+    documents_by_url: dict[str, list[PayloadDocument]] = {}
+    for document in bundle.documents:
+        if document.url:
+            documents_by_url.setdefault(document.url, []).append(document)
+    for document in bundle.documents:
+        if not document.parent_url:
+            continue
+        if not document.link_reference:
+            raise ValueError(f"文档关系边界缺失：{document.label}缺少链接引用")
+        parents = [
+            parent
+            for parent in documents_by_url.get(document.parent_url, ())
+            if parent is not document
+        ]
+        if not parents:
+            raise ValueError(f"文档关系边界缺失：{document.label}父文档{document.parent_url}不在DocumentBundle内")
+        parent_ids = {parent.record_id for parent in parents if parent.record_id}
+        if document.record_id and parent_ids and document.record_id not in parent_ids:
+            raise ValueError(
+                f"文档关系记录ID冲突：{document.label}={document.record_id}，"
+                f"父文档={','.join(sorted(parent_ids))}"
+            )
+        if document.parent_url != document.url and not any(
+            document_is_linked(parent, document) for parent in parents
+        ):
+            raise ValueError(f"文档关系边界无效：父文档未引用{document.url}")
+
+
+def document_is_linked(anchor: PayloadDocument, body: PayloadDocument) -> bool:
+    if anchor is body or not body.url or (anchor.url and anchor.url == body.url):
+        return False
+    anchor_source = html.unescape(anchor.source.replace(r"\/", "/"))
+    parsed = urlparse(body.url)
+    link_reference = html.unescape(body.link_reference.replace(r"\/", "/")).strip()
+    if (
+        link_reference
+        and link_reference in anchor_source
+        and urljoin(anchor.url, link_reference) == body.url
+    ):
+        return True
+    relative = parsed.path + (f"?{parsed.query}" if parsed.query else "")
+    references = [body.url, unquote(body.url)]
+    protocol_relative = f"//{parsed.netloc}{relative}" if parsed.netloc else ""
+    references.extend((protocol_relative, unquote(protocol_relative)))
+    if any(reference and reference != "/" and reference in anchor_source for reference in references):
+        return True
+    anchor_url = urlparse(anchor.url)
+    if (anchor_url.scheme.lower(), anchor_url.netloc.lower()) != (parsed.scheme.lower(), parsed.netloc.lower()):
+        return False
+    relative_references = [relative, unquote(relative)]
+    if not parsed.query:
+        relative_references.append(parsed.path)
+    return any(reference and reference != "/" and reference in anchor_source for reference in relative_references)
+
+
+def linked_document_is_authorized(site: Site, anchor: PayloadDocument, body: PayloadDocument) -> bool:
+    if not site.linked_document_pattern or not re.search(site.linked_document_pattern, body.url, flags=re.I):
+        return False
+    if not document_is_linked(anchor, body):
+        return False
+    if not body.link_reference or not body.parent_url:
+        return False
+    return body.parent_url == anchor.url

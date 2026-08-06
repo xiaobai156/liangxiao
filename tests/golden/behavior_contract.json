@@ -1,0 +1,58 @@
+{
+  "schema": 1,
+  "site_count": 215,
+  "zodiacs": "牛马羊鸡狗猪鼠虎兔龙蛇猴",
+  "pick_aliases": {
+    "top": "top",
+    "顶部": "top",
+    "上": "top",
+    "bottom": "bottom",
+    "尾部": "bottom",
+    "下": "bottom"
+  },
+  "single_period_fixed_tail": ["黄杀", "有点帅", "金绝", "金元宝", "男人牛"],
+  "defaults": {
+    "workers": 10,
+    "timeout": 25,
+    "history_back_periods": 9,
+    "adaptive_mode": "fallback",
+    "adaptive_similarity": 70,
+    "adaptive_max_documents": 16,
+    "adaptive_browser_workers": 2
+  },
+  "paths": {
+    "success_dir": "C:\\Users\\Administrator\\Desktop\\每天工具\\数据系列\\七类数据统一归纳",
+    "failure_dir": "C:\\Users\\Administrator\\Desktop\\每天工具\\数据系列\\七类数据统一归纳失败",
+    "success_name": "{period}期-二肖.txt",
+    "failure_name": "{period}期-二肖-失败.txt",
+    "multi_failure_name": "{periods}期-二肖-多期全部失败.txt",
+    "history_cache": "recent_10_cache.json",
+    "structure_profiles": "site_structure_profiles.json"
+  },
+  "period_rules": {
+    "digits": 3,
+    "minimum": 1,
+    "maximum": 365
+  },
+  "direction_window": 3,
+  "duplicate_thresholds": {
+    "ignore_max": 2,
+    "suspected_min": 3,
+    "suspected_max": 5,
+    "reject_min": 6
+  },
+  "error_categories": [
+    "网络请求超时",
+    "SSL连接失败",
+    "HTTP请求失败",
+    "内容尚未发布",
+    "页面结构已变化",
+    "未找到专属锚点",
+    "未找到指定目标",
+    "字段校验未通过",
+    "数据存在冲突",
+    "自适应匹配被拒绝",
+    "浏览器渲染失败",
+    "结构档案不可用"
+  ]
+}

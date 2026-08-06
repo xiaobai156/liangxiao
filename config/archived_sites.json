@@ -1,0 +1,44 @@
+[
+  {
+    "name": "赌神没睡醒",
+    "pick": "尾部",
+    "url": "https://qvuuqqs.8imf7-hteuh-ylwuqv.xyz/#/users/200204",
+    "parser": "tuku_user_forums_short_kill",
+    "payload": "tuku_user_forums",
+    "archive_reason": "内容尚未发布：用户论坛接口：bottom 候选内未找到 215 期；实际近3条：203期龙虎@位置394、204期龙蛇@位置405、205期马鼠@位置416"
+  },
+  {
+    "name": "登堂入室",
+    "pick": "尾部",
+    "url": "https://nlafoq9v.dh5565656.xyz/bbs/topic.php?id=912",
+    "parser": "dengtang_rushi_bottom",
+    "payload": "page",
+    "keywords": [
+      "登堂入室",
+      "绝杀二肖"
+    ],
+    "title": "登堂入室",
+    "archive_reason": "未找到指定目标：未抓到有效候选"
+  },
+  {
+    "name": "德艺双馨",
+    "pick": "尾部",
+    "url": "https://yzpbdkow.6m1ba-7p7u4-ppolcy.work:29433/article/admin/6a02cbaa8bad0a3579e9f734?url=tdg",
+    "payload": "admin_article_api",
+    "title": "德艺双馨",
+    "record": "(?P<period>\\d{3})\\s*期[^期]{0,90}?(?:绝\\s*杀|稳\\s*杀|精\\s*杀|无错\\s*杀|砍\\s*杀|杀)\\s*(?:二|两|2|２|②)\\s*肖[^期]{0,50}?[【〖\\[（(《『〈]\\s*(?P<zodiac>[牛马羊鸡狗猪鼠虎兔龙蛇猴]\\s*[-－、,，.。· ]?\\s*[牛马羊鸡狗猪鼠虎兔龙蛇猴])\\s*[】〗\\]）)》』〉]\\s*(?:←|[~～_\\-－—|]*)\\s*(?:开|開)\\s*[:：]?\\s*(?P<open>[^\\s准中错赢对↑√]+)",
+    "api_url": "https://yzpbdkow.6m1ba-7p7u4-ppolcy.work:29433/api/proxy/landing-page-data?url=tdg",
+    "archive_reason": "未找到指定目标：接口返回内容内未找到对应后台文章"
+  },
+  {
+    "name": "全球预测",
+    "pick": "尾部",
+    "url": "https://bbs02.836280.cyou/bbs/topic.php?id=17887",
+    "parser": "named_block",
+    "payload": "page_and_scripts",
+    "title": "全球预测",
+    "stop": "\\s*下一贴\\s*[：:]",
+    "record": "(?P<period>\\d{3})\\s*期\\s*[:：]?\\s*《\\s*全球预测\\s*》\\s*📙\\s*绝杀二肖\\s*📙\\s*[【\\[]\\s*(?P<zodiac>[牛马羊鸡狗猪鼠虎兔龙蛇猴]\\s*[-－、，,。.]?\\s*[牛马羊鸡狗猪鼠虎兔龙蛇猴])\\s*[】\\]]\\s*[开開]\\s*[:：]?\\s*(?P<open>[^\\s准中错赢对]+)",
+    "archive_reason": "字段校验未通过：多文档内未能独立验证 216 期目标"
+  }
+]

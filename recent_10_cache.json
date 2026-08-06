@@ -1,0 +1,6591 @@
+{
+  "schema": 2,
+  "position_kind": "visible_text_offset_v1",
+  "description": "杀两肖重复检测最近10期基准数据；由每日指定期抓取自动覆盖更新。",
+  "updated_at": "2026-08-05T18:41:11",
+  "window_size": 10,
+  "issues": [
+    217,
+    216,
+    215,
+    214,
+    213,
+    212,
+    211,
+    210,
+    209,
+    208
+  ],
+  "sites": [
+    {
+      "name": "金多宝",
+      "url": "https://993345.com/jysx.aspx?ContentType=js",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "羊马",
+        "216": "猪鼠"
+      },
+      "positions": {
+        "217": 10,
+        "216": 10
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "羊马",
+          "position": 10,
+          "source_positions": [
+            10
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "猪鼠",
+          "position": 10,
+          "source_positions": [
+            10
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "羊马猪鼠"
+    },
+    {
+      "name": "桃花吹谢",
+      "url": "https://akqasqa.drr11-soh5x-jcaafg.xyz:16677/",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "兔虎",
+        "216": "鸡狗"
+      },
+      "positions": {
+        "217": 1976,
+        "216": 1845
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "兔虎",
+          "position": 1976,
+          "source_positions": [
+            1976
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "鸡狗",
+          "position": 1845,
+          "source_positions": [
+            1845
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "兔虎鸡狗"
+    },
+    {
+      "name": "百姓网禁杀",
+      "url": "https://fbgbfg.www27521c.com:8443/bbs/jin2x.js",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "马猪",
+        "216": "猴羊"
+      },
+      "positions": {
+        "217": 25,
+        "216": 25
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "马猪",
+          "position": 25,
+          "source_positions": [
+            25
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "猴羊",
+          "position": 25,
+          "source_positions": [
+            25
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "马猪猴羊"
+    },
+    {
+      "name": "百彩通",
+      "url": "https://a.909922.com/js2x.aspx?ContentType=js",
+      "pick": "bottom",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "猴猪",
+        "216": "龙蛇"
+      },
+      "positions": {
+        "217": 789,
+        "216": 764
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "猴猪",
+          "position": 789,
+          "source_positions": [
+            789
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "龙蛇",
+          "position": 764,
+          "source_positions": [
+            764
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "猴猪龙蛇"
+    },
+    {
+      "name": "曹国舅",
+      "url": "https://fgojas.dvbeo-9e4rq-scgpzt.xyz:16677/",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "虎鸡",
+        "216": "牛蛇"
+      },
+      "positions": {
+        "217": 855,
+        "216": 774
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "虎鸡",
+          "position": 855,
+          "source_positions": [
+            855
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "牛蛇",
+          "position": 774,
+          "source_positions": [
+            774
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "虎鸡牛蛇"
+    },
+    {
+      "name": "自然而然",
+      "url": "https://dslzhw.g6bwp-006p4-uzcadn.xyz:16677/topic/435120.html",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "鸡狗",
+        "216": "龙猴"
+      },
+      "positions": {
+        "217": 47,
+        "216": 47
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "鸡狗",
+          "position": 47,
+          "source_positions": [
+            47
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "龙猴",
+          "position": 47,
+          "source_positions": [
+            47
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "鸡狗龙猴"
+    },
+    {
+      "name": "只是有点帅",
+      "url": "https://88.62782d.com:1888/",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "马狗",
+        "216": "牛鼠"
+      },
+      "positions": {
+        "217": 52725,
+        "216": 52538
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "马狗",
+          "position": 52725,
+          "source_positions": [
+            52725
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "牛鼠",
+          "position": 52538,
+          "source_positions": [
+            52538
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "马狗牛鼠"
+    },
+    {
+      "name": "精忠报国",
+      "url": "https://993345.com/gsb1.aspx?id=3243",
+      "pick": "bottom",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "猪蛇",
+        "216": "虎猪"
+      },
+      "positions": {
+        "217": 474,
+        "216": 450
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "猪蛇",
+          "position": 474,
+          "source_positions": [
+            474
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "虎猪",
+          "position": 450,
+          "source_positions": [
+            450
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "猪蛇虎猪"
+    },
+    {
+      "name": "女娲补天",
+      "url": "https://993345.com/gsb1.aspx?id=3238",
+      "pick": "bottom",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "龙猴",
+        "216": "鸡猴"
+      },
+      "positions": {
+        "217": 303,
+        "216": 790
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "龙猴",
+          "position": 303,
+          "source_positions": [
+            303
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "鸡猴",
+          "position": 790,
+          "source_positions": [
+            790
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "龙猴鸡猴"
+    },
+    {
+      "name": "专心致志",
+      "url": "https://xoxtpupt.bvptr-i3mv8-pbjxin.work:17455/topic/226532.html",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "猴羊",
+        "216": "兔虎"
+      },
+      "positions": {
+        "217": 269,
+        "216": 269
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "猴羊",
+          "position": 269,
+          "source_positions": [
+            269
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "兔虎",
+          "position": 269,
+          "source_positions": [
+            269
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "猴羊兔虎"
+    },
+    {
+      "name": "心里有底",
+      "url": "https://myvvqq.4cgus-6vlme-hcuthd.work/topic/216270.html",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "猪猴",
+        "216": "狗鸡"
+      },
+      "positions": {
+        "217": 244,
+        "216": 244
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "猪猴",
+          "position": 244,
+          "source_positions": [
+            244
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "狗鸡",
+          "position": 244,
+          "source_positions": [
+            244
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "猪猴狗鸡"
+    },
+    {
+      "name": "人不聊生",
+      "url": "https://pykzjitu.mvtre-w938p-xmiuyz.xyz:16677/topic/451627.html",
+      "pick": "bottom",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "猪猴",
+        "216": "狗鸡"
+      },
+      "positions": {
+        "217": 2252,
+        "216": 2231
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "猪猴",
+          "position": 2252,
+          "source_positions": [
+            2252
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "狗鸡",
+          "position": 2231,
+          "source_positions": [
+            2231
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "猪猴狗鸡"
+    },
+    {
+      "name": "一丘之貉",
+      "url": "https://kxhnibht.49x6o-xyonh-swqkpv.xyz:16677/topic/263561.html",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "鼠猴",
+        "216": "蛇狗"
+      },
+      "positions": {
+        "217": 47,
+        "216": 47
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "鼠猴",
+          "position": 47,
+          "source_positions": [
+            47
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "蛇狗",
+          "position": 47,
+          "source_positions": [
+            47
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "鼠猴蛇狗"
+    },
+    {
+      "name": "染泪丹青",
+      "url": "https://fbgbfg.www27521c.com:8443/gsb/am73.html",
+      "pick": "bottom",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "牛龙",
+        "216": "羊兔"
+      },
+      "positions": {
+        "217": 2293,
+        "216": 2268
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "牛龙",
+          "position": 2293,
+          "source_positions": [
+            2293
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "羊兔",
+          "position": 2268,
+          "source_positions": [
+            2268
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "牛龙羊兔"
+    },
+    {
+      "name": "离岸观潮",
+      "url": "https://fbgbfg.www27521c.com:8443/gsb/am15.html",
+      "pick": "bottom",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "马兔",
+        "216": "狗马"
+      },
+      "positions": {
+        "217": 1146,
+        "216": 1122
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "马兔",
+          "position": 1146,
+          "source_positions": [
+            1146
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "狗马",
+          "position": 1122,
+          "source_positions": [
+            1122
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "马兔狗马"
+    },
+    {
+      "name": "道士出山",
+      "url": "https://111.246004.com:9066/Article.Aspx?ListId=247&id=53523",
+      "pick": "bottom",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "牛兔",
+        "216": "虎羊"
+      },
+      "positions": {
+        "217": 511,
+        "216": 481
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "牛兔",
+          "position": 511,
+          "source_positions": [
+            511
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "虎羊",
+          "position": 481,
+          "source_positions": [
+            481
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "牛兔虎羊"
+    },
+    {
+      "name": "百彩通第二",
+      "url": "https://a.909922.com/gsb.aspx?id=amsmh005",
+      "pick": "bottom",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "马蛇",
+        "216": "蛇牛"
+      },
+      "positions": {
+        "217": 421,
+        "216": 397
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "马蛇",
+          "position": 421,
+          "source_positions": [
+            421
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "蛇牛",
+          "position": 397,
+          "source_positions": [
+            397
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "马蛇蛇牛"
+    },
+    {
+      "name": "火云邪神",
+      "url": "https://www.336868.com/art_zhuanqu/217.html",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "马鼠",
+        "216": "猪龙"
+      },
+      "positions": {
+        "217": 285,
+        "216": 285
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "马鼠",
+          "position": 285,
+          "source_positions": [
+            285
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "猪龙",
+          "position": 285,
+          "source_positions": [
+            285
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "马鼠猪龙"
+    },
+    {
+      "name": "菁华浮梦",
+      "url": "https://www.336868.com/art_zhuanqu/183.html",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "牛猪",
+        "216": "狗虎"
+      },
+      "positions": {
+        "217": 285,
+        "216": 285
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "牛猪",
+          "position": 285,
+          "source_positions": [
+            285
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "狗虎",
+          "position": 285,
+          "source_positions": [
+            285
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "牛猪狗虎"
+    },
+    {
+      "name": "陪你入睡",
+      "url": "https://www.336868.com/art_zhuanqu/180.html",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "鸡兔",
+        "216": "马猪"
+      },
+      "positions": {
+        "217": 285,
+        "216": 285
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "鸡兔",
+          "position": 285,
+          "source_positions": [
+            285
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "马猪",
+          "position": 285,
+          "source_positions": [
+            285
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "鸡兔马猪"
+    },
+    {
+      "name": "小鹿乱撞",
+      "url": "https://www.336868.com/art_zhuanqu/172.html",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "鼠羊",
+        "216": "鼠鸡"
+      },
+      "positions": {
+        "217": 285,
+        "216": 285
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "鼠羊",
+          "position": 285,
+          "source_positions": [
+            285
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "鼠鸡",
+          "position": 285,
+          "source_positions": [
+            285
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "鼠羊鼠鸡"
+    },
+    {
+      "name": "惟于莽莽",
+      "url": "https://www.336868.com/art_zhuanqu/198.html",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "狗牛",
+        "216": "虎鼠"
+      },
+      "positions": {
+        "217": 285,
+        "216": 285
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "狗牛",
+          "position": 285,
+          "source_positions": [
+            285
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "虎鼠",
+          "position": 285,
+          "source_positions": [
+            285
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "狗牛虎鼠"
+    },
+    {
+      "name": "金道",
+      "url": "https://www.336868.com/art_zhuanqu/8026.html",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "鸡虎",
+        "216": "兔马"
+      },
+      "positions": {
+        "217": 289,
+        "216": 289
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "鸡虎",
+          "position": 289,
+          "source_positions": [
+            289
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "兔马",
+          "position": 289,
+          "source_positions": [
+            289
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "鸡虎兔马"
+    },
+    {
+      "name": "全球预测",
+      "url": "https://bbs02.836280.cyou/bbs/topic.php?id=17887",
+      "pick": "bottom",
+      "position_kind": "visible_text_offset_v1",
+      "values": {},
+      "positions": {},
+      "records": [],
+      "fingerprint": "",
+      "error": "字段校验未通过：多文档内未能独立验证 216 期目标"
+    },
+    {
+      "name": "探讨资料",
+      "url": "https://bbs03.836386.cyou/bbs/topic.php?id=18258",
+      "pick": "bottom",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "龙羊",
+        "216": "龙鼠"
+      },
+      "positions": {
+        "217": 1535,
+        "216": 1494
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "龙羊",
+          "position": 1535,
+          "source_positions": [
+            1535
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "龙鼠",
+          "position": 1494,
+          "source_positions": [
+            1494
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "龙羊龙鼠"
+    },
+    {
+      "name": "互帮互助",
+      "url": "https://hbwtl.ydiu6-pom20-zexnea.xyz/topic/430709.html",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "龙羊",
+        "216": "龙鸡"
+      },
+      "positions": {
+        "217": 25,
+        "216": 25
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "龙羊",
+          "position": 25,
+          "source_positions": [
+            25
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "龙鸡",
+          "position": 25,
+          "source_positions": [
+            25
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "龙羊龙鸡"
+    },
+    {
+      "name": "科方东文",
+      "url": "https://jnf52f.a3ds1-gzs2r-jsppci.work/topic/206635.html",
+      "pick": "bottom",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "马蛇",
+        "216": "鼠狗"
+      },
+      "positions": {
+        "217": 2671,
+        "216": 2650
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "马蛇",
+          "position": 2671,
+          "source_positions": [
+            2671
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "鼠狗",
+          "position": 2650,
+          "source_positions": [
+            2650
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "马蛇鼠狗"
+    },
+    {
+      "name": "狙击杀手",
+      "url": "https://dhqjbz.uxec9-jxs3h-fomubo.work:16677/topic/250852.html",
+      "pick": "bottom",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "龙虎",
+        "216": "兔猪"
+      },
+      "positions": {
+        "217": 4052,
+        "216": 4035
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "龙虎",
+          "position": 4052,
+          "source_positions": [
+            4052
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "兔猪",
+          "position": 4035,
+          "source_positions": [
+            4035
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "龙虎兔猪"
+    },
+    {
+      "name": "人间改岁",
+      "url": "https://mm.676626m.com:1888/bbs/8026",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "狗羊",
+        "216": "猪鸡"
+      },
+      "positions": {
+        "217": 43,
+        "216": 43
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "狗羊",
+          "position": 43,
+          "source_positions": [
+            43
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "猪鸡",
+          "position": 43,
+          "source_positions": [
+            43
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "狗羊猪鸡"
+    },
+    {
+      "name": "欢聚一堂",
+      "url": "https://qdufkx.sjb5z-pi4k6-jlhnig.xyz:16677/topic/798463.html",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "蛇马",
+        "216": "马兔"
+      },
+      "positions": {
+        "217": 32,
+        "216": 32
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "蛇马",
+          "position": 32,
+          "source_positions": [
+            32
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "马兔",
+          "position": 32,
+          "source_positions": [
+            32
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "蛇马马兔"
+    },
+    {
+      "name": "安居乐业",
+      "url": "https://qdufkx.sjb5z-pi4k6-jlhnig.xyz:16677/topic/798167.html",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "马兔",
+        "216": "兔猪"
+      },
+      "positions": {
+        "217": 33,
+        "216": 33
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "马兔",
+          "position": 33,
+          "source_positions": [
+            33
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "兔猪",
+          "position": 33,
+          "source_positions": [
+            33
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "马兔兔猪"
+    },
+    {
+      "name": "锐不可当",
+      "url": "https://xuknerw.fu5qv-a7f7o-nxmebt.work:16633/topic/466129.html",
+      "pick": "bottom",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "狗鸡",
+        "216": "鸡马"
+      },
+      "positions": {
+        "217": 4325,
+        "216": 4305
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "狗鸡",
+          "position": 4325,
+          "source_positions": [
+            4325
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "鸡马",
+          "position": 4305,
+          "source_positions": [
+            4305
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "狗鸡鸡马"
+    },
+    {
+      "name": "积少成多第二",
+      "url": "https://huqtzej.vvlq2-j4i8n-lisghq.xyz:16677/topic/281517.html",
+      "pick": "bottom",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "鼠狗",
+        "216": "羊马"
+      },
+      "positions": {
+        "217": 1667,
+        "216": 1643
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "鼠狗",
+          "position": 1667,
+          "source_positions": [
+            1667
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "羊马",
+          "position": 1643,
+          "source_positions": [
+            1643
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "鼠狗羊马"
+    },
+    {
+      "name": "六合头条",
+      "url": "https://yioznkua.snfqn-48psf-vctwsw.xyz:16677/topic/246165.html",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "马蛇",
+        "216": "猪狗"
+      },
+      "positions": {
+        "217": 21,
+        "216": 21
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "马蛇",
+          "position": 21,
+          "source_positions": [
+            21
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "猪狗",
+          "position": 21,
+          "source_positions": [
+            21
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "马蛇猪狗"
+    },
+    {
+      "name": "超级稳定",
+      "url": "https://xmdrbud.eqpr2-6tpvi-pjqztv.xyz:16677/topic/320715.html",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "鸡蛇",
+        "216": "牛兔"
+      },
+      "positions": {
+        "217": 202,
+        "216": 202
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "鸡蛇",
+          "position": 202,
+          "source_positions": [
+            202
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "牛兔",
+          "position": 202,
+          "source_positions": [
+            202
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "鸡蛇牛兔"
+    },
+    {
+      "name": "澳門男人味",
+      "url": "https://rmrcjqk.6ln2t-46k8t-kuthoe.xyz:16677/",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "蛇龙",
+        "216": "鼠猪"
+      },
+      "positions": {
+        "217": 177,
+        "216": 147
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "蛇龙",
+          "position": 177,
+          "source_positions": [
+            177
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "鼠猪",
+          "position": 147,
+          "source_positions": [
+            147
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "蛇龙鼠猪"
+    },
+    {
+      "name": "白蛇",
+      "url": "https://ocnrhq.du156-vb27w-tmhsed.xyz:16677/",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "猪猴",
+        "216": "马猴"
+      },
+      "positions": {
+        "217": 131898,
+        "216": 131277
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "猪猴",
+          "position": 131898,
+          "source_positions": [
+            131898
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "马猴",
+          "position": 131277,
+          "source_positions": [
+            131277
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "猪猴马猴"
+    },
+    {
+      "name": "大上海",
+      "url": "https://dukvjyhp.348fb-hdg3z-ipblfe.xyz:17466/",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "蛇马",
+        "216": "兔猴"
+      },
+      "positions": {
+        "217": 1131,
+        "216": 1106
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "蛇马",
+          "position": 1131,
+          "source_positions": [
+            1131
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "兔猴",
+          "position": 1106,
+          "source_positions": [
+            1106
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "蛇马兔猴"
+    },
+    {
+      "name": "九龙论坛",
+      "url": "https://wrbavfzg.e0fjk-5tc7b-mqquzq.work:16677/#am",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "蛇马",
+        "216": "龙兔"
+      },
+      "positions": {
+        "217": 762,
+        "216": 736
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "蛇马",
+          "position": 762,
+          "source_positions": [
+            762
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "龙兔",
+          "position": 736,
+          "source_positions": [
+            736
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "蛇马龙兔"
+    },
+    {
+      "name": "六合宝典",
+      "url": "https://aq14f.2gdkh-2qrjm-hxaxji.xyz/",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "牛虎",
+        "216": "鸡猴"
+      },
+      "positions": {
+        "217": 428,
+        "216": 406
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "牛虎",
+          "position": 428,
+          "source_positions": [
+            428
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "鸡猴",
+          "position": 406,
+          "source_positions": [
+            406
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "牛虎鸡猴"
+    },
+    {
+      "name": "手起刀落",
+      "url": "https://nxesrklm.a3ds1-gzs2r-jsppci.work:16677/#am",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "马蛇",
+        "216": "猪狗"
+      },
+      "positions": {
+        "217": 1120,
+        "216": 1099
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "马蛇",
+          "position": 1120,
+          "source_positions": [
+            1120
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "猪狗",
+          "position": 1099,
+          "source_positions": [
+            1099
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "马蛇猪狗"
+    },
+    {
+      "name": "武林高手",
+      "url": "https://gymmgzx.ef7xd-dl2r4-dqxbyc.xyz:16633/",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "鸡狗",
+        "216": "马猴"
+      },
+      "positions": {
+        "217": 0,
+        "216": 0
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "鸡狗",
+          "position": 0,
+          "source_positions": [
+            0
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "马猴",
+          "position": 0,
+          "source_positions": [
+            0
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "鸡狗马猴"
+    },
+    {
+      "name": "玄机阁",
+      "url": "https://aqlvuvz.kkr58-ayern-biiohi.xyz:16677/",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "猪狗",
+        "216": "猴羊"
+      },
+      "positions": {
+        "217": 909,
+        "216": 882
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "猪狗",
+          "position": 909,
+          "source_positions": [
+            909
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "猴羊",
+          "position": 882,
+          "source_positions": [
+            882
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "猪狗猴羊"
+    },
+    {
+      "name": "反反复复",
+      "url": "https://ykkpjdgv.d1ju4-kbfjr-zexdzd.xyz:16677/topic/681956.html",
+      "pick": "bottom",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "马兔",
+        "216": "鸡狗"
+      },
+      "positions": {
+        "217": 2302,
+        "216": 2278
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "马兔",
+          "position": 2302,
+          "source_positions": [
+            2302
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "鸡狗",
+          "position": 2278,
+          "source_positions": [
+            2278
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "马兔鸡狗"
+    },
+    {
+      "name": "来情去意",
+      "url": "https://ykkpjdgv.d1ju4-kbfjr-zexdzd.xyz:16677/topic/681954.html",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "马兔",
+        "216": "鸡狗"
+      },
+      "positions": {
+        "217": 46,
+        "216": 46
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "马兔",
+          "position": 46,
+          "source_positions": [
+            46
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "鸡狗",
+          "position": 46,
+          "source_positions": [
+            46
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "马兔鸡狗"
+    },
+    {
+      "name": "金多宝第二",
+      "url": "https://993345.com/bbs.aspx?id=021",
+      "pick": "bottom",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "羊猴",
+        "216": "猪虎"
+      },
+      "positions": {
+        "217": 86,
+        "216": 60
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "羊猴",
+          "position": 86,
+          "source_positions": [
+            86
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "猪虎",
+          "position": 60,
+          "source_positions": [
+            60
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "羊猴猪虎"
+    },
+    {
+      "name": "澳姜太公",
+      "url": "https://mhbrhe.yng6t-7rqul-ximlot.xyz:16677/topic/336836.html",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "虎牛",
+        "216": "鸡猴"
+      },
+      "positions": {
+        "217": 45,
+        "216": 45
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "虎牛",
+          "position": 45,
+          "source_positions": [
+            45
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "鸡猴",
+          "position": 45,
+          "source_positions": [
+            45
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "虎牛鸡猴"
+    },
+    {
+      "name": "有喜有忧",
+      "url": "https://kcyeko.bzx7a-tl1us-cfcaei.xyz:16677/topic/610833.html",
+      "pick": "bottom",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "猪狗",
+        "216": "羊马"
+      },
+      "positions": {
+        "217": 893,
+        "216": 872
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "猪狗",
+          "position": 893,
+          "source_positions": [
+            893
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "羊马",
+          "position": 872,
+          "source_positions": [
+            872
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "猪狗羊马"
+    },
+    {
+      "name": "诸葛忘机",
+      "url": "https://msbqxti.zhx2n-7v5x3-ivdpud.xyz:16677/topic/682730.html",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "虎马",
+        "216": "马蛇"
+      },
+      "positions": {
+        "217": 62,
+        "216": 62
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "虎马",
+          "position": 62,
+          "source_positions": [
+            62
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "马蛇",
+          "position": 62,
+          "source_positions": [
+            62
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "虎马马蛇"
+    },
+    {
+      "name": "文房四宝",
+      "url": "https://xoxtpupt.bvptr-i3mv8-pbjxin.work:17455/topic/467525.html",
+      "pick": "bottom",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "兔牛",
+        "216": "兔蛇"
+      },
+      "positions": {
+        "217": 4080,
+        "216": 4056
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "兔牛",
+          "position": 4080,
+          "source_positions": [
+            4080
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "兔蛇",
+          "position": 4056,
+          "source_positions": [
+            4056
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "兔牛兔蛇"
+    },
+    {
+      "name": "破除迷信",
+      "url": "https://1w4ip.78j1a-o16m1-wopsco.xyz/topic/215953.html",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "兔牛",
+        "216": "猪鸡"
+      },
+      "positions": {
+        "217": 25,
+        "216": 25
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "兔牛",
+          "position": 25,
+          "source_positions": [
+            25
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "猪鸡",
+          "position": 25,
+          "source_positions": [
+            25
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "兔牛猪鸡"
+    },
+    {
+      "name": "前合后仰",
+      "url": "https://gboqrz.8hq17-fdt9o-uujeae.work/topic/225333.html",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "猪猴",
+        "216": "狗鸡"
+      },
+      "positions": {
+        "217": 25,
+        "216": 25
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "猪猴",
+          "position": 25,
+          "source_positions": [
+            25
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "狗鸡",
+          "position": 25,
+          "source_positions": [
+            25
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "猪猴狗鸡"
+    },
+    {
+      "name": "七嘴八舌",
+      "url": "https://eebysckd.2go6k-y0pfv-fqbdsm.xyz:16677/topic/552348.html",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "蛇龙",
+        "216": "猪鼠"
+      },
+      "positions": {
+        "217": 60,
+        "216": 60
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "蛇龙",
+          "position": 60,
+          "source_positions": [
+            60
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "猪鼠",
+          "position": 60,
+          "source_positions": [
+            60
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "蛇龙猪鼠"
+    },
+    {
+      "name": "恍然自失",
+      "url": "https://eebysckd.2go6k-y0pfv-fqbdsm.xyz:16677/topic/625516.html",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "牛鼠",
+        "216": "羊马"
+      },
+      "positions": {
+        "217": 238,
+        "216": 238
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "牛鼠",
+          "position": 238,
+          "source_positions": [
+            238
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "羊马",
+          "position": 238,
+          "source_positions": [
+            238
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "牛鼠羊马"
+    },
+    {
+      "name": "一筹莫展",
+      "url": "https://eebysckd.2go6k-y0pfv-fqbdsm.xyz:16677/topic/626034.html",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "龙兔",
+        "216": "鼠猪"
+      },
+      "positions": {
+        "217": 238,
+        "216": 238
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "龙兔",
+          "position": 238,
+          "source_positions": [
+            238
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "鼠猪",
+          "position": 238,
+          "source_positions": [
+            238
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "龙兔鼠猪"
+    },
+    {
+      "name": "一言一句",
+      "url": "https://eebysckd.2go6k-y0pfv-fqbdsm.xyz:16677/topic/625852.html",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "蛇龙",
+        "216": "鼠牛"
+      },
+      "positions": {
+        "217": 536,
+        "216": 536
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "蛇龙",
+          "position": 536,
+          "source_positions": [
+            536
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "鼠牛",
+          "position": 536,
+          "source_positions": [
+            536
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "蛇龙鼠牛"
+    },
+    {
+      "name": "博闻茄子",
+      "url": "https://akqasqa.drr11-soh5x-jcaafg.xyz:16677/topic/543283.html",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "兔虎",
+        "216": "鸡猴"
+      },
+      "positions": {
+        "217": 71,
+        "216": 71
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "兔虎",
+          "position": 71,
+          "source_positions": [
+            71
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "鸡猴",
+          "position": 71,
+          "source_positions": [
+            71
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "兔虎鸡猴"
+    },
+    {
+      "name": "冰封绝恋",
+      "url": "https://2.www39169b.com:888/gsbl/s14.html",
+      "pick": "bottom",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "马羊",
+        "216": "猪猴"
+      },
+      "positions": {
+        "217": 348,
+        "216": 316
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "马羊",
+          "position": 348,
+          "source_positions": [
+            348
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "猪猴",
+          "position": 316,
+          "source_positions": [
+            316
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "马羊猪猴"
+    },
+    {
+      "name": "一本万利死杀",
+      "url": "https://mflmcobome.26222hi.app:2569/htm/bbs/top010.html",
+      "pick": "bottom",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "猪羊",
+        "216": "马龙"
+      },
+      "positions": {
+        "217": 717,
+        "216": 687
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "猪羊",
+          "position": 717,
+          "source_positions": [
+            717
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "马龙",
+          "position": 687,
+          "source_positions": [
+            687
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "猪羊马龙"
+    },
+    {
+      "name": "白姐輸盡光",
+      "url": "https://mhbrhe.yng6t-7rqul-ximlot.xyz:16677/",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "马鼠",
+        "216": "狗猴"
+      },
+      "positions": {
+        "217": 1665,
+        "216": 1540
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "马鼠",
+          "position": 1665,
+          "source_positions": [
+            1665
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "狗猴",
+          "position": 1540,
+          "source_positions": [
+            1540
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "马鼠狗猴"
+    },
+    {
+      "name": "熬出头儿",
+      "url": "https://111.246004.com:9066/Article.Aspx?ListId=247&id=53502",
+      "pick": "bottom",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "猪蛇",
+        "216": "猪羊"
+      },
+      "positions": {
+        "217": 681,
+        "216": 659
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "猪蛇",
+          "position": 681,
+          "source_positions": [
+            681
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "猪羊",
+          "position": 659,
+          "source_positions": [
+            659
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "猪蛇猪羊"
+    },
+    {
+      "name": "八二佳人",
+      "url": "https://aa.196868k.com:1888/art_zhuanqu/10754.html",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "狗鼠",
+        "216": "马羊"
+      },
+      "positions": {
+        "217": 31,
+        "216": 31
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "狗鼠",
+          "position": 31,
+          "source_positions": [
+            31
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "马羊",
+          "position": 31,
+          "source_positions": [
+            31
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "狗鼠马羊"
+    },
+    {
+      "name": "九宫格",
+      "url": "https://aa.196868k.com:1888/art_zhuanqu/10674.html",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "鸡鼠",
+        "216": "虎羊"
+      },
+      "positions": {
+        "217": 28,
+        "216": 28
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "鸡鼠",
+          "position": 28,
+          "source_positions": [
+            28
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "虎羊",
+          "position": 28,
+          "source_positions": [
+            28
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "鸡鼠虎羊"
+    },
+    {
+      "name": "赏罚分明",
+      "url": "https://aa.196868k.com:1888/art_zhuanqu/10690.html",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "鸡羊",
+        "216": "鼠猪"
+      },
+      "positions": {
+        "217": 38,
+        "216": 38
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "鸡羊",
+          "position": 38,
+          "source_positions": [
+            38
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "鼠猪",
+          "position": 38,
+          "source_positions": [
+            38
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "鸡羊鼠猪"
+    },
+    {
+      "name": "旧人不覆",
+      "url": "https://sadoleu.rznla-fgwyr-nzqalp.xyz:16677/topic/287632.html",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "虎龙",
+        "216": "鼠兔"
+      },
+      "positions": {
+        "217": 425,
+        "216": 425
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "虎龙",
+          "position": 425,
+          "source_positions": [
+            425
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "鼠兔",
+          "position": 425,
+          "source_positions": [
+            425
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "虎龙鼠兔"
+    },
+    {
+      "name": "侭多侭少",
+      "url": "https://tulprhfc.wghcb-bnmgm-hyymaz.work:16655/topic/305417.html",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "猪猴",
+        "216": "马猴"
+      },
+      "positions": {
+        "217": 531,
+        "216": 531
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "猪猴",
+          "position": 531,
+          "source_positions": [
+            531
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "马猴",
+          "position": 531,
+          "source_positions": [
+            531
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "猪猴马猴"
+    },
+    {
+      "name": "智能",
+      "url": "https://jjlachsn.4fk3e-i2rpf-vgknlh.work:16677/topic/661960.html",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "羊马",
+        "216": "羊猪"
+      },
+      "positions": {
+        "217": 31,
+        "216": 31
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "羊马",
+          "position": 31,
+          "source_positions": [
+            31
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "羊猪",
+          "position": 31,
+          "source_positions": [
+            31
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "羊马羊猪"
+    },
+    {
+      "name": "琼府金穴",
+      "url": "https://iezrqhps.5don6-02xeq-rrhbps.xyz:16677/topic/559106.html",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "牛兔",
+        "216": "猪狗"
+      },
+      "positions": {
+        "217": 120,
+        "216": 120
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "牛兔",
+          "position": 120,
+          "source_positions": [
+            120
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "猪狗",
+          "position": 120,
+          "source_positions": [
+            120
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "牛兔猪狗"
+    },
+    {
+      "name": "流合",
+      "url": "https://iezrqhps.5don6-02xeq-rrhbps.xyz:16677/topic/500614.html",
+      "pick": "bottom",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "鼠蛇",
+        "216": "猴猪"
+      },
+      "positions": {
+        "217": 6115,
+        "216": 6090
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "鼠蛇",
+          "position": 6115,
+          "source_positions": [
+            6115
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "猴猪",
+          "position": 6090,
+          "source_positions": [
+            6090
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "鼠蛇猴猪"
+    },
+    {
+      "name": "将杀两肖",
+      "url": "https://43666.886677a.app:2563/htm/bbs/top010.html",
+      "pick": "bottom",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "猪羊",
+        "216": "马龙"
+      },
+      "positions": {
+        "217": 1519,
+        "216": 1491
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "猪羊",
+          "position": 1519,
+          "source_positions": [
+            1519
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "马龙",
+          "position": 1491,
+          "source_positions": [
+            1491
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "猪羊马龙"
+    },
+    {
+      "name": "宿柳眠花",
+      "url": "https://kqfmnjht.ip6et-0zvu7-gpqkrf.work:16677/topic/215051.html",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "猪牛",
+        "216": "虎马"
+      },
+      "positions": {
+        "217": 226,
+        "216": 225
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "猪牛",
+          "position": 226,
+          "source_positions": [
+            226
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "虎马",
+          "position": 225,
+          "source_positions": [
+            225
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "猪牛虎马"
+    },
+    {
+      "name": "不由自主",
+      "url": "https://gxixcfq.4hxms-k65ek-jsvqzm.xyz:16677/topic/314318.html",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "狗鸡",
+        "216": "虎猪"
+      },
+      "positions": {
+        "217": 294,
+        "216": 294
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "狗鸡",
+          "position": 294,
+          "source_positions": [
+            294
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "虎猪",
+          "position": 294,
+          "source_positions": [
+            294
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "狗鸡虎猪"
+    },
+    {
+      "name": "热火朝天",
+      "url": "https://gxixcfq.4hxms-k65ek-jsvqzm.xyz:16677/topic/314312.html",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "鸡马",
+        "216": "虎羊"
+      },
+      "positions": {
+        "217": 294,
+        "216": 294
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "鸡马",
+          "position": 294,
+          "source_positions": [
+            294
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "虎羊",
+          "position": 294,
+          "source_positions": [
+            294
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "鸡马虎羊"
+    },
+    {
+      "name": "俯拾地芥",
+      "url": "https://zdwcig.iyo4d-81klf-udwkqg.work:16677/topic/455539.html",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "兔牛",
+        "216": "蛇马"
+      },
+      "positions": {
+        "217": 196,
+        "216": 196
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "兔牛",
+          "position": 196,
+          "source_positions": [
+            196
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "蛇马",
+          "position": 196,
+          "source_positions": [
+            196
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "兔牛蛇马"
+    },
+    {
+      "name": "不伏烧埋",
+      "url": "https://zdwcig.iyo4d-81klf-udwkqg.work:16677/topic/455536.html",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "兔猪",
+        "216": "蛇马"
+      },
+      "positions": {
+        "217": 196,
+        "216": 196
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "兔猪",
+          "position": 196,
+          "source_positions": [
+            196
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "蛇马",
+          "position": 196,
+          "source_positions": [
+            196
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "兔猪蛇马"
+    },
+    {
+      "name": "老老实实",
+      "url": "https://kulipur.l5paz-a0o8v-uozmmd.xyz:16677/topic/435502.html",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "狗兔",
+        "216": "马猴"
+      },
+      "positions": {
+        "217": 49,
+        "216": 49
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "狗兔",
+          "position": 49,
+          "source_positions": [
+            49
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "马猴",
+          "position": 49,
+          "source_positions": [
+            49
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "狗兔马猴"
+    },
+    {
+      "name": "相辅而成",
+      "url": "https://zwhzkjo.fc4fh-otded-nvhceu.xyz:16677/topic/472645.html",
+      "pick": "bottom",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "鸡狗",
+        "216": "狗猪"
+      },
+      "positions": {
+        "217": 8448,
+        "216": 8426
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "鸡狗",
+          "position": 8448,
+          "source_positions": [
+            8448
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "狗猪",
+          "position": 8426,
+          "source_positions": [
+            8426
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "鸡狗狗猪"
+    },
+    {
+      "name": "火急火燎",
+      "url": "https://cxmdjok.8wtwc-boven-glylvt.xyz:16677/topic/437750.html",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "鼠猪",
+        "216": "兔虎"
+      },
+      "positions": {
+        "217": 30,
+        "216": 30
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "鼠猪",
+          "position": 30,
+          "source_positions": [
+            30
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "兔虎",
+          "position": 30,
+          "source_positions": [
+            30
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "鼠猪兔虎"
+    },
+    {
+      "name": "莲叶满池",
+      "url": "https://ntvjzt.gau41-qu6jy-sotyug.work:16677/topic/309350.html",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "鼠蛇",
+        "216": "兔猪"
+      },
+      "positions": {
+        "217": 526,
+        "216": 526
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "鼠蛇",
+          "position": 526,
+          "source_positions": [
+            526
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "兔猪",
+          "position": 526,
+          "source_positions": [
+            526
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "鼠蛇兔猪"
+    },
+    {
+      "name": "争权夺利",
+      "url": "https://zwhzkjo.fc4fh-otded-nvhceu.xyz:16677/topic/342737.html",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "马猴",
+        "216": "牛蛇"
+      },
+      "positions": {
+        "217": 256,
+        "216": 256
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "马猴",
+          "position": 256,
+          "source_positions": [
+            256
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "牛蛇",
+          "position": 256,
+          "source_positions": [
+            256
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "马猴牛蛇"
+    },
+    {
+      "name": "徒手敬月",
+      "url": "https://dhqjbz.uxec9-jxs3h-fomubo.work:16677/topic/250670.html",
+      "pick": "bottom",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "虎牛",
+        "216": "猪马"
+      },
+      "positions": {
+        "217": 6448,
+        "216": 6431
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "虎牛",
+          "position": 6448,
+          "source_positions": [
+            6448
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "猪马",
+          "position": 6431,
+          "source_positions": [
+            6431
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "虎牛猪马"
+    },
+    {
+      "name": "自然和谐",
+      "url": "https://dhqjbz.uxec9-jxs3h-fomubo.work:16677/topic/458972.html",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "鸡猴",
+        "216": "猪狗"
+      },
+      "positions": {
+        "217": 287,
+        "216": 280
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "鸡猴",
+          "position": 287,
+          "source_positions": [
+            287
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "猪狗",
+          "position": 280,
+          "source_positions": [
+            280
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "鸡猴猪狗"
+    },
+    {
+      "name": "徒手敬月第二",
+      "url": "https://dhqjbz.uxec9-jxs3h-fomubo.work:16677/topic/250854.html",
+      "pick": "bottom",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "狗马",
+        "216": "鸡鼠"
+      },
+      "positions": {
+        "217": 1990,
+        "216": 1976
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "狗马",
+          "position": 1990,
+          "source_positions": [
+            1990
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "鸡鼠",
+          "position": 1976,
+          "source_positions": [
+            1976
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "狗马鸡鼠"
+    },
+    {
+      "name": "魔刹石尊",
+      "url": "https://dhqjbz.uxec9-jxs3h-fomubo.work:16677/topic/250863.html",
+      "pick": "bottom",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "狗鼠",
+        "216": "牛马"
+      },
+      "positions": {
+        "217": 2618,
+        "216": 2598
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "狗鼠",
+          "position": 2618,
+          "source_positions": [
+            2618
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "牛马",
+          "position": 2598,
+          "source_positions": [
+            2598
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "狗鼠牛马"
+    },
+    {
+      "name": "广西仔",
+      "url": "https://jldzuea.0xkqd-q7ng5-boerfb.xyz:16677/topic/677572.html",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "鼠龙",
+        "216": "马鸡"
+      },
+      "positions": {
+        "217": 61,
+        "216": 61
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "鼠龙",
+          "position": 61,
+          "source_positions": [
+            61
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "马鸡",
+          "position": 61,
+          "source_positions": [
+            61
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "鼠龙马鸡"
+    },
+    {
+      "name": "纷纷扬扬",
+      "url": "https://whsbrmz.qclrc-4mk42-vnxbyg.work:16677/topic/454916.html",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "虎鼠",
+        "216": "牛马"
+      },
+      "positions": {
+        "217": 247,
+        "216": 250
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "虎鼠",
+          "position": 247,
+          "source_positions": [
+            247
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "牛马",
+          "position": 250,
+          "source_positions": [
+            250
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "虎鼠牛马"
+    },
+    {
+      "name": "唯利是趋",
+      "url": "https://myvvqq.30dok-2s9fd-bibfmg.work/topic/226889.html",
+      "pick": "bottom",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "鼠猴",
+        "216": "兔蛇"
+      },
+      "positions": {
+        "217": 4135,
+        "216": 4116
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "鼠猴",
+          "position": 4135,
+          "source_positions": [
+            4135
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "兔蛇",
+          "position": 4116,
+          "source_positions": [
+            4116
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "鼠猴兔蛇"
+    },
+    {
+      "name": "不吃的猫",
+      "url": "https://lx11.www87127b.com:8443/bbs/38.html",
+      "pick": "bottom",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "狗蛇",
+        "216": "鼠兔"
+      },
+      "positions": {
+        "217": 391,
+        "216": 370
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "狗蛇",
+          "position": 391,
+          "source_positions": [
+            391
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "鼠兔",
+          "position": 370,
+          "source_positions": [
+            370
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "狗蛇鼠兔"
+    },
+    {
+      "name": "白头偕老",
+      "url": "https://uhaxnrzx.q76gf-deec8-zqckeo.xyz:16677/topic/610280.html",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "马羊",
+        "216": "龙虎"
+      },
+      "positions": {
+        "217": 97,
+        "216": 97
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "马羊",
+          "position": 97,
+          "source_positions": [
+            97
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "龙虎",
+          "position": 97,
+          "source_positions": [
+            97
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "马羊龙虎"
+    },
+    {
+      "name": "春华秋实",
+      "url": "https://qdufkx.sjb5z-pi4k6-jlhnig.xyz:16677/topic/798062.html",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "马狗",
+        "216": "猴狗"
+      },
+      "positions": {
+        "217": 33,
+        "216": 33
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "马狗",
+          "position": 33,
+          "source_positions": [
+            33
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "猴狗",
+          "position": 33,
+          "source_positions": [
+            33
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "马狗猴狗"
+    },
+    {
+      "name": "头破血流",
+      "url": "https://ozfksr.8gd3h-8yo27-ttlqhq.xyz:16677/topic/447839.html",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "蛇兔",
+        "216": "猴蛇"
+      },
+      "positions": {
+        "217": 63,
+        "216": 63
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "蛇兔",
+          "position": 63,
+          "source_positions": [
+            63
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "猴蛇",
+          "position": 63,
+          "source_positions": [
+            63
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "蛇兔猴蛇"
+    },
+    {
+      "name": "广东",
+      "url": "https://otsqjail.wl3tb-t1tzs-mavjyr.work:16677/topic/440134.html",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "鸡羊",
+        "216": "兔龙"
+      },
+      "positions": {
+        "217": 38,
+        "216": 38
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "鸡羊",
+          "position": 38,
+          "source_positions": [
+            38
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "兔龙",
+          "position": 38,
+          "source_positions": [
+            38
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "鸡羊兔龙"
+    },
+    {
+      "name": "欧阳澜纯",
+      "url": "https://gybqxgn.wtnxq-tlmew-ozgscb.xyz:16677/topic/279287.html",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "猴羊",
+        "216": "马狗"
+      },
+      "positions": {
+        "217": 213,
+        "216": 213
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "猴羊",
+          "position": 213,
+          "source_positions": [
+            213
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "马狗",
+          "position": 213,
+          "source_positions": [
+            213
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "猴羊马狗"
+    },
+    {
+      "name": "白里透红",
+      "url": "https://flivjhz.4vrvi-8tdry-vrzzwk.xyz:16677/topic/540581.html",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "兔蛇",
+        "216": "猴蛇"
+      },
+      "positions": {
+        "217": 237,
+        "216": 237
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "兔蛇",
+          "position": 237,
+          "source_positions": [
+            237
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "猴蛇",
+          "position": 237,
+          "source_positions": [
+            237
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "兔蛇猴蛇"
+    },
+    {
+      "name": "老金绝杀",
+      "url": "https://jjpifrbj.1m74k-kckgn-enmoqe.xyz:16677/topic/265079.html",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "鼠牛",
+        "216": "龙蛇"
+      },
+      "positions": {
+        "217": 48,
+        "216": 48
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "鼠牛",
+          "position": 48,
+          "source_positions": [
+            48
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "龙蛇",
+          "position": 48,
+          "source_positions": [
+            48
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "鼠牛龙蛇"
+    },
+    {
+      "name": "争强好胜",
+      "url": "https://kjqba.ipvrs-9mw2c-wdnuvo.work/topic/230597.html",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "牛猴",
+        "216": "鸡马"
+      },
+      "positions": {
+        "217": 111,
+        "216": 111
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "牛猴",
+          "position": 111,
+          "source_positions": [
+            111
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "鸡马",
+          "position": 111,
+          "source_positions": [
+            111
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "牛猴鸡马"
+    },
+    {
+      "name": "陈言老套",
+      "url": "https://rh2fgz.qy6di-x0q62-zwazrw.work/topic/253958.html",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "鼠猪",
+        "216": "羊蛇"
+      },
+      "positions": {
+        "217": 25,
+        "216": 25
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "鼠猪",
+          "position": 25,
+          "source_positions": [
+            25
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "羊蛇",
+          "position": 25,
+          "source_positions": [
+            25
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "鼠猪羊蛇"
+    },
+    {
+      "name": "振聋发聩",
+      "url": "https://yfchnh.nsyiv-6g6l7-uwfqot.xyz:16677/topic/211593.html",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "马龙",
+        "216": "虎蛇"
+      },
+      "positions": {
+        "217": 29,
+        "216": 29
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "马龙",
+          "position": 29,
+          "source_positions": [
+            29
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "虎蛇",
+          "position": 29,
+          "source_positions": [
+            29
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "马龙虎蛇"
+    },
+    {
+      "name": "完美世界",
+      "url": "https://vqxzuc.fggtp-huz0q-sbrraa.xyz:16677/topic/251181.html",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "羊马",
+        "216": "龙蛇"
+      },
+      "positions": {
+        "217": 44,
+        "216": 44
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "羊马",
+          "position": 44,
+          "source_positions": [
+            44
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "龙蛇",
+          "position": 44,
+          "source_positions": [
+            44
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "羊马龙蛇"
+    },
+    {
+      "name": "乐不可支",
+      "url": "https://vqxzuc.fggtp-huz0q-sbrraa.xyz:16677/topic/251178.html",
+      "pick": "bottom",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "羊兔",
+        "216": "龙虎"
+      },
+      "positions": {
+        "217": 11228,
+        "216": 11204
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "羊兔",
+          "position": 11228,
+          "source_positions": [
+            11228
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "龙虎",
+          "position": 11204,
+          "source_positions": [
+            11204
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "羊兔龙虎"
+    },
+    {
+      "name": "旧街凉风",
+      "url": "https://vqxzuc.fggtp-huz0q-sbrraa.xyz:16677/topic/251180.html",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "羊兔",
+        "216": "龙虎"
+      },
+      "positions": {
+        "217": 44,
+        "216": 44
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "羊兔",
+          "position": 44,
+          "source_positions": [
+            44
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "龙虎",
+          "position": 44,
+          "source_positions": [
+            44
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "羊兔龙虎"
+    },
+    {
+      "name": "奴颜媚骨",
+      "url": "https://vqxzuc.fggtp-huz0q-sbrraa.xyz:16677/topic/251259.html",
+      "pick": "bottom",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "羊兔",
+        "216": "龙虎"
+      },
+      "positions": {
+        "217": 7453,
+        "216": 7434
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "羊兔",
+          "position": 7453,
+          "source_positions": [
+            7453
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "龙虎",
+          "position": 7434,
+          "source_positions": [
+            7434
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "羊兔龙虎"
+    },
+    {
+      "name": "笑话奇谈",
+      "url": "https://ryfbdty.p4a53-f1hew-diwcrg.xyz:16677/topic/209407.html",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "猪虎",
+        "216": "牛马"
+      },
+      "positions": {
+        "217": 37,
+        "216": 37
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "猪虎",
+          "position": 37,
+          "source_positions": [
+            37
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "牛马",
+          "position": 37,
+          "source_positions": [
+            37
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "猪虎牛马"
+    },
+    {
+      "name": "太史常不",
+      "url": "https://e7rzi6.xnlf8-6i5rn-vabarz.work/topic/240870.html",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "马羊",
+        "216": "兔蛇"
+      },
+      "positions": {
+        "217": 25,
+        "216": 25
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "马羊",
+          "position": 25,
+          "source_positions": [
+            25
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "兔蛇",
+          "position": 25,
+          "source_positions": [
+            25
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "马羊兔蛇"
+    },
+    {
+      "name": "惘然若失",
+      "url": "https://t3zvj.mvtre-w938p-xmiuyz.xyz/topic/207242.html",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "虎马",
+        "216": "马兔"
+      },
+      "positions": {
+        "217": 177,
+        "216": 180
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "虎马",
+          "position": 177,
+          "source_positions": [
+            177
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "马兔",
+          "position": 180,
+          "source_positions": [
+            180
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "虎马马兔"
+    },
+    {
+      "name": "与虎谋皮",
+      "url": "https://wmdhoki.6su07-7lpw6-gudkzl.xyz:16677/topic/727530.html",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "马猴",
+        "216": "猴狗"
+      },
+      "positions": {
+        "217": 83,
+        "216": 83
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "马猴",
+          "position": 83,
+          "source_positions": [
+            83
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "猴狗",
+          "position": 83,
+          "source_positions": [
+            83
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "马猴猴狗"
+    },
+    {
+      "name": "王者无心",
+      "url": "https://fjjxlve.eclrc-7oqku-atxhrs.xyz:16677/topic/445652.html",
+      "pick": "bottom",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "马猴",
+        "216": "兔猴"
+      },
+      "positions": {
+        "217": 11790,
+        "216": 11761
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "马猴",
+          "position": 11790,
+          "source_positions": [
+            11790
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "兔猴",
+          "position": 11761,
+          "source_positions": [
+            11761
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "马猴兔猴"
+    },
+    {
+      "name": "同心叶力",
+      "url": "https://fdybdcq.b9mav-ho5x7-zwckje.xyz:16677/topic/211571.html",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "马蛇",
+        "216": "蛇兔"
+      },
+      "positions": {
+        "217": 193,
+        "216": 193
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "马蛇",
+          "position": 193,
+          "source_positions": [
+            193
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "蛇兔",
+          "position": 193,
+          "source_positions": [
+            193
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "马蛇蛇兔"
+    },
+    {
+      "name": "自我作古",
+      "url": "https://uonjrs.w3nth-qq7qx-yiubza.xyz:16677/topic/232154.html",
+      "pick": "bottom",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "兔蛇",
+        "216": "蛇龙"
+      },
+      "positions": {
+        "217": 1411,
+        "216": 1388
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "兔蛇",
+          "position": 1411,
+          "source_positions": [
+            1411
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "蛇龙",
+          "position": 1388,
+          "source_positions": [
+            1388
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "兔蛇蛇龙"
+    },
+    {
+      "name": "一点红",
+      "url": "https://dwfoxsuz.ik1v5-stbjb-dsttyy.xyz:16677/topic/246793.html",
+      "pick": "bottom",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "马猴",
+        "216": "猴猪"
+      },
+      "positions": {
+        "217": 11793,
+        "216": 11772
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "马猴",
+          "position": 11793,
+          "source_positions": [
+            11793
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "猴猪",
+          "position": 11772,
+          "source_positions": [
+            11772
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "马猴猴猪"
+    },
+    {
+      "name": "狀元紅",
+      "url": "https://3.www112291a.com:2053/gengxin/20.html",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "兔猴",
+        "216": "猴鸡"
+      },
+      "positions": {
+        "217": 17,
+        "216": 17
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "兔猴",
+          "position": 17,
+          "source_positions": [
+            17
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "猴鸡",
+          "position": 17,
+          "source_positions": [
+            17
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "兔猴猴鸡"
+    },
+    {
+      "name": "王者九点",
+      "url": "https://iboatq.pjgpm-epbf7-lxpezb.work:16677/",
+      "pick": "bottom",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "鼠虎",
+        "216": "牛兔"
+      },
+      "positions": {
+        "217": 1344,
+        "216": 1314
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "鼠虎",
+          "position": 1344,
+          "source_positions": [
+            1344
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "牛兔",
+          "position": 1314,
+          "source_positions": [
+            1314
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "鼠虎牛兔"
+    },
+    {
+      "name": "王者九点禁二肖图",
+      "url": "https://iboatq.pjgpm-epbf7-lxpezb.work:16677/",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "龙马",
+        "216": "兔蛇"
+      },
+      "positions": {
+        "217": 1380,
+        "216": 1379
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "龙马",
+          "position": 1380,
+          "source_positions": [
+            1380
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "兔蛇",
+          "position": 1379,
+          "source_positions": [
+            1379
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "龙马兔蛇"
+    },
+    {
+      "name": "王者九点杀二肖图",
+      "url": "https://iboatq.pjgpm-epbf7-lxpezb.work:16677/",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "猴龙",
+        "216": "狗兔"
+      },
+      "positions": {
+        "217": 1393,
+        "216": 1392
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "猴龙",
+          "position": 1393,
+          "source_positions": [
+            1393
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "狗兔",
+          "position": 1392,
+          "source_positions": [
+            1392
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "猴龙狗兔"
+    },
+    {
+      "name": "玄机网禁两肖",
+      "url": "https://shuqhbq.654o7-lyreu-rzcudi.xyz:16677/",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "马鼠",
+        "216": "蛇虎"
+      },
+      "positions": {
+        "217": 2452,
+        "216": 2429
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "马鼠",
+          "position": 2452,
+          "source_positions": [
+            2452
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "蛇虎",
+          "position": 2429,
+          "source_positions": [
+            2429
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "马鼠蛇虎"
+    },
+    {
+      "name": "澳门杀两肖图",
+      "url": "https://shuqhbq.654o7-lyreu-rzcudi.xyz:16677/",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "虎蛇",
+        "216": "牛羊"
+      },
+      "positions": {
+        "217": 2476,
+        "216": 2453
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "虎蛇",
+          "position": 2476,
+          "source_positions": [
+            2476
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "牛羊",
+          "position": 2453,
+          "source_positions": [
+            2453
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "虎蛇牛羊"
+    },
+    {
+      "name": "澳门图库禁肖",
+      "url": "https://shuqhbq.654o7-lyreu-rzcudi.xyz:16677/",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "虎鸡",
+        "216": "猪狗"
+      },
+      "positions": {
+        "217": 2500,
+        "216": 2477
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "虎鸡",
+          "position": 2500,
+          "source_positions": [
+            2500
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "猪狗",
+          "position": 2477,
+          "source_positions": [
+            2477
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "虎鸡猪狗"
+    },
+    {
+      "name": "朱雀",
+      "url": "https://estsghu.t7gsm-xl1x8-uohlna.xyz:16677/",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "鼠马",
+        "216": "兔猪"
+      },
+      "positions": {
+        "217": 81869,
+        "216": 82252
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "鼠马",
+          "position": 81869,
+          "source_positions": [
+            81869
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "兔猪",
+          "position": 82252,
+          "source_positions": [
+            82252
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "鼠马兔猪"
+    },
+    {
+      "name": "月老搭桥",
+      "url": "https://yzpbdkow.6m1ba-7p7u4-ppolcy.work:29433/article/admin/6a02c9bc8bad0a3579e9f72b?url=tdg",
+      "pick": "bottom",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "猴牛",
+        "216": "狗蛇"
+      },
+      "positions": {
+        "217": 4148,
+        "216": 4113
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "猴牛",
+          "position": 4148,
+          "source_positions": [
+            4148
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "狗蛇",
+          "position": 4113,
+          "source_positions": [
+            4113
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "猴牛狗蛇",
+      "article_ids": {
+        "217": "6a02c9bc8bad0a3579e9f72b",
+        "216": "6a02c9bc8bad0a3579e9f72b"
+      }
+    },
+    {
+      "name": "民间高手",
+      "url": "https://88.62782d.com:1888/",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "猴马",
+        "216": "兔猴"
+      },
+      "positions": {
+        "217": 74927,
+        "216": 74306
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "猴马",
+          "position": 74927,
+          "source_positions": [
+            74927
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "兔猴",
+          "position": 74306,
+          "source_positions": [
+            74306
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "猴马兔猴"
+    },
+    {
+      "name": "哼哼唧唧",
+      "url": "https://jnf52f.24607-9ftvj-loupmx.work/topic/430698.html",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "鼠龙",
+        "216": "鸡马"
+      },
+      "positions": {
+        "217": 25,
+        "216": 25
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "鼠龙",
+          "position": 25,
+          "source_positions": [
+            25
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "鸡马",
+          "position": 25,
+          "source_positions": [
+            25
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "鼠龙鸡马"
+    },
+    {
+      "name": "与民同忧",
+      "url": "https://269x6s.nz5ct-hdywm-byyuma.work/topic/226522.html",
+      "pick": "bottom",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "鼠蛇",
+        "216": "狗兔"
+      },
+      "positions": {
+        "217": 6675,
+        "216": 6656
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "鼠蛇",
+          "position": 6675,
+          "source_positions": [
+            6675
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "狗兔",
+          "position": 6656,
+          "source_positions": [
+            6656
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "鼠蛇狗兔"
+    },
+    {
+      "name": "膏火之费",
+      "url": "https://jnf52f.24607-9ftvj-loupmx.work/topic/226517.html",
+      "pick": "bottom",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "猴鼠",
+        "216": "狗蛇"
+      },
+      "positions": {
+        "217": 8857,
+        "216": 8833
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "猴鼠",
+          "position": 8857,
+          "source_positions": [
+            8857
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "狗蛇",
+          "position": 8833,
+          "source_positions": [
+            8833
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "猴鼠狗蛇"
+    },
+    {
+      "name": "故态复萌",
+      "url": "https://kqfmnjht.ip6et-0zvu7-gpqkrf.work:16677/topic/222782.html",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "鼠猴",
+        "216": "蛇狗"
+      },
+      "positions": {
+        "217": 183,
+        "216": 183
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "鼠猴",
+          "position": 183,
+          "source_positions": [
+            183
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "蛇狗",
+          "position": 183,
+          "source_positions": [
+            183
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "鼠猴蛇狗"
+    },
+    {
+      "name": "守株待兔",
+      "url": "https://jogavu.6bl6s-ilo1w-yfnvvl.work:16677/topic/678126.html",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "猴狗",
+        "216": "蛇鸡"
+      },
+      "positions": {
+        "217": 30,
+        "216": 30
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "猴狗",
+          "position": 30,
+          "source_positions": [
+            30
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "蛇鸡",
+          "position": 30,
+          "source_positions": [
+            30
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "猴狗蛇鸡"
+    },
+    {
+      "name": "众多非一",
+      "url": "https://gxixcfq.4hxms-k65ek-jsvqzm.xyz:16677/topic/276911.html",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "狗马",
+        "216": "羊猪"
+      },
+      "positions": {
+        "217": 288,
+        "216": 288
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "狗马",
+          "position": 288,
+          "source_positions": [
+            288
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "羊猪",
+          "position": 288,
+          "source_positions": [
+            288
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "狗马羊猪"
+    },
+    {
+      "name": "呻吟成瘾",
+      "url": "https://vds8y.2wu98-q1kie-wjsdjo.xyz/topic/384835.html",
+      "pick": "bottom",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "猴猪",
+        "216": "马猴"
+      },
+      "positions": {
+        "217": 806,
+        "216": 806
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "猴猪",
+          "position": 806,
+          "source_positions": [
+            806
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "马猴",
+          "position": 806,
+          "source_positions": [
+            806
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "猴猪马猴"
+    },
+    {
+      "name": "鹏程万里",
+      "url": "https://bqipgah.pvib6-ptrqe-ihcefh.xyz:16677/topic/268616.html",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "牛龙",
+        "216": "鼠猴"
+      },
+      "positions": {
+        "217": 47,
+        "216": 47
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "牛龙",
+          "position": 47,
+          "source_positions": [
+            47
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "鼠猴",
+          "position": 47,
+          "source_positions": [
+            47
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "牛龙鼠猴"
+    },
+    {
+      "name": "马票",
+      "url": "https://cxmdjok.8wtwc-boven-glylvt.xyz:16677/",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "牛猪",
+        "216": "龙兔"
+      },
+      "positions": {
+        "217": 1188,
+        "216": 1161
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "牛猪",
+          "position": 1188,
+          "source_positions": [
+            1188
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "龙兔",
+          "position": 1161,
+          "source_positions": [
+            1161
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "牛猪龙兔"
+    },
+    {
+      "name": "踏雪无痕",
+      "url": "https://ntvjzt.gau41-qu6jy-sotyug.work:16677/",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "猴羊",
+        "216": "鸡猴"
+      },
+      "positions": {
+        "217": 40292,
+        "216": 38992
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "猴羊",
+          "position": 40292,
+          "source_positions": [
+            40292
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "鸡猴",
+          "position": 38992,
+          "source_positions": [
+            38992
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "猴羊鸡猴"
+    },
+    {
+      "name": "雷锋一",
+      "url": "https://dvglkfp.mueyy-uiuci-vtqiod.work:16677/topic/368875.html",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "猪蛇",
+        "216": "虎牛"
+      },
+      "positions": {
+        "217": 43,
+        "216": 43
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "猪蛇",
+          "position": 43,
+          "source_positions": [
+            43
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "虎牛",
+          "position": 43,
+          "source_positions": [
+            43
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "猪蛇虎牛"
+    },
+    {
+      "name": "雷锋二",
+      "url": "https://dvglkfp.mueyy-uiuci-vtqiod.work:16677/topic/453715.html",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "蛇龙",
+        "216": "虎牛"
+      },
+      "positions": {
+        "217": 41,
+        "216": 41
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "蛇龙",
+          "position": 41,
+          "source_positions": [
+            41
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "虎牛",
+          "position": 41,
+          "source_positions": [
+            41
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "蛇龙虎牛"
+    },
+    {
+      "name": "千古绝唱",
+      "url": "https://bdxufda.po4ai-dqhr0-mljzdr.work:16655/topic/209866.html",
+      "pick": "bottom",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "猴马",
+        "216": "猪鼠"
+      },
+      "positions": {
+        "217": 768,
+        "216": 748
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "猴马",
+          "position": 768,
+          "source_positions": [
+            768
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "猪鼠",
+          "position": 748,
+          "source_positions": [
+            748
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "猴马猪鼠"
+    },
+    {
+      "name": "枪打天下",
+      "url": "https://myvvqq.30dok-2s9fd-bibfmg.work/",
+      "pick": "bottom",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "鼠马",
+        "216": "狗龙"
+      },
+      "positions": {
+        "217": 8690,
+        "216": 9223
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "鼠马",
+          "position": 8690,
+          "source_positions": [
+            8690
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "狗龙",
+          "position": 9223,
+          "source_positions": [
+            9223
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "鼠马狗龙"
+    },
+    {
+      "name": "同床异梦",
+      "url": "https://ofxhqgor.li0cj-4esgz-npswxa.xyz/view.php?id=521",
+      "pick": "bottom",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "蛇羊",
+        "216": "猴蛇"
+      },
+      "positions": {
+        "217": 3202,
+        "216": 3165
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "蛇羊",
+          "position": 3202,
+          "source_positions": [
+            3202
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "猴蛇",
+          "position": 3165,
+          "source_positions": [
+            3165
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "蛇羊猴蛇"
+    },
+    {
+      "name": "一言中的",
+      "url": "https://qhfsrngx.x9mcp-vrrqh-dzqfro.xyz:16677/topic/451167.html",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "鸡蛇",
+        "216": "兔蛇"
+      },
+      "positions": {
+        "217": 40,
+        "216": 40
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "鸡蛇",
+          "position": 40,
+          "source_positions": [
+            40
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "兔蛇",
+          "position": 40,
+          "source_positions": [
+            40
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "鸡蛇兔蛇"
+    },
+    {
+      "name": "舞文弄墨",
+      "url": "https://kxglojup.fao5v-9u0oz-okhubb.work:16677/topic/468203.html",
+      "pick": "bottom",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "蛇猴",
+        "216": "蛇兔"
+      },
+      "positions": {
+        "217": 3481,
+        "216": 3453
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "蛇猴",
+          "position": 3481,
+          "source_positions": [
+            3481
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "蛇兔",
+          "position": 3453,
+          "source_positions": [
+            3453
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "蛇猴蛇兔"
+    },
+    {
+      "name": "酒有别肠",
+      "url": "https://mjnrsqwu.c3kef-jhnm5-opjvvz.xyz:16677/topic/227117.html",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "鼠蛇",
+        "216": "兔马"
+      },
+      "positions": {
+        "217": 34,
+        "216": 34
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "鼠蛇",
+          "position": 34,
+          "source_positions": [
+            34
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "兔马",
+          "position": 34,
+          "source_positions": [
+            34
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "鼠蛇兔马"
+    },
+    {
+      "name": "神人共愤",
+      "url": "https://mjnrsqwu.c3kef-jhnm5-opjvvz.xyz:16677/topic/211150.html",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "龙兔",
+        "216": "兔牛"
+      },
+      "positions": {
+        "217": 34,
+        "216": 34
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "龙兔",
+          "position": 34,
+          "source_positions": [
+            34
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "兔牛",
+          "position": 34,
+          "source_positions": [
+            34
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "龙兔兔牛"
+    },
+    {
+      "name": "口有同嗜",
+      "url": "https://uhaxnrzx.q76gf-deec8-zqckeo.xyz:16677/topic/615700.html",
+      "pick": "bottom",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "蛇鸡",
+        "216": "兔狗"
+      },
+      "positions": {
+        "217": 4003,
+        "216": 3979
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "蛇鸡",
+          "position": 4003,
+          "source_positions": [
+            4003
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "兔狗",
+          "position": 3979,
+          "source_positions": [
+            3979
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "蛇鸡兔狗"
+    },
+    {
+      "name": "金科玉律",
+      "url": "https://ldxzuj.sgv53-iyx8f-wocoff.work:16677/topic/440109.html",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "狗牛",
+        "216": "蛇猴"
+      },
+      "positions": {
+        "217": 30,
+        "216": 30
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "狗牛",
+          "position": 30,
+          "source_positions": [
+            30
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "蛇猴",
+          "position": 30,
+          "source_positions": [
+            30
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "狗牛蛇猴"
+    },
+    {
+      "name": "一箭双雕",
+      "url": "https://hnzbrzl.2n783-iuaof-dczvqm.xyz/topic/764776.html",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "龙兔",
+        "216": "鼠猪"
+      },
+      "positions": {
+        "217": 44,
+        "216": 44
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "龙兔",
+          "position": 44,
+          "source_positions": [
+            44
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "鼠猪",
+          "position": 44,
+          "source_positions": [
+            44
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "龙兔鼠猪"
+    },
+    {
+      "name": "绘声绘色",
+      "url": "https://bouxeto.evrcg-2aasr-pflslr.xyz:16677/topic/328420.html",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "虎马",
+        "216": "马蛇"
+      },
+      "positions": {
+        "217": 452,
+        "216": 452
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "虎马",
+          "position": 452,
+          "source_positions": [
+            452
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "马蛇",
+          "position": 452,
+          "source_positions": [
+            452
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "虎马马蛇"
+    },
+    {
+      "name": "绝对好料",
+      "url": "https://yioznkua.snfqn-48psf-vctwsw.xyz:16677/topic/246165.html",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "马蛇",
+        "216": "猪狗"
+      },
+      "positions": {
+        "217": 21,
+        "216": 21
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "马蛇",
+          "position": 21,
+          "source_positions": [
+            21
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "猪狗",
+          "position": 21,
+          "source_positions": [
+            21
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "马蛇猪狗"
+    },
+    {
+      "name": "对好料",
+      "url": "https://yioznkua.snfqn-48psf-vctwsw.xyz:16677/topic/246166.html",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "马蛇",
+        "216": "蛇兔"
+      },
+      "positions": {
+        "217": 21,
+        "216": 21
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "马蛇",
+          "position": 21,
+          "source_positions": [
+            21
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "蛇兔",
+          "position": 21,
+          "source_positions": [
+            21
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "马蛇蛇兔"
+    },
+    {
+      "name": "竞相开",
+      "url": "https://zqliou.kify1-fbyi6-lmeykn.xyz:16677/topic/309621.html",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "龙猪",
+        "216": "鼠蛇"
+      },
+      "positions": {
+        "217": 513,
+        "216": 513
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "龙猪",
+          "position": 513,
+          "source_positions": [
+            513
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "鼠蛇",
+          "position": 513,
+          "source_positions": [
+            513
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "龙猪鼠蛇"
+    },
+    {
+      "name": "人心如镜",
+      "url": "https://ninbwa.7bmc7-mxwy9-uwkcem.xyz:16677/topic/472200.html",
+      "pick": "bottom",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "鼠马",
+        "216": "狗兔"
+      },
+      "positions": {
+        "217": 5267,
+        "216": 5246
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "鼠马",
+          "position": 5267,
+          "source_positions": [
+            5267
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "狗兔",
+          "position": 5246,
+          "source_positions": [
+            5246
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "鼠马狗兔"
+    },
+    {
+      "name": "相见恨晚",
+      "url": "https://hqukoej.4r7ey-l73ae-clkcxs.xyz:16677/topic/280629.html",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "龙猪",
+        "216": "鼠羊"
+      },
+      "positions": {
+        "217": 49,
+        "216": 49
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "龙猪",
+          "position": 49,
+          "source_positions": [
+            49
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "鼠羊",
+          "position": 49,
+          "source_positions": [
+            49
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "龙猪鼠羊"
+    },
+    {
+      "name": "北海紫陌",
+      "url": "https://yaaxgud.xg0eu-qjubd-yneksw.xyz:16677/",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "鼠马",
+        "216": "兔狗"
+      },
+      "positions": {
+        "217": 1877,
+        "216": 1809
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "鼠马",
+          "position": 1877,
+          "source_positions": [
+            1877
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "兔狗",
+          "position": 1809,
+          "source_positions": [
+            1809
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "鼠马兔狗"
+    },
+    {
+      "name": "澳门-白虎",
+      "url": "https://cdgiyg.h2xwn-eq86t-ibfeex.work:16677/#am",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "虎牛",
+        "216": "牛鼠"
+      },
+      "positions": {
+        "217": 838,
+        "216": 722
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "虎牛",
+          "position": 838,
+          "source_positions": [
+            838
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "牛鼠",
+          "position": 722,
+          "source_positions": [
+            722
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "虎牛牛鼠"
+    },
+    {
+      "name": "没忍住啊",
+      "url": "https://ryfbdty.p4a53-f1hew-diwcrg.xyz:16677/topic/226296.html",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "猪虎",
+        "216": "牛马"
+      },
+      "positions": {
+        "217": 44,
+        "216": 44
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "猪虎",
+          "position": 44,
+          "source_positions": [
+            44
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "牛马",
+          "position": 44,
+          "source_positions": [
+            44
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "猪虎牛马"
+    },
+    {
+      "name": "最美记忆",
+      "url": "https://hhsmgw.rcl5b-akta2-ylzzwv.xyz:16677/topic/328434.html",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "猴羊",
+        "216": "狗鸡"
+      },
+      "positions": {
+        "217": 436,
+        "216": 436
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "猴羊",
+          "position": 436,
+          "source_positions": [
+            436
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "狗鸡",
+          "position": 436,
+          "source_positions": [
+            436
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "猴羊狗鸡"
+    },
+    {
+      "name": "雁落沙滩",
+      "url": "https://xxn08n.s80sr-rxe8g-wbvqjh.work/topic/216108.html",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "蛇马",
+        "216": "兔蛇"
+      },
+      "positions": {
+        "217": 25,
+        "216": 25
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "蛇马",
+          "position": 25,
+          "source_positions": [
+            25
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "兔蛇",
+          "position": 25,
+          "source_positions": [
+            25
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "蛇马兔蛇"
+    },
+    {
+      "name": "万里长城",
+      "url": "https://wmdhoki.6su07-7lpw6-gudkzl.xyz:16677/topic/727499.html",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "羊蛇",
+        "216": "羊鸡"
+      },
+      "positions": {
+        "217": 83,
+        "216": 83
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "羊蛇",
+          "position": 83,
+          "source_positions": [
+            83
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "羊鸡",
+          "position": 83,
+          "source_positions": [
+            83
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "羊蛇羊鸡"
+    },
+    {
+      "name": "繁忙棒球",
+      "url": "https://qvuuqqs.8imf7-hteuh-ylwuqv.xyz/#/users/3978",
+      "pick": "bottom",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "鼠猴",
+        "216": "兔狗"
+      },
+      "positions": {
+        "217": 612,
+        "216": 592
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "鼠猴",
+          "position": 612,
+          "source_positions": [
+            612
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "兔狗",
+          "position": 592,
+          "source_positions": [
+            592
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "鼠猴兔狗"
+    },
+    {
+      "name": "寸草不生",
+      "url": "https://qvuuqqs.8imf7-hteuh-ylwuqv.xyz/#/users/116174",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "牛虎",
+        "216": "牛兔"
+      },
+      "positions": {
+        "217": 147,
+        "216": 147
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "牛虎",
+          "position": 147,
+          "source_positions": [
+            147
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "牛兔",
+          "position": 147,
+          "source_positions": [
+            147
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "牛虎牛兔"
+    },
+    {
+      "name": "富贵可得",
+      "url": "https://ztpqrap.m8sbq-na911-wmojzb.work:29444/article/admin/6a2d9104394c9f8f7ed188ba?url=gsw",
+      "pick": "bottom",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "牛鼠",
+        "216": "鸡牛"
+      },
+      "positions": {
+        "217": 2354,
+        "216": 2322
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "牛鼠",
+          "position": 2354,
+          "source_positions": [
+            2354
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "鸡牛",
+          "position": 2322,
+          "source_positions": [
+            2322
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "牛鼠鸡牛",
+      "article_ids": {
+        "217": "6a2d9104394c9f8f7ed188ba",
+        "216": "6a2d9104394c9f8f7ed188ba"
+      }
+    },
+    {
+      "name": "勤能补拙",
+      "url": "https://8818.www71986a.com/read.php?tid=563",
+      "pick": "bottom",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "鸡兔",
+        "216": "猴羊"
+      },
+      "positions": {
+        "217": 6195,
+        "216": 6160
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "鸡兔",
+          "position": 6195,
+          "source_positions": [
+            6195
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "猴羊",
+          "position": 6160,
+          "source_positions": [
+            6160
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "鸡兔猴羊"
+    },
+    {
+      "name": "老大主",
+      "url": "https://drmthln.beqj8-tntx4-ukbetl.xyz:16677/",
+      "pick": "bottom",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "马蛇",
+        "216": "鸡狗"
+      },
+      "positions": {
+        "217": 1713,
+        "216": 1684
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "马蛇",
+          "position": 1713,
+          "source_positions": [
+            1713
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "鸡狗",
+          "position": 1684,
+          "source_positions": [
+            1684
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "马蛇鸡狗"
+    },
+    {
+      "name": "捕风捉影",
+      "url": "https://asilnwgq.vrwy5-3gm7i-cdtcvs.xyz:17477/topic/371379.html",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "狗鸡",
+        "216": "蛇虎"
+      },
+      "positions": {
+        "217": 150,
+        "216": 150
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "狗鸡",
+          "position": 150,
+          "source_positions": [
+            150
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "蛇虎",
+          "position": 150,
+          "source_positions": [
+            150
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "狗鸡蛇虎"
+    },
+    {
+      "name": "碎银几两",
+      "url": "https://jogavu.6bl6s-ilo1w-yfnvvl.work:16677/topic/678134.html",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "狗龙",
+        "216": "鸡蛇"
+      },
+      "positions": {
+        "217": 30,
+        "216": 30
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "狗龙",
+          "position": 30,
+          "source_positions": [
+            30
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "鸡蛇",
+          "position": 30,
+          "source_positions": [
+            30
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "狗龙鸡蛇"
+    },
+    {
+      "name": "无忧无虑",
+      "url": "https://jjlachsn.4fk3e-i2rpf-vgknlh.work:16677/topic/649646.html",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "马兔",
+        "216": "马猪"
+      },
+      "positions": {
+        "217": 19,
+        "216": 19
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "马兔",
+          "position": 19,
+          "source_positions": [
+            19
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "马猪",
+          "position": 19,
+          "source_positions": [
+            19
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "马兔马猪"
+    },
+    {
+      "name": "披沙捡金",
+      "url": "https://drxgkjt.uu1oc-eyjpt-uxyccu.xyz:29400/article/manager/6a33e97adfa16552b923d418?url=jyb",
+      "pick": "bottom",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "鸡马",
+        "216": "马鸡"
+      },
+      "positions": {
+        "217": 3028,
+        "216": 2993
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "鸡马",
+          "position": 3028,
+          "source_positions": [
+            3028
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "马鸡",
+          "position": 2993,
+          "source_positions": [
+            2993
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "鸡马马鸡",
+      "article_ids": {
+        "217": "6a33e97adfa16552b923d418",
+        "216": "6a33e97adfa16552b923d418"
+      }
+    },
+    {
+      "name": "梦寐以求",
+      "url": "https://drxgkjt.uu1oc-eyjpt-uxyccu.xyz:29400/article/manager/6a33e49fdfa16552b923d264?url=jyb",
+      "pick": "bottom",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "马鸡",
+        "216": "龙马"
+      },
+      "positions": {
+        "217": 2958,
+        "216": 2923
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "马鸡",
+          "position": 2958,
+          "source_positions": [
+            2958
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "龙马",
+          "position": 2923,
+          "source_positions": [
+            2923
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "马鸡龙马",
+      "article_ids": {
+        "217": "6a33e49fdfa16552b923d264",
+        "216": "6a33e49fdfa16552b923d264"
+      }
+    },
+    {
+      "name": "霸王传奇",
+      "url": "https://nwrkkmv.rx287-rkrai-jsjccc.xyz:29499/article/manager/6a33d2d2dfa16552b923d0af?url=ggz",
+      "pick": "bottom",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "鸡猪",
+        "216": "鸡猪"
+      },
+      "positions": {
+        "217": 2869,
+        "216": 2832
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "鸡猪",
+          "position": 2869,
+          "source_positions": [
+            2869
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "鸡猪",
+          "position": 2832,
+          "source_positions": [
+            2832
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "鸡猪鸡猪",
+      "article_ids": {
+        "217": "6a33d2d2dfa16552b923d0af",
+        "216": "6a33d2d2dfa16552b923d0af"
+      }
+    },
+    {
+      "name": "粉色樱花",
+      "url": "https://hcsuuoy.nimo7-9bgj4-fmspxt.xyz:29466/article/manager/6a31451a9f83cbadb83797d9?url=cww",
+      "pick": "bottom",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "马狗",
+        "216": "狗猴"
+      },
+      "positions": {
+        "217": 3133,
+        "216": 3098
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "马狗",
+          "position": 3133,
+          "source_positions": [
+            3133
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "狗猴",
+          "position": 3098,
+          "source_positions": [
+            3098
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "马狗狗猴",
+      "article_ids": {
+        "217": "6a31451a9f83cbadb83797d9",
+        "216": "6a31451a9f83cbadb83797d9"
+      }
+    },
+    {
+      "name": "彻头彻尾",
+      "url": "https://xjsjbkv.b3e4x-wxhjo-lbdbjg.xyz:29477/article/manager/6a323a63549767728892cb19?url=jbx",
+      "pick": "bottom",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "龙鼠",
+        "216": "猴羊"
+      },
+      "positions": {
+        "217": 2098,
+        "216": 2058
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "龙鼠",
+          "position": 2098,
+          "source_positions": [
+            2098
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "猴羊",
+          "position": 2058,
+          "source_positions": [
+            2058
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "龙鼠猴羊",
+      "article_ids": {
+        "217": "6a323a63549767728892cb19",
+        "216": "6a323a63549767728892cb19"
+      }
+    },
+    {
+      "name": "金禅彩票",
+      "url": "https://xjsjbkv.b3e4x-wxhjo-lbdbjg.xyz:29477/article/manager/6a324276f21d7a093399ef17?url=jbx",
+      "pick": "bottom",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "猴兔",
+        "216": "鼠羊"
+      },
+      "positions": {
+        "217": 1838,
+        "216": 1803
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "猴兔",
+          "position": 1838,
+          "source_positions": [
+            1838
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "鼠羊",
+          "position": 1803,
+          "source_positions": [
+            1803
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "猴兔鼠羊",
+      "article_ids": {
+        "217": "6a324276f21d7a093399ef17",
+        "216": "6a324276f21d7a093399ef17"
+      }
+    },
+    {
+      "name": "光彩夺目",
+      "url": "https://xjsjbkv.b3e4x-wxhjo-lbdbjg.xyz:29477/article/manager/6a324da4d2455bc872d9a632?url=jbx",
+      "pick": "bottom",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "牛兔",
+        "216": "鼠羊"
+      },
+      "positions": {
+        "217": 2150,
+        "216": 2109
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "牛兔",
+          "position": 2150,
+          "source_positions": [
+            2150
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "鼠羊",
+          "position": 2109,
+          "source_positions": [
+            2109
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "牛兔鼠羊",
+      "article_ids": {
+        "217": "6a324da4d2455bc872d9a632",
+        "216": "6a324da4d2455bc872d9a632"
+      }
+    },
+    {
+      "name": "冲上云霄",
+      "url": "https://xjsjbkv.b3e4x-wxhjo-lbdbjg.xyz:29477/article/manager/6a342366dfa16552b92413c6?url=jbx",
+      "pick": "bottom",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "兔羊",
+        "216": "鸡龙"
+      },
+      "positions": {
+        "217": 1042,
+        "216": 1010
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "兔羊",
+          "position": 1042,
+          "source_positions": [
+            1042
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "鸡龙",
+          "position": 1010,
+          "source_positions": [
+            1010
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "兔羊鸡龙",
+      "article_ids": {
+        "217": "6a342366dfa16552b92413c6",
+        "216": "6a342366dfa16552b92413c6"
+      }
+    },
+    {
+      "name": "不容置疑",
+      "url": "https://xjsjbkv.b3e4x-wxhjo-lbdbjg.xyz:29477/article/manager/6a3270bf3a4bb06f16af372f?url=jbx",
+      "pick": "bottom",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "狗牛",
+        "216": "狗虎"
+      },
+      "positions": {
+        "217": 1838,
+        "216": 1803
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "狗牛",
+          "position": 1838,
+          "source_positions": [
+            1838
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "狗虎",
+          "position": 1803,
+          "source_positions": [
+            1803
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "狗牛狗虎",
+      "article_ids": {
+        "217": "6a3270bf3a4bb06f16af372f",
+        "216": "6a3270bf3a4bb06f16af372f"
+      }
+    },
+    {
+      "name": "精妙绝伦",
+      "url": "https://xjsjbkv.b3e4x-wxhjo-lbdbjg.xyz:29477/article/manager/6a32761ac50767750c400789?url=jbx",
+      "pick": "bottom",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "狗鸡",
+        "216": "鸡猪"
+      },
+      "positions": {
+        "217": 1942,
+        "216": 1905
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "狗鸡",
+          "position": 1942,
+          "source_positions": [
+            1942
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "鸡猪",
+          "position": 1905,
+          "source_positions": [
+            1905
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "狗鸡鸡猪",
+      "article_ids": {
+        "217": "6a32761ac50767750c400789",
+        "216": "6a32761ac50767750c400789"
+      }
+    },
+    {
+      "name": "眉飞色舞",
+      "url": "https://hquomm.20t3f-0yztv-jiozun.xyz:29444/article/manager/6a329eaa887a9b338e851fde?url=dgd",
+      "pick": "bottom",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "狗猴",
+        "216": "鸡鼠"
+      },
+      "positions": {
+        "217": 2592,
+        "216": 2559
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "狗猴",
+          "position": 2592,
+          "source_positions": [
+            2592
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "鸡鼠",
+          "position": 2559,
+          "source_positions": [
+            2559
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "狗猴鸡鼠",
+      "article_ids": {
+        "217": "6a329eaa887a9b338e851fde",
+        "216": "6a329eaa887a9b338e851fde"
+      }
+    },
+    {
+      "name": "烟雨扶苏",
+      "url": "https://mxiscni.nkh6s-vfni4-lwgfvw.xyz:16677/topic/257907.html",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "马蛇",
+        "216": "猴蛇"
+      },
+      "positions": {
+        "217": 142,
+        "216": 142
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "马蛇",
+          "position": 142,
+          "source_positions": [
+            142
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "猴蛇",
+          "position": 142,
+          "source_positions": [
+            142
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "马蛇猴蛇"
+    },
+    {
+      "name": "六合道人",
+      "url": "https://fymxwnyg.ttmzc-muvns-udlfln.work:29455/article/manager/6a096e64291caff3edcb8bff?url=lhbd",
+      "pick": "bottom",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "马蛇",
+        "216": "牛兔"
+      },
+      "positions": {
+        "217": 4324,
+        "216": 4289
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "马蛇",
+          "position": 4324,
+          "source_positions": [
+            4324
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "牛兔",
+          "position": 4289,
+          "source_positions": [
+            4289
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "马蛇牛兔",
+      "article_ids": {
+        "217": "6a096e64291caff3edcb8bff",
+        "216": "6a096e64291caff3edcb8bff"
+      }
+    },
+    {
+      "name": "花颜月貌",
+      "url": "https://aszmkf.c3z3l-qrlqm-mwgccr.work:29411/article/manager/6a0839c808adb5ed7357effe?url=lhw",
+      "pick": "bottom",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "兔马",
+        "216": "鸡兔"
+      },
+      "positions": {
+        "217": 3763,
+        "216": 3728
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "兔马",
+          "position": 3763,
+          "source_positions": [
+            3763
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "鸡兔",
+          "position": 3728,
+          "source_positions": [
+            3728
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "兔马鸡兔",
+      "article_ids": {
+        "217": "6a0839c808adb5ed7357effe",
+        "216": "6a0839c808adb5ed7357effe"
+      }
+    },
+    {
+      "name": "夜夜笙财",
+      "url": "https://knfoaep.ivqs8-1depw-yoirtw.xyz:29444/article/manager/6a095246291caff3edcb8a31?url=lf",
+      "pick": "bottom",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "虎猴",
+        "216": "牛鼠"
+      },
+      "positions": {
+        "217": 4113,
+        "216": 4078
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "虎猴",
+          "position": 4113,
+          "source_positions": [
+            4113
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "牛鼠",
+          "position": 4078,
+          "source_positions": [
+            4078
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "虎猴牛鼠",
+      "article_ids": {
+        "217": "6a095246291caff3edcb8a31",
+        "216": "6a095246291caff3edcb8a31"
+      }
+    },
+    {
+      "name": "月白风清",
+      "url": "https://dgjdlk.0hrwo-8qjsc-spwvba.xyz:29411/article/manager/6a12df0d741e3e91a04e5223?url=cf",
+      "pick": "bottom",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "马牛",
+        "216": "虎猪"
+      },
+      "positions": {
+        "217": 9120,
+        "216": 9085
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "马牛",
+          "position": 9120,
+          "source_positions": [
+            9120
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "虎猪",
+          "position": 9085,
+          "source_positions": [
+            9085
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "马牛虎猪",
+      "article_ids": {
+        "217": "6a12df0d741e3e91a04e5223",
+        "216": "6a12df0d741e3e91a04e5223"
+      }
+    },
+    {
+      "name": "阳春彩虹",
+      "url": "https://8818.www19753a.com/read.php?tid=639",
+      "pick": "bottom",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "狗猪",
+        "216": "蛇兔"
+      },
+      "positions": {
+        "217": 4793,
+        "216": 4758
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "狗猪",
+          "position": 4793,
+          "source_positions": [
+            4793
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "蛇兔",
+          "position": 4758,
+          "source_positions": [
+            4758
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "狗猪蛇兔"
+    },
+    {
+      "name": "无所畏惧",
+      "url": "https://8818.www73261a.com/read.php?tid=441",
+      "pick": "bottom",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "猴龙",
+        "216": "猴兔"
+      },
+      "positions": {
+        "217": 6674,
+        "216": 6613
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "猴龙",
+          "position": 6674,
+          "source_positions": [
+            6674
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "猴兔",
+          "position": 6613,
+          "source_positions": [
+            6613
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "猴龙猴兔"
+    },
+    {
+      "name": "真龙活现",
+      "url": "https://mbsqhpk.8ivvt-u3cx5-enwlld.xyz:29400/article/manager/6a33d2c6dfa16552b923d0ad?url=lhzj",
+      "pick": "bottom",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "马鸡",
+        "216": "鸡马"
+      },
+      "positions": {
+        "217": 3052,
+        "216": 3015
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "马鸡",
+          "position": 3052,
+          "source_positions": [
+            3052
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "鸡马",
+          "position": 3015,
+          "source_positions": [
+            3015
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "马鸡鸡马",
+      "article_ids": {
+        "217": "6a33d2c6dfa16552b923d0ad",
+        "216": "6a33d2c6dfa16552b923d0ad"
+      }
+    },
+    {
+      "name": "六合中心",
+      "url": "https://utklnwvn.xt8d7-kd9kc-csprqr.work:29488/article/manager/6a0445354ea5c20141013e7c?url=qdz",
+      "pick": "bottom",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "虎牛",
+        "216": "狗鸡"
+      },
+      "positions": {
+        "217": 3833,
+        "216": 3798
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "虎牛",
+          "position": 3833,
+          "source_positions": [
+            3833
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "狗鸡",
+          "position": 3798,
+          "source_positions": [
+            3798
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "虎牛狗鸡",
+      "article_ids": {
+        "217": "6a0445354ea5c20141013e7c",
+        "216": "6a0445354ea5c20141013e7c"
+      }
+    },
+    {
+      "name": "白手起家",
+      "url": "https://ymkakun.dwgml-7jbcy-ohrbrq.xyz:16677/topic/547564.html",
+      "pick": "bottom",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "鼠猪",
+        "216": "虎龙"
+      },
+      "positions": {
+        "217": 8421,
+        "216": 8403
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "鼠猪",
+          "position": 8421,
+          "source_positions": [
+            8421
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "虎龙",
+          "position": 8403,
+          "source_positions": [
+            8403
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "鼠猪虎龙"
+    },
+    {
+      "name": "金宝码王",
+      "url": "https://yzpbdkow.6m1ba-7p7u4-ppolcy.work:29433/article/manager/6a695d022822d465035c94cf?url=tdg",
+      "pick": "bottom",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "鼠羊",
+        "216": "鸡马"
+      },
+      "positions": {
+        "217": 893,
+        "216": 858
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "鼠羊",
+          "position": 893,
+          "source_positions": [
+            893
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "鸡马",
+          "position": 858,
+          "source_positions": [
+            858
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "鼠羊鸡马",
+      "article_ids": {
+        "217": "6a695d022822d465035c94cf",
+        "216": "6a695d022822d465035c94cf"
+      }
+    },
+    {
+      "name": "如神探讨",
+      "url": "https://hl.90216a.com/read.php?tid=751",
+      "pick": "bottom",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "牛兔",
+        "216": "狗羊"
+      },
+      "positions": {
+        "217": 5510,
+        "216": 5475
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "牛兔",
+          "position": 5510,
+          "source_positions": [
+            5510
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "狗羊",
+          "position": 5475,
+          "source_positions": [
+            5475
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "牛兔狗羊"
+    },
+    {
+      "name": "玄机天书",
+      "url": "https://mbsqhpk.8ivvt-u3cx5-enwlld.xyz:29400/article/manager/6a33d28bdfa16552b923d0a5?url=lhzj",
+      "pick": "bottom",
+      "position_kind": "visible_text_offset_v1",
+      "values": {
+        "217": "马鸡",
+        "216": "龙马"
+      },
+      "positions": {
+        "217": 1757,
+        "216": 1720
+      },
+      "records": [
+        {
+          "period": 217,
+          "zodiac": "马鸡",
+          "position": 1757,
+          "source_positions": [
+            1757
+          ],
+          "position_kind": "visible_text_offset_v1"
+        },
+        {
+          "period": 216,
+          "zodiac": "龙马",
+          "position": 1720,
+          "source_positions": [
+            1720
+          ],
+          "position_kind": "visible_text_offset_v1"
+        }
+      ],
+      "fingerprint": "马鸡龙马",
+      "article_ids": {
+        "217": "6a33d28bdfa16552b923d0a5",
+        "216": "6a33d28bdfa16552b923d0a5"
+      }
+    }
+  ]
+}
