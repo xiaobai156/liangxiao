@@ -7,6 +7,7 @@ from output.transaction import append_repaired_successes, atomic_write_bytes
 from cache.repository import RecentCacheRepository
 from cache.contracts import validate_issue_window
 from domain.models import Result, Site
+from output.transaction import _validate_distinct_paths
 
 
 def sites_from_failure_file(path: Path, sites: list[Site]) -> list[Site]:
@@ -31,9 +32,10 @@ def remove_successful_failures(path: Path, results: list[Result]) -> None:
     atomic_write_bytes(path, b"".join(kept))
 
 
-def update_current_cache(path: Path, period: int, results: list[Result]) -> None:
+def update_current_cache(path: Path, period: int, results: list[Result], *, locked: bool = False) -> None:
     repository = RecentCacheRepository(path)
-    with repository._lock():
+    lock = repository._lock() if not locked else _null_lock()
+    with lock:
         original = path.read_bytes()
         payload = json.loads(original.decode("utf-8-sig"))
         issues = validate_issue_window(payload.get("issues"))
@@ -55,9 +57,21 @@ def update_current_cache(path: Path, period: int, results: list[Result]) -> None
         atomic_write_bytes(path, json.dumps(payload, ensure_ascii=False, indent=2).encode("utf-8"))
 
 
+class _null_lock:
+    def __enter__(self): return self
+    def __exit__(self, *args): return False
+
+
 def apply_retry(results: list[Result], success: Path, failure: Path, cache: Path, period: int, include_url: bool) -> None:
     good = [r for r in results if r.ok]
     if good:
+        _validate_distinct_paths((("成功TXT", success), ("失败TXT", failure), ("缓存", cache)))
+        repository = RecentCacheRepository(cache)
+        with repository._lock():
+            _apply_retry_locked(good, success, failure, cache, period, include_url)
+
+
+def _apply_retry_locked(good, success, failure, cache, period, include_url):
         success_before = success.read_bytes() if success.exists() else None
         failure_before = failure.read_bytes() if failure.exists() else None
         try:
@@ -82,6 +96,6 @@ def apply_retry(results: list[Result], success: Path, failure: Path, cache: Path
             if failure_before is not None: atomic_write_bytes(failure, failure_before)
             raise
         try:
-            update_current_cache(cache, period, good)
+            update_current_cache(cache, period, good, locked=True)
         except Exception as exc:
             raise RuntimeError(f"缓存更新未同步，成功TXT已保留：{exc}") from exc

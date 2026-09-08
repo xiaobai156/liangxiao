@@ -182,7 +182,11 @@ def main(argv: list[str] | None = None) -> int:
         return run_duplicate_check(sites, repository.path)
     if args.retry_failures:
         errors = Path(args.errors) if args.errors else failure_path(args.period)
-        targets = sites_from_failure_file(errors, sites)
+        try:
+            targets = sites_from_failure_file(errors, sites)
+        except (OSError, UnicodeError) as exc:
+            print(f"失败TXT读取失败，未执行重抓：{exc}")
+            return 2
         if not targets:
             print(f"未找到{args.period}期失败TXT中的可重抓站点：{errors.resolve()}")
             return 0
