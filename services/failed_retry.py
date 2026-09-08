@@ -5,7 +5,10 @@ from pathlib import Path
 
 from output.transaction import append_repaired_successes, atomic_write_bytes
 from cache.repository import RecentCacheRepository
-from cache.contracts import validate_issue_window
+from cache.contracts import validate_issue_window, validate_cache_position_contract
+from contextlib import contextmanager
+import os
+import tempfile
 from domain.models import Result, Site
 from output.transaction import _validate_distinct_paths
 
@@ -38,6 +41,7 @@ def update_current_cache(path: Path, period: int, results: list[Result], *, lock
     with lock:
         original = path.read_bytes()
         payload = json.loads(original.decode("utf-8-sig"))
+        validate_cache_position_contract(payload)
         issues = validate_issue_window(payload.get("issues"))
         if period not in issues:
             raise ValueError(f"当前期{period}不在缓存窗口，未同步")
@@ -61,13 +65,29 @@ class _null_lock:
     def __enter__(self): return self
     def __exit__(self, *args): return False
 
+@contextmanager
+def output_lock(path: Path):
+    lock = path.parent / ".杀两肖输出.lock"
+    with lock.open("a+b") as handle:
+        if os.name == "nt":
+            import msvcrt
+            handle.seek(0, os.SEEK_END)
+            if handle.tell() == 0: handle.write(b"0"); handle.flush()
+            handle.seek(0); msvcrt.locking(handle.fileno(), msvcrt.LK_LOCK, 1)
+            try: yield
+            finally: handle.seek(0); msvcrt.locking(handle.fileno(), msvcrt.LK_UNLCK, 1)
+        else:
+            import fcntl
+            fcntl.flock(handle.fileno(), fcntl.LOCK_EX)
+            try: yield
+            finally: fcntl.flock(handle.fileno(), fcntl.LOCK_UN)
+
 
 def apply_retry(results: list[Result], success: Path, failure: Path, cache: Path, period: int, include_url: bool) -> None:
     good = [r for r in results if r.ok]
     if good:
         _validate_distinct_paths((("成功TXT", success), ("失败TXT", failure), ("缓存", cache)))
-        repository = RecentCacheRepository(cache)
-        with repository._lock():
+        with output_lock(success):
             _apply_retry_locked(good, success, failure, cache, period, include_url)
 
 

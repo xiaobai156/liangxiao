@@ -133,7 +133,9 @@ def write_outputs(
     success_text, failure_text = format_results(results, include_url=include_url)
     paths = (output, errors)
     snapshot = _snapshot(paths)
+    from services.failed_retry import output_lock
     try:
+      with output_lock(output):
         atomic_write_text(output, success_text)
         if failure_text:
             atomic_write_text(errors, failure_text)
