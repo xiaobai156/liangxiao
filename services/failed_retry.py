@@ -39,28 +39,20 @@ def update_current_cache(path: Path, period: int, results: list[Result]) -> None
         issues = validate_issue_window(payload.get("issues"))
         if period not in issues:
             raise ValueError(f"当前期{period}不在缓存窗口，未同步")
-    entries = payload.get("sites")
-    if not isinstance(entries, list):
-        raise ValueError("缓存sites结构无效")
-    by_identity = {(e.get("name"), e.get("url"), e.get("pick")): e for e in entries if isinstance(e, dict)}
-    for result in results:
-        if not result.ok or result.record is None:
-            continue
-        entry = by_identity.get(result.site.identity)
-        if entry is None:
-            raise ValueError(f"缓存中未找到站点：{result.site.name}")
-        values = dict(entry.get("values", {})); positions = dict(entry.get("positions", {})); articles = dict(entry.get("article_ids", {}))
-        values[str(period)] = result.record.zodiac; positions[str(period)] = result.record.position
-        entry["values"], entry["positions"] = values, positions
-        if result.record.record_id:
-            articles[str(period)] = result.record.record_id
-            entry["article_ids"] = articles
-        entry["records"] = [{"period": int(p), "zodiac": values[p], "position": positions[p],
-                             "source_positions": [positions[p]], "position_kind": entry.get("position_kind", "visible_text_offset_v1")}
-                            for p in values]
-        entry["fingerprint"] = "".join(values.values())
-        entry.pop("status", None); entry.pop("error", None)
-    atomic_write_bytes(path, json.dumps(payload, ensure_ascii=False, indent=2).encode("utf-8"))
+        entries = payload.get("sites")
+        if not isinstance(entries, list): raise ValueError("缓存sites结构无效")
+        by_identity = {(e.get("name"), e.get("url"), e.get("pick")): e for e in entries if isinstance(e, dict)}
+        for result in results:
+            if not result.ok or result.record is None: continue
+            entry = by_identity.get(result.site.identity)
+            if entry is None: raise ValueError(f"缓存中未找到站点：{result.site.name}")
+            values = dict(entry.get("values", {})); positions = dict(entry.get("positions", {})); articles = dict(entry.get("article_ids", {}))
+            key = str(period); values[key] = result.record.zodiac; positions[key] = result.record.position
+            entry["values"], entry["positions"] = values, positions
+            if result.record.record_id: articles[key] = result.record.record_id; entry["article_ids"] = articles
+            entry["records"] = [{"period": int(p), "zodiac": values[p], "position": positions[p], "source_positions": [positions[p]], "position_kind": entry.get("position_kind", "visible_text_offset_v1")} for p in values]
+            entry["fingerprint"] = "".join(values.values()); entry.pop("status", None); entry.pop("error", None)
+        atomic_write_bytes(path, json.dumps(payload, ensure_ascii=False, indent=2).encode("utf-8"))
 
 
 def apply_retry(results: list[Result], success: Path, failure: Path, cache: Path, period: int, include_url: bool) -> None:
@@ -71,13 +63,19 @@ def apply_retry(results: list[Result], success: Path, failure: Path, cache: Path
         try:
             existing = success.read_text(encoding="utf-8-sig") if success.exists() else ""
             for result in good:
-                if any((f" {result.site.name}" in line and result.site.name not in line.split()[-1:]) for line in existing.splitlines()):
-                    raise ValueError(f"成功TXT已有同站不同结果：{result.site.name}")
+                expected = f"{result.record.zodiac} {result.site.name}"
+                for line in existing.splitlines():
+                    if line == expected or line.startswith(expected + " "): continue
+                    if line.endswith(" " + result.site.name) or line.endswith(" " + result.site.name + " " + result.site.url):
+                        raise ValueError(f"成功TXT已有同站不同结果：{result.site.name}")
             append_repaired_successes(good, success, include_url=include_url)
             remove_successful_failures(failure, good)
-            update_current_cache(cache, period, good)
         except Exception:
             if success_before is None: success.unlink(missing_ok=True)
             else: atomic_write_bytes(success, success_before)
             if failure_before is not None: atomic_write_bytes(failure, failure_before)
             raise
+        try:
+            update_current_cache(cache, period, good)
+        except Exception as exc:
+            raise RuntimeError(f"缓存更新未同步，成功TXT已保留：{exc}") from exc
