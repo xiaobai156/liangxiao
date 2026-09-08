@@ -19,6 +19,25 @@ TextFetcher = Callable[[str, int], str]
 Renderer = Callable[[str, int], str]
 
 
+def _decode_best_text(content: bytes, encodings: tuple[str | None, ...]) -> str:
+    best_text = ""
+    best_score = -10**9
+    seen_encodings: set[str] = set()
+    for encoding in encodings:
+        if not encoding or encoding in seen_encodings:
+            continue
+        seen_encodings.add(encoding)
+        try:
+            text = content.decode(encoding, errors="replace")
+        except LookupError:
+            continue
+        score = len(re.findall(r"[\u4e00-\u9fff]", text)) + text.count("期") * 3 - text.count("\ufffd") * 20
+        if score > best_score:
+            best_text = text
+            best_score = score
+    return best_text
+
+
 def http_get(url: str, timeout: int = 25) -> requests.Response:
     if current_thread() is main_thread():
         session = HTTP_SESSION
@@ -58,21 +77,10 @@ def decode_response_content(response: requests.Response) -> str:
     # real UTF-8/Chinese encodings.
     if str(apparent_encoding or "").lower().replace("-", "") == "utf7":
         apparent_encoding = None
-    hints = [response.encoding, apparent_encoding, "utf-8", "gb18030", "gbk"]
-    best_text = ""
-    best_score = -10**9
-    for encoding in hints:
-        if not encoding:
-            continue
-        try:
-            text = response.content.decode(encoding, errors="replace")
-        except LookupError:
-            continue
-        score = len(re.findall(r"[\u4e00-\u9fff]", text)) + text.count("期") * 3 - text.count("\ufffd") * 20
-        if score > best_score:
-            best_text = text
-            best_score = score
-    return best_text
+    return _decode_best_text(
+        response.content,
+        (response.encoding, apparent_encoding, "utf-8", "gb18030", "gbk"),
+    )
 
 
 def fetch_curl_text(url: str, timeout: int = 25) -> str:
@@ -107,15 +115,7 @@ def fetch_curl_text(url: str, timeout: int = 25) -> str:
             raise requests.RequestException(f"curl SSL兼容抓取失败：{exc}") from exc
     if completed is None:
         raise requests.RequestException(f"curl SSL兼容抓取失败：{url}")
-    best_text = ""
-    best_score = -10**9
-    for encoding in ("utf-8", "gb18030", "gbk"):
-        text = completed.stdout.decode(encoding, errors="replace")
-        score = len(re.findall(r"[\u4e00-\u9fff]", text)) + text.count("期") * 3 - text.count("\ufffd") * 20
-        if score > best_score:
-            best_text = text
-            best_score = score
-    return best_text
+    return _decode_best_text(completed.stdout, ("utf-8", "gb18030", "gbk"))
 
 
 def fetch_text(url: str, timeout: int = 25) -> str:
@@ -171,16 +171,13 @@ class FetchContext:
         renderer: Renderer | None = None,
     ) -> None:
         self._text_fetcher = text_fetcher or fetch_text
-        if renderer is None:
-            from fetching.browser import render_browser_text
-
-            renderer = render_browser_text
         self._renderer = renderer
         self._texts: dict[str, str] = {}
         self._errors: dict[str, requests.RequestException] = {}
         self._url_locks: dict[str, Lock] = {}
         self._rendered_texts: dict[str, str] = {}
         self._render_locks: dict[str, Lock] = {}
+        self._closed = False
         self._lock = Lock()
 
     def get_text(self, url: str, timeout: int) -> str:
@@ -212,13 +209,34 @@ class FetchContext:
         with self._lock:
             if url in self._rendered_texts:
                 return self._rendered_texts[url]
+            if self._closed:
+                raise requests.RequestException("抓取上下文已关闭")
+            if self._renderer is None:
+                from fetching.browser import PlaywrightRenderer
+
+                self._renderer = PlaywrightRenderer()
             render_lock = self._render_locks.setdefault(url, Lock())
+            renderer = self._renderer
         with render_lock:
             with self._lock:
                 if url in self._rendered_texts:
                     return self._rendered_texts[url]
-            source = self._renderer(url, timeout)
+                if self._closed:
+                    raise requests.RequestException("抓取上下文已关闭")
+            source = renderer(url, timeout)
             if not is_transient_soft_payload(source):
                 with self._lock:
                     self._rendered_texts[url] = source
             return source
+
+    def close(self) -> None:
+        with self._lock:
+            if self._closed:
+                return
+            self._closed = True
+        renderer = self._renderer
+        if renderer is None:
+            return
+        close = getattr(renderer, "close", None)
+        if callable(close):
+            close()

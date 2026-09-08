@@ -1,17 +1,12 @@
 from __future__ import annotations
 
-import json
 import re
 
-from domain.models import Record, Site
+from domain.models import DOCUMENT_BOUNDARY, Record, Site
 from parsers.helpers import (
     ZODIACS,
-    ZODIAC_SET,
-    clean_zodiac,
-    detail_record_identity,
     html_to_text,
     records_from_pattern,
-    ten_unique_zodiacs,
 )
 
 def parse_fugui_kede_admin_article_records(source: str, site: Site) -> list[Record]:
@@ -133,6 +128,36 @@ def parse_manager_article_two_zodiac_records(source: str, site: Site) -> list[Re
         rf"{period_gap}{{0,70}}?绝\s*杀\s*(?:二|两|2|２|②)\s*肖"
         rf"{period_gap}{{0,70}}?[【〖\[]\s*(?P<zodiac>[{ZODIACS}]\s*[-－、,，.。· ]?\s*[{ZODIACS}])\s*[】〗\]]\s*"
         rf"开\s*[:：]?\s*(?P<open>[^\s准中错赢对↑√]+)"
+    )
+    return records_from_pattern(text, pattern)
+
+
+def parse_mengxiang_rensheng_manager_article_records(source: str, site: Site) -> list[Record]:
+    article_match = re.search(r"/article/manager/([^/?#]+)", site.url, flags=re.I)
+    if (
+        site.name != "梦想人生"
+        or site.pick != "bottom"
+        or site.payload != "admin_article_api"
+        or article_match is None
+        or article_match.group(1) != "6a55eceff447e21b02daa681"
+        or DOCUMENT_BOUNDARY in source
+    ):
+        return []
+    return parse_manager_article_two_zodiac_records(source, site)
+
+
+def parse_guanwang_touma_manager_article_records(source: str, site: Site) -> list[Record]:
+    if site.name != "官网透码":
+        return []
+    text = html_to_text(source)
+    period_gap = r"(?:(?!\d{3}\s*期).)"
+    pattern = re.compile(
+        rf"(?P<period>\d{{3}})\s*期\s*[:：]?\s*官网透码"
+        rf"{period_gap}{{0,20}}?绝\s*杀\s*(?:二|两|2|２|②)\s*肖"
+        rf"{period_gap}{{0,20}}?[【〖\[]\s*"
+        rf"(?P<zodiac>[{ZODIACS}]\s*[-－、,，.。· ]?[{ZODIACS}])\s*"
+        rf"[】〗\]]\s*开\s*[:：]?\s*"
+        rf"(?P<open>[^\s准中错赢对↑√]+)"
     )
     return records_from_pattern(text, pattern)
 

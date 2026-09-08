@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from domain.models import Record, Site
 from validation.direction import direction_window
-from validation.records import record_value_signature
+from validation.records import record_signature, record_value_signature
 
 
 def validate_document_windows(
@@ -13,16 +13,22 @@ def validate_document_windows(
 ) -> None:
     signatures_by_period: dict[int, set[str]] = {}
     for label, records in observed_documents:
-        local: dict[int, set[str]] = {}
+        local: dict[int, set[tuple[str, int]]] = {}
         window = direction_window(records, site)
         for record in window:
-            signature = record_value_signature(record)
+            signature = record_signature(record)
             local.setdefault(record.period, set()).add(signature)
-            signatures_by_period.setdefault(record.period, set()).add(signature)
+            signatures_by_period.setdefault(record.period, set()).add(
+                record_value_signature(record)
+            )
         local_conflicts = {period: values for period, values in local.items() if len(values) > 1}
         if local_conflicts:
             details = "；".join(
-                f"{period}期 " + "、".join(sorted(values))
+                f"{period}期 "
+                + "、".join(
+                    f"{zodiac}@位置{position}"
+                    for zodiac, position in sorted(values, key=lambda value: (value[1], value[0]))
+                )
                 for period, values in sorted(local_conflicts.items())
             )
             raise ValueError(f"数据存在冲突：{label}{context}近3条内{details}")

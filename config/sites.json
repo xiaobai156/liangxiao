@@ -67,14 +67,6 @@
     "record": "(?P<period>\\d{3})\\s*期\\s*绝杀二肖\\s*[:：]\\s*【\\s*(?P<zodiac>[牛马羊鸡狗猪鼠虎兔龙蛇猴]{2})\\s*】\\s*开\\s*[:：]?\\s*(?P<open>[^ 准中错]+)"
   },
   {
-    "name": "精忠报国",
-    "pick": "尾部",
-    "url": "https://993345.com/gsb1.aspx?id=3243",
-    "parser": "jingzhongbaoguo_tail",
-    "payload": "page_and_scripts",
-    "title": "精忠报国"
-  },
-  {
     "name": "女娲补天",
     "pick": "尾部",
     "url": "https://993345.com/gsb1.aspx?id=3238",
@@ -347,7 +339,7 @@
     "payload": "page_and_scripts",
     "title": "武林高手\\s*\\d{3}\\s*期\\s*《\\s*绝杀两肖\\s*》",
     "record": "(?P<period>\\d{3})\\s*期\\s*[:：]?\\s*绝杀两肖\\s*[【\\[]\\s*(?P<zodiac>[牛马羊鸡狗猪鼠虎兔龙蛇猴]\\s*[-－、，,。.]?\\s*[牛马羊鸡狗猪鼠虎兔龙蛇猴])\\s*[】\\]]\\s*[开開]\\s*[:：]?\\s*(?P<open>[^\\s准中错赢对]+)",
-    "linked_document_pattern": "https://xia\\d+\\.cosds\\.ahsccn\\.com/upload/script/08/"
+    "linked_document_pattern": "https://xia\\d+\\.cosds\\.aohjifv\\.com/upload/script/09/"
   },
   {
     "name": "玄机阁",
@@ -495,7 +487,10 @@
     "parser": "baijie_shujinguang_top",
     "payload": "page_and_scripts",
     "title": "澳门姜太公\\s*☛\\s*白姐輸盡光\\s*☚",
-    "keywords": ["白姐输尽光", "今期"]
+    "keywords": [
+      "白姐输尽光",
+      "今期"
+    ]
   },
   {
     "name": "熬出头儿",
@@ -826,8 +821,8 @@
   {
     "name": "旧街凉风",
     "pick": "顶部",
-    "url": "https://vqxzuc.fggtp-huz0q-sbrraa.xyz:16677/topic/251180.html",
-    "parser": "site_scoped_two_zodiac",
+    "url": "https://ygaazoi.80f2d-qi0ig-gkygze.work:17488/topic/251180.html",
+    "parser": "jiujie_liangfeng_top",
     "payload": "page_and_scripts",
     "title": "旧街凉风"
   },
@@ -964,15 +959,6 @@
     "payload": "browser_rendered_page"
   },
   {
-    "name": "月老搭桥",
-    "pick": "尾部",
-    "url": "https://yzpbdkow.6m1ba-7p7u4-ppolcy.work:29433/article/admin/6a02c9bc8bad0a3579e9f72b?url=tdg",
-    "payload": "admin_article_api",
-    "title": "月老搭桥",
-    "record": "(?P<period>\\d{3})\\s*期[^期]{0,90}?(?:绝\\s*杀|稳\\s*杀|精\\s*杀|无错\\s*杀|砍\\s*杀|杀)\\s*(?:二|两|2|２|②)\\s*肖[^期]{0,50}?[【〖\\[（(《『〈]\\s*(?P<zodiac>[牛马羊鸡狗猪鼠虎兔龙蛇猴]\\s*[-－、,，.。· ]?\\s*[牛马羊鸡狗猪鼠虎兔龙蛇猴])\\s*[】〗\\]）)》』〉]\\s*(?:←|[~～_\\-－—|]*)\\s*(?:开|開)\\s*[:：]?\\s*(?P<open>[^\\s准中错赢对↑√]+)",
-    "api_url": "https://yzpbdkow.6m1ba-7p7u4-ppolcy.work:29433/api/proxy/landing-page-data?url=tdg"
-  },
-  {
     "name": "民间高手",
     "pick": "顶部",
     "url": "https://88.62782d.com:1888/",
@@ -1093,14 +1079,6 @@
     "payload": "page_and_scripts",
     "title": "枪打天下\\s*[（(]\\s*绝杀二肖\\s*[）)]",
     "record": "(?P<period>\\d{3})\\s*期\\s*稳杀二肖\\s*[（(]\\s*(?P<zodiac>[牛马羊鸡狗猪鼠虎兔龙蛇猴]\\s*[-－、,，.。· ]?\\s*[牛马羊鸡狗猪鼠虎兔龙蛇猴])\\s*[）)]\\s*开\\s*(?P<open>[^\\s准中错赢对↑√]+)"
-  },
-  {
-    "name": "同床异梦",
-    "pick": "尾部",
-    "url": "https://ofxhqgor.li0cj-4esgz-npswxa.xyz/view.php?id=521",
-    "payload": "page_and_scripts",
-    "title": "同床异梦",
-    "record": "(?P<period>\\d{3})\\s*期[^期]{0,90}?(?:绝\\s*杀|稳\\s*杀|精\\s*杀|无错\\s*杀|砍\\s*杀|杀)\\s*(?:二|两|2|２|②)\\s*肖[^期]{0,50}?[【〖\\[（(《『〈]\\s*(?P<zodiac>[牛马羊鸡狗猪鼠虎兔龙蛇猴]\\s*[-－、,，.。· ]?\\s*[牛马羊鸡狗猪鼠虎兔龙蛇猴])\\s*[】〗\\]）)》』〉]\\s*(?:←|[~～_\\-－—|]*)\\s*(?:开|開)\\s*[:：]?\\s*(?P<open>[^\\s准中错赢对↑√]+)"
   },
   {
     "name": "一言中的",
@@ -1330,14 +1308,6 @@
     "api_url": "https://drxgkjt.uu1oc-eyjpt-uxyccu.xyz:29400/api/proxy/landing-page-data?url=jyb"
   },
   {
-    "name": "霸王传奇",
-    "pick": "尾部",
-    "url": "https://nwrkkmv.rx287-rkrai-jsjccc.xyz:29499/article/manager/6a33d2d2dfa16552b923d0af?url=ggz",
-    "parser": "manager_article_two_zodiac",
-    "payload": "admin_article_api",
-    "api_url": "https://nwrkkmv.rx287-rkrai-jsjccc.xyz:29499/api/proxy/landing-page-data?url=ggz"
-  },
-  {
     "name": "粉色樱花",
     "pick": "尾部",
     "url": "https://hcsuuoy.nimo7-9bgj4-fmspxt.xyz:29466/article/manager/6a31451a9f83cbadb83797d9?url=cww",
@@ -1441,13 +1411,6 @@
     "api_url": "https://dgjdlk.0hrwo-8qjsc-spwvba.xyz:29411/api/proxy/landing-page-data?url=cf"
   },
   {
-    "name": "阳春彩虹",
-    "pick": "尾部",
-    "url": "https://8818.www19753a.com/read.php?tid=639",
-    "parser": "yangchun_caihong_read_page",
-    "payload": "browser_rendered_page"
-  },
-  {
     "name": "无所畏惧",
     "pick": "尾部",
     "url": "https://8818.www73261a.com/read.php?tid=441",
@@ -1461,14 +1424,6 @@
     "parser": "zhenlong_huoxian_admin_article",
     "payload": "admin_article_api",
     "api_url": "https://mbsqhpk.8ivvt-u3cx5-enwlld.xyz:29400/api/proxy/landing-page-data?url=lhzj"
-  },
-  {
-    "name": "六合中心",
-    "pick": "尾部",
-    "url": "https://utklnwvn.xt8d7-kd9kc-csprqr.work:29488/article/manager/6a0445354ea5c20141013e7c?url=qdz",
-    "parser": "liuhe_zhongxin_manager_article",
-    "payload": "admin_article_api",
-    "api_url": "https://utklnwvn.xt8d7-kd9kc-csprqr.work:29488/api/proxy/landing-page-data?url=qdz"
   },
   {
     "name": "白手起家",
@@ -1534,22 +1489,6 @@
     "title": "志在四方"
   },
   {
-    "name": "周大发财",
-    "pick": "top",
-    "url": "https://dh-nwsm-0806.yqs01490156c.app/cm/cm101.html",
-    "parser": "site_scoped_two_zodiac",
-    "payload": "page",
-    "title": "周大发财"
-  },
-  {
-    "name": "超越自我",
-    "pick": "bottom",
-    "url": "https://cahgjib.5blx9-z8506-ekiwxc.work:29488/article/manager/6a1446e9bf0a6cb1dd38fbad?url=lqz",
-    "parser": "manager_article_two_zodiac",
-    "payload": "admin_article_api",
-    "api_url": "https://cahgjib.5blx9-z8506-ekiwxc.work:29488/api/proxy/landing-page-data?url=lqz"
-  },
-  {
     "name": "四季如春",
     "pick": "bottom",
     "url": "https://pgyzulb.iwnn7-gyyip-pnpfqv.work:29477/article/manager/6a153c328be59b17287c6ceb?url=bflc",
@@ -1580,14 +1519,6 @@
     "parser": "manager_article_two_zodiac",
     "payload": "admin_article_api",
     "api_url": "https://sheuzjss.tgpcj-9w0vl-mwyhly.work:29422/api/proxy/landing-page-data?url=zfw"
-  },
-  {
-    "name": "澳门马头",
-    "pick": "bottom",
-    "url": "https://qgyhdauu.avht7-lah7b-oavfmr.work:29444/article/manager/6a6c7d332822d465035d6d7e?url=wzw",
-    "parser": "manager_article_two_zodiac",
-    "payload": "admin_article_api",
-    "api_url": "https://qgyhdauu.avht7-lah7b-oavfmr.work:29444/api/proxy/landing-page-data?url=wzw"
   },
   {
     "name": "极目远眺",
@@ -1699,13 +1630,14 @@
     "url": "https://18118.73829.com/read.php?tid=473",
     "parser": "site_scoped_two_zodiac",
     "payload": "page",
-    "title": "曲尽其妙"
+    "title": "(?:^|\\n)曲尽其妙(?:\\n|$)",
+    "stop": "重要通知"
   },
   {
     "name": "官网透码",
     "pick": "bottom",
     "url": "https://aszmkf.c3z3l-qrlqm-mwgccr.work:29411/article/manager/6a0833cc08adb5ed7357ef83?url=lhw",
-    "parser": "manager_article_two_zodiac",
+    "parser": "guanwang_touma_manager_article",
     "payload": "admin_article_api",
     "api_url": "https://aszmkf.c3z3l-qrlqm-mwgccr.work:29411/api/proxy/landing-page-data?url=lhw"
   },
@@ -1739,6 +1671,594 @@
     "url": "https://hl.www25195a.com/read.php?tid=684",
     "parser": "site_scoped_two_zodiac",
     "payload": "page",
-    "title": "黄大仙道"
+    "title": "(?:^|\\n)黄大仙道(?:\\n|$)",
+    "stop": "重要通知"
+  },
+  {
+    "name": "大有文章",
+    "pick": "bottom",
+    "url": "https://0130190808.880646.xyz/bbs/topic.php?id=20685",
+    "parser": "named_block",
+    "payload": "page",
+    "title": "大有文章",
+    "stop": "(?:上一篇|下一篇)\\s*[：:]",
+    "record": "(?P<period>[0-9]{3})期 *[:：]? *《大有文章》 *绝杀(?:二|两|2|２|②)肖 *【 *(?P<zodiac>[牛马羊鸡狗猪鼠虎兔龙蛇猴] *[.。·－、,，-]* *[牛马羊鸡狗猪鼠虎兔龙蛇猴]) *】 *开[:： ]*(?P<open>[^ 准中错赢对↑√]+)"
+  },
+  {
+    "name": "梦寐以求第二",
+    "pick": "bottom",
+    "url": "https://rzezcu.1d6n7-kqrjr-tliphw.xyz:29466/article/manager/6a12b692d5071f9d0b8b463c?url=hcf",
+    "parser": "named_block",
+    "payload": "admin_article_api",
+    "title": "\\d{3}\\s*期\\s*[：:]\\s*[【〖\\[]\\s*绝杀\\s*二肖",
+    "stop": "(?:上一篇|下一篇)\\s*[：:]|重要通知|第[①一]步骤|免责提示",
+    "record": "(?P<period>\\d{3})\\s*期\\s*[:：]?\\s*《\\s*梦寐以求\\s*》\\s*(?:👈\\s*)?绝\\s*杀\\s*(?:二|两|2|２|②)\\s*肖\\s*(?:👈\\s*)?[【〖\\[]\\s*(?P<zodiac>[牛马羊鸡狗猪鼠虎兔龙蛇猴]\\s*[-－、,，.。· ]?\\s*[牛马羊鸡狗猪鼠虎兔龙蛇猴])\\s*[】〗\\]]\\s*开\\s*[:：]?\\s*(?P<open>[^\\s准中错赢对↑√]+)",
+    "api_url": "https://rzezcu.1d6n7-kqrjr-tliphw.xyz:29466/api/proxy/landing-page-data?url=hcf"
+  },
+  {
+    "name": "紫苏经典",
+    "pick": "top",
+    "url": "https://4.48kk49.com:1888/Article/ar_content/id/1545/tid/82.html",
+    "parser": "named_block",
+    "payload": "page",
+    "title": "紫苏经典\\s*好料\\s*[《【〖\\[]\\s*绝\\s*杀\\s*(?:二|两|2|２|②)\\s*肖\\s*[》】〗\\]]",
+    "stop": "\\*点击查看新港澳台彩图大全",
+    "record": "(?P<period>\\d{3})\\s*期\\s*绝\\s*杀\\s*(?:二|两|2|２|②)\\s*肖\\s*[:：]?\\s*[【〖\\[]\\s*(?P<zodiac>[^\\W\\d_]\\s*[-－、，,.。]?\\s*[^\\W\\d_])\\s*[】〗\\]]\\s*[开開]\\s*[:：]?\\s*(?P<open>[^\\s准中错赢对]+)",
+    "history_authorization": "本次允许不足10期",
+    "history_valid_periods": [
+      225,
+      224,
+      223,
+      222,
+      221,
+      220,
+      219,
+      218,
+      216
+    ],
+    "history_missing_periods": [
+      217
+    ]
+  },
+  {
+    "name": "天才小白",
+    "pick": "top",
+    "url": "https://4.48kk49.com:1888/Article/ar_content/id/1439/tid/82.html",
+    "parser": "named_block",
+    "payload": "page",
+    "title": "天才小白\\s*精准\\s*[【〖\\[]\\s*专\\s*杀\\s*(?:二|两|2|２|②)\\s*肖\\s*[】〗\\]]",
+    "stop": "\\*点击查看新港澳台彩图大全",
+    "record": "(?P<period>\\d{3})\\s*期\\s*天才小白\\s*专\\s*杀\\s*(?:二|两|2|２|②)\\s*肖\\s*[:：]?\\s*[【〖\\[]\\s*(?P<zodiac>[^\\W\\d_]\\s*[-－、，,.。]?\\s*[^\\W\\d_])\\s*[】〗\\]]\\s*[开開]\\s*[:：]?\\s*(?P<open>[^\\s准中错赢对]+)",
+    "history_authorization": "本次允许不足10期",
+    "history_valid_periods": [
+      225,
+      224,
+      223,
+      221,
+      220,
+      219,
+      218,
+      217,
+      216
+    ],
+    "history_missing_periods": [
+      222
+    ]
+  },
+  {
+    "name": "鲲逆鳞",
+    "pick": "top",
+    "url": "https://88.48a55.com:1888/gszl/id/1521",
+    "parser": "named_block",
+    "payload": "page",
+    "title": "鲲逆鳞\\s*★\\s*实力\\s*[【〖\\[]\\s*拼杀\\s*(?:二|两|2|２|②)\\s*肖\\s*[】〗\\]]",
+    "stop": "(?:上一篇|下一篇)\\s*[：:]",
+    "record": "(?P<period>\\d{3})\\s*期\\s*拼杀\\s*(?:二|两|2|２|②)\\s*肖\\s*[:：]?\\s*[【〖\\[]\\s*(?P<zodiac>[^\\W\\d_]\\s*[-－、，,.。]?\\s*[^\\W\\d_])\\s*[】〗\\]]\\s*[开開]\\s*[:：]?\\s*(?P<open>[^\\s准中错赢对]+)"
+  },
+  {
+    "name": "倾不素颜",
+    "pick": "bottom",
+    "url": "https://88.jcwap.in/gsx.aspx?id=34",
+    "parser": "named_block",
+    "payload": "page",
+    "title": "倾不素颜",
+    "stop": "copyright|免责声明|返回首页",
+    "record": "(?P<period>\\d{3})\\s*期\\s*[：:]?\\s*[（(]\\s*绝\\s*杀\\s*(?:二|两|2|２|②)\\s*肖\\s*[）)]\\s*⠾\\s*(?P<zodiac>[牛马羊鸡狗猪鼠虎兔龙蛇猴]\\s*[-－、,，.。· ]?\\s*[牛马羊鸡狗猪鼠虎兔龙蛇猴])\\s*⠾\\s*开\\s*[:：]?\\s*(?P<open>[^\\s准中错赢对]+)",
+    "history_authorization": "用户特例添加",
+    "history_valid_periods": [
+      224,
+      223,
+      222,
+      221,
+      220,
+      219,
+      218,
+      217,
+      216,
+      215
+    ],
+    "history_missing_periods": []
+  },
+  {
+    "name": "管家婆精准杀二肖",
+    "pick": "top",
+    "url": "https://4.48kk49.com:1888/Article/ar_content/id/172/tid/5.html",
+    "parser": "named_block",
+    "payload": "page",
+    "title": "精准杀二肖",
+    "stop": "\\*点击查看新港澳台彩图",
+    "record": "(?P<period>\\d{3})\\s*期\\s*绝\\s*杀\\s*(?:二|两|2|２|②)\\s*肖\\s*[:：]?\\s*[【〖\\[]\\s*(?P<zodiac>[牛马羊鸡狗猪鼠虎兔龙蛇猴]\\s*[-－、,，.。· ]?\\s*[牛马羊鸡狗猪鼠虎兔龙蛇猴])\\s*[】〗\\]]\\s*[开開]\\s*[:：]?\\s*(?P<open>[^\\s准中错赢对↑√]+)",
+    "history_authorization": "用户特例添加",
+    "history_valid_periods": [
+      225,
+      222,
+      221
+    ],
+    "history_missing_periods": [
+      224,
+      223,
+      220,
+      219,
+      218,
+      217,
+      216,
+      215
+    ]
+  },
+  {
+    "name": "金多宝信息网",
+    "pick": "top",
+    "url": "https://4.48kk49.com:1888/Article/ar_content/id/156/tid/7.html",
+    "parser": "named_block",
+    "payload": "page",
+    "title": "金多宝信息網[^\\n]{0,80}絕殺二肖",
+    "stop": "(?:上一篇|下一篇)\\s*[：:]\\s*225期\\s*:\\s*金多宝信息網",
+    "record": "(?P<period>\\d{3})\\s*期\\s*絕殺二肖\\s*[:：]?\\s*[【〖\\[]\\s*(?P<zodiac>[牛马羊鸡狗猪鼠虎兔龙蛇猴]\\s*[-－、,，.。· ]?\\s*[牛马羊鸡狗猪鼠虎兔龙蛇猴])\\s*[】〗\\]]\\s*[^0-9]{0,80}?[开開]\\s*[:：]?\\s*(?P<open>[^\\s准中错赢对↑√]+)",
+    "history_authorization": "用户指定：只按已有期数对比，225/224基准均可通过",
+    "history_valid_periods": [
+      225,
+      224,
+      223,
+      222,
+      220,
+      219,
+      218,
+      217,
+      216,
+      215
+    ],
+    "history_missing_periods": [
+      221
+    ]
+  },
+  {
+    "name": "澳门彩票",
+    "pick": "top",
+    "url": "https://4.48kk49.com:1888/Article/ar_content/id/126/tid/9.html",
+    "parser": "named_block",
+    "payload": "page",
+    "title": "澳门彩票[^\\n]{0,80}白姐绝杀②肖",
+    "stop": "上一篇\\s*[：:]\\s*225期\\s*:\\s*澳门彩票",
+    "record": "(?P<period>\\d{3})\\s*期\\s*绝杀两肖\\s*[:：]?\\s*[【〖\\[]\\s*(?P<zodiac>[牛马羊鸡狗猪鼠虎兔龙蛇猴]\\s*[-－、,，.。· ]?\\s*[牛马羊鸡狗猪鼠虎兔龙蛇猴])\\s*[】〗\\]]\\s*[^0-9]{0,80}?[开開]\\s*[:：]?\\s*(?P<open>[^\\s准中错赢对↑√]+)",
+    "history_authorization": "用户指定：只按已有期数对比，225/224基准均可通过",
+    "history_valid_periods": [
+      225,
+      224,
+      223,
+      222,
+      221,
+      220,
+      219,
+      218,
+      217,
+      216
+    ],
+    "history_missing_periods": []
+  },
+  {
+    "name": "大赢家",
+    "pick": "top",
+    "url": "https://4.48kk49.com:1888/Article/ar_content/id/283/tid/18.html",
+    "parser": "named_block",
+    "payload": "page",
+    "title": "大赢家[^\\n]{0,80}必杀二肖",
+    "stop": "上一篇\\s*[：:]\\s*225期\\s*:\\s*◆大赢家◆",
+    "record": "(?P<period>\\d{3})\\s*期\\s*大赢家绝杀二肖\\s*[:：]?\\s*[【〖\\[]\\s*(?P<zodiac>[牛马羊鸡狗猪鼠虎兔龙蛇猴]\\s*[-－、,，.。· ]?\\s*[牛马羊鸡狗猪鼠虎兔龙蛇猴])\\s*[】〗\\]]\\s*[^0-9]{0,80}?[开開]\\s*[:：]?\\s*(?P<open>[^\\s准中错赢对↑√]+)",
+    "history_authorization": "用户指定：只按已有期数对比，225/224基准均可通过",
+    "history_valid_periods": [
+      225,
+      224,
+      222,
+      221,
+      220,
+      219,
+      218,
+      217,
+      216,
+      214
+    ],
+    "history_missing_periods": [
+      223
+    ]
+  },
+  {
+    "name": "⑥合彩开奖资料",
+    "pick": "top",
+    "url": "https://4.48kk49.com:1888/Article/ar_content/id/351/tid/23.html",
+    "parser": "named_block",
+    "payload": "page",
+    "title": "原创资料[^\\n]{0,80}绝杀两肖",
+    "stop": "上一篇\\s*[：:]\\s*225期\\s*:\\s*原创资料",
+    "record": "(?P<period>\\d{3})\\s*期\\s*⑥合彩开奖资料【绝杀两肖】\\s*[:：]?\\s*[【〖\\[]\\s*(?P<zodiac>[牛马羊鸡狗猪鼠虎兔龙蛇猴]\\s*[-－、,，.。· ]?\\s*[牛马羊鸡狗猪鼠虎兔龙蛇猴])\\s*[】〗\\]]\\s*[^0-9]{0,80}?[开開]\\s*[:：]?\\s*(?P<open>[^\\s准中错赢对↑√]+)",
+    "history_authorization": "用户指定：只按已有期数对比，225/224基准均可通过",
+    "history_valid_periods": [
+      225,
+      224,
+      223,
+      222,
+      221,
+      220,
+      219,
+      217,
+      216,
+      215
+    ],
+    "history_missing_periods": [
+      218
+    ]
+  },
+  {
+    "name": "澳门赌圣",
+    "pick": "top",
+    "url": "https://4.48kk49.com:1888/Article/ar_content/id/399/tid/26.html",
+    "parser": "named_block",
+    "payload": "page",
+    "title": "⑥合赌圣[^\\n]{0,80}绝杀二肖",
+    "stop": "上一篇\\s*[：:]\\s*225期\\s*:\\s*⑥合赌圣",
+    "record": "(?P<period>\\d{3})\\s*期\\s*澳门赌圣【绝杀二肖】\\s*[:：]?\\s*[【〖\\[]\\s*(?P<zodiac>[牛马羊鸡狗猪鼠虎兔龙蛇猴]\\s*[-－、,，.。· ]?\\s*[牛马羊鸡狗猪鼠虎兔龙蛇猴])\\s*[】〗\\]]\\s*[^0-9]{0,80}?[开開]\\s*[:：]?\\s*(?P<open>[^\\s准中错赢对↑√]+)",
+    "history_authorization": "用户指定：只按已有期数对比，225/224基准均可通过",
+    "history_valid_periods": [
+      225,
+      223,
+      222,
+      221,
+      220,
+      219,
+      218,
+      217,
+      216,
+      213
+    ],
+    "history_missing_periods": [
+      224
+    ]
+  },
+  {
+    "name": "博发世家",
+    "pick": "top",
+    "url": "https://4.48kk49.com:1888/Article/ar_content/id/496/tid/33.html",
+    "parser": "named_block",
+    "payload": "page",
+    "title": "博发世家[^\\n]{0,80}错二极品杀肖",
+    "stop": "上一篇\\s*[：:]\\s*225期\\s*:\\s*博发世家",
+    "record": "(?P<period>\\d{3})\\s*期\\s*全年极品杀肖\\s*=*\\s*[:：]?\\s*[【〖\\[]\\s*(?P<zodiac>[牛马羊鸡狗猪鼠虎兔龙蛇猴]\\s*[-－、,，.。· ]?\\s*[牛马羊鸡狗猪鼠虎兔龙蛇猴])\\s*[】〗\\]]\\s*[^0-9]{0,80}?[开開]\\s*[:：]?\\s*(?P<open>[^\\s准中错赢对↑√]+)",
+    "history_authorization": "用户指定：只按已有期数对比，225/224基准均可通过",
+    "history_valid_periods": [
+      225,
+      224
+    ],
+    "history_missing_periods": [
+      223,
+      222,
+      221,
+      220,
+      219,
+      218,
+      217,
+      216
+    ]
+  },
+  {
+    "name": "米老头",
+    "pick": "top",
+    "url": "https://4.48kk49.com:1888/Article/ar_content/id/532/tid/35.html",
+    "parser": "named_block",
+    "payload": "page",
+    "title": "绝杀二肖原创今年无错长期公开验证",
+    "stop": "上一篇\\s*[：:]\\s*225期\\s*:\\s*称霸9肖王",
+    "record": "(?P<period>\\d{3})\\s*期\\s*→米老头←年度少错绝杀\\s*[:：]?\\s*[【〖\\[]\\s*(?P<zodiac>[牛马羊鸡狗猪鼠虎兔龙蛇猴]\\s*[-－、,，.。· ]?\\s*[牛马羊鸡狗猪鼠虎兔龙蛇猴])\\s*[】〗\\]]\\s*[^0-9]{0,80}?[开開]\\s*[:：]?\\s*(?P<open>[^\\s准中错赢对↑√]+)",
+    "history_authorization": "用户指定：只按已有期数对比，225/224基准均可通过",
+    "history_valid_periods": [
+      225,
+      224,
+      223,
+      222,
+      221,
+      219,
+      218,
+      217,
+      216,
+      215
+    ],
+    "history_missing_periods": [
+      220
+    ]
+  },
+  {
+    "name": "凤凰马经",
+    "pick": "top",
+    "url": "https://4.48kk49.com:1888/Article/ar_content/id/559/tid/36.html",
+    "parser": "named_block",
+    "payload": "page",
+    "title": "凤凰马经[^\\n]{0,80}绝杀[^\\n]{0,20}二肖",
+    "stop": "上一篇\\s*[：:]\\s*225期\\s*:\\s*凤凰马经",
+    "record": "(?P<period>\\d{3})\\s*期\\s*杀\\s*[:：]?\\s*[【〖\\[]\\s*(?P<zodiac>[牛马羊鸡狗猪鼠虎兔龙蛇猴]\\s*[-－、,，.。· ]?\\s*[牛马羊鸡狗猪鼠虎兔龙蛇猴])\\s*[】〗\\]]\\s*[^0-9]{0,80}?[开開]\\s*[:：]?\\s*(?P<open>[^\\s准中错赢对↑√]+)",
+    "history_authorization": "用户指定：只按已有期数对比，225/224基准均可通过",
+    "history_valid_periods": [
+      225,
+      222,
+      221,
+      220,
+      219,
+      218,
+      217,
+      216,
+      215,
+      214
+    ],
+    "history_missing_periods": [
+      224,
+      223
+    ]
+  },
+  {
+    "name": "澳门好彩",
+    "pick": "top",
+    "url": "https://4.48kk49.com:1888/Article/ar_content/id/656/tid/44.html",
+    "parser": "named_block",
+    "payload": "page",
+    "title": "澳门好彩[^\\n]{0,80}杀二肖",
+    "stop": "上一篇\\s*[：:]\\s*225期\\s*:\\s*澳门好彩",
+    "record": "(?P<period>\\d{3})\\s*期\\s*绝杀二肖\\s*[:：]?\\s*[【〖\\[]\\s*(?P<zodiac>[牛马羊鸡狗猪鼠虎兔龙蛇猴]\\s*[-－、,，.。· ]?\\s*[牛马羊鸡狗猪鼠虎兔龙蛇猴])\\s*[】〗\\]]\\s*[^0-9]{0,80}?[开開]\\s*[:：]?\\s*(?P<open>[^\\s准中错赢对↑√]+)",
+    "history_authorization": "用户指定：只按已有期数对比，225/224基准均可通过",
+    "history_valid_periods": [
+      225,
+      223,
+      221,
+      220,
+      219,
+      218,
+      217,
+      216,
+      215,
+      214
+    ],
+    "history_missing_periods": [
+      224,
+      222
+    ]
+  },
+  {
+    "name": "东方心经",
+    "pick": "top",
+    "url": "https://4.48kk49.com:1888/Article/ar_content/id/746/tid/52.html",
+    "parser": "named_block",
+    "payload": "page",
+    "title": "东方心经[^\\n]{0,80}无错杀肖",
+    "stop": "上一篇\\s*[：:]\\s*225期\\s*:\\s*东方心经",
+    "record": "(?P<period>\\d{3})\\s*期\\s*东方心经无错杀肖\\s*[:：]?\\s*[【〖\\[]\\s*(?P<zodiac>[牛马羊鸡狗鼠虎兔龙蛇猴]\\s*[-－、,，.。· ]?\\s*[牛马羊鸡狗猪鼠虎兔龙蛇猴])\\s*[】〗\\]]\\s*[^0-9]{0,80}?[开開]\\s*[:：]?\\s*(?P<open>[^\\s准中错赢对↑√]+)",
+    "history_authorization": "用户指定：只按已有期数对比，225/224基准均可通过",
+    "history_valid_periods": [
+      225,
+      224,
+      223,
+      222,
+      220,
+      219,
+      218,
+      216,
+      215,
+      214
+    ],
+    "history_missing_periods": [
+      221,
+      217
+    ]
+  },
+  {
+    "name": "大刀皇",
+    "pick": "top",
+    "url": "https://4.48kk49.com:1888/Article/ar_content/id/765/tid/54.html",
+    "parser": "named_block",
+    "payload": "page",
+    "title": "大刀皇[^\\n]{0,80}稳杀二肖",
+    "stop": "上一篇\\s*[：:]\\s*225期\\s*:\\s*大刀皇",
+    "record": "(?P<period>\\d{3})\\s*期\\s*大刀皇稳杀二肖\\s*[:：]?\\s*[【〖\\[]\\s*(?P<zodiac>[牛马羊鸡狗猪鼠虎兔龙蛇猴]\\s*[-－、,，.。· ]?\\s*[牛马羊鸡狗猪鼠虎兔龙蛇猴])\\s*[】〗\\]]\\s*[^0-9]{0,80}?[开開]\\s*[:：]?\\s*(?P<open>[^\\s准中错赢对↑√]+)",
+    "history_authorization": "用户指定：只按已有期数对比，225/224基准均可通过",
+    "history_valid_periods": [
+      225,
+      224,
+      223,
+      222,
+      221,
+      220,
+      219,
+      218,
+      217,
+      216
+    ],
+    "history_missing_periods": []
+  },
+  {
+    "name": "稳如泰山",
+    "pick": "top",
+    "url": "https://azjjosd.scyms-vek4g-yubibb.xyz:17455/topic/253481.html",
+    "parser": "wenru_taishan_top",
+    "payload": "browser_rendered_page",
+    "title": "稳如泰山"
+  },
+  {
+    "name": "梦想人生",
+    "pick": "bottom",
+    "url": "https://nwrkkmv.rx287-rkrai-jsjccc.xyz:29499/article/manager/6a55eceff447e21b02daa681?url=ggz",
+    "parser": "mengxiang_rensheng_manager_article",
+    "payload": "admin_article_api",
+    "api_url": "https://nwrkkmv.rx287-rkrai-jsjccc.xyz:29499/api/proxy/landing-page-data?url=ggz",
+    "title": "梦想人生"
+  },
+  {
+    "name": "妆罢低声",
+    "pick": "bottom",
+    "url": "https://fansiggg.jc2q8-whfmg-vajjui.xyz:29433/article/manager/6a4e87bd57dc857ae1c13558?url=dyj",
+    "payload": "admin_article_api",
+    "api_url": "https://fansiggg.jc2q8-whfmg-vajjui.xyz:29433/api/proxy/landing-page-data?url=dyj",
+    "parser": "zhuangba_disheng_manager_article"
+  },
+  {
+    "name": "燕姬独擅",
+    "pick": "bottom",
+    "url": "https://fansiggg.jc2q8-whfmg-vajjui.xyz:29433/article/manager/6a64ec62b3f65fed7d6286e7?url=dyj",
+    "payload": "admin_article_api",
+    "api_url": "https://fansiggg.jc2q8-whfmg-vajjui.xyz:29433/api/proxy/landing-page-data?url=dyj",
+    "parser": "yanji_dushan_manager_article"
+  },
+  {
+    "name": "金码赌神",
+    "pick": "bottom",
+    "url": "https://vnxqseiu.ymm13-381iq-zcgmtu.xyz:29400/article/manager/6a081b9be0d076537e1df8a6?url=jdb",
+    "payload": "admin_article_api",
+    "api_url": "https://vnxqseiu.ymm13-381iq-zcgmtu.xyz:29400/api/proxy/landing-page-data?url=jdb",
+    "parser": "jinma_dushen_manager_article"
+  },
+  {
+    "name": "上官研之",
+    "pick": "top",
+    "url": "https://xxn08n.w2jqr-rbl71-ngvkmq.work/topic/479502.html",
+    "parser": "new_topic_235_exact",
+    "payload": "page_and_scripts",
+    "title": "上官研之"
+  },
+  {
+    "name": "杯中之水",
+    "pick": "top",
+    "url": "https://xxn08n.w2jqr-rbl71-ngvkmq.work/topic/453967.html",
+    "parser": "new_topic_235_exact",
+    "payload": "page_and_scripts",
+    "title": "杯中之水"
+  },
+  {
+    "name": "林间语屑",
+    "pick": "bottom",
+    "url": "https://citsyvlm.5ujgl-2q1ig-bszkno.work:17466/topic/682028.html",
+    "parser": "new_topic_235_exact",
+    "payload": "page_and_scripts",
+    "title": "林间语屑"
+  },
+  {
+    "name": "恍然大悟",
+    "pick": "top",
+    "url": "https://cxmdjok.8wtwc-boven-glylvt.xyz:16677/topic/437767.html",
+    "parser": "new_topic_235_exact",
+    "payload": "page_and_scripts",
+    "title": "恍然大悟"
+  },
+  {
+    "name": "粉骨糜身",
+    "pick": "top",
+    "url": "https://qhfsrngx.x9mcp-vrrqh-dzqfro.xyz:16677/topic/451425.html",
+    "parser": "new_topic_235_exact",
+    "payload": "page_and_scripts",
+    "title": "粉骨糜身"
+  },
+  {
+    "name": "安宅正路",
+    "pick": "top",
+    "url": "https://uhaxnrzx.q76gf-deec8-zqckeo.xyz:16677/topic/615690.html",
+    "parser": "new_topic_235_exact",
+    "payload": "page_and_scripts",
+    "title": "安宅正路"
+  },
+  {
+    "name": "坐怀不乱",
+    "pick": "top",
+    "url": "https://gabqzzz.ahv8c-6713g-otpeiy.xyz:16677/topic/530161.html",
+    "parser": "new_topic_235_exact",
+    "payload": "page_and_scripts",
+    "title": "坐怀不乱"
+  },
+  {
+    "name": "市区幸福",
+    "pick": "top",
+    "url": "https://yelsagvn.1iwwa-jwubd-szbnwd.work:17466/topic/551397.html",
+    "parser": "new_topic_235_exact",
+    "payload": "page_and_scripts",
+    "title": "市区幸福"
+  },
+  {
+    "name": "燃萁煎豆",
+    "pick": "bottom",
+    "url": "https://kjqba.ipvrs-9mw2c-wdnuvo.work/topic/213294.html",
+    "parser": "new_topic_235_exact",
+    "payload": "page_and_scripts",
+    "title": "燃萁煎豆"
+  },
+  {
+    "name": "周公神算",
+    "pick": "top",
+    "url": "https://xxn08n.w2jqr-rbl71-ngvkmq.work/",
+    "parser": "zhougong_shensuan_two_zodiac",
+    "payload": "page_and_scripts",
+    "history_authorization": "本次允许不足10期"
+  },
+  {
+    "name": "托尼库尔莫妮卡",
+    "pick": "top",
+    "url": "https://zcphjs.ce83x-ms2rz-orwude.work:12277/#/users/230245",
+    "parser": "tuoni_kulmonika_snapshots",
+    "payload": "tuku_user_forums",
+    "history_authorization": "本次允许不足10期"
+  },
+  {
+    "name": "小算算",
+    "pick": "bottom",
+    "url": "https://zcphjs.ce83x-ms2rz-orwude.work:12277/#/users/214200",
+    "parser": "xiaosuan_bottom_two_zodiac",
+    "payload": "tuku_user_forums",
+    "history_authorization": "本次允许不足10期"
+  },
+  {
+    "name": "卢九稳杀",
+    "pick": "尾部",
+    "url": "https://xclpqth.4zsn8-rzqg9-ulwfyu.work:17477/topic/800282.html",
+    "parser": "lujiu_wensha_bottom",
+    "payload": "page_and_scripts"
+  },
+  {
+    "name": "卢九",
+    "pick": "顶部",
+    "url": "https://xclpqth.4zsn8-rzqg9-ulwfyu.work:17477/",
+    "parser": "lujiu_home_top",
+    "payload": "page_and_scripts"
+  },
+  {
+    "name": "月窟织绡",
+    "pick": "顶部",
+    "url": "https://jtrmhar.cwdc3-r5vqn-qzqasa.work:17455/topic/741219.html",
+    "parser": "yueku_zhixiao_top",
+    "payload": "page_and_scripts"
+  },
+  {
+    "name": "步步高升",
+    "pick": "top",
+    "url": "https://azyqhiut.9kzow-3yq4j-hlwmev.work:17477/",
+    "parser": "bubu_gaosheng_top",
+    "payload": "page_and_scripts"
+  },
+  {
+    "name": "天狼杀星",
+    "pick": "bottom",
+    "url": "https://etmchyhq.cee5t-w30bf-xgqspr.work:17477/topic/248728.html",
+    "parser": "tianlang_shaxing_bottom",
+    "payload": "page_and_scripts"
   }
 ]

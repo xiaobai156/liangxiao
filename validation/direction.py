@@ -3,7 +3,7 @@ from __future__ import annotations
 from domain.models import Record, Site
 from validation.records import (
     merge_equivalent_records,
-    record_value_signature,
+    record_signature,
 )
 
 
@@ -13,7 +13,7 @@ def _merge_adjacent_equivalent(records: list[Record]) -> list[Record]:
         if (
             merged
             and merged[-1].period == record.period
-            and record_value_signature(merged[-1]) == record_value_signature(record)
+            and record_signature(merged[-1]) == record_signature(record)
         ):
             merged[-1] = merge_equivalent_records([merged[-1], record])
         else:
@@ -39,7 +39,7 @@ def select_record(records: list[Record], period: int, site: Site) -> Record:
         raise ValueError(
             f"{site.pick} 候选内未找到 {period} 期；实际近3条：{actual}"
         )
-    signatures = {record_value_signature(record) for record in matches}
+    signatures = {record_signature(record) for record in matches}
     if len(signatures) > 1:
         details = "、".join(
             f"{record.zodiac}@位置{record.position}"

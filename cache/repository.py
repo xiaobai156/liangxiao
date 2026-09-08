@@ -1,64 +1,151 @@
 from __future__ import annotations
 
-from collections.abc import Mapping
-from datetime import datetime
+import hashlib
 import json
 import os
-from pathlib import Path
 import tempfile
+from collections.abc import Mapping
+from contextlib import contextmanager
+from datetime import datetime
+from pathlib import Path
 
 from cache.contracts import (
     CACHE_POSITION_KIND,
     CACHE_SCHEMA_VERSION,
+    CACHE_WINDOW_SIZE,
+    cache_identity,
+    config_fingerprint,
+    recent_periods,
     validate_cache_position_contract,
+    validate_issue_window,
 )
-from cache.duplicates import article_ids_from_entry, cache_key, positions_from_entry, values_from_entry
+from cache.duplicates import (
+    article_ids_from_entry,
+    positions_from_entry,
+    values_from_entry,
+)
 from domain.models import HistoryResult, Result
+from validation.records import normalize_zodiac
 
 
-def recent_periods(current_period: int, count: int = 10) -> list[int]:
-    if not 1 <= current_period <= 365:
-        raise ValueError(f"期数必须在1-365内：{current_period}")
-    if count < 1:
-        return []
-    return [((current_period - offset - 1) % 365) + 1 for offset in range(count)]
+class _PreparedCache(dict[str, object]):
+    def __init__(self, payload: Mapping[str, object], source_hash: str | None) -> None:
+        super().__init__(payload)
+        self.source_hash = source_hash
+
+
+def _result_identity(result: Result | HistoryResult, index: int) -> tuple[str, str, str]:
+    site = result.site
+    if not isinstance(site.name, str) or not site.name.strip():
+        raise ValueError(f"抓取结果第{index + 1}个站点身份无效：name不能为空")
+    if not isinstance(site.url, str) or not site.url.strip():
+        raise ValueError(f"抓取结果第{index + 1}个站点身份无效：url不能为空")
+    if site.pick not in {"top", "bottom"}:
+        raise ValueError(f"抓取结果第{index + 1}个站点身份无效：pick必须为top或bottom")
+    return site.name, site.url, site.pick
+
+
+def _result_keys(results: list[Result] | list[HistoryResult]) -> list[tuple[str, str, str]]:
+    keys: list[tuple[str, str, str]] = []
+    seen: set[tuple[str, str, str]] = set()
+    for index, result in enumerate(results):
+        key = _result_identity(result, index)
+        if key in seen:
+            raise ValueError(f"抓取结果包含重复站点身份：{key[0]} {key[1]} {key[2]}")
+        seen.add(key)
+        keys.append(key)
+    return keys
+
+
+def _validate_record_position(record, site_name: str) -> None:
+    if isinstance(record.position, bool) or not isinstance(record.position, int) or record.position < 0:
+        raise ValueError(f"缓存位置结构无效：{site_name} {record.period}期position必须为非负整数")
 
 
 def _validate_issues(cache: Mapping[str, object]) -> list[int]:
-    raw_issues = cache.get("issues")
-    if not isinstance(raw_issues, list) or not raw_issues:
-        raise ValueError("缓存文件缺少有效期数窗口，已拒绝覆盖")
-    try:
-        issues = [int(period) for period in raw_issues]
-    except (TypeError, ValueError) as exc:
-        raise ValueError("缓存文件期数窗口无效，已拒绝覆盖") from exc
-    if any(not 1 <= period <= 365 for period in issues) or issues != recent_periods(issues[0], len(issues)):
-        raise ValueError("缓存文件期数窗口顺序无效，已拒绝覆盖")
-    return issues
+    return validate_issue_window(cache.get("issues"))
+
+
+def _validate_current_period(current_period: object) -> int:
+    if isinstance(current_period, bool) or not isinstance(current_period, int) or not 1 <= current_period <= 365:
+        raise ValueError(f"期数必须在1-365内：{current_period}")
+    return current_period
 
 
 class RecentCacheRepository:
     def __init__(self, path: Path) -> None:
         self.path = path
 
-    def read(self) -> dict[str, object]:
+    def _read_snapshot(self) -> tuple[dict[str, object], str | None]:
         if not self.path.exists():
-            return {}
+            return {}, None
         try:
-            loaded = json.loads(self.path.read_text(encoding="utf-8-sig"))
-        except json.JSONDecodeError as exc:
+            raw = self.path.read_bytes()
+            loaded = json.loads(raw.decode("utf-8-sig"))
+        except (UnicodeDecodeError, json.JSONDecodeError) as exc:
             raise ValueError(f"缓存文件损坏，已拒绝覆盖：{self.path}") from exc
         except OSError as exc:
             raise ValueError(f"缓存文件读取失败，已拒绝覆盖：{self.path}：{exc}") from exc
         if not isinstance(loaded, dict):
             raise ValueError(f"缓存文件结构无效，已拒绝覆盖：{self.path}")
-        return loaded
+        return loaded, hashlib.sha256(raw).hexdigest()
+
+    def read(self) -> dict[str, object]:
+        return self._read_snapshot()[0]
+
+    def _current_hash(self) -> str | None:
+        try:
+            raw = self.path.read_bytes()
+        except FileNotFoundError:
+            return None
+        except OSError as exc:
+            raise ValueError(f"缓存文件读取失败，已拒绝覆盖：{self.path}：{exc}") from exc
+        return hashlib.sha256(raw).hexdigest()
+
+    @contextmanager
+    def _lock(self):
+        self.path.parent.mkdir(parents=True, exist_ok=True)
+        lock_path = self.path.with_name(f".{self.path.name}.lock")
+        with lock_path.open("a+b") as handle:
+            if os.name == "nt":
+                import msvcrt
+
+                handle.seek(0, os.SEEK_END)
+                if handle.tell() == 0:
+                    handle.write(b"0")
+                    handle.flush()
+                handle.seek(0)
+                try:
+                    msvcrt.locking(handle.fileno(), msvcrt.LK_NBLCK, 1)
+                except OSError as exc:
+                    raise ValueError("缓存正在被其他进程写入，已拒绝覆盖") from exc
+                try:
+                    yield
+                finally:
+                    handle.seek(0)
+                    msvcrt.locking(handle.fileno(), msvcrt.LK_UNLCK, 1)
+            else:
+                import fcntl
+
+                try:
+                    fcntl.flock(handle.fileno(), fcntl.LOCK_EX | fcntl.LOCK_NB)
+                except OSError as exc:
+                    raise ValueError("缓存正在被其他进程写入，已拒绝覆盖") from exc
+                try:
+                    yield
+                finally:
+                    fcntl.flock(handle.fileno(), fcntl.LOCK_UN)
 
     def prepare_update(self, results: list[Result], current_period: int) -> dict[str, object] | None:
-        cache = self.read()
+        current_period = _validate_current_period(current_period)
+        result_keys = _result_keys(results)
+        expected_fingerprint = config_fingerprint([result.site for result in results])
+        cache, source_hash = self._read_snapshot()
         existing_issues: list[int] = []
         if cache:
             validate_cache_position_contract(cache)
+            if cache.get("config_fingerprint") != expected_fingerprint:
+                raise ValueError("缓存config_fingerprint缺失或不匹配，已拒绝覆盖")
             existing_issues = _validate_issues(cache)
             if not isinstance(cache.get("sites"), list):
                 raise ValueError(f"缓存文件站点列表结构无效，已拒绝覆盖：{self.path}")
@@ -73,48 +160,40 @@ class RecentCacheRepository:
                 return None
         else:
             issues = recent_periods(current_period)
-        issue_keys = {str(period) for period in issues}
 
         existing: dict[tuple[str, str, str], Mapping[str, object]] = {}
-        identities: dict[tuple[str, str, str], dict[str, str]] = {}
-        ordered_keys: list[tuple[str, str, str]] = []
         raw_entries = cache.get("sites", [])
-        assert isinstance(raw_entries, list)
-        for entry in raw_entries:
-            if not isinstance(entry, dict):
-                raise ValueError(f"缓存文件站点结构无效，已拒绝覆盖：{self.path}")
-            key = cache_key(str(entry.get("name") or ""), str(entry.get("url") or ""), str(entry.get("pick") or "top"))
+        if not isinstance(raw_entries, list):
+            raise ValueError(f"缓存文件站点列表结构无效，已拒绝覆盖：{self.path}")
+        existing_keys: list[tuple[str, str, str]] = []
+        for index, entry in enumerate(raw_entries):
+            if not isinstance(entry, Mapping):
+                raise ValueError(f"缓存文件第{index + 1}个站点结构无效，已拒绝覆盖：{self.path}")
+            key = cache_identity(entry, index)
             if key in existing:
                 raise ValueError(f"缓存文件包含重复站点，已拒绝覆盖：{key[0]} {key[1]} {key[2]}")
             existing[key] = entry
-            identities[key] = {"name": key[0], "url": key[1], "pick": key[2]}
-            ordered_keys.append(key)
+            existing_keys.append(key)
+        if cache and existing_keys != result_keys:
+            raise ValueError("缓存站点身份缺失、额外或顺序不一致，已拒绝覆盖")
 
-        result_by_key: dict[tuple[str, str, str], Result] = {}
-        for result in results:
-            key = cache_key(result.site.name, result.site.url, result.site.pick)
-            if key in result_by_key:
-                raise ValueError(f"抓取结果包含重复站点，已拒绝覆盖：{result.site.name}")
-            result_by_key[key] = result
-            if key not in identities:
-                identities[key] = {"name": key[0], "url": key[1], "pick": key[2]}
-                ordered_keys.append(key)
-
+        result_by_key = dict(zip(result_keys, results))
         sites: list[dict[str, object]] = []
         period_key = str(current_period)
-        for key in ordered_keys:
+        for key in result_keys:
             entry = existing.get(key, {})
             values = values_from_entry(entry)
             positions = positions_from_entry(entry)
             article_ids = article_ids_from_entry(entry)
-            result = result_by_key.get(key)
-            if result is not None and result.ok and result.record is not None:
+            result = result_by_key[key]
+            if result.ok and result.record is not None:
                 record = result.record
                 if record.position_kind != CACHE_POSITION_KIND:
                     raise ValueError(
                         f"缓存位置语义不兼容：{result.site.name}抓取结果position_kind="
                         f"{record.position_kind or '缺失'}，要求{CACHE_POSITION_KIND}"
                     )
+                _validate_record_position(record, result.site.name)
                 record_article_id = record.record_id if result.site.payload == "admin_article_api" else ""
                 values[period_key] = record.zodiac
                 positions[period_key] = record.position
@@ -122,8 +201,12 @@ class RecentCacheRepository:
                     article_ids[period_key] = record_article_id
                 else:
                     article_ids.pop(period_key, None)
+            else:
+                values.pop(period_key, None)
+                positions.pop(period_key, None)
+                article_ids.pop(period_key, None)
 
-            values = {str(period): values[str(period)] for period in issues if str(period) in values and str(period) in issue_keys}
+            values = {str(period): values[str(period)] for period in issues if str(period) in values}
             positions = {period: positions[period] for period in values if period in positions}
             article_ids = {period: article_ids[period] for period in values if period in article_ids}
             records = [
@@ -137,79 +220,75 @@ class RecentCacheRepository:
                 for period, zodiac in values.items()
             ]
             output: dict[str, object] = {
-                **identities[key],
+                "name": result.site.name,
+                "url": result.site.url,
+                "pick": result.site.pick,
                 "position_kind": CACHE_POSITION_KIND,
                 "values": values,
                 "positions": positions,
                 "records": records,
                 "fingerprint": "".join(values[str(period)] for period in issues if str(period) in values),
             }
-            error = result.error if result is not None else str(entry.get("error") or "")
-            if result is not None and not result.ok:
+            if not result.ok:
                 output["status"] = "failed"
-            if error:
-                output["error"] = error
+            if result.error:
+                output["error"] = result.error
             if article_ids:
                 output["article_ids"] = article_ids
             sites.append(output)
 
-        return {
-            "schema": CACHE_SCHEMA_VERSION,
-            "position_kind": CACHE_POSITION_KIND,
-            "description": "杀两肖重复检测最近10期基准数据；由每日指定期抓取自动覆盖更新。",
-            "updated_at": datetime.now().isoformat(timespec="seconds"),
-            "window_size": 10,
-            "issues": issues,
-            "sites": sites,
-        }
+        return _PreparedCache(
+            {
+                "schema": CACHE_SCHEMA_VERSION,
+                "position_kind": CACHE_POSITION_KIND,
+                "config_fingerprint": expected_fingerprint,
+                "description": "杀两肖重复检测最近10期基准数据；由每日指定期抓取自动覆盖更新。",
+                "updated_at": datetime.now().isoformat(timespec="seconds"),
+                "window_size": CACHE_WINDOW_SIZE,
+                "issues": issues,
+                "sites": sites,
+            },
+            source_hash,
+        )
 
     def commit(self, payload: Mapping[str, object]) -> None:
-        self.path.parent.mkdir(parents=True, exist_ok=True)
+        if not isinstance(payload, _PreparedCache):
+            raise ValueError("缓存提交未经过prepare，已拒绝写入")
+        validate_cache_position_contract(payload)
+        source_hash = payload.source_hash
         data = json.dumps(payload, ensure_ascii=False, indent=2).encode("utf-8")
-        fd, temporary = tempfile.mkstemp(prefix=f".{self.path.name}.", suffix=".tmp", dir=self.path.parent)
-        temporary_path = Path(temporary)
-        try:
-            with os.fdopen(fd, "wb") as stream:
-                stream.write(data)
-                stream.flush()
-                os.fsync(stream.fileno())
-            os.replace(temporary_path, self.path)
-        finally:
-            temporary_path.unlink(missing_ok=True)
+        with self._lock():
+            current_hash = self._current_hash()
+            if current_hash != source_hash:
+                raise ValueError("缓存在prepare后发生变化，已拒绝覆盖")
+            fd, temporary = tempfile.mkstemp(prefix=f".{self.path.name}.", suffix=".tmp", dir=self.path.parent)
+            temporary_path = Path(temporary)
+            try:
+                with os.fdopen(fd, "wb") as stream:
+                    stream.write(data)
+                    stream.flush()
+                    os.fsync(stream.fileno())
+                os.replace(temporary_path, self.path)
+            finally:
+                temporary_path.unlink(missing_ok=True)
 
     def prepare_history_update(
         self,
         results: list[HistoryResult],
         current_period: int,
     ) -> dict[str, object]:
-        cache = self.read()
-        if cache:
-            validate_cache_position_contract(cache)
+        current_period = _validate_current_period(current_period)
+        _, source_hash = self._read_snapshot()
         issues = recent_periods(current_period)
-        existing: dict[tuple[str, str, str], Mapping[str, object]] = {}
-        raw_entries = cache.get("sites", []) if cache else []
-        if not isinstance(raw_entries, list):
-            raise ValueError(f"缓存文件站点列表结构无效，已拒绝覆盖：{self.path}")
-        for entry in raw_entries:
-            if not isinstance(entry, dict):
-                raise ValueError(f"缓存文件站点结构无效，已拒绝覆盖：{self.path}")
-            key = cache_key(str(entry.get("name") or ""), str(entry.get("url") or ""), str(entry.get("pick") or "top"))
-            if key in existing:
-                raise ValueError(f"缓存文件包含重复站点，已拒绝覆盖：{key[0]} {key[1]} {key[2]}")
-            existing[key] = entry
+        _result_keys(results)
+        expected_fingerprint = config_fingerprint([result.site for result in results])
         sites: list[dict[str, object]] = []
-        seen: set[tuple[str, str, str]] = set()
         issue_keys = {str(period) for period in issues}
         for result in results:
-            key = cache_key(result.site.name, result.site.url, result.site.pick)
-            if key in seen:
-                raise ValueError(f"历史抓取结果包含重复站点，已拒绝写入：{result.site.name}")
-            seen.add(key)
-            old = existing.get(key, {})
-            values = {period: value for period, value in values_from_entry(old).items() if period in issue_keys}
-            positions = {period: value for period, value in positions_from_entry(old).items() if period in issue_keys}
-            article_ids = {period: value for period, value in article_ids_from_entry(old).items() if period in issue_keys}
-            for record in result.records if result.ok else ():
+            values: dict[str, str] = {}
+            positions: dict[str, int] = {}
+            article_ids: dict[str, str] = {}
+            for record in result.records:
                 if record.position_kind != CACHE_POSITION_KIND:
                     raise ValueError(
                         f"缓存位置语义不兼容：{result.site.name}抓取结果position_kind="
@@ -218,6 +297,20 @@ class RecentCacheRepository:
                 period = str(record.period)
                 record_article_id = record.record_id if result.site.payload == "admin_article_api" else ""
                 if period not in issue_keys:
+                    continue
+                _validate_record_position(record, result.site.name)
+                if period in values:
+                    existing_article_id = article_ids.get(period, "")
+                    if normalize_zodiac(values[period]) != normalize_zodiac(record.zodiac) or positions[period] != record.position:
+                        raise ValueError(f"缓存历史记录同期冲突：{result.site.name} {period}期结果不一致")
+                    if (
+                        existing_article_id
+                        and record_article_id
+                        and existing_article_id != record_article_id
+                    ):
+                        raise ValueError(f"缓存历史记录同期冲突：{result.site.name} {period}期record_id不一致")
+                    if not existing_article_id and record_article_id:
+                        article_ids[period] = record_article_id
                     continue
                 values[period] = record.zodiac
                 positions[period] = record.position
@@ -254,12 +347,16 @@ class RecentCacheRepository:
             if ordered_articles:
                 entry["article_ids"] = ordered_articles
             sites.append(entry)
-        return {
-            "schema": CACHE_SCHEMA_VERSION,
-            "position_kind": CACHE_POSITION_KIND,
-            "description": "杀两肖重复检测最近10期基准数据；由每日指定期抓取自动覆盖更新。",
-            "updated_at": datetime.now().isoformat(timespec="seconds"),
-            "window_size": 10,
-            "issues": issues,
-            "sites": sites,
-        }
+        return _PreparedCache(
+            {
+                "schema": CACHE_SCHEMA_VERSION,
+                "position_kind": CACHE_POSITION_KIND,
+                "config_fingerprint": expected_fingerprint,
+                "description": "杀两肖重复检测最近10期基准数据；由每日指定期抓取自动覆盖更新。",
+                "updated_at": datetime.now().isoformat(timespec="seconds"),
+                "window_size": CACHE_WINDOW_SIZE,
+                "issues": issues,
+                "sites": sites,
+            },
+            source_hash,
+        )

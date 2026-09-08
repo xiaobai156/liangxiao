@@ -1,10 +1,9 @@
 from __future__ import annotations
 
 import html
-from dataclasses import dataclass, replace
+from dataclasses import dataclass
 import re
 
-from domain.identity import detail_record_identity
 from domain.models import POSITION_KIND_VISIBLE_TEXT, Record, Site
 
 
@@ -247,38 +246,11 @@ def target_block(source: str, site: Site) -> str:
     return block.text if block is not None else ""
 
 
-def site_scoped_target_block(source: str, site: Site) -> str:
-    return target_block(source, site)
-
-
 def clean_zodiac(value: str) -> str:
     zodiac = re.sub(r"[\s\-－.。·、]+", "", value)
     if len(zodiac) == 2 and zodiac[0] == zodiac[1]:
         return ""
     return zodiac
-
-
-def merge_record_sources(existing: Record, duplicate: Record) -> Record:
-    positions = tuple(
-        sorted(
-            {
-                position
-                for record in (existing, duplicate)
-                for position in (record.source_positions or (record.position,))
-                if position >= 0
-            }
-        )
-    )
-    return replace(existing, source_positions=positions)
-
-
-def append_or_merge_same_value_record(records: list[Record], record: Record) -> None:
-    value = clean_zodiac(record.zodiac)
-    for index, existing in enumerate(records):
-        if existing.period == record.period and clean_zodiac(existing.zodiac) == value:
-            records[index] = merge_record_sources(existing, record)
-            return
-    records.append(record)
 
 
 def ten_unique_zodiacs(value: str) -> list[str]:

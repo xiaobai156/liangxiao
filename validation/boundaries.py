@@ -4,13 +4,14 @@ import html
 import re
 from urllib.parse import unquote, urljoin, urlparse
 
+from domain.errors import ErrorCategory, ScrapeFailure
 from domain.identity import detail_record_identity
 from domain.models import DocumentBundle, PayloadDocument, Site
 
 
 def expected_record_id(site: Site) -> str:
     if site.payload == "admin_article_api":
-        match = re.search(r"/article/(?:admin|manager)/([^/?#]+)", urlparse(site.url).path, flags=re.I)
+        match = re.search(r"/article/(?:admin|manager|lottery)/([^/?#]+)", urlparse(site.url).path, flags=re.I)
         return match.group(1) if match else ""
     if site.payload == "tuku_user_forums":
         match = re.search(r"/users/(\d+)", urlparse(site.url).fragment)
@@ -21,6 +22,8 @@ def expected_record_id(site: Site) -> str:
 
 
 def validate_bundle_boundaries(bundle: DocumentBundle, site: Site) -> None:
+    if not bundle.scan_complete:
+        raise ScrapeFailure(ErrorCategory.STRUCTURE_CHANGED, "文档扫描未完成")
     expected = expected_record_id(site)
     if not expected:
         return
@@ -90,10 +93,37 @@ def document_is_linked(anchor: PayloadDocument, body: PayloadDocument) -> bool:
 
 
 def linked_document_is_authorized(site: Site, anchor: PayloadDocument, body: PayloadDocument) -> bool:
-    if not site.linked_document_pattern or not re.search(site.linked_document_pattern, body.url, flags=re.I):
-        return False
-    if not document_is_linked(anchor, body):
-        return False
     if not body.link_reference or not body.parent_url:
         return False
-    return body.parent_url == anchor.url
+    configured = bool(
+        site.linked_document_pattern
+        and re.search(site.linked_document_pattern, body.url, flags=re.I)
+    )
+    direct_link = body.parent_url == anchor.url and document_is_linked(anchor, body)
+    configured_siblings = bool(
+        configured
+        and anchor.parent_url
+        and anchor.link_reference
+        and anchor.parent_url == body.parent_url
+        and re.search(site.linked_document_pattern, anchor.url, flags=re.I)
+    )
+    if configured_siblings:
+        return True
+    if not direct_link:
+        return False
+    anchor_url = urlparse(anchor.url)
+    body_url = urlparse(body.url)
+    same_origin = (
+        anchor_url.scheme.lower(),
+        anchor_url.netloc.lower(),
+    ) == (
+        body_url.scheme.lower(),
+        body_url.netloc.lower(),
+    )
+    explicitly_referenced_data_script = (
+        site.payload
+        in {"page_and_scripts", "curl_tls10_page_and_scripts", "scripts", "topic_list_detail"}
+        and body_url.path.lower().startswith("/upload/script/")
+        and body_url.path.lower().endswith(".js")
+    )
+    return same_origin or configured or explicitly_referenced_data_script

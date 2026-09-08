@@ -9,9 +9,7 @@ from parsers.helpers import (
     ZODIACS,
     ZODIAC_SET,
     clean_zodiac,
-    detail_record_identity,
     html_to_text,
-    merge_record_sources,
     records_from_pattern,
     ten_unique_zodiacs,
 )
@@ -45,7 +43,7 @@ def parse_wangzhejiudian_stat_chart_records(source: str, field_name: str) -> lis
         tail = tail[: len(start.group(0)) + stop.start()]
 
     records: list[Record] = []
-    seen: dict[tuple[int, str], int] = {}
+    seen: dict[tuple[int, str, int], int] = {}
     period_pattern = re.compile(r"(?P<period>\d{3})\s*期\s*杀\s*肖\s*统计")
     starts = list(period_pattern.finditer(tail))
     field_pattern = re.compile(
@@ -59,7 +57,6 @@ def parse_wangzhejiudian_stat_chart_records(source: str, field_name: str) -> lis
         open_match = re.search(r"特\s*开\s*(?P<open>[^)\s]+)", chunk)
         for field in field_pattern.finditer(chunk):
             zodiac = clean_zodiac(field.group("zodiac"))
-            signature = (period, zodiac)
             if len(zodiac) != 2 or zodiac[0] == zodiac[1] or any(item not in ZODIAC_SET for item in zodiac):
                 continue
             candidate = Record(
@@ -69,8 +66,8 @@ def parse_wangzhejiudian_stat_chart_records(source: str, field_name: str) -> lis
                 field.group(0),
                 start.start() + match.start() + field.start(),
             )
+            signature = (period, zodiac, candidate.position)
             if signature in seen:
-                records[seen[signature]] = merge_record_sources(records[seen[signature]], candidate)
                 continue
             seen[signature] = len(records)
             records.append(candidate)
@@ -257,7 +254,7 @@ def parse_tuku_user_forums_shizhuang_cut_records(source: str, site: Site) -> lis
         rf"\s*(?P<open>[✓✔√]?)"
     )
     records: list[Record] = []
-    seen: dict[tuple[int, str], int] = {}
+    seen: dict[tuple[int, str, int], int] = {}
     for item in items:
         if not isinstance(item, dict):
             continue
@@ -273,10 +270,9 @@ def parse_tuku_user_forums_shizhuang_cut_records(source: str, site: Site) -> lis
             if len(zodiac) != 2 or any(value not in ZODIAC_SET for value in zodiac):
                 continue
             period = int(match.group("period"))
-            signature = (period, zodiac)
             candidate = Record(period, zodiac, match.group("open"), match.group(0), match.start())
+            signature = (period, zodiac, candidate.position)
             if signature in seen:
-                records[seen[signature]] = merge_record_sources(records[seen[signature]], candidate)
                 continue
             seen[signature] = len(records)
             records.append(candidate)
@@ -292,19 +288,18 @@ def parse_laodazhu_ten_zodiac_complement_records(source: str, site: Site) -> lis
     block = text[start:] if end < 0 else text[start:end]
     pattern = re.compile(rf"(?P<period>\d{{3}})\s*期\s*[【〖\[]\s*(?P<body>[{ZODIACS}\s]+)\s*[】〗\]]")
     records: list[Record] = []
-    seen: dict[tuple[int, str], int] = {}
+    seen: dict[tuple[int, str, int], int] = {}
     for match in pattern.finditer(block):
         period = int(match.group("period"))
         picked = ten_unique_zodiacs(match.group("body"))
         if len(picked) != 10:
             continue
         missing = "".join(zodiac for zodiac in ZODIACS if zodiac not in picked)
-        signature = (period, missing)
         if len(missing) != 2:
             continue
         candidate = Record(period, missing, "", match.group(0), start + match.start())
+        signature = (period, missing, candidate.position)
         if signature in seen:
-            records[seen[signature]] = merge_record_sources(records[seen[signature]], candidate)
             continue
         seen[signature] = len(records)
         records.append(candidate)
@@ -326,19 +321,18 @@ def parse_suiyin_jiliang_ten_zodiac_complement_records(source: str, site: Site) 
         rf"[开開]\s*[:：]?\s*(?P<open>[^\s准中错赢对↑√]+)"
     )
     records: list[Record] = []
-    seen: dict[tuple[int, str], int] = {}
+    seen: dict[tuple[int, str, int], int] = {}
     for match in pattern.finditer(tail):
         period = int(match.group("period"))
         picked = ten_unique_zodiacs(match.group("body"))
         if len(picked) != 10:
             continue
         missing = "".join(zodiac for zodiac in ZODIACS if zodiac not in picked)
-        signature = (period, missing)
         if len(missing) != 2:
             continue
         candidate = Record(period, missing, match.group("open"), match.group(0), start.start() + match.start())
+        signature = (period, missing, candidate.position)
         if signature in seen:
-            records[seen[signature]] = merge_record_sources(records[seen[signature]], candidate)
             continue
         seen[signature] = len(records)
         records.append(candidate)

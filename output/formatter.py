@@ -4,16 +4,13 @@ from collections import Counter
 
 from domain.models import Result
 
-
 ZODIACS = "牛马羊鸡狗猪鼠虎兔龙蛇猴"
-SINGLE_PERIOD_FIXED_TAIL = ("黄杀", "有点帅", "金绝", "金元宝", "男人牛")
 
 
 def format_results(
     results: list[Result],
     *,
     include_url: bool,
-    append_fixed_tail: bool = False,
 ) -> tuple[str, str]:
     ok_lines: list[str] = []
     seen: set[tuple[str, str]] = set()
@@ -31,13 +28,23 @@ def format_results(
             ok_lines.append(line)
             counter.update(result.record.zodiac)
         else:
-            error_lines.append(f"{result.site.name} {result.site.pick} {result.site.url} 原因：{result.error}")
-    rank = [
-        f"{zodiac} {counter[zodiac]}次"
-        for zodiac in sorted(counter, key=lambda item: (-counter[item], ZODIACS.index(item)))
-    ]
-    fixed_tail = list(SINGLE_PERIOD_FIXED_TAIL) if append_fixed_tail and ok_lines else []
-    success = "\n".join(ok_lines + fixed_tail + (["", "生肖次数排行榜", *rank] if ok_lines else []))
+            error_lines.append(
+                f"{result.site.name} {result.site.pick} {result.site.url} 原因：{result.error}"
+            )
+    rank: list[str] = []
+    previous_count = -1
+    dense_rank = 0
+    for zodiac in sorted(
+        counter, key=lambda item: (-counter[item], ZODIACS.index(item))
+    ):
+        count = counter[zodiac]
+        if count != previous_count:
+            dense_rank += 1
+            previous_count = count
+        rank.append(f"{zodiac}\t{count}\t{dense_rank}")
+    success = "\n".join(
+        ok_lines + (["", "内容\t次数\t排名", *rank] if ok_lines else [])
+    )
     if ok_lines:
         success += "\n"
     failure = "\n\n".join(error_lines) + ("\n" if error_lines else "")
@@ -58,5 +65,9 @@ def multi_failure_text(period_results: dict[int, list[Result]]) -> str:
                 break
             failures.append(f"{period}期：{result.error}")
         else:
-            blocks.append("\n".join([f"{first.site.name} {first.site.pick} {first.site.url}", *failures]))
+            blocks.append(
+                "\n".join(
+                    [f"{first.site.name} {first.site.pick} {first.site.url}", *failures]
+                )
+            )
     return "\n\n".join(blocks) + ("\n" if blocks else "")

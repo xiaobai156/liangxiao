@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import base64
+import binascii
 from collections.abc import Callable
 import html
 import json
@@ -18,7 +19,7 @@ TargetProbe = Callable[[str, Site, int | None], bool]
 
 def admin_article_id(url: str) -> str:
     parsed = urlparse(url)
-    match = re.search(r"/article/(?:admin|manager)/([^/?#]+)", parsed.path)
+    match = re.search(r"/article/(?:admin|manager|lottery)/([^/?#]+)", parsed.path)
     if not match:
         raise ValueError(f"无法识别后台文章 ID：{url}")
     return match.group(1)
@@ -53,12 +54,21 @@ def is_admin_article_record(value: object) -> bool:
 
 def find_unique_admin_article_record(source: str, article_id: str) -> AdminArticleMatch | None:
     data = json.loads(source)
-    articles: list[tuple[str, dict[str, object]]] = []
+    article_count = 0
+    matching_record: dict[str, object] | None = None
+    matching_path = ""
+    matching_count = 0
 
     def collect(value: object, path: str) -> None:
+        nonlocal article_count, matching_count, matching_path, matching_record
         if isinstance(value, dict):
             if is_admin_article_record(value):
-                articles.append((path, value))
+                article_count += 1
+                if str(value.get("id") or "") == article_id:
+                    matching_count += 1
+                    if matching_count == 1:
+                        matching_path = path
+                        matching_record = value
             for key, child in value.items():
                 collect(child, f"{path}.{key}")
         elif isinstance(value, list):
@@ -66,13 +76,11 @@ def find_unique_admin_article_record(source: str, article_id: str) -> AdminArtic
                 collect(child, f"{path}[{index}]")
 
     collect(data, "root")
-    matches = [(path, record) for path, record in articles if str(record.get("id") or "") == article_id]
-    if len(matches) > 1:
+    if matching_count > 1:
         raise ValueError(f"接口内匹配到多个同ID文章：{article_id}")
-    if not matches:
+    if matching_record is None:
         return None
-    path, record = matches[0]
-    return AdminArticleMatch(record, path, len(articles))
+    return AdminArticleMatch(matching_record, matching_path, article_count)
 
 
 def decode_admin_article_record(record: dict[str, object]) -> str:
@@ -82,8 +90,9 @@ def decode_admin_article_record(record: dict[str, object]) -> str:
         if not isinstance(encoded, str) or not encoded:
             raise ValueError(f"目标后台文章缺少{key}字段")
         try:
-            decoded = base64.b64decode(encoded).decode("utf-8", errors="replace")
-        except Exception as exc:
+            normalized = "".join(encoded.split())
+            decoded = base64.b64decode(normalized, validate=True).decode("utf-8")
+        except (binascii.Error, UnicodeDecodeError) as exc:
             raise ValueError(f"目标后台文章{key}字段解码失败") from exc
         if not decoded.strip():
             raise ValueError(f"目标后台文章{key}字段为空")
@@ -116,7 +125,7 @@ def decode_admin_article_api_response(
 def page_has_record_boundary(source: str, article_id: str) -> bool:
     route_ids = set(
         re.findall(
-            r"(?<![A-Za-z0-9])/?article/(?:admin|manager)/([^/?#\"'\s]+)",
+            r"(?<![A-Za-z0-9])/?article/(?:admin|manager|lottery)/([^/?#\"'\s]+)",
             html.unescape(source),
             flags=re.I,
         )

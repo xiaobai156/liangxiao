@@ -1,9 +1,9 @@
 from __future__ import annotations
 
-from collections.abc import Callable, Iterable, Mapping
-from dataclasses import replace
 import hashlib
 import re
+from collections.abc import Callable, Iterable, Mapping
+from dataclasses import replace
 from types import MappingProxyType
 
 from domain.errors import ConfigurationError, ErrorCategory, ScrapeFailure
@@ -15,8 +15,8 @@ from parsers.chart import (
     parse_shuqhbq_xuanji_forbidden_records,
     parse_suiyin_jiliang_ten_zodiac_complement_records,
     parse_tuku_user_forums_precise_two_zodiac_records,
-    parse_tuku_user_forums_short_kill_records,
     parse_tuku_user_forums_shizhuang_cut_records,
+    parse_tuku_user_forums_short_kill_records,
     parse_tuku_user_forums_two_zodiac_records,
     parse_wangzhejiudian_forbidden_chart_records,
     parse_wangzhejiudian_kill_chart_records,
@@ -25,6 +25,7 @@ from parsers.chart import (
 )
 from parsers.dynamic import (
     parse_fugui_kede_admin_article_records,
+    parse_guanwang_touma_manager_article_records,
     parse_huayan_yuemao_admin_article_records,
     parse_jinbao_mawang_manager_article_records,
     parse_junlin_tianxia_manager_article_records,
@@ -32,14 +33,15 @@ from parsers.dynamic import (
     parse_liuhe_zhongxin_manager_article_records,
     parse_manager_article_two_zodiac_records,
     parse_meifeise_wu_manager_article_records,
+    parse_mengxiang_rensheng_manager_article_records,
     parse_qinneng_buzhuo_read_page_records,
     parse_rushen_tantao_read_page_records,
     parse_songjiu_yingxin_admin_article_records,
     parse_wusuoweiju_read_page_records,
+    parse_xuanji_tianshu_admin_article_records,
     parse_yangchun_caihong_read_page_records,
     parse_yeyeshengcai_admin_article_records,
     parse_yuebaifengqing_admin_article_records,
-    parse_xuanji_tianshu_admin_article_records,
     parse_zhenlong_huoxian_admin_article_records,
 )
 from parsers.forum import (
@@ -52,9 +54,9 @@ from parsers.forum import (
     parse_guangdong_linked_top_records,
     parse_guangxizai_linked_top_records,
     parse_guangxizai_top_records,
-    parse_jiulong_forum_top_records,
     parse_jinduobao_second_tail_records,
     parse_jingzhongbaoguo_tail_records,
+    parse_jiulong_forum_top_records,
     parse_liuhe_tail_records,
     parse_liuhe_toutiao_linked_top_records,
     parse_liuhe_toutiao_top_records,
@@ -64,14 +66,15 @@ from parsers.forum import (
     parse_shouqi_daoluo_top_records,
     parse_taxue_wuhen_bottom_records,
     parse_taxue_wuhen_top_records,
-    parse_zhuangyuan_red_top_records,
-    parse_wuyou_wulv_topic_records,
+    parse_wenru_taishan_top_records,
     parse_wulin_gaoshou_linked_top_records,
+    parse_wuyou_wulv_topic_records,
     parse_xiangfu_ercheng_tail_records,
     parse_yiben_wanli_sisha_bottom_records,
     parse_yichou_mozhan_top_records,
     parse_zhenlong_fankui_topic_records,
     parse_zhongduo_feiyi_top_records,
+    parse_zhuangyuan_red_top_records,
     parse_ziranziran_top_records,
 )
 from parsers.helpers import (
@@ -80,8 +83,27 @@ from parsers.helpers import (
     parse_named_block_records,
     parse_site_scoped_two_zodiac_records,
 )
+from parsers.manager_234 import (
+    parse_jinma_dushen_manager_article_records,
+    parse_yanji_dushan_manager_article_records,
+    parse_zhuangba_disheng_manager_article_records,
+)
+from parsers.new_sites_235 import (
+    parse_feilong_qishi_records,
+    parse_new_topic_235_records,
+    parse_tuoni_kulmonika_records,
+    parse_xiaosuan_bottom_records,
+    parse_zhougong_shensuan_records,
+)
+from parsers.new_sites_241 import (
+    parse_bubu_gaosheng_top_records,
+    parse_jiujie_liangfeng_top_records,
+    parse_lujiu_home_top_records,
+    parse_lujiu_wensha_bottom_records,
+    parse_tianlang_shaxing_bottom_records,
+    parse_yueku_zhixiao_top_records,
+)
 from parsers.special import parse_yanyu_fusu_list_detail_records
-
 
 ParserFunction = Callable[[str, Site], list[Record]]
 
@@ -91,6 +113,7 @@ ENGINE_REGISTRY: Mapping[str, ParserFunction] = MappingProxyType(
         "named_block": parse_named_block_records,
         "generic_two_zodiac": parse_generic_two_zodiac_records,
         "site_scoped_two_zodiac": parse_site_scoped_two_zodiac_records,
+        "feilong_qishi_bottom": parse_feilong_qishi_records,
         "ziranziran_top": parse_ziranziran_top_records,
         "jingzhongbaoguo_tail": parse_jingzhongbaoguo_tail_records,
         "nuwabutiantail": parse_nuwabutiantail_records,
@@ -111,6 +134,7 @@ ENGINE_REGISTRY: Mapping[str, ParserFunction] = MappingProxyType(
         "tuku_user_forums_shizhuang_cut": parse_tuku_user_forums_shizhuang_cut_records,
         "wuyou_wulv_topic": parse_wuyou_wulv_topic_records,
         "fugui_kede_admin_article": parse_fugui_kede_admin_article_records,
+        "guanwang_touma_manager_article": parse_guanwang_touma_manager_article_records,
         "songjiu_yingxin_admin_article": parse_songjiu_yingxin_admin_article_records,
         "liuhe_daoren_admin_article": parse_liuhe_daoren_admin_article_records,
         "huayan_yuemao_admin_article": parse_huayan_yuemao_admin_article_records,
@@ -124,6 +148,10 @@ ENGINE_REGISTRY: Mapping[str, ParserFunction] = MappingProxyType(
         "junlin_tianxia_manager_article": parse_junlin_tianxia_manager_article_records,
         "liuhe_zhongxin_manager_article": parse_liuhe_zhongxin_manager_article_records,
         "manager_article_two_zodiac": parse_manager_article_two_zodiac_records,
+        "mengxiang_rensheng_manager_article": parse_mengxiang_rensheng_manager_article_records,
+        "zhuangba_disheng_manager_article": parse_zhuangba_disheng_manager_article_records,
+        "yanji_dushan_manager_article": parse_yanji_dushan_manager_article_records,
+        "jinma_dushen_manager_article": parse_jinma_dushen_manager_article_records,
         "meifeise_wu_manager_article": parse_meifeise_wu_manager_article_records,
         "yanyu_fusu_list_detail": parse_yanyu_fusu_list_detail_records,
         "qinneng_buzhuo_read_page": parse_qinneng_buzhuo_read_page_records,
@@ -152,6 +180,17 @@ ENGINE_REGISTRY: Mapping[str, ParserFunction] = MappingProxyType(
         "dengtang_rushi_bottom": parse_dengtang_rushi_bottom_records,
         "yichou_mozhan_top": parse_yichou_mozhan_top_records,
         "zhongduo_feiyi_top": parse_zhongduo_feiyi_top_records,
+        "wenru_taishan_top": parse_wenru_taishan_top_records,
+        "new_topic_235_exact": parse_new_topic_235_records,
+        "zhougong_shensuan_two_zodiac": parse_zhougong_shensuan_records,
+        "tuoni_kulmonika_snapshots": parse_tuoni_kulmonika_records,
+        "xiaosuan_bottom_two_zodiac": parse_xiaosuan_bottom_records,
+        "lujiu_wensha_bottom": parse_lujiu_wensha_bottom_records,
+        "lujiu_home_top": parse_lujiu_home_top_records,
+        "yueku_zhixiao_top": parse_yueku_zhixiao_top_records,
+        "jiujie_liangfeng_top": parse_jiujie_liangfeng_top_records,
+        "bubu_gaosheng_top": parse_bubu_gaosheng_top_records,
+        "tianlang_shaxing_bottom": parse_tianlang_shaxing_bottom_records,
     }
 )
 

@@ -1,17 +1,12 @@
 from __future__ import annotations
 
-import json
 import re
 
 from domain.models import Record, Site
 from parsers.helpers import (
     ZODIACS,
-    ZODIAC_SET,
-    clean_zodiac,
-    detail_record_identity,
     html_to_text,
     records_from_pattern,
-    ten_unique_zodiacs,
 )
 
 def parse_yanyu_fusu_list_detail_records(source: str, site: Site) -> list[Record]:

@@ -1,5 +1,5 @@
 @echo off
-setlocal EnableExtensions
+setlocal EnableExtensions EnableDelayedExpansion
 
 cd /d "%~dp0"
 if errorlevel 1 goto BAD_DIR
@@ -31,24 +31,24 @@ if not defined PERIOD (
   goto ASK_PERIOD
 )
 
-echo %PERIOD%| findstr /r "^[0-9][0-9]*$" >nul
+echo !PERIOD!| findstr /r "^[0-9][0-9][0-9]$" >nul
 if errorlevel 1 (
-  echo Period must be numbers only.
+  echo Period must be exactly 3 digits.
   goto ASK_PERIOD
 )
 
 echo.
 echo Work dir: %CD%
-echo Command : %PYTHON_CMD% two_zodiac_site_scraper.py --period %PERIOD% --workers 10
+echo Command : !PYTHON_CMD! two_zodiac_site_scraper.py --period !PERIOD! --workers 10
 echo.
 
-%PYTHON_CMD% "two_zodiac_site_scraper.py" --period %PERIOD% --workers 10
-set "RUN_ERROR=%ERRORLEVEL%"
+!PYTHON_CMD! "two_zodiac_site_scraper.py" --period !PERIOD! --workers 10
+set "RUN_ERROR=!ERRORLEVEL!"
 
 echo.
-if not "%RUN_ERROR%"=="0" echo Run failed. Error code: %RUN_ERROR%
+if not "!RUN_ERROR!"=="0" echo Run failed. Error code: !RUN_ERROR!
 pause
-exit /b %RUN_ERROR%
+exit /b !RUN_ERROR!
 
 :BAD_DIR
 echo Cannot enter bat directory.

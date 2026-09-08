@@ -14,9 +14,7 @@ class ErrorCategory(str, Enum):
     TARGET_MISSING = "未找到指定目标"
     FIELD_VALIDATION = "字段校验未通过"
     DATA_CONFLICT = "数据存在冲突"
-    ADAPTIVE_REJECTED = "自适应匹配被拒绝"
     BROWSER_FAILURE = "浏览器渲染失败"
-    PROFILE_UNAVAILABLE = "结构档案不可用"
 
 
 class ScrapeFailure(ValueError):

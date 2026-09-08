@@ -40,5 +40,96 @@
     "stop": "\\s*下一贴\\s*[：:]",
     "record": "(?P<period>\\d{3})\\s*期\\s*[:：]?\\s*《\\s*全球预测\\s*》\\s*📙\\s*绝杀二肖\\s*📙\\s*[【\\[]\\s*(?P<zodiac>[牛马羊鸡狗猪鼠虎兔龙蛇猴]\\s*[-－、，,。.]?\\s*[牛马羊鸡狗猪鼠虎兔龙蛇猴])\\s*[】\\]]\\s*[开開]\\s*[:：]?\\s*(?P<open>[^\\s准中错赢对]+)",
     "archive_reason": "字段校验未通过：多文档内未能独立验证 216 期目标"
+  },
+  {
+    "name": "月老搭桥",
+    "pick": "尾部",
+    "url": "https://yzpbdkow.6m1ba-7p7u4-ppolcy.work:29433/article/admin/6a02c9bc8bad0a3579e9f72b?url=tdg",
+    "payload": "admin_article_api",
+    "title": "月老搭桥",
+    "record": "(?P<period>\\d{3})\\s*期[^期]{0,90}?(?:绝\\s*杀|稳\\s*杀|精\\s*杀|无错\\s*杀|砍\\s*杀|杀)\\s*(?:二|两|2|２|②)\\s*肖[^期]{0,50}?[【〖\\[（(《『〈]\\s*(?P<zodiac>[牛马羊鸡狗猪鼠虎兔龙蛇猴]\\s*[-－、,，.。· ]?\\s*[牛马羊鸡狗猪鼠虎兔龙蛇猴])\\s*[】〗\\]）)》』〉]\\s*(?:←|[~～_\\-－—|]*)\\s*(?:开|開)\\s*[:：]?\\s*(?P<open>[^\\s准中错赢对↑√]+)",
+    "api_url": "https://yzpbdkow.6m1ba-7p7u4-ppolcy.work:29433/api/proxy/landing-page-data?url=tdg",
+    "archive_reason": "未找到指定目标：接口返回内容内未找到对应后台文章"
+  },
+  {
+    "name": "周大发财",
+    "pick": "top",
+    "url": "https://dh-nwsm-0806.yqs01490156c.app/cm/cm101.html",
+    "parser": "site_scoped_two_zodiac",
+    "payload": "page",
+    "title": "周大发财",
+    "archive_reason": "HTTP请求失败：HTTP 404: https://dh-nwsm-0806.yqs01490156c.app/cm/cm101.html"
+  },
+  {
+    "name": "澳门马头",
+    "pick": "bottom",
+    "url": "https://qgyhdauu.avht7-lah7b-oavfmr.work:29444/article/manager/6a6c7d332822d465035d6d7e?url=wzw",
+    "parser": "manager_article_two_zodiac",
+    "payload": "admin_article_api",
+    "api_url": "https://qgyhdauu.avht7-lah7b-oavfmr.work:29444/api/proxy/landing-page-data?url=wzw",
+    "archive_reason": "未找到指定目标：接口返回内容内未找到对应后台文章"
+  },
+  {
+    "name": "霸王传奇",
+    "pick": "尾部",
+    "url": "https://nwrkkmv.rx287-rkrai-jsjccc.xyz:29499/article/manager/6a33d2d2dfa16552b923d0af?url=ggz",
+    "parser": "manager_article_two_zodiac",
+    "payload": "admin_article_api",
+    "api_url": "https://nwrkkmv.rx287-rkrai-jsjccc.xyz:29499/api/proxy/landing-page-data?url=ggz",
+    "archive_reason": "未找到指定目标：接口返回内容内未找到对应后台文章"
+  },
+  {
+    "name": "超越自我",
+    "pick": "bottom",
+    "url": "https://cahgjib.5blx9-z8506-ekiwxc.work:29488/article/manager/6a1446e9bf0a6cb1dd38fbad?url=lqz",
+    "parser": "manager_article_two_zodiac",
+    "payload": "admin_article_api",
+    "api_url": "https://cahgjib.5blx9-z8506-ekiwxc.work:29488/api/proxy/landing-page-data?url=lqz",
+    "archive_reason": "未找到指定目标：接口返回内容内未找到对应后台文章"
+  },
+  {
+    "name": "精忠报国",
+    "pick": "尾部",
+    "url": "https://993345.com/gsb1.aspx?id=3243",
+    "parser": "jingzhongbaoguo_tail",
+    "payload": "page_and_scripts",
+    "title": "精忠报国",
+    "archive_reason": "内容尚未发布：原始页面：bottom 候选内未找到 238 期；实际近3条：232期牛鼠@位置374、233期猴鼠@位置400、234期鸡龙@位置426；原始页面+脚本：bottom 候选内未找到 238 期；实际近3条：232期牛鼠@位置374、233期猴鼠@位置400、234期鸡龙@位置426"
+  },
+  {
+    "name": "六合中心",
+    "pick": "尾部",
+    "url": "https://utklnwvn.xt8d7-kd9kc-csprqr.work:29488/article/manager/6a0445354ea5c20141013e7c?url=qdz",
+    "parser": "liuhe_zhongxin_manager_article",
+    "payload": "admin_article_api",
+    "api_url": "https://utklnwvn.xt8d7-kd9kc-csprqr.work:29488/api/proxy/landing-page-data?url=qdz",
+    "archive_reason": "未找到指定目标：未抓到有效候选"
+  },
+  {
+    "name": "同床异梦",
+    "pick": "bottom",
+    "url": "https://ofxhqgor.li0cj-4esgz-npswxa.xyz/view.php?id=521",
+    "parser": "named_block",
+    "payload": "page_and_scripts",
+    "title": "作者\\s*[:：]\\s*同床异梦",
+    "record": "(?P<period>\\d{3})\\s*期[^期]{0,90}?(?:绝\\s*杀|稳\\s*杀|精\\s*杀|无错\\s*杀|砍\\s*杀|杀)\\s*(?:二|两|2|２|②)\\s*肖[^期]{0,50}?[【〖\\[（(《『〈]\\s*(?P<zodiac>[牛马羊鸡狗猪鼠虎兔龙蛇猴]\\s*[-－、,，.。· ]?\\s*[牛马羊鸡狗猪鼠虎兔龙蛇猴])\\s*[】〗\\]）)》』〉]\\s*(?:←|[~～_\\-－—|]*)\\s*(?:开|開)\\s*[:：]?\\s*(?P<open>[^\\s准中错赢对↑√]+)",
+    "stop": "广告",
+    "archive_reason": "字段校验未通过：Invalid IPv6 URL"
+  },
+  {
+    "name": "阳春彩虹",
+    "pick": "bottom",
+    "url": "https://8818.www19753a.com/read.php?tid=639",
+    "parser": "yangchun_caihong_read_page",
+    "payload": "browser_rendered_page",
+    "archive_reason": "浏览器渲染失败：浏览器渲染后仍未找到指定期数或专属目标"
+  },
+  {
+    "name": "飞龙骑士",
+    "pick": "bottom",
+    "url": "https://bbs02.836280.cyou/bbs/topic.php?id=18357",
+    "parser": "feilong_qishi_bottom",
+    "payload": "page_and_scripts",
+    "archive_reason": "字段校验未通过：多文档内未能独立验证 248 期目标"
   }
 ]

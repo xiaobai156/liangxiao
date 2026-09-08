@@ -4,17 +4,13 @@ from collections.abc import Callable
 from concurrent.futures import ThreadPoolExecutor, as_completed
 import time
 
-import adaptive_scrapling as adaptive
-
 from diagnostics.run_report import format_failure, progress_summary_line
-from domain.models import DocumentBundle, HistoryResult, Record, Site
+from domain.models import HistoryResult, Record, Site
 from fetching.client import FetchContext
-from fetching.browser import render_browser_text
-from fetching.page import decode_strdecode_blocks, fetch_payload
 from parsers.registry import ParserRegistry
-from services.single_period import parse_bundle_for_period
+from services.single_period import fetch_payload_for_period, parse_bundle_for_period
 from validation.direction import select_record
-from validation.records import merge_equivalent_records, record_value_signature
+from validation.records import merge_equivalent_records, record_signature
 
 
 HISTORY_BACK_PERIODS = 9
@@ -65,7 +61,7 @@ def history_result_from_records(site: Site, records: list[Record], current_perio
             grouped.setdefault(record.period, []).append(record)
     selected_by_period: dict[int, Record] = {}
     for period, candidates in grouped.items():
-        signatures = {record_value_signature(record) for record in candidates}
+        signatures = {record_signature(record) for record in candidates}
         if len(signatures) > 1:
             details = "、".join(
                 f"{record.zodiac}@位置{record.position}"
@@ -89,48 +85,13 @@ def scrape_site_history(
     timeout: int,
     context: FetchContext,
     registry: ParserRegistry,
-    adaptive_manager: adaptive.AdaptiveManager | None = None,
 ) -> HistoryResult:
-    source = ""
-    bundle = DocumentBundle(())
     try:
-        bundle = fetch_payload(site, current_period, timeout, context, lambda *_args: True)
-        source = bundle.combined_source
-        records, selected = parse_bundle_for_period(bundle, site, current_period, registry)
+        bundle = fetch_payload_for_period(site, current_period, timeout, context, registry)
+        records, _selected = parse_bundle_for_period(bundle, site, current_period, registry)
     except Exception as exc:
-        if (
-            adaptive_manager is None
-            or not adaptive_manager.enabled
-            or site.payload in {"admin_article_api", "tuku_user_forums"}
-            or not adaptive.should_attempt_recovery(site, adaptive.classify_failure(exc), str(exc))
-        ):
-            return HistoryResult(site, (), format_failure(exc))
-        try:
-            recovery = adaptive_manager.recover(
-                site,
-                current_period,
-                timeout,
-                bundle,
-                context.get_text,
-                registry.parse,
-                select_record,
-                lambda record: record.period == current_period,
-                decode_strdecode_blocks,
-                render_browser_text,
-            )
-        except Exception as recovery_exc:
-            return HistoryResult(site, (), f"{format_failure(exc)}；{recovery_exc}")
-        if adaptive_manager.mode == "shadow":
-            return HistoryResult(site, (), f"{format_failure(exc)}；自适应影子验证通过，未写入正式结果")
-        records = list(recovery.records)
-        selected = recovery.record
-    result = history_result_from_records(site, records, current_period)
-    if result.ok and adaptive_manager is not None and adaptive_manager.enabled:
-        try:
-            adaptive_manager.observe_primary_success(site, source, records, selected, registry.parse, select_record)
-        except (RuntimeError, ValueError):
-            pass
-    return result
+        return HistoryResult(site, (), format_failure(exc))
+    return history_result_from_records(site, records, current_period)
 
 
 def scrape_history_sites(
@@ -142,47 +103,50 @@ def scrape_history_sites(
     context: FetchContext | None = None,
     registry: ParserRegistry | None = None,
     progress: ProgressSink | None = print,
-    adaptive_manager: adaptive.AdaptiveManager | None = None,
 ) -> list[HistoryResult]:
     if not sites:
         return []
-    active_context = context or FetchContext()
+    active_context = context if context is not None else FetchContext()
+    owns_context = context is None
     active_registry = registry or ParserRegistry.bind_sites(sites)
     results: list[HistoryResult | None] = [None] * len(sites)
     started_at = time.monotonic()
     success = failed = done = 0
     scheduled_indices = range(len(sites))
-    with ThreadPoolExecutor(max_workers=max(1, min(workers, len(sites)))) as executor:
-        futures = {
-            executor.submit(
-                scrape_site_history,
-                sites[index],
-                current_period,
-                timeout,
-                active_context,
-                active_registry,
-                adaptive_manager,
-            ): index
-            for index in scheduled_indices
-        }
-        for future in as_completed(futures):
-            index = futures[future]
-            result = future.result()
-            results[index] = result
-            done += 1
-            success += int(result.ok)
-            failed += int(not result.ok)
-            if progress is not None:
-                progress(
-                    progress_summary_line(
-                        done,
-                        len(sites),
-                        success,
-                        failed,
-                        time.monotonic() - started_at,
-                        result.site.name,
-                        result.ok,
-                        result.error,
+    try:
+        with ThreadPoolExecutor(max_workers=max(1, min(workers, len(sites)))) as executor:
+            futures = {
+                executor.submit(
+                    scrape_site_history,
+                    sites[index],
+                    current_period,
+                    timeout,
+                    active_context,
+                    active_registry,
+                ): index
+                for index in scheduled_indices
+            }
+            for future in as_completed(futures):
+                index = futures[future]
+                result = future.result()
+                results[index] = result
+                done += 1
+                success += int(result.ok)
+                failed += int(not result.ok)
+                if progress is not None:
+                    progress(
+                        progress_summary_line(
+                            done,
+                            len(sites),
+                            success,
+                            failed,
+                            time.monotonic() - started_at,
+                            result.site.name,
+                            result.ok,
+                            result.error,
+                        )
                     )
-                )
-    return [result for result in results if result is not None]
+        return [result for result in results if result is not None]
+    finally:
+        if owns_context:
+            active_context.close()

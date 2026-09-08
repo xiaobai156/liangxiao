@@ -1,19 +1,16 @@
 from __future__ import annotations
 
-import json
 import re
 
+from domain.identity import detail_record_identity
 from domain.errors import CandidateConflict, ErrorCategory, ScrapeFailure
 from domain.models import DOCUMENT_BOUNDARY, Record, Site
 from parsers.helpers import (
     ZODIACS,
     ZODIAC_SET,
     clean_zodiac,
-    detail_record_identity,
     html_to_text,
-    merge_record_sources,
     records_from_pattern,
-    ten_unique_zodiacs,
 )
 
 
@@ -209,18 +206,17 @@ def parse_taxue_wuhen_bottom_records(source: str, site: Site) -> list[Record]:
         rf"开\s*[:：]?\s*(?P<open>[^\s准中错赢对]+)"
     )
     descending: list[Record] = []
-    seen: dict[tuple[int, str], int] = {}
+    seen: set[tuple[int, str, int]] = set()
     for match in pattern.finditer(block):
         period = int(match.group("period"))
         zodiac = clean_zodiac(match.group("zodiac"))
-        signature = (period, zodiac)
         if len(zodiac) != 2 or zodiac[0] == zodiac[1]:
             return []
         candidate = Record(period, zodiac, match.group("open"), match.group(0), heading.end() + match.start())
+        signature = (period, zodiac, candidate.position)
         if signature in seen:
-            descending[seen[signature]] = merge_record_sources(descending[seen[signature]], candidate)
             continue
-        seen[signature] = len(descending)
+        seen.add(signature)
         descending.append(candidate)
     if len(descending) < 3:
         return []
@@ -310,18 +306,17 @@ def parse_yiben_wanli_sisha_bottom_records(source: str, site: Site) -> list[Reco
         rf"[【〖\[]\s*(?P<zodiac>[{ZODIACS}]\s*[{ZODIACS}])\s*[】〗\]]"
     )
     records: list[Record] = []
-    seen: dict[tuple[int, str], int] = {}
+    seen: set[tuple[int, str, int]] = set()
     for match in pattern.finditer(tail):
         period = int(match.group("period"))
         zodiac = clean_zodiac(match.group("zodiac"))
         if len(zodiac) != 2 or zodiac[0] == zodiac[1]:
             return []
-        signature = (period, zodiac)
         candidate = Record(period, zodiac, match.group("open"), match.group(0), heading.end() + match.start())
+        signature = (period, zodiac, candidate.position)
         if signature in seen:
-            records[seen[signature]] = merge_record_sources(records[seen[signature]], candidate)
             continue
-        seen[signature] = len(records)
+        seen.add(signature)
         records.append(candidate)
     if len(records) < 3:
         return []
@@ -331,6 +326,11 @@ def parse_yiben_wanli_sisha_bottom_records(source: str, site: Site) -> list[Reco
 def parse_baijie_shujinguang_top_records(source: str, site: Site) -> list[Record]:
     if site.name != "白姐輸盡光":
         return []
+    source = re.sub(
+        r"\\u([0-9a-fA-F]{4})",
+        lambda match: chr(int(match.group(1), 16)),
+        source.replace(r"\/", "/").replace(r'\"', '"'),
+    )
     text = html_to_text(source)
     heading = re.search(r"澳门\s*姜太公\s*☛\s*白姐\s*輸\s*盡\s*光\s*☚", text)
     if not heading:
@@ -343,23 +343,22 @@ def parse_baijie_shujinguang_top_records(source: str, site: Site) -> list[Record
         return []
     block = tail[: boundary.start()]
     pattern = re.compile(
-        rf"(?P<period>\d{{3}})期\s*[【〖\[]\s*白姐\s*[输輸]\s*尽光\s*[】〗\]]\s*"
-        rf"[开開](?:[發发])?\s*[^\s]+\s*今期\s*"
-        rf"(?P<zodiac>[{ZODIACS}]\s*[{ZODIACS}])\s*[输輸]\s*尽光"
+        rf"(?P<period>\d{{3}})期\s*[【〖\[]\s*白姐\s*[输輸]\s*[尽盡]光\s*[】〗\]]\s*"
+        rf"[开開](?:[發发])?\s*[^\s]+\s*今\s*期\s*"
+        rf"(?P<zodiac>[{ZODIACS}]\s*[{ZODIACS}])\s*[输輸]\s*[尽盡]光"
     )
     records: list[Record] = []
-    seen: dict[tuple[int, str], int] = {}
+    seen: set[tuple[int, str, int]] = set()
     for match in pattern.finditer(block):
         period = int(match.group("period"))
         zodiac = clean_zodiac(match.group("zodiac"))
         if len(zodiac) != 2 or zodiac[0] == zodiac[1]:
             return []
-        signature = (period, zodiac)
         candidate = Record(period, zodiac, "", match.group(0), heading.end() + match.start())
+        signature = (period, zodiac, candidate.position)
         if signature in seen:
-            records[seen[signature]] = merge_record_sources(records[seen[signature]], candidate)
             continue
-        seen[signature] = len(records)
+        seen.add(signature)
         records.append(candidate)
     if len(records) < 3:
         return []
@@ -621,10 +620,13 @@ def parse_dengtang_rushi_bottom_records(source: str, site: Site) -> list[Record]
                     f"登堂入室{period}期出现{previous[0]}和{zodiac}两个候选",
                     conflict,
                 )
-            record_index = previous[1]
-            records[record_index] = merge_record_sources(records[record_index], candidate)
+            if previous[1] != candidate.position:
+                raise CandidateConflict(
+                    f"登堂入室{period}期出现重复候选：{zodiac}@位置{previous[1]}和{candidate.position}",
+                    [*records, candidate],
+                )
             continue
-        seen_periods[period] = (zodiac, len(records))
+        seen_periods[period] = (zodiac, candidate.position)
         records.append(candidate)
     if len(records) < 10:
         raise ScrapeFailure(ErrorCategory.FIELD_VALIDATION, "登堂入室目标块有效记录不足10条")
@@ -807,7 +809,33 @@ def parse_gaohuo_zhifei_topic_records(source: str, site: Site) -> list[Record]:
         tail = tail[: min(boundary_positions)]
     pattern = re.compile(
         rf"(?P<period>\d{{3}})\s*期\s*[:：]?\s*☆\s*稳\s*杀\s*(?:二|两|2|２|②)\s*肖\s*☆\s*"
-        rf"[（(]\s*(?P<zodiac>[{ZODIACS}]\s*[-－、,，.。· ]?\s*[{ZODIACS}])\s*[）)]\s*"
+        rf"[（(]\s*(?P<zodiac>[{ZODIACS}]\s*[-－、,，.。· ]?\s*[{ZODIACS}])\s*[）)]?\s*"
         rf"开\s*[:：]?\s*(?P<open>[^\s准中错赢对↑√]+)"
     )
     return records_from_pattern(tail, pattern, base_offset=start.start())
+
+
+def parse_wenru_taishan_top_records(source: str, site: Site) -> list[Record]:
+    if site.name != "稳如泰山" or site.pick != "top" or DOCUMENT_BOUNDARY in source:
+        return []
+    text = html_to_text(source)
+    heading = re.search(
+        r"(?P<period>\d{3})\s*期\s*[:：]\s*稳如泰山\s*[【〖\[]\s*稳杀二肖\s*[】〗\]]\s*已公开",
+        text,
+    )
+    if not heading:
+        return []
+    tail = text[heading.end() :]
+    boundary = re.search(r"(?:站长宣言|上一篇|下一篇|Copyright|免责声明)\s*[:：]?", tail, flags=re.I)
+    if boundary:
+        tail = tail[: boundary.start()]
+    pattern = re.compile(
+        rf"(?P<period>\d{{3}})\s*期\s*稳如泰山\s*[【〖\[]\s*稳杀二肖\s*[】〗\]]\s*"
+        rf"[【〖\[]\s*(?P<zodiac>[{ZODIACS}]\s*[-－、,，.。· ]?\s*[{ZODIACS}])\s*[】〗\]]\s*"
+        rf"[开開]\s*[:：]?\s*(?P<open>[^\s准中错赢对↑√]+)"
+    )
+    records = records_from_pattern(tail, pattern, base_offset=heading.end())
+    heading_period = int(heading.group("period"))
+    if not records or records[0].period != heading_period:
+        return []
+    return records

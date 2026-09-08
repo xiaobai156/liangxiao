@@ -2,7 +2,11 @@ from __future__ import annotations
 
 from collections.abc import Mapping
 
-from cache.contracts import validate_cache_position_contract
+from cache.contracts import (
+    cache_identity,
+    config_fingerprint,
+    validate_cache_position_contract,
+)
 from domain.models import CacheCoverage, DuplicateFinding, Site
 from validation.records import normalize_zodiac
 
@@ -105,18 +109,27 @@ def detect_duplicate_findings(cache: Mapping[str, object]) -> list[DuplicateFind
 
 def audit_cache_coverage(cache: Mapping[str, object], sites: list[Site]) -> CacheCoverage:
     validate_cache_position_contract(cache)
+    raw_entries = cache.get("sites")
+    if not isinstance(raw_entries, list):
+        raise ValueError("缓存文件站点列表结构无效，已拒绝判定")
+    cache_keys = [
+        cache_identity(entry, index)
+        for index, entry in enumerate(raw_entries)
+        if isinstance(entry, Mapping)
+    ]
+    if len(cache_keys) != len(raw_entries):
+        raise ValueError("缓存文件站点结构无效，已拒绝判定")
+    site_keys = [(site.name, site.url, site.pick) for site in sites]
+    if cache_keys != site_keys:
+        raise ValueError("缓存站点身份或顺序与当前配置不一致，已拒绝判定")
+    if cache.get("config_fingerprint") != config_fingerprint(sites):
+        raise ValueError("缓存config_fingerprint缺失或不匹配，已拒绝判定")
     raw_issues = cache.get("issues")
     issues = list(dict.fromkeys(int(period) for period in raw_issues))[:10] if isinstance(raw_issues, list) else []
     entries: dict[tuple[str, str, str], Mapping[str, object]] = {}
-    raw_entries = cache.get("sites")
-    if isinstance(raw_entries, list):
-        for entry in raw_entries:
-            if not isinstance(entry, dict):
-                continue
-            pick = str(entry.get("pick") or "top").lower()
-            if pick not in {"top", "bottom"}:
-                continue
-            entries[cache_key(str(entry.get("name") or ""), str(entry.get("url") or ""), pick)] = entry
+    for entry in raw_entries:
+        assert isinstance(entry, Mapping)
+        entries[cache_key(str(entry["name"]), str(entry["url"]), str(entry["pick"]))] = entry
     missing: list[str] = []
     incomplete: list[str] = []
     for site in sites:

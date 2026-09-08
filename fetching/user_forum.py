@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import re
+from typing import cast
 from urllib.parse import urlparse
 
 
@@ -22,7 +23,6 @@ def filter_user_forums(source: str, expected_user_id: str) -> tuple[list[dict[st
     data = json.loads(source)
     if not isinstance(data, list) or not data:
         raise ValueError("用户接口没有有效论坛记录")
-    records: list[dict[str, object]] = []
     for item in data:
         if not isinstance(item, dict):
             raise ValueError("用户接口记录结构无效")
@@ -33,5 +33,4 @@ def filter_user_forums(source: str, expected_user_id: str) -> tuple[list[dict[st
             raise ValueError(
                 f"用户ID边界冲突：目标用户{expected_user_id}，记录用户{item_user_id or '缺失'}"
             )
-        records.append(item)
-    return records, len(data)
+    return cast(list[dict[str, object]], data), len(data)

@@ -2,22 +2,25 @@ from __future__ import annotations
 
 import argparse
 import json
-from pathlib import Path
 import re
 import sys
-
-import adaptive_scrapling as adaptive
+from pathlib import Path
 
 from cache.duplicates import audit_cache_coverage, detect_duplicate_findings
 from cache.repository import RecentCacheRepository
 from config.loader import load_sites
+from domain.errors import ConfigurationError
 from output.formatter import multi_failure_text
-from output.transaction import atomic_write_text, write_formal_outputs_and_cache, write_outputs
+from output.transaction import (
+    CacheUpdateError,
+    atomic_write_text,
+    write_formal_outputs_and_cache,
+    write_outputs,
+)
 from parsers.registry import ENGINE_REGISTRY, ParserRegistry
 from services.multi_period import scrape_sites_for_periods
 from services.recent_history import scrape_history_sites
 from services.single_period import scrape_sites
-
 
 ROOT = Path(__file__).resolve().parent
 OUTPUT_DIR = Path(r"C:\Users\Administrator\Desktop\每天工具\爬虫合集\七类数据统一归纳")
@@ -70,12 +73,13 @@ def parse_args(argv: list[str]) -> argparse.Namespace:
     parser.add_argument("--history-cache", action="store_true", help="抓取最近10期并生成重复检测缓存")
     parser.add_argument("--history-cache-file", default=str(DEFAULT_HISTORY_CACHE), help="重复检测缓存 JSON")
     parser.add_argument("--duplicate-check", action="store_true", help="使用 recent_10_cache.json 执行正式重复检测")
-    parser.add_argument("--adaptive-mode", choices=("off", "shadow", "fallback"), default="fallback")
-    parser.add_argument("--structure-profiles-file", default=str(ROOT / "site_structure_profiles.json"))
-    parser.add_argument("--adaptive-similarity", type=int, default=70)
-    parser.add_argument("--adaptive-max-documents", type=int, default=16)
-    parser.add_argument("--adaptive-browser-workers", type=int, default=2)
     args = parser.parse_args(argv)
+    if args.timeout < 1:
+        parser.error("--timeout 必须大于等于1")
+    if args.workers < 1:
+        parser.error("--workers 必须大于等于1")
+    if args.limit < 0:
+        parser.error("--limit 必须大于等于0")
     if args.duplicate_check and (args.period is not None or args.periods):
         parser.error("--duplicate-check 不需要指定 --period 或 --periods")
     if args.period is None and not args.periods and not args.duplicate_check:
@@ -88,43 +92,13 @@ def parse_args(argv: list[str]) -> argparse.Namespace:
         parser.error("--periods 会按原单期文件名输出，不能同时指定 --output/--errors")
     if args.limit > 0 and (args.periods or args.history_cache):
         parser.error("--limit 仅用于单期只读诊断，不能配合多期或缓存重建")
-    if not 40 <= args.adaptive_similarity <= 100:
-        parser.error("--adaptive-similarity 必须为40-100")
-    if args.adaptive_max_documents < 1 or args.adaptive_browser_workers < 1:
-        parser.error("自适应文档数和浏览器并发必须大于0")
     return args
-
-
-def build_adaptive_manager(args: argparse.Namespace, sites) -> adaptive.AdaptiveManager:
-    manager = adaptive.AdaptiveManager(
-        Path(args.structure_profiles_file),
-        mode=args.adaptive_mode,
-        similarity=args.adaptive_similarity,
-        max_documents=args.adaptive_max_documents,
-        browser_workers=args.adaptive_browser_workers,
-        history_cache_path=Path(args.history_cache_file),
-        require_history=args.adaptive_mode != "off",
-    )
-    if manager.enabled:
-        if not manager.available:
-            raise RuntimeError(adaptive.dependency_error())
-        manager.register_sites(sites)
-    return manager
-
-
-def print_adaptive_status(manager: adaptive.AdaptiveManager) -> None:
-    labels = {"off": "关闭", "shadow": "影子验证", "fallback": "严格兜底"}
-    print(
-        f"Scrapling自适应：{labels[manager.mode]}；"
-        f"依赖：{'可用' if manager.available else '不可用'}；结构档案：{manager.store.path.resolve()}",
-        flush=True,
-    )
 
 
 def run_duplicate_check(sites, path: Path) -> int:
     try:
         cache = json.loads(path.read_text(encoding="utf-8-sig"))
-    except (OSError, json.JSONDecodeError) as exc:
+    except (OSError, UnicodeDecodeError, json.JSONDecodeError) as exc:
         print(f"重复检测缓存读取失败：{exc}")
         return 2
     if not isinstance(cache, dict):
@@ -157,7 +131,6 @@ def run_multi_periods(
     sites,
     args: argparse.Namespace,
     registry: ParserRegistry,
-    adaptive_manager: adaptive.AdaptiveManager | None,
 ) -> int:
     periods = list(dict.fromkeys(args.periods))
     period_results = scrape_sites_for_periods(
@@ -166,7 +139,6 @@ def run_multi_periods(
         args.timeout,
         args.workers,
         registry=registry,
-        adaptive_manager=adaptive_manager,
     )
     total_ok = 0
     for period in periods:
@@ -193,21 +165,19 @@ def run_multi_periods(
 
 def main(argv: list[str] | None = None) -> int:
     args = parse_args(sys.argv[1:] if argv is None else argv)
-    sites = load_sites(Path(args.sites_file), allowed_parsers=ENGINE_REGISTRY)
-    if args.limit > 0:
-        sites = sites[: args.limit]
-    registry = ParserRegistry.bind_sites(sites)
+    try:
+        sites = load_sites(Path(args.sites_file), allowed_parsers=ENGINE_REGISTRY)
+        if args.limit > 0:
+            sites = sites[: args.limit]
+        registry = ParserRegistry.bind_sites(sites)
+    except (ConfigurationError, ValueError) as exc:
+        print(f"站点配置加载失败：{exc}")
+        return 2
     repository = RecentCacheRepository(Path(args.history_cache_file))
     if args.duplicate_check:
         return run_duplicate_check(sites, repository.path)
-    try:
-        adaptive_manager = build_adaptive_manager(args, sites)
-    except (RuntimeError, ValueError) as exc:
-        print(f"自适应初始化失败：{exc}", flush=True)
-        return 2
-    print_adaptive_status(adaptive_manager)
     if args.periods:
-        return run_multi_periods(sites, args, registry, adaptive_manager)
+        return run_multi_periods(sites, args, registry)
     if args.history_cache:
         results = scrape_history_sites(
             sites,
@@ -215,7 +185,6 @@ def main(argv: list[str] | None = None) -> int:
             args.timeout,
             args.workers,
             registry=registry,
-            adaptive_manager=adaptive_manager,
         )
         try:
             repository.commit(repository.prepare_history_update(results, args.period))
@@ -234,7 +203,6 @@ def main(argv: list[str] | None = None) -> int:
         args.timeout,
         args.workers,
         registry=registry,
-        adaptive_manager=adaptive_manager,
     )
     if args.limit > 0:
         ok_count = sum(result.ok for result in results)
@@ -245,8 +213,17 @@ def main(argv: list[str] | None = None) -> int:
     errors = Path(args.errors) if args.errors else failure_path(args.period)
     ok_count = sum(result.ok for result in results)
     cache_allowed = should_update_cache(ok_count, len(sites))
+    prepared: dict[str, object] | None = None
+    cache_error: Exception | None = None
+    if cache_allowed:
+        try:
+            prepared = repository.prepare_update(results, args.period)
+        except (OSError, ValueError) as exc:
+            cache_error = exc
+            print(f"缓存准备失败：{exc}")
+        if prepared is None and cache_error is None:
+            print("当前期数与缓存窗口不连续，缓存未更新")
     try:
-        prepared = repository.prepare_update(results, args.period) if cache_allowed else None
         cache_updated = write_formal_outputs_and_cache(
             results,
             output,
@@ -255,9 +232,11 @@ def main(argv: list[str] | None = None) -> int:
             prepared,
             include_url=args.include_url,
         )
+    except CacheUpdateError as exc:
+        cache_error = exc
+        cache_updated = False
     except (OSError, ValueError) as exc:
-        print(f"正式写入失败：{exc}")
-        print("已拒绝保留不一致的正式TXT和 recent_10_cache.json")
+        print(f"正式输出失败：{exc}")
         return 2
     success_rate = ok_count / len(sites) * 100 if sites else 0.0
     print(f"完成：成功 {ok_count} 条，失败 {len(results) - ok_count} 条")
@@ -266,6 +245,12 @@ def main(argv: list[str] | None = None) -> int:
     if not cache_allowed:
         print(f"成功率 {success_rate:.2f}% 不超过85%，保持 recent_10_cache.json 不变")
     print(f"最近10期基准缓存：{'已更新' if cache_updated else '未更新'} {repository.path.resolve()}")
+    if cache_error is not None:
+        if isinstance(cache_error, CacheUpdateError):
+            print(str(cache_error))
+        else:
+            print(f"缓存更新未完成：{cache_error}")
+        return 2
     return 0 if ok_count == len(results) else 1
 
 

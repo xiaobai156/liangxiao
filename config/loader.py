@@ -3,6 +3,7 @@ from __future__ import annotations
 from collections.abc import Collection, Mapping
 import json
 from pathlib import Path
+import re
 from urllib.parse import urlparse
 
 from domain.errors import ConfigurationError
@@ -19,6 +20,18 @@ PICK_ALIASES = {
     "尾部": "bottom",
     "下": "bottom",
 }
+ALLOWED_PAYLOADS = frozenset(
+    {
+        "page",
+        "page_and_scripts",
+        "browser_rendered_page",
+        "topic_list_detail",
+        "admin_article_api",
+        "tuku_user_forums",
+        "curl_tls10_page_and_scripts",
+        "scripts",
+    }
+)
 
 def normalize_pick(value: str) -> str:
     pick = PICK_ALIASES.get(str(value).strip().lower())
@@ -44,8 +57,12 @@ def site_from_mapping(
     name = required_text(item, "name", "站点名称不能为空")
     pick = normalize_pick(str(item.get("pick") or ""))
     url = required_text(item, "url", f"{name} URL不能为空")
-    parsed_url = urlparse(url)
-    if parsed_url.scheme.lower() not in {"http", "https"} or not parsed_url.netloc:
+    try:
+        parsed_url = urlparse(url)
+        hostname, _ = parsed_url.hostname, parsed_url.port
+    except ValueError as exc:
+        raise ConfigError(f"{name} URL 必须使用 http/https：{url}") from exc
+    if parsed_url.scheme.lower() not in {"http", "https"} or not hostname:
         raise ConfigError(f"{name} URL 必须使用 http/https：{url}")
     parser = str(item.get("parser") or "named_block").strip()
     if not parser:
@@ -53,6 +70,25 @@ def site_from_mapping(
     if allowed_parsers is not None and parser not in set(allowed_parsers):
         raise ConfigError(f"{name} 使用未知 parser：{parser}")
     payload = required_text(item, "payload", f"{name} payload 不能为空")
+    if payload not in ALLOWED_PAYLOADS:
+        raise ConfigError(f"{name} payload 不支持：{payload}")
+    for field in ("title", "record", "stop", "linked_document_pattern"):
+        value = str(item.get(field) or "").strip()
+        if not value:
+            continue
+        try:
+            re.compile(value)
+        except re.error as exc:
+            raise ConfigError(f"{name} {field} 正则无效：{exc}") from exc
+    api_url = str(item.get("api_url") or "").strip()
+    if api_url:
+        try:
+            parsed_api_url = urlparse(api_url)
+            api_hostname, _ = parsed_api_url.hostname, parsed_api_url.port
+        except ValueError as exc:
+            raise ConfigError(f"{name} api_url 必须使用 http/https 且包含主机：{api_url}") from exc
+        if parsed_api_url.scheme.lower() not in {"http", "https"} or not api_hostname:
+            raise ConfigError(f"{name} api_url 必须使用 http/https 且包含主机：{api_url}")
     raw_keywords = item.get("keywords") or ()
     if isinstance(raw_keywords, str):
         keywords = (raw_keywords,) if raw_keywords else ()
@@ -69,7 +105,7 @@ def site_from_mapping(
         record=str(item.get("record") or ""),
         stop=str(item.get("stop") or ""),
         payload=payload,
-        api_url=str(item.get("api_url") or "").strip(),
+        api_url=api_url,
         keywords=keywords,
         profile_id=str(item.get("profile_id") or "").strip(),
         linked_document_pattern=str(item.get("linked_document_pattern") or "").strip(),
@@ -85,12 +121,14 @@ def load_sites(
         raise ConfigError(f"站点配置不存在：{path}")
     try:
         data = json.loads(path.read_text(encoding="utf-8-sig"))
-    except json.JSONDecodeError as exc:
+    except (json.JSONDecodeError, UnicodeDecodeError) as exc:
         raise ConfigError(f"站点配置 JSON格式错误：{exc}") from exc
     except OSError as exc:
         raise ConfigError(f"站点配置读取失败：{exc}") from exc
     if not isinstance(data, list):
         raise ConfigError("站点配置根节点必须是数组")
+    if not data:
+        raise ConfigError("站点配置不能为空")
     sites = [site_from_mapping(item, allowed_parsers=allowed_parsers) for item in data]
     seen_names: set[str] = set()
     seen_identities: set[tuple[str, str, str]] = set()

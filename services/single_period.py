@@ -1,18 +1,33 @@
 from __future__ import annotations
 
+import json
+import re
+import time
 from collections.abc import Callable
 from concurrent.futures import ThreadPoolExecutor, as_completed
-import time
+from dataclasses import replace
 
 import requests
 
-import adaptive_scrapling as adaptive
-
 from diagnostics.run_report import format_failure, progress_summary_line
-from domain.models import DOCUMENT_BOUNDARY, DocumentBundle, PayloadDocument, Record, Result, Site
+from domain.errors import ErrorCategory, ScrapeFailure
+from domain.models import (
+    DOCUMENT_BOUNDARY,
+    DocumentBundle,
+    PayloadDocument,
+    Record,
+    Result,
+    Site,
+)
 from fetching.client import FetchContext
-from fetching.browser import render_browser_text
-from fetching.page import decode_strdecode_blocks, fetch_payload
+from fetching.page import (
+    fetch_payload,
+    fetch_topic_detail_documents,
+    make_document_bundle,
+    next_topic_listing_url,
+    topic_listing_links,
+    visible_text,
+)
 from parsers.registry import ParserRegistry
 from validation.boundaries import (
     linked_document_is_authorized,
@@ -23,8 +38,170 @@ from validation.conflicts import validate_document_windows
 from validation.direction import select_record
 from validation.records import record_value_signature, validate_selected_record
 
-
 ProgressSink = Callable[[str], None]
+
+
+def source_has_target(
+    registry: ParserRegistry,
+    source: str,
+    site: Site,
+    period: int | None,
+) -> bool:
+    try:
+        candidates = registry.parse(source, site)
+        if period is None:
+            return bool(candidates)
+        selected = select_record(candidates, period, site)
+        return validate_selected_record(selected, period)
+    except (ValueError, LookupError):
+        return False
+
+
+def _topic_list_item_matches(title: str, site: Site) -> bool:
+    if site.title:
+        try:
+            return bool(re.search(site.title, title, flags=re.I))
+        except re.error:
+            return False
+    return (
+        site.name in title
+        and "绝杀" in title
+        and any(marker in title for marker in ("二肖", "两肖", "②肖", "2肖", "２肖"))
+    )
+
+
+def fetch_topic_list_detail_for_period(
+    site: Site,
+    period: int | None,
+    timeout: int,
+    context: FetchContext,
+) -> DocumentBundle:
+    if period is None:
+        raise ValueError("列表详情站必须指定期数")
+    visited_listing_urls: set[str] = set()
+    period_order: list[int] = []
+    urls_by_period: dict[int, list[str]] = {}
+    seen_urls: set[str] = set()
+    listing_url = site.url
+    for _ in range(32):
+        if listing_url in visited_listing_urls:
+            break
+        visited_listing_urls.add(listing_url)
+        listing = context.get_text(listing_url, timeout)
+        next_url = next_topic_listing_url(listing, listing_url)
+        for detail_url, title in topic_listing_links(listing, listing_url):
+            period_match = re.search(r"(\d{3})\s*期", title)
+            if not period_match or not _topic_list_item_matches(title, site):
+                continue
+            candidate_period = int(period_match.group(1))
+            if detail_url in seen_urls:
+                continue
+            seen_urls.add(detail_url)
+            if candidate_period not in urls_by_period:
+                period_order.append(candidate_period)
+                urls_by_period[candidate_period] = []
+            urls_by_period[candidate_period].append(detail_url)
+        if not next_url or next_url in visited_listing_urls:
+            break
+        listing_url = next_url
+    else:
+        raise ValueError("列表分页超过扫描上限")
+
+    candidates = period_order[:3] if site.pick == "top" else period_order[-3:]
+    if period not in candidates:
+        raise ValueError(f"{site.pick} 列表候选内未找到 {period} 期")
+
+    documents: list[PayloadDocument] = []
+    for detail_url in urls_by_period[period]:
+        detail_documents = fetch_topic_detail_documents(detail_url, timeout, context, site)
+        detail_page = detail_documents[0]
+        matching_documents: list[PayloadDocument] = []
+        detail_text = visible_text(detail_page.source)
+        if re.search(rf"{period}\s*期", detail_text) and _topic_list_item_matches(detail_text, site):
+            matching_documents.append(detail_page)
+        for document in detail_documents[1:]:
+            text = visible_text(document.source)
+            if _topic_list_item_matches(text, site) and re.search(rf"{period}\s*期", text):
+                matching_documents.append(document)
+        if not matching_documents:
+            raise ValueError("详情页脚本内未找到指定期数或专属关键词")
+        if detail_page not in matching_documents:
+            matching_documents.insert(0, detail_page)
+        documents.extend(matching_documents)
+    return make_document_bundle(documents)
+
+
+def fetch_payload_for_period(
+    site: Site,
+    period: int | None,
+    timeout: int,
+    context: FetchContext,
+    registry: ParserRegistry,
+) -> DocumentBundle:
+    if site.payload == "topic_list_detail":
+        return fetch_topic_list_detail_for_period(site, period, timeout, context)
+    bundle = fetch_payload(
+        site,
+        period,
+        timeout,
+        context,
+        lambda source, target, issue: source_has_target(registry, source, target, issue),
+    )
+    if site.parser != "xiaosuan_bottom_two_zodiac":
+        return bundle
+    if period is None or len(bundle.documents) != 1:
+        raise ValueError("小算算必须指定期数并使用唯一用户接口文档")
+    document = bundle.documents[0]
+    try:
+        items = json.loads(document.source)
+    except json.JSONDecodeError as exc:
+        raise ValueError("小算算用户接口JSON无效") from exc
+    draw_matches = [
+        item
+        for item in items
+        if isinstance(item, dict)
+        if item.get("draw") == period
+    ]
+    if not draw_matches:
+        raise ScrapeFailure(
+            ErrorCategory.CONTENT_NOT_PUBLISHED,
+            f"用户接口内未找到{period}期帖子",
+        )
+    if len(draw_matches) > 1:
+        raise ScrapeFailure(
+            ErrorCategory.DATA_CONFLICT,
+            f"用户接口内{period}期出现{len(draw_matches)}篇帖子",
+        )
+    matches = [
+        item
+        for item in draw_matches
+        if item.get("status") == "published"
+        and str(item.get("topic") or "").strip() == "杀肖"
+        and isinstance(item.get("user"), dict)
+        and str(item["user"].get("nickname") or "") == site.name
+    ]
+    if not matches:
+        raise ScrapeFailure(
+            ErrorCategory.TARGET_MISSING,
+            f"{period}期帖子作者、栏目或发布状态不匹配",
+        )
+    article_id = matches[0].get("id")
+    if not isinstance(article_id, int) or article_id <= 0:
+        raise ScrapeFailure(
+            ErrorCategory.FIELD_VALIDATION,
+            f"{period}期目标帖子缺少文章ID",
+        )
+    return replace(
+        bundle,
+        documents=(
+            replace(
+                document,
+                source=json.dumps(matches, ensure_ascii=False),
+                record_path=f"root[id={article_id}]",
+                record_count=1,
+            ),
+        ),
+    )
 
 
 def parse_bundle_for_period(
@@ -56,7 +233,7 @@ def parse_bundle_for_period(
 
     pair_observed: list[tuple[str, list[Record]]] = []
     pair_successes: list[tuple[str, list[Record], Record]] = []
-    if len(bundle.documents) > 1 and site.linked_document_pattern:
+    if len(bundle.documents) > 1:
         anchor_candidates = list(bundle.documents)
         documents_by_url: dict[str, list[PayloadDocument]] = {}
         for document in bundle.documents:
@@ -114,7 +291,11 @@ def parse_bundle_for_period(
                     link_reference=body.link_reference,
                     body_source_start=len(anchor.source) + len(DOCUMENT_BOUNDARY),
                 )
-                records = registry.parse(paired, site)
+                pair_site = site if site.linked_document_pattern else replace(
+                    site,
+                    linked_document_pattern=re.escape(body.url),
+                )
+                records = registry.parse(paired, pair_site)
                 if not records:
                     continue
                 pair_observed.append((paired.label, records))
@@ -135,9 +316,9 @@ def parse_bundle_for_period(
         if paired and independent != paired:
             details = "、".join(sorted(independent | paired))
             raise ValueError(f"数据存在冲突：{period}期独立文档与标题正文结果不同：{details}")
-        _label, records, selected = max(successful, key=lambda item: len(item[1]))
+        _label, records, selected = successful[0]
     elif pair_successes:
-        _label, records, selected = max(pair_successes, key=lambda item: len(item[1]))
+        _label, records, selected = pair_successes[0]
     elif selection_failures:
         details = "；".join(
             f"{label}：{detail}"
@@ -162,59 +343,12 @@ def scrape_site(
     timeout: int,
     context: FetchContext,
     registry: ParserRegistry,
-    adaptive_manager: adaptive.AdaptiveManager | None = None,
 ) -> Result:
-    source = ""
-    bundle = DocumentBundle(())
-    records: list[Record] = []
     try:
-        bundle = fetch_payload(
-            site,
-            period,
-            timeout,
-            context,
-            lambda source, target, issue: bool(registry.parse(source, target)) if issue is None else any(
-                record.period == issue for record in registry.parse(source, target)
-            ),
-        )
-        source = bundle.combined_source
-        records, selected = parse_bundle_for_period(bundle, site, period, registry)
+        bundle = fetch_payload_for_period(site, period, timeout, context, registry)
+        _records, selected = parse_bundle_for_period(bundle, site, period, registry)
     except (requests.RequestException, ValueError, LookupError) as exc:
-        if (
-            adaptive_manager is None
-            or not adaptive_manager.enabled
-            or site.payload in {"admin_article_api", "tuku_user_forums"}
-            or not adaptive.should_attempt_recovery(site, adaptive.classify_failure(exc), str(exc))
-        ):
-            return Result(site, None, format_failure(exc))
-        try:
-            recovery = adaptive_manager.recover(
-                site,
-                period,
-                timeout,
-                bundle,
-                context.get_text,
-                registry.parse,
-                select_record,
-                lambda record: validate_selected_record(record, period),
-                decode_strdecode_blocks,
-                render_browser_text,
-            )
-        except Exception as recovery_exc:
-            return Result(site, None, f"{format_failure(exc)}；{recovery_exc}")
-        if adaptive_manager.mode == "shadow":
-            return Result(
-                site,
-                None,
-                f"{format_failure(exc)}；自适应影子验证已找到："
-                f"{recovery.record.zodiac}@位置{recovery.record.position}，未写入正式结果",
-            )
-        return Result(site, recovery.record)
-    if adaptive_manager is not None and adaptive_manager.enabled:
-        try:
-            adaptive_manager.observe_primary_success(site, source, records, selected, registry.parse, select_record)
-        except (RuntimeError, ValueError):
-            pass
+        return Result(site, None, format_failure(exc))
     return Result(site, selected)
 
 
@@ -227,50 +361,53 @@ def scrape_sites(
     context: FetchContext | None = None,
     registry: ParserRegistry | None = None,
     progress: ProgressSink | None = print,
-    adaptive_manager: adaptive.AdaptiveManager | None = None,
 ) -> list[Result]:
     if not sites:
         return []
-    active_context = context or FetchContext()
+    active_context = context if context is not None else FetchContext()
+    owns_context = context is None
     active_registry = registry or ParserRegistry.bind_sites(sites)
     results: list[Result | None] = [None] * len(sites)
     started_at = time.monotonic()
     success = failed = done = 0
     scheduled_indices = range(len(sites))
-    with ThreadPoolExecutor(max_workers=max(1, min(workers, len(sites)))) as executor:
-        futures = {
-            executor.submit(
-                scrape_site,
-                sites[index],
-                period,
-                timeout,
-                active_context,
-                active_registry,
-                adaptive_manager,
-            ): index
-            for index in scheduled_indices
-        }
-        for future in as_completed(futures):
-            index = futures[future]
-            try:
-                result = future.result()
-            except Exception as exc:
-                result = Result(sites[index], None, format_failure(exc))
-            results[index] = result
-            done += 1
-            success += int(result.ok)
-            failed += int(not result.ok)
-            if progress is not None:
-                progress(
-                    progress_summary_line(
-                        done,
-                        len(sites),
-                        success,
-                        failed,
-                        time.monotonic() - started_at,
-                        result.site.name,
-                        result.ok,
-                        result.error,
+    try:
+        with ThreadPoolExecutor(max_workers=max(1, min(workers, len(sites)))) as executor:
+            futures = {
+                executor.submit(
+                    scrape_site,
+                    sites[index],
+                    period,
+                    timeout,
+                    active_context,
+                    active_registry,
+                ): index
+                for index in scheduled_indices
+            }
+            for future in as_completed(futures):
+                index = futures[future]
+                try:
+                    result = future.result()
+                except Exception as exc:
+                    result = Result(sites[index], None, format_failure(exc))
+                results[index] = result
+                done += 1
+                success += int(result.ok)
+                failed += int(not result.ok)
+                if progress is not None:
+                    progress(
+                        progress_summary_line(
+                            done,
+                            len(sites),
+                            success,
+                            failed,
+                            time.monotonic() - started_at,
+                            result.site.name,
+                            result.ok,
+                            result.error,
+                        )
                     )
-                )
-    return [result for result in results if result is not None]
+        return [result for result in results if result is not None]
+    finally:
+        if owns_context:
+            active_context.close()
