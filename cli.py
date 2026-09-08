@@ -21,6 +21,7 @@ from parsers.registry import ENGINE_REGISTRY, ParserRegistry
 from services.multi_period import scrape_sites_for_periods
 from services.recent_history import scrape_history_sites
 from services.single_period import scrape_sites
+from services.failed_retry import apply_retry, sites_from_failure_file
 
 ROOT = Path(__file__).resolve().parent
 OUTPUT_DIR = Path(r"C:\Users\Administrator\Desktop\每天工具\爬虫合集\七类数据统一归纳")
@@ -73,6 +74,7 @@ def parse_args(argv: list[str]) -> argparse.Namespace:
     parser.add_argument("--history-cache", action="store_true", help="抓取最近10期并生成重复检测缓存")
     parser.add_argument("--history-cache-file", default=str(DEFAULT_HISTORY_CACHE), help="重复检测缓存 JSON")
     parser.add_argument("--duplicate-check", action="store_true", help="使用 recent_10_cache.json 执行正式重复检测")
+    parser.add_argument("--retry-failures", action="store_true", help="只重抓当前期失败TXT中的站点")
     args = parser.parse_args(argv)
     if args.timeout < 1:
         parser.error("--timeout 必须大于等于1")
@@ -88,6 +90,8 @@ def parse_args(argv: list[str]) -> argparse.Namespace:
         parser.error("--period 和 --periods 不能同时使用")
     if args.history_cache and args.period is None:
         parser.error("--history-cache 只能配合单个 --period 使用")
+    if args.retry_failures and (args.period is None or args.periods or args.limit):
+        parser.error("--retry-failures 只能配合单个 --period 使用，且不能限量")
     if args.periods and (args.output or args.errors):
         parser.error("--periods 会按原单期文件名输出，不能同时指定 --output/--errors")
     if args.limit > 0 and (args.periods or args.history_cache):
@@ -176,6 +180,23 @@ def main(argv: list[str] | None = None) -> int:
     repository = RecentCacheRepository(Path(args.history_cache_file))
     if args.duplicate_check:
         return run_duplicate_check(sites, repository.path)
+    if args.retry_failures:
+        errors = Path(args.errors) if args.errors else failure_path(args.period)
+        targets = sites_from_failure_file(errors, sites)
+        if not targets:
+            print(f"未找到{args.period}期失败TXT中的可重抓站点：{errors.resolve()}")
+            return 0
+        results = scrape_sites(targets, args.period, args.timeout, args.workers, registry=registry)
+        try:
+            apply_retry(results, Path(args.output) if args.output else success_path(args.period), errors,
+                        repository.path, args.period, args.include_url)
+        except (OSError, ValueError) as exc:
+            print(f"失败站点更新失败：{exc}")
+            return 2
+        ok_count = sum(result.ok for result in results)
+        print(f"失败站点重抓完成：成功 {ok_count} 条，失败 {len(results) - ok_count} 条")
+        print(f"仅处理站点：{','.join(site.name for site in targets)}")
+        return 0 if ok_count == len(results) else 1
     if args.periods:
         return run_multi_periods(sites, args, registry)
     if args.history_cache:
