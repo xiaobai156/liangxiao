@@ -68,7 +68,13 @@ def apply_retry(results: list[Result], success: Path, failure: Path, cache: Path
                     if line == expected or line.startswith(expected + " "): continue
                     if line.endswith(" " + result.site.name) or line.endswith(" " + result.site.name + " " + result.site.url):
                         raise ValueError(f"成功TXT已有同站不同结果：{result.site.name}")
-            append_repaired_successes(good, success, include_url=include_url)
+            existing_keys = {line.split(" ", 2)[:2][0] + " " + line.split(" ", 2)[:2][1]
+                             for line in existing.splitlines() if len(line.split(" ", 2)) >= 2}
+            append_repaired_successes(
+                [r for r in good if f"{r.record.zodiac} {r.site.name}" not in existing_keys],
+                success,
+                include_url=include_url,
+            )
             remove_successful_failures(failure, good)
         except Exception:
             if success_before is None: success.unlink(missing_ok=True)

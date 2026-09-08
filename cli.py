@@ -190,7 +190,7 @@ def main(argv: list[str] | None = None) -> int:
         try:
             apply_retry(results, Path(args.output) if args.output else success_path(args.period), errors,
                         repository.path, args.period, args.include_url)
-        except (OSError, ValueError) as exc:
+        except (OSError, ValueError, RuntimeError) as exc:
             print(f"失败站点更新失败：{exc}")
             return 2
         ok_count = sum(result.ok for result in results)
