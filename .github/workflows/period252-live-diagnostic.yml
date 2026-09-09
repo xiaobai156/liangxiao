@@ -1,0 +1,41 @@
+name: Period 252 live diagnostic
+
+on:
+  push:
+    branches: ['diagnostic/period252-20260909']
+    paths:
+      - '.github/workflows/period252-live-diagnostic.yml'
+      - 'tools/diagnose_period252.py'
+
+permissions:
+  contents: read
+
+jobs:
+  diagnose:
+    runs-on: windows-latest
+    timeout-minutes: 35
+    env:
+      PYTHONUTF8: '1'
+      BASE_MAIN_SHA: '42b3e3e076bee0149d338fcdaac2f5adfe6e59d4'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: diagnostic/period252-20260909
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Install runtime dependencies
+        run: |
+          python -m pip install -r requirements.txt
+          python -m pip install playwright
+          python -m playwright install chromium
+      - name: Run 252 live diagnostic without formal output/cache writes
+        run: python tools/diagnose_period252.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: period252-diagnostic
+          path: period252-diagnostic.json
+          if-no-files-found: warn
+          retention-days: 7
