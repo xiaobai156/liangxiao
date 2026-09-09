@@ -24,17 +24,19 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.10'
-      - name: Repair the tests
+      - name: Repair cache fingerprint expectation
         shell: bash
         run: |
           python - <<'PY'
           from pathlib import Path
+          from textwrap import dedent
 
-          audit_path = Path('tests/test_audit_cache_output.py')
-          text = audit_path.read_text(encoding='utf-8')
+          path = Path('tests/test_audit_cache_output.py')
+          text = path.read_text(encoding='utf-8')
           start = text.index('@pytest.mark.parametrize(\n    "changed_sites",')
           end = text.index('\n\ndef test_prepare_history_update_rebuilds_config_fingerprint', start)
-          replacement = '''@pytest.mark.parametrize(
+          replacement = dedent('''\
+          @pytest.mark.parametrize(
               "changed_sites",
               [
                   lambda sites: [replace(sites[0], parser="other_parser"), sites[1]],
@@ -67,12 +69,14 @@ jobs:
                   repository.prepare_update(
                       [_result(site, 100) for site in reversed(sites)], 100
                   )
-          '''
-          # Normalize indentation introduced by the workflow source itself.
-          replacement = '\n'.join(line[10:] if line.startswith('          ') else line for line in replacement.splitlines())
-          audit_path.write_text(text[:start] + replacement + text[end:], encoding='utf-8')
-
-          safety = '''from contextlib import contextmanager
+          ''')
+          path.write_text(text[:start] + replacement + text[end:], encoding='utf-8')
+          PY
+      - name: Replace failed retry safety tests
+        shell: bash
+        run: |
+          cat > tests/test_failed_retry_safety.py <<'PYTEST'
+          from contextlib import contextmanager
           import copy
           import json
           from concurrent.futures import ThreadPoolExecutor
@@ -90,9 +94,9 @@ jobs:
               sites = [Site(name, 'top', f'https://example.test/{name}') for name in ('A', 'B')]
               results = [Result(s, Record(248, '牛马', '', '', 10)) for s in sites]
               success, failure, cache = [tmp_path / n for n in ('success.txt', 'failure.txt', 'cache.json')]
-              success.write_bytes(b'original\\r\\n')
+              success.write_bytes(b'original\r\n')
               failure.write_text(
-                  ''.join(f'{s.name} {s.pick} {s.url} 原因：失败\\n' for s in sites),
+                  ''.join(f'{s.name} {s.pick} {s.url} 原因：失败\n' for s in sites),
                   encoding='utf-8',
               )
               repo = RecentCacheRepository(cache)
@@ -138,7 +142,7 @@ jobs:
 
               monkeypatch.setattr(cli, 'scrape_sites', no_fetch)
               if bad == 'encoding':
-                  failure.write_bytes(b'\\xff')
+                  failure.write_bytes(b'\xff')
               else:
                   def denied(*a):
                       raise PermissionError('denied')
@@ -217,10 +221,7 @@ jobs:
               assert by_name['A']['positions']['248'] == 11
               assert by_name['B']['values']['248'] == '蛇鸡'
               assert by_name['B']['positions']['248'] == 12
-          '''
-          safety = '\n'.join(line[10:] if line.startswith('          ') else line for line in safety.splitlines()) + '\n'
-          Path('tests/test_failed_retry_safety.py').write_text(safety, encoding='utf-8')
-          PY
+          PYTEST
       - name: Install test dependencies
         run: python -m pip install -r requirements-dev.txt
       - name: Run full offline suite
