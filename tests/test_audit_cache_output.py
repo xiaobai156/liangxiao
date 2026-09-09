@@ -511,7 +511,6 @@ def test_prepare_update_accepts_same_config_and_persists_fingerprint(
         lambda sites: [replace(sites[0], parser="other_parser"), sites[1]],
         lambda sites: [replace(sites[0], title="other title"), sites[1]],
         lambda sites: [replace(sites[0], record="other record"), sites[1]],
-        lambda sites: [sites[1], sites[0]],
     ],
 )
 def test_prepare_update_allows_config_fingerprint_change(
@@ -526,6 +525,19 @@ def test_prepare_update_allows_config_fingerprint_change(
     assert repository.prepare_update(
         [_result(site, 100) for site in changed_sites(sites)], 100
     ) is not None
+
+
+def test_prepare_update_still_rejects_site_order_change(tmp_path: Path) -> None:
+    sites = [_site("fingerprint-a"), _site("fingerprint-b", pick="bottom")]
+    repository = RecentCacheRepository(tmp_path / "cache.json")
+    initial = repository.prepare_update([_result(site, 100) for site in sites], 100)
+    assert initial is not None
+    repository.commit(initial)
+
+    with pytest.raises(ValueError, match="身份|顺序|站点"):
+        repository.prepare_update(
+            [_result(site, 100) for site in reversed(sites)], 100
+        )
 
 
 def test_prepare_history_update_rebuilds_config_fingerprint(tmp_path: Path) -> None:
