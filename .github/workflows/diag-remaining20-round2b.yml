@@ -1,0 +1,89 @@
+name: Diagnose remaining 20 round 2b
+
+on:
+  push:
+    branches: ['test/remaining20-round2b']
+    paths:
+      - '.github/workflows/diag-remaining20-round2b.yml'
+      - 'tools/fix20-code-r2.patch.xz.b64'
+
+permissions:
+  contents: read
+
+jobs:
+  diagnose:
+    runs-on: windows-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Apply candidate code patch
+        shell: pwsh
+        run: |
+          $encoded = Get-Content -Raw tools/fix20-code-r2.patch.xz.b64
+          [IO.File]::WriteAllBytes("$env:RUNNER_TEMP\fix.patch.xz", [Convert]::FromBase64String($encoded.Trim()))
+          $hash = (Get-FileHash "$env:RUNNER_TEMP\fix.patch.xz" -Algorithm SHA256).Hash.ToLower()
+          if ($hash -ne '33cfcfbf1be32c41ce80fd783e773fb4cbb65d61c7a627c0b6898ae06fc61b93') { throw "patch checksum mismatch: $hash" }
+          xz -dc "$env:RUNNER_TEMP\fix.patch.xz" | Set-Content -Encoding utf8 "$env:RUNNER_TEMP\fix.patch"
+          git apply --check --whitespace=error-all "$env:RUNNER_TEMP\fix.patch"
+          git apply --whitespace=error-all "$env:RUNNER_TEMP\fix.patch"
+      - name: Install dependencies
+        run: python -m pip install -r requirements-dev.txt
+      - name: Run full offline suite
+        run: python tools/run_offline_tests.py -q tests
+      - name: Recheck paired sites and inspect remaining boundaries
+        shell: pwsh
+        env:
+          PYTHONUTF8: '1'
+        run: |
+          @'
+          import re
+          from pathlib import Path
+          from config.loader import load_sites
+          from fetching.client import FetchContext
+          from parsers.helpers import visible_source_text
+          from parsers.registry import ENGINE_REGISTRY, ParserRegistry
+          from services.single_period import fetch_payload_for_period, scrape_sites
+
+          all_sites = load_sites(Path('config/sites.json'), allowed_parsers=ENGINE_REGISTRY)
+          by_name = {site.name: site for site in all_sites}
+          pair_names = ['大上海','澳姜太公','广东']
+          pair_sites = [by_name[name] for name in pair_names]
+          results = scrape_sites(pair_sites, 252, timeout=25, workers=3,
+                                 registry=ParserRegistry.bind_sites(pair_sites), progress=None)
+          for result in results:
+              print('PAIR', result.site.name, 'OK' if result.ok else 'FAIL',
+                    result.record.zodiac if result.ok and result.record else '',
+                    result.record.position if result.ok and result.record else None,
+                    result.error)
+
+          inspect_names = ['呻吟成瘾','人心如镜','曹国舅','科方东文','乐不可支','梦寐以求第二']
+          inspect_sites = [by_name[name] for name in inspect_names]
+          registry = ParserRegistry.bind_sites(inspect_sites)
+          for site in inspect_sites:
+              print('\n===SITE', site.name, '===')
+              context = FetchContext()
+              try:
+                  bundle = fetch_payload_for_period(site, 252, 25, context, registry)
+                  print('BUNDLE', len(bundle.documents), 'complete', bundle.scan_complete)
+                  for index, doc in enumerate(bundle.documents):
+                      text = visible_source_text(doc.source)
+                      title_matches = list(re.finditer(site.title, text, flags=re.I)) if site.title else []
+                      stop_matches = list(re.finditer(site.stop, text, flags=re.I)) if site.stop else []
+                      name_offsets = [m.start() for m in re.finditer(re.escape(site.name), text, flags=re.I)]
+                      if not title_matches and not name_offsets:
+                          continue
+                      print('DOC', index, doc.label, doc.url, 'len', len(text),
+                            'title', len(title_matches), 'stop', len(stop_matches), 'name', len(name_offsets))
+                      anchors = [m.start() for m in title_matches[:3]] or name_offsets[:3]
+                      for pos in anchors:
+                          lo=max(0,pos-220); hi=min(len(text),pos+1000)
+                          print('SNIP', repr(text[lo:hi]))
+              except Exception as exc:
+                  print('INSPECT_ERR', type(exc).__name__, str(exc))
+              finally:
+                  context.close()
+          '@ | Set-Content -Encoding UTF8 diag_round2b.py
+          python diag_round2b.py
