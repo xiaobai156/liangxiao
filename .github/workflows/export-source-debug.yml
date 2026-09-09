@@ -1,0 +1,18 @@
+name: Export source debug
+on:
+  push:
+    branches: ['test/period-252-live-20260909']
+    paths: ['.github/workflows/export-source-debug.yml']
+permissions:
+  contents: read
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: git archive --format=zip --output="${RUNNER_TEMP}/source.zip" HEAD
+      - uses: actions/upload-artifact@v4
+        with:
+          name: source-debug
+          path: ${{ runner.temp }}/source.zip
+          retention-days: 1
