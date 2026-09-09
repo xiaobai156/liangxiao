@@ -22,10 +22,27 @@ class Site:
     keywords: tuple[str, ...] = ()
     profile_id: str = ""
     linked_document_pattern: str = ""
+    allowed_redirect_origins: tuple[str, ...] = ()
+    allowed_document_origins: tuple[str, ...] = ()
 
     @property
     def identity(self) -> tuple[str, str, str]:
         return self.name, self.url, self.pick
+
+
+@dataclass(frozen=True, slots=True)
+class RecordEvidence:
+    document_label: str
+    document_url: str
+    record_id: str
+    position: int
+    window_index: int
+    block_id: str = ""
+    anchor_text: str = ""
+    parent_url: str = ""
+    link_reference: str = ""
+    own_record_id: str = ""
+    parent_record_id: str = ""
 
 
 @dataclass(frozen=True, slots=True)
@@ -54,6 +71,7 @@ class Record:
     body_record_id: str = ""
     body_record_path: str = ""
     body_record_count: int = 0
+    evidence: tuple[RecordEvidence, ...] = ()
 
 
 @dataclass(frozen=True, slots=True)
@@ -113,6 +131,9 @@ class PayloadDocument:
     parent_url: str = ""
     link_reference: str = ""
     body_source_start: int = 0
+    own_record_id: str = ""
+    parent_record_id: str = ""
+    identity_inherited: bool = False
     anchor_record_id: str = ""
     anchor_record_path: str = ""
     anchor_record_count: int = 0

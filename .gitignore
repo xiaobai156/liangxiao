@@ -1,4 +1,14 @@
 __pycache__/
-*.pyc
+*.py[cod]
 .coverage
+htmlcov/
+.pytest_cache/
 .*.lock
+*.tmp
+*.bak
+.venv/
+.env
+.env.*
+# Existing tracked business data is deliberately preserved; do not add new copies.
+/recent_10_cache.json
+/site_structure_profiles.json

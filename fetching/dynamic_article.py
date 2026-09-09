@@ -11,7 +11,7 @@ from urllib.parse import parse_qs, quote, urlparse
 import requests
 
 from domain.models import AdminArticleMatch, DocumentBundle, PayloadDocument, Site
-from fetching.client import FetchContext
+from fetching.client import FetchContext, get_site_text, get_site_rendered
 
 
 TargetProbe = Callable[[str, Site, int | None], bool]
@@ -143,7 +143,7 @@ def fetch_admin_article_page_or_render(
     article_id = admin_article_id(site.url)
     raw_error: requests.RequestException | None = None
     try:
-        source = context.get_text(site.url, timeout)
+        source = get_site_text(context, site.url, timeout, site)
     except requests.RequestException as exc:
         raw_error = exc
     else:
@@ -152,7 +152,7 @@ def fetch_admin_article_page_or_render(
                 (
                     PayloadDocument(
                         "后台文章页面",
-                        site.url,
+                        getattr(source, "final_url", site.url),
                         source,
                         record_id=article_id,
                         record_path=f"page:{urlparse(site.url).path}",
@@ -161,7 +161,7 @@ def fetch_admin_article_page_or_render(
                 )
             )
     try:
-        rendered = context.get_rendered(site.url, timeout)
+        rendered = get_site_rendered(context, site.url, timeout, site)
     except requests.RequestException as exc:
         if raw_error is not None:
             raise requests.RequestException(f"原始页面与浏览器均抓取失败：{raw_error}；{exc}") from exc
@@ -172,7 +172,7 @@ def fetch_admin_article_page_or_render(
         (
             PayloadDocument(
                 "浏览器渲染后台文章",
-                site.url,
+                getattr(rendered, "final_url", site.url),
                 rendered,
                 record_id=article_id,
                 record_path=f"rendered:{urlparse(site.url).path}",
@@ -193,7 +193,7 @@ def fetch_admin_article_payload(
     api_url = site.api_url or admin_article_api_url(site.url)
     try:
         bundle = decode_admin_article_api_response(
-            context.get_text(api_url, timeout),
+            get_site_text(context, api_url, timeout, site),
             article_id,
             api_url,
         )

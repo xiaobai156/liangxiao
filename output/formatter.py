@@ -3,6 +3,7 @@ from __future__ import annotations
 from collections import Counter
 
 from domain.models import Result
+from validation.records import normalize_zodiac, validate_selected_record
 
 ZODIACS = "牛马羊鸡狗猪鼠虎兔龙蛇猴"
 
@@ -18,15 +19,18 @@ def format_results(
     error_lines: list[str] = []
     for result in results:
         if result.ok and result.record is not None:
-            key = (result.record.zodiac, result.site.name)
+            if not validate_selected_record(result.record, result.record.period):
+                raise ValueError(f"输出结果字段不合法：{result.site.name}")
+            zodiac = normalize_zodiac(result.record.zodiac)
+            key = (zodiac, result.site.name)
             if key in seen:
                 continue
             seen.add(key)
-            line = f"{result.record.zodiac} {result.site.name}"
+            line = f"{zodiac} {result.site.name}"
             if include_url:
                 line += f" {result.site.url}"
             ok_lines.append(line)
-            counter.update(result.record.zodiac)
+            counter.update(zodiac)
         else:
             error_lines.append(
                 f"{result.site.name} {result.site.pick} {result.site.url} 原因：{result.error}"

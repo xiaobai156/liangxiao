@@ -54,6 +54,10 @@ def config_fingerprint(sites: list[Site]) -> str:
             field: list(getattr(site, field)) if field == "keywords" else getattr(site, field)
             for field in CONFIG_FINGERPRINT_FIELDS
         }
+        for field in ("allowed_redirect_origins", "allowed_document_origins"):
+            value = getattr(site, field)
+            if value:
+                definition[field] = list(value)
         definitions.append(definition)
     payload = {"project": CONFIG_FINGERPRINT_NAMESPACE, "sites": definitions}
     encoded = json.dumps(payload, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode("utf-8")

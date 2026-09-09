@@ -7,6 +7,8 @@ from pathlib import Path
 from cache.repository import RecentCacheRepository
 from domain.models import Result
 from output.formatter import format_results
+from output.locking import output_lock
+from validation.records import normalize_zodiac, validate_selected_record
 
 
 LEGACY_FIXED_TAIL_FIRST_LINE = "黄杀"
@@ -73,7 +75,9 @@ def append_repaired_successes(
     for result in results:
         if not result.ok or result.record is None:
             raise ValueError(f"修复结果尚未成功：{result.site.name}")
-        line = f"{result.record.zodiac} {result.site.name}"
+        if not validate_selected_record(result.record, result.record.period):
+            raise ValueError(f"修复结果字段不合法：{result.site.name}")
+        line = f"{normalize_zodiac(result.record.zodiac)} {result.site.name}"
         if include_url:
             line += f" {result.site.url}"
         if line not in lines:
@@ -132,18 +136,17 @@ def write_outputs(
     _validate_distinct_paths((("成功TXT", output), ("失败TXT", errors)))
     success_text, failure_text = format_results(results, include_url=include_url)
     paths = (output, errors)
-    snapshot = _snapshot(paths)
-    from services.failed_retry import output_lock
-    try:
-      with output_lock(output):
-        atomic_write_text(output, success_text)
-        if failure_text:
-            atomic_write_text(errors, failure_text)
-        else:
-            errors.unlink(missing_ok=True)
-    except BaseException:
-        _restore(snapshot)
-        raise
+    with output_lock(output, errors):
+        snapshot = _snapshot(paths)
+        try:
+            atomic_write_text(output, success_text)
+            if failure_text:
+                atomic_write_text(errors, failure_text)
+            else:
+                errors.unlink(missing_ok=True)
+        except BaseException:
+            _restore(snapshot)
+            raise
 
 
 def write_formal_outputs_and_cache(

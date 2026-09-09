@@ -10,35 +10,39 @@ permissions:
 
 jobs:
   tests:
-    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-latest
+            python: '3.10'
+          - os: windows-latest
+            python: '3.10'
+          - os: ubuntu-latest
+            python: '3.13'
+    runs-on: ${{ matrix.os }}
     timeout-minutes: 10
+    env:
+      PYTHONUTF8: '1'
     steps:
       - uses: actions/checkout@v4
         with:
+          fetch-depth: 2
           persist-credentials: false
-      - name: Export audit source snapshot
-        if: startsWith(github.ref_name, 'repair/')
-        run: git archive --format=zip --output="${{ runner.temp }}/source.zip" HEAD
-      - uses: actions/upload-artifact@v4
-        if: startsWith(github.ref_name, 'repair/')
-        with:
-          name: audit-source
-          path: ${{ runner.temp }}/source.zip
-          retention-days: 1
       - uses: actions/setup-python@v5
         with:
-          python-version: '3.10'
+          python-version: ${{ matrix.python }}
       - name: Install test dependencies
-        run: python -m pip install requests pytest
+        run: python -m pip install -r requirements-dev.txt
       - name: Compile source
         run: python -m compileall -q cli.py domain config fetching parsers validation services cache output diagnostics
-      - name: Test without live network
+      - name: Test without live network or child processes
         run: python tools/run_offline_tests.py -q tests --junitxml="${{ runner.temp }}/pytest.xml"
-      - name: Check whitespace
-        run: git diff --check
+      - name: Check commit whitespace
+        run: git diff --check HEAD^ HEAD
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: test-results
+          name: tests-${{ matrix.os }}-py${{ matrix.python }}
           path: ${{ runner.temp }}/pytest.xml
           retention-days: 7

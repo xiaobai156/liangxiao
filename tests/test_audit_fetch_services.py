@@ -135,7 +135,8 @@ def test_http_get_uses_separate_main_and_worker_sessions(monkeypatch: pytest.Mon
         def __init__(self) -> None:
             self.calls: list[tuple[str, int, bool, dict[str, str]]] = []
 
-        def get(self, url: str, *, timeout: int, verify: bool, headers: dict[str, str]) -> object:
+        def get(self, url: str, *, timeout: int, verify: bool, headers: dict[str, str], allow_redirects: bool) -> object:
+            assert allow_redirects is False
             self.calls.append((url, timeout, verify, headers))
             return self
 
@@ -156,8 +157,8 @@ def test_http_get_uses_separate_main_and_worker_sessions(monkeypatch: pytest.Mon
 
     assert not thread.is_alive()
     assert worker_result == [worker_session]
-    assert main_session.calls[0][1:3] == (3, False)
-    assert worker_session.calls[0][1:3] == (4, False)
+    assert main_session.calls[0][1:3] == (3, True)
+    assert worker_session.calls[0][1:3] == (4, True)
 
 
 def test_decode_best_text_skips_unknown_encoding_hint() -> None:
@@ -171,7 +172,10 @@ def test_fetch_curl_retries_receive_error_without_live_network(monkeypatch: pyte
         calls.append(args)
         if len(calls) == 1:
             raise subprocess.CalledProcessError(56, args[0])
-        return subprocess.CompletedProcess(args[0], 0, stdout=b"209\xe6\x9c\x9f")
+        return subprocess.CompletedProcess(args[0], 0, stdout=(
+            b"209\xe6\x9c\x9f" + fetching_client.CURL_META_MARKER
+            + b"200\nhttps://example.test/page\n"
+        ))
 
     monkeypatch.setattr(fetching_client.subprocess, "run", run)
     monkeypatch.setattr(fetching_client.time, "sleep", lambda _seconds: None)
@@ -602,7 +606,7 @@ def test_page_helpers_preserve_document_order_and_reject_empty_duplicates() -> N
         "https://example.test/a.aspx?x=1"
     )
     assert fetching_page.canonical_detail_url("https://example.test/a?x=1#top") == (
-        "https://example.test/a"
+        "https://example.test/a?x=1"
     )
     assert fetching_page.visible_text("<style>x</style><p> 测试&nbsp;文本 </p>") == "测试 文本"
 
@@ -620,8 +624,8 @@ def test_listing_helpers_ignore_invalid_pagination_and_empty_links() -> None:
         "https://example.test/list?page=2"
     )
     assert fetching_page.topic_listing_links(listing, "https://example.test/list") == [
-        ("https://other.test/list", "下一页"),
-        ("https://example.test/list", "下一页"),
+        ("https://other.test/list?page=2", "下一页"),
+        ("https://example.test/list?page=2", "下一页"),
         ("https://example.test/topic/209.html", "209期"),
     ]
 
@@ -781,7 +785,7 @@ def test_fetch_payload_user_forums_and_curl_modes_stay_raw(monkeypatch: pytest.M
     user_bundle = fetch_payload(user_site, 209, 3, user_context, lambda *_args: False)
 
     curl_site = Site("页面", "top", "https://example.test/page", payload="curl_tls10_page_and_scripts")
-    monkeypatch.setattr(fetching_page, "fetch_curl_text", lambda _url, _timeout: "curl source")
+    monkeypatch.setattr(fetching_page, "fetch_curl_text", lambda _url, _timeout, **_kwargs: "curl source")
     curl_context, _curl_calls = source_context({})
     curl_bundle = fetch_payload(curl_site, 209, 3, curl_context, lambda *_args: False)
 
@@ -1047,7 +1051,7 @@ def test_topic_script_match_keeps_detail_parent_for_full_bundle_validation() -> 
     assert script_document.link_reference == "/upload/script/209.js"
 
 
-def test_topic_later_page_duplicate_period_is_fetched_and_conflicts() -> None:
+def test_topic_later_page_duplicate_period_outside_window_is_not_fetched() -> None:
     site = Site("烟雨", "top", "https://example.test/list", parser="stub", payload="topic_list_detail")
     first_detail = "https://example.test/topic/209.html"
     second_detail = "https://example.test/topic/209-alt.html"
@@ -1077,10 +1081,10 @@ def test_topic_later_page_duplicate_period_is_fetched_and_conflicts() -> None:
         }
     )
 
-    assert second_detail in calls
-    assert second_script in calls
-    with pytest.raises(ValueError, match="冲突"):
-        single_period.parse_bundle_for_period(bundle, site, 209, registry)
+    assert second_detail not in calls
+    assert second_script not in calls
+    _records, selected = single_period.parse_bundle_for_period(bundle, site, 209, registry)
+    assert selected.zodiac == "狗蛇"
 
 
 def test_topic_list_errors_keep_period_and_direction_boundaries() -> None:
@@ -1479,7 +1483,11 @@ class FakePage:
         self.content_value = content
         self.closed = 0
 
+    def route(self, _pattern, _handler):
+        return None
+
     def goto(self, _url: str, *, wait_until: str, timeout: int) -> None:
+        self.url = _url
         assert wait_until == "domcontentloaded"
         assert timeout > 0
 

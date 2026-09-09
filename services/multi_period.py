@@ -24,7 +24,7 @@ def scrape_site_multi_results(
 ) -> list[Result]:
     bundles: dict[int, DocumentBundle] = {}
     errors: dict[int, BaseException] = {}
-    if site.payload in PERIOD_SCOPED_PAYLOADS:
+    if site.payload in PERIOD_SCOPED_PAYLOADS or site.parser == "xiaosuan_bottom_two_zodiac":
         for period in periods:
             try:
                 bundles[period] = fetch_payload_for_period(site, period, timeout, context, registry)

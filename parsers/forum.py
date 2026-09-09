@@ -3,6 +3,7 @@ from __future__ import annotations
 import re
 
 from domain.identity import detail_record_identity
+from domain.periods import previous_period, next_period
 from domain.errors import CandidateConflict, ErrorCategory, ScrapeFailure
 from domain.models import DOCUMENT_BOUNDARY, Record, Site
 from parsers.helpers import (
@@ -136,7 +137,7 @@ def parse_xiangfu_ercheng_tail_records(source: str, site: Site) -> list[Record]:
     ):
         return []
     if any(
-        current.period != (previous.period % 365) + 1
+        current.period != next_period(previous.period)
         for previous, current in zip(current_cycle, current_cycle[1:])
     ):
         return []
@@ -181,7 +182,7 @@ def parse_baishou_qijia_tail_records(source: str, site: Site) -> list[Record]:
         return []
     current_cycle = records[-365:]
     if any(
-        current.period != (previous.period % 365) + 1
+        current.period != next_period(previous.period)
         for previous, current in zip(current_cycle, current_cycle[1:])
     ):
         return []
@@ -220,7 +221,7 @@ def parse_taxue_wuhen_bottom_records(source: str, site: Site) -> list[Record]:
         descending.append(candidate)
     if len(descending) < 3:
         return []
-    if any(current.period != previous.period - 1 for previous, current in zip(descending, descending[1:])):
+    if any(current.period != previous_period(previous.period) for previous, current in zip(descending, descending[1:])):
         return []
     return descending
 
@@ -363,7 +364,7 @@ def parse_baijie_shujinguang_top_records(source: str, site: Site) -> list[Record
     if len(records) < 3:
         return []
     if any(
-        current.period != previous.period and current.period != previous.period - 1
+        current.period != previous.period and current.period != previous_period(previous.period)
         for previous, current in zip(records, records[1:])
     ):
         return []
@@ -631,7 +632,7 @@ def parse_dengtang_rushi_bottom_records(source: str, site: Site) -> list[Record]
     if len(records) < 10:
         raise ScrapeFailure(ErrorCategory.FIELD_VALIDATION, "登堂入室目标块有效记录不足10条")
     if any(
-        current.period != (previous.period % 365) + 1
+        current.period != next_period(previous.period)
         for previous, current in zip(records, records[1:])
     ):
         raise ScrapeFailure(ErrorCategory.FIELD_VALIDATION, "登堂入室目标块期数不连续")

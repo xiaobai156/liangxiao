@@ -90,6 +90,8 @@ def parse_args(argv: list[str]) -> argparse.Namespace:
         parser.error("--period 和 --periods 不能同时使用")
     if args.history_cache and args.period is None:
         parser.error("--history-cache 只能配合单个 --period 使用")
+    if args.retry_failures and args.history_cache:
+        parser.error("--retry-failures 不能与 --history-cache 同时使用")
     if args.retry_failures and (args.period is None or args.periods or args.limit):
         parser.error("--retry-failures 只能配合单个 --period 使用，且不能限量")
     if args.periods and (args.output or args.errors):
@@ -164,7 +166,7 @@ def run_multi_periods(
     print("多期模式：未更新 recent_10_cache.json")
     print(f"多期全部失败目录：{failed_all} 个")
     print(f"多期汇总失败报告：{summary.resolve()}")
-    return 0 if total_ok else 1
+    return 0 if total_ok == len(periods) * len(sites) else 1
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -193,16 +195,22 @@ def main(argv: list[str] | None = None) -> int:
         results = scrape_sites(targets, args.period, args.timeout, args.workers, registry=registry)
         try:
             apply_retry(results, Path(args.output) if args.output else success_path(args.period), errors,
-                        repository.path, args.period, args.include_url)
+                        repository.path, args.period, args.include_url, sites=sites)
         except (OSError, ValueError, RuntimeError) as exc:
             print(f"失败站点更新失败：{exc}")
             return 2
         ok_count = sum(result.ok for result in results)
         print(f"失败站点重抓完成：成功 {ok_count} 条，失败 {len(results) - ok_count} 条")
         print(f"仅处理站点：{','.join(site.name for site in targets)}")
+        if ok_count:
+            print("原排行榜未重算")
         return 0 if ok_count == len(results) else 1
     if args.periods:
-        return run_multi_periods(sites, args, registry)
+        try:
+            return run_multi_periods(sites, args, registry)
+        except (OSError, ValueError) as exc:
+            print(f"多期输出写入未完成：{exc}")
+            return 2
     if args.history_cache:
         results = scrape_history_sites(
             sites,
@@ -220,7 +228,7 @@ def main(argv: list[str] | None = None) -> int:
         ok_count = sum(result.ok for result in results)
         print(f"完成：缓存成功 {ok_count} 个，失败 {len(results) - ok_count} 个")
         print(f"重复检测缓存：{repository.path.resolve()}")
-        return 0 if ok_count else 1
+        return 0 if ok_count == len(results) else 1
 
     results = scrape_sites(
         sites,

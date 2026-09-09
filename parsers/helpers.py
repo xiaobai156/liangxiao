@@ -124,10 +124,15 @@ GENERIC_TWO_ZODIAC_PATTERNS = (
 )
 
 
-def html_to_text(source: str) -> str:
+def _expand_written_markup(source: str) -> str:
     text = re.sub(r"document\.writeln?\([\s\S]{0,80}(?:strdecode|atob)\([\s\S]*?\)\s*\);?", " ", source, flags=re.S)
     text = re.sub(r"document\.writeln?\(\s*([\"'`])([\s\S]*?)\1\s*\);?", r"\2\n", text, flags=re.S)
     text = text.replace(r"\'", "'").replace(r"\"", '"')
+    return text
+
+
+def html_to_text(source: str) -> str:
+    text = _expand_written_markup(source)
     text = re.sub(r"<script[\s\S]*?</script>", " ", text, flags=re.I)
     text = re.sub(r"<style[\s\S]*?</style>", " ", text, flags=re.I)
     text = re.sub(r"<[^>]+>", " ", text)
@@ -136,6 +141,7 @@ def html_to_text(source: str) -> str:
 
 
 def visible_source_text(source: str) -> str:
+    source = _expand_written_markup(source)
     text = re.sub(r"<script[\s\S]*?</script>", " ", source, flags=re.I)
     text = re.sub(r"<style[\s\S]*?</style>", " ", text, flags=re.I)
     text = BLOCK_TAG_RE.sub("\n", text)
@@ -191,6 +197,8 @@ def select_target_block(source: str, site: Site) -> TargetBlock | None:
     if len(structural_matches) > 1 or len(structural_lines) > 1:
         raise ValueError(f"专属锚点不唯一：{site.name}匹配到{len(structural_lines)}个目标块")
 
+    if not structural_matches and len(matches) != 1:
+        raise ValueError(f"专属锚点不唯一：{site.name}匹配到{len(matches)}个非结构标题")
     match = structural_matches[0] if structural_matches else matches[0]
     anchor_line = _line_index_at(spans, match.start())
     block_start = match.start()
@@ -198,8 +206,9 @@ def select_target_block(source: str, site: Site) -> TargetBlock | None:
     tail_start = match.end()
     if site.stop:
         stop = re.search(site.stop, structured_text[tail_start:], flags=re.I)
-        if stop:
-            block_end = tail_start + stop.start()
+        if not stop:
+            raise ValueError(f"目标区块停止边界缺失：{site.name}")
+        block_end = tail_start + stop.start()
     else:
         data_seen = False
         unpublished_seen = False
@@ -222,13 +231,10 @@ def select_target_block(source: str, site: Site) -> TargetBlock | None:
     structured_block = structured_text[block_start:block_end].strip()
     block_text = html_to_text(structured_block)
     full_text = html_to_text(source)
-    flat_start = full_text.find(block_text)
-    if flat_start < 0:
-        flat_anchor = html_to_text(match.group(0))
-        flat_start = full_text.find(flat_anchor)
-        if flat_start < 0:
-            return None
-        block_text = full_text[flat_start:]
+    occurrences = [match.start() for match in re.finditer(re.escape(block_text), full_text)]
+    if len(occurrences) != 1:
+        raise ValueError(f"目标区块无法唯一映射：{site.name}")
+    flat_start = occurrences[0]
     flat_anchor = html_to_text(match.group(0))
     anchor_in_block = block_text.find(flat_anchor)
     flat_anchor_offset = flat_start + max(0, anchor_in_block)
@@ -247,7 +253,7 @@ def target_block(source: str, site: Site) -> str:
 
 
 def clean_zodiac(value: str) -> str:
-    zodiac = re.sub(r"[\s\-－.。·、]+", "", value)
+    zodiac = re.sub(r"[\s\-－.。·、,，]+", "", value)
     if len(zodiac) == 2 and zodiac[0] == zodiac[1]:
         return ""
     return zodiac

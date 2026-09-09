@@ -213,16 +213,7 @@ def _flexible_raw_pattern(raw: str) -> re.Pattern[str] | None:
 def _record_offsets(text: str, record: Record) -> list[int]:
     pattern = _flexible_raw_pattern(record.raw)
     offsets = [match.start() for match in pattern.finditer(text)] if pattern is not None else []
-    if offsets:
-        return offsets
-    zodiac = re.sub(r"[\s\-－.。·、,，]+", "", record.zodiac)
-    if len(zodiac) != 2:
-        return []
-    fallback = re.compile(
-        rf"(?<!\d){record.period}\s*期[\s\S]{{0,220}}?{re.escape(zodiac[0])}"
-        rf"[\s\-－.。·、,，]{{0,12}}{re.escape(zodiac[1])}"
-    )
-    return [match.start() for match in fallback.finditer(text)]
+    return offsets
 
 
 def _hydrate_records(
@@ -238,36 +229,47 @@ def _hydrate_records(
     if document is not None and document.body_source_start > 0:
         body_text = html_to_text(source[document.body_source_start :])
         located = visible.rfind(body_text) if body_text else -1
-        body_start = located if located >= 0 else 0
+        if located < 0:
+            raise ScrapeFailure(ErrorCategory.FIELD_VALIDATION, "标题正文无法定位独立正文边界")
+        body_start = located
     for record in records:
         offsets = _record_offsets(visible, record)
+        if body_start:
+            if record.position in offsets and record.position < body_start:
+                continue  # Anchor records cannot supply the paired body's window.
+            offsets = [value for value in offsets if value >= body_start]
         if not offsets:
             raise ScrapeFailure(
                 ErrorCategory.FIELD_VALIDATION,
                 f"{site.name}候选无法定位真实可见正文位置：{record.period}期 {record.zodiac}",
             )
         preferred = record.position if record.position in offsets and record.position not in used else None
-        position = preferred if preferred is not None else next((value for value in offsets if value not in used), offsets[0])
+        available = [value for value in offsets if value not in used]
+        if preferred is None and len(available) != 1:
+            raise ScrapeFailure(ErrorCategory.FIELD_VALIDATION,
+                                f"{site.name}候选原始位置不唯一：{record.period}期")
+        position = preferred if preferred is not None else available[0]
         used.add(position)
         adjusted_position = position - body_start if position >= body_start else position
         source_positions = tuple(
             sorted(
                 {
                     value - body_start if value >= body_start else value
-                    for value in (record.source_positions or (position,))
+                    for value in (position,)
                     if value >= 0
                 }
             )
         )
         anchor_match = re.search(site.title, visible, flags=re.I) if site.title else None
-        anchor_text = record.anchor_text or (anchor_match.group(0) if anchor_match else site.name)
+        anchor_text = record.anchor_text or (anchor_match.group(0) if anchor_match else "")
         anchor_offset = record.anchor_offset if record.anchor_offset >= 0 else (anchor_match.start() if anchor_match else -1)
-        block_start = record.block_start if record.block_start >= 0 else 0
-        block_end = record.block_end if record.block_end >= 0 else len(visible)
+        shift = position - record.position
+        block_start = record.block_start + shift if record.block_start >= 0 else 0
+        block_end = record.block_end + shift if record.block_end >= 0 else len(visible)
         if body_start:
             block_start = max(0, block_start - body_start)
             block_end = max(block_start, block_end - body_start)
-        block_id = record.block_id or hashlib.sha256(
+        block_id = (record.block_id if not shift and not body_start else "") or hashlib.sha256(
             f"{site.name}|{block_start}|{block_end}|{anchor_text}".encode("utf-8")
         ).hexdigest()[:16]
         hydrated.append(

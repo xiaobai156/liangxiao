@@ -6,6 +6,7 @@ from urllib.parse import unquote, urljoin, urlparse
 
 from domain.errors import ErrorCategory, ScrapeFailure
 from domain.identity import detail_record_identity
+from fetching.urls import origin
 from domain.models import DocumentBundle, PayloadDocument, Site
 
 
@@ -14,8 +15,7 @@ def expected_record_id(site: Site) -> str:
         match = re.search(r"/article/(?:admin|manager|lottery)/([^/?#]+)", urlparse(site.url).path, flags=re.I)
         return match.group(1) if match else ""
     if site.payload == "tuku_user_forums":
-        match = re.search(r"/users/(\d+)", urlparse(site.url).fragment)
-        return f"user:{match.group(1)}" if match else ""
+        return detail_record_identity(site.url)
     if site.payload == "topic_list_detail":
         return ""
     return detail_record_identity(site.url)
@@ -42,6 +42,16 @@ def validate_document_relationships(bundle: DocumentBundle) -> None:
         if document.url:
             documents_by_url.setdefault(document.url, []).append(document)
     for document in bundle.documents:
+        actual = detail_record_identity(document.url)
+        if document.own_record_id and actual and document.own_record_id != actual:
+            raise ValueError(f"文档自身记录边界冲突：{document.label}自身ID与URL不一致")
+        actual = actual or document.own_record_id
+        if actual and document.record_id and actual != document.record_id:
+            # Admin APIs carry a bare article ID in the existing data contract.
+            if actual != "admin_article:" + document.record_id:
+                raise ValueError(f"文档自身记录边界冲突：{document.label} {actual}")
+        if document.identity_inherited and (not document.parent_url or not document.link_reference):
+            raise ValueError(f"继承身份缺少父文档引用证据：{document.label}")
         if not document.parent_url:
             continue
         if not document.link_reference:
@@ -97,7 +107,7 @@ def linked_document_is_authorized(site: Site, anchor: PayloadDocument, body: Pay
         return False
     configured = bool(
         site.linked_document_pattern
-        and re.search(site.linked_document_pattern, body.url, flags=re.I)
+        and re.match(site.linked_document_pattern, body.url, flags=re.I)
     )
     direct_link = body.parent_url == anchor.url and document_is_linked(anchor, body)
     configured_siblings = bool(
@@ -105,7 +115,7 @@ def linked_document_is_authorized(site: Site, anchor: PayloadDocument, body: Pay
         and anchor.parent_url
         and anchor.link_reference
         and anchor.parent_url == body.parent_url
-        and re.search(site.linked_document_pattern, anchor.url, flags=re.I)
+        and re.match(site.linked_document_pattern, anchor.url, flags=re.I)
     )
     if configured_siblings:
         return True
@@ -120,10 +130,5 @@ def linked_document_is_authorized(site: Site, anchor: PayloadDocument, body: Pay
         body_url.scheme.lower(),
         body_url.netloc.lower(),
     )
-    explicitly_referenced_data_script = (
-        site.payload
-        in {"page_and_scripts", "curl_tls10_page_and_scripts", "scripts", "topic_list_detail"}
-        and body_url.path.lower().startswith("/upload/script/")
-        and body_url.path.lower().endswith(".js")
-    )
-    return same_origin or configured or explicitly_referenced_data_script
+    allowed_origin = origin(body.url) in {origin(value) for value in site.allowed_document_origins}
+    return same_origin or configured or allowed_origin

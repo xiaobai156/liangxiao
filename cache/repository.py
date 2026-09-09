@@ -7,6 +7,7 @@ import tempfile
 from collections.abc import Mapping
 from contextlib import contextmanager
 from datetime import datetime
+from copy import deepcopy
 from pathlib import Path
 
 from cache.contracts import (
@@ -24,8 +25,9 @@ from cache.duplicates import (
     positions_from_entry,
     values_from_entry,
 )
-from domain.models import HistoryResult, Result
-from validation.records import normalize_zodiac
+from domain.models import HistoryResult, Record, Result, Site
+from validation.records import normalize_zodiac, validate_selected_record
+from cache.serialization import serialize_cached_record
 
 
 class _PreparedCache(dict[str, object]):
@@ -188,6 +190,8 @@ class RecentCacheRepository:
             result = result_by_key[key]
             if result.ok and result.record is not None:
                 record = result.record
+                if record.period != current_period:
+                    raise ValueError(f"抓取结果期数不匹配：{result.site.name}")
                 if record.position_kind != CACHE_POSITION_KIND:
                     raise ValueError(
                         f"缓存位置语义不兼容：{result.site.name}抓取结果position_kind="
@@ -209,16 +213,10 @@ class RecentCacheRepository:
             values = {str(period): values[str(period)] for period in issues if str(period) in values}
             positions = {period: positions[period] for period in values if period in positions}
             article_ids = {period: article_ids[period] for period in values if period in article_ids}
-            records = [
-                {
-                    "period": int(period),
-                    "zodiac": zodiac,
-                    "position": positions.get(period, -1),
-                    "source_positions": [positions[period]] if period in positions else [],
-                    "position_kind": CACHE_POSITION_KIND,
-                }
-                for period, zodiac in values.items()
-            ]
+            old_records = {str(item["period"]): item for item in entry.get("records", [])}
+            if result.ok and result.record is not None:
+                old_records[period_key] = serialize_cached_record(result.site, result.record)
+            records = [deepcopy(old_records[period]) for period in values]
             output: dict[str, object] = {
                 "name": result.site.name,
                 "url": result.site.url,
@@ -250,6 +248,67 @@ class RecentCacheRepository:
             },
             source_hash,
         )
+
+    def prepare_current_period_update(
+        self,
+        period: int,
+        results: list[Result],
+        *,
+        sites: list[Site] | None = None,
+    ) -> dict[str, object]:
+        """Prepare a restricted repair; preserve every other site and issue."""
+        period = _validate_current_period(period)
+        _result_keys(results)
+        payload, source_hash = self._read_snapshot()
+        validate_cache_position_contract(payload)
+        issues = validate_issue_window(payload.get("issues"))
+        if period not in issues:
+            raise ValueError(f"当前期{period}不在缓存窗口，未同步")
+        if sites is not None and payload.get("config_fingerprint") != config_fingerprint(sites):
+            raise ValueError("缓存config_fingerprint与当前配置不匹配，未同步")
+        updated = deepcopy(payload)
+        entries = {cache_identity(entry, index): entry
+                   for index, entry in enumerate(updated["sites"])}
+        for result in results:
+            if not result.ok or result.record is None:
+                continue
+            record = result.record
+            if not validate_selected_record(record, period):
+                raise ValueError(f"缓存修复结果期数或字段不合法：{result.site.name}")
+            entry = entries.get(result.site.identity)
+            if entry is None:
+                raise ValueError(f"缓存中未找到站点：{result.site.name}")
+            key = str(period)
+            entry["values"][key] = record.zodiac
+            entry["positions"][key] = record.position
+            serialized = serialize_cached_record(result.site, record)
+            records = entry["records"]
+            index = next((i for i, item in enumerate(records) if item["period"] == period), None)
+            if index is None:
+                records.append(serialized)
+            else:
+                records[index] = serialized
+            articles = entry.get("article_ids", {})
+            if result.site.payload == "admin_article_api" and record.record_id:
+                articles[key] = record.record_id
+            else:
+                articles.pop(key, None)
+            if articles:
+                entry["article_ids"] = articles
+            else:
+                entry.pop("article_ids", None)
+            entry["fingerprint"] = "".join(entry["values"][str(issue)]
+                                           for issue in issues if str(issue) in entry["values"])
+            entry.pop("status", None)
+            entry.pop("error", None)
+        updated["updated_at"] = datetime.now().isoformat(timespec="seconds")
+        validate_cache_position_contract(updated)
+        return _PreparedCache(updated, source_hash)
+
+    def update_current_period(
+        self, period: int, results: list[Result], *, sites: list[Site] | None = None
+    ) -> None:
+        self.commit(self.prepare_current_period_update(period, results, sites=sites))
 
     def commit(self, payload: Mapping[str, object]) -> None:
         if not isinstance(payload, _PreparedCache):
@@ -321,15 +380,12 @@ class RecentCacheRepository:
             ordered_values = {str(period): values[str(period)] for period in issues if str(period) in values}
             ordered_positions = {period: positions[period] for period in ordered_values if period in positions}
             ordered_articles = {period: article_ids[period] for period in ordered_values if period in article_ids}
+            record_by_period: dict[str, Record] = {}
+            for record in result.records:
+                record_by_period.setdefault(str(record.period), record)
             records = [
-                {
-                    "period": int(period),
-                    "zodiac": zodiac,
-                    "position": ordered_positions.get(period, -1),
-                    "source_positions": [ordered_positions[period]] if period in ordered_positions else [],
-                    "position_kind": CACHE_POSITION_KIND,
-                }
-                for period, zodiac in ordered_values.items()
+                serialize_cached_record(result.site, record_by_period[period])
+                for period in ordered_values
             ]
             entry: dict[str, object] = {
                 "name": result.site.name,

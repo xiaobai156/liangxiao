@@ -5,7 +5,8 @@ import re
 import time
 from collections.abc import Callable
 from concurrent.futures import ThreadPoolExecutor, as_completed
-from dataclasses import replace
+from dataclasses import dataclass, replace
+from domain.identity import detail_record_identity
 
 import requests
 
@@ -16,10 +17,11 @@ from domain.models import (
     DocumentBundle,
     PayloadDocument,
     Record,
+    RecordEvidence,
     Result,
     Site,
 )
-from fetching.client import FetchContext
+from fetching.client import FetchContext, get_site_text, get_site_rendered
 from fetching.page import (
     fetch_payload,
     fetch_topic_detail_documents,
@@ -35,8 +37,8 @@ from validation.boundaries import (
     validate_document_relationships,
 )
 from validation.conflicts import validate_document_windows
-from validation.direction import select_record
-from validation.records import record_value_signature, validate_selected_record
+from validation.direction import direction_window, select_record
+from validation.records import normalize_zodiac, record_value_signature, validate_selected_record
 
 ProgressSink = Callable[[str], None]
 
@@ -70,6 +72,15 @@ def _topic_list_item_matches(title: str, site: Site) -> bool:
     )
 
 
+@dataclass(frozen=True, slots=True)
+class TopicListCandidate:
+    index: int
+    period: int
+    url: str
+    title: str
+    record_id: str
+
+
 def fetch_topic_list_detail_for_period(
     site: Site,
     period: int | None,
@@ -79,40 +90,43 @@ def fetch_topic_list_detail_for_period(
     if period is None:
         raise ValueError("列表详情站必须指定期数")
     visited_listing_urls: set[str] = set()
-    period_order: list[int] = []
-    urls_by_period: dict[int, list[str]] = {}
+    entries: list[TopicListCandidate] = []
     seen_urls: set[str] = set()
     listing_url = site.url
     for _ in range(32):
         if listing_url in visited_listing_urls:
             break
         visited_listing_urls.add(listing_url)
-        listing = context.get_text(listing_url, timeout)
+        listing = get_site_text(context, listing_url, timeout, site)
         next_url = next_topic_listing_url(listing, listing_url)
         for detail_url, title in topic_listing_links(listing, listing_url):
-            period_match = re.search(r"(\d{3})\s*期", title)
+            period_match = re.search(r"(?<!\d)([0-9]{3})\s*期", title)
             if not period_match or not _topic_list_item_matches(title, site):
                 continue
             candidate_period = int(period_match.group(1))
+            if not 1 <= candidate_period <= 365:
+                continue
             if detail_url in seen_urls:
                 continue
             seen_urls.add(detail_url)
-            if candidate_period not in urls_by_period:
-                period_order.append(candidate_period)
-                urls_by_period[candidate_period] = []
-            urls_by_period[candidate_period].append(detail_url)
+            entries.append(TopicListCandidate(
+                len(entries), candidate_period, detail_url, title,
+                detail_record_identity(detail_url),
+            ))
         if not next_url or next_url in visited_listing_urls:
             break
         listing_url = next_url
     else:
         raise ValueError("列表分页超过扫描上限")
 
-    candidates = period_order[:3] if site.pick == "top" else period_order[-3:]
-    if period not in candidates:
+    window = entries[:3] if site.pick == "top" else entries[-3:]
+    targets = [item for item in window if item.period == period]
+    if not targets:
         raise ValueError(f"{site.pick} 列表候选内未找到 {period} 期")
 
     documents: list[PayloadDocument] = []
-    for detail_url in urls_by_period[period]:
+    for candidate in targets:
+        detail_url = candidate.url
         detail_documents = fetch_topic_detail_documents(detail_url, timeout, context, site)
         detail_page = detail_documents[0]
         matching_documents: list[PayloadDocument] = []
@@ -215,6 +229,18 @@ def parse_bundle_for_period(
     observed: list[tuple[str, list[Record]]] = []
     successful: list[tuple[str, list[Record], Record]] = []
     selection_failures: list[tuple[str, str]] = []
+    evidence: list[RecordEvidence] = []
+
+    def collect_evidence(document, records, selected):
+        index = next((index for index, item in enumerate(direction_window(records, site))
+                      if item.period == selected.period and item.position == selected.position), -1)
+        evidence.append(RecordEvidence(
+            document.label, document.url, selected.record_id or document.record_id,
+            selected.position, index, selected.block_id, selected.anchor_text,
+            document.parent_url, document.link_reference,
+            document.own_record_id, document.parent_record_id,
+        ))
+
     for document in bundle.documents:
         records = registry.parse(document, site)
         if not records:
@@ -227,6 +253,7 @@ def parse_bundle_for_period(
                 raise ValueError(f"数据存在冲突：{document.label}内{exc}") from exc
             selection_failures.append((document.label, str(exc)))
             continue
+        collect_evidence(document, records, selected)
         successful.append((document.label, records, selected))
     if observed:
         validate_document_windows(observed, site, "多文档", period=period)
@@ -290,6 +317,9 @@ def parse_bundle_for_period(
                     parent_url=anchor.url,
                     link_reference=body.link_reference,
                     body_source_start=len(anchor.source) + len(DOCUMENT_BOUNDARY),
+                    own_record_id=body.own_record_id,
+                    parent_record_id=anchor.record_id,
+                    identity_inherited=body.identity_inherited,
                 )
                 pair_site = site if site.linked_document_pattern else replace(
                     site,
@@ -306,9 +336,15 @@ def parse_bundle_for_period(
                         raise ValueError(f"数据存在冲突：{paired.label}内{exc}") from exc
                     selection_failures.append((paired.label, str(exc)))
                     continue
+                collect_evidence(paired, records, selected)
                 pair_successes.append((paired.label, records, selected))
         if pair_observed:
             validate_document_windows(pair_observed, site, "标题正文文档", period=period)
+
+    def carrier_key(item):
+        label, _records, record = item
+        # This is only the carrier for an already-agreed value. All proofs remain.
+        return (record.document_url != site.url, record.document_url, label, record.position)
 
     if successful:
         independent = {record_value_signature(selected) for _label, _records, selected in successful}
@@ -316,9 +352,9 @@ def parse_bundle_for_period(
         if paired and independent != paired:
             details = "、".join(sorted(independent | paired))
             raise ValueError(f"数据存在冲突：{period}期独立文档与标题正文结果不同：{details}")
-        _label, records, selected = successful[0]
+        _label, records, selected = min(successful, key=carrier_key)
     elif pair_successes:
-        _label, records, selected = pair_successes[0]
+        _label, records, selected = min(pair_successes, key=carrier_key)
     elif selection_failures:
         details = "；".join(
             f"{label}：{detail}"
@@ -334,6 +370,13 @@ def parse_bundle_for_period(
         raise ValueError("未抓到有效候选")
     if not validate_selected_record(selected, period):
         raise ValueError("期数、生肖唯一性或原始位置不合法")
+    ids = {item.record_id for item in evidence if item.record_id}
+    if len(ids) > 1:
+        raise ValueError(f"数据存在冲突：同一期结果属于不同记录身份：{','.join(sorted(ids))}")
+    selected = replace(selected, zodiac=normalize_zodiac(selected.zodiac),
+                       evidence=tuple(sorted(set(evidence), key=lambda item: (
+                           item.document_url, item.document_label, item.position, item.record_id
+                       ))))
     return records, selected
 
 

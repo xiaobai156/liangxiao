@@ -36,12 +36,17 @@ def merge_equivalent_records(records: list[Record], *, prefer_last: bool = False
 
 
 def validate_selected_record(record: Record, period: int) -> bool:
+    if not isinstance(record.zodiac, str):
+        return False
     zodiac = normalize_zodiac(record.zodiac)
     return (
-        record.period == period
+        type(period) is int and 1 <= period <= 365
+        and type(record.period) is int
+        and record.period == period
         and len(zodiac) == 2
         and len(set(zodiac)) == 2
         and all(value in ZODIAC_SET for value in zodiac)
+        and type(record.position) is int
         and record.position >= 0
         and record.position_kind == POSITION_KIND_VISIBLE_TEXT
     )

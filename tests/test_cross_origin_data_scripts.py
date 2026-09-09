@@ -20,12 +20,13 @@ def _context(sources: dict[str, str]) -> tuple[FetchContext, list[str]]:
     return FetchContext(text_fetcher=fetcher, renderer=lambda *_args: ""), calls
 
 
-def test_explicit_cross_origin_upload_script_is_collected() -> None:
+def test_configured_cross_origin_upload_script_is_collected() -> None:
     site = Site(
         "测试站",
         "top",
         "https://example.test/topic/1.html",
         payload="page_and_scripts",
+        linked_document_pattern=r"^https://cdn\.test/upload/script/08/",
     )
     script_url = "https://cdn.test/upload/script/08/target.js"
     context, calls = _context({script_url: "测试站 236期 绝杀二肖【龙虎】"})

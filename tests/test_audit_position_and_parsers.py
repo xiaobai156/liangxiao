@@ -354,8 +354,8 @@ def test_loader_preserves_same_url_sites_with_distinct_identities(tmp_path) -> N
     path.write_text(
         json.dumps(
             [
-                {"name": "顶部站", "pick": "top", "url": "https://same.example.test", "payload": "page"},
-                {"name": "底部站", "pick": "bottom", "url": "https://same.example.test", "payload": "page"},
+                {"name": "顶部站", "pick": "top", "url": "https://same.example.test", "payload": "page", "parser": "site_scoped_two_zodiac", "title": "顶部站"},
+                {"name": "底部站", "pick": "bottom", "url": "https://same.example.test", "payload": "page", "parser": "site_scoped_two_zodiac", "title": "底部站"},
             ],
             ensure_ascii=False,
         ),

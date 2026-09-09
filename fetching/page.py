@@ -12,7 +12,7 @@ import requests
 
 from domain.identity import detail_record_identity
 from domain.models import DocumentBundle, PayloadDocument, Site
-from fetching.client import FetchContext, fetch_curl_text
+from fetching.client import FetchContext, fetch_curl_text, get_site_text, get_site_rendered
 from fetching.dynamic_article import TargetProbe, admin_article_id, fetch_admin_article_payload
 from fetching.user_forum import filter_user_forums, user_forums_api_url, user_id
 
@@ -73,9 +73,8 @@ def source_boundary_id(site: Site) -> str:
 
 def canonical_detail_url(url: str) -> str:
     parsed = urlparse(url)
-    if parsed.path.lower().endswith(".aspx"):
-        return parsed._replace(fragment="").geturl()
-    return parsed._replace(query="", fragment="").geturl()
+    # Query parameters identify PHP/ASP articles as well as ASPX records.
+    return parsed._replace(fragment="").geturl()
 
 
 def next_topic_listing_url(listing: str, current_url: str) -> str:
@@ -121,7 +120,9 @@ def fetch_topic_detail_documents(
     context: FetchContext,
     site: Site | None = None,
 ) -> list[PayloadDocument]:
-    detail = context.get_text(detail_url, timeout)
+    detail = (get_site_text(context, detail_url, timeout, site) if site is not None
+              else context.get_text(detail_url, timeout))
+    detail_url = getattr(detail, "final_url", detail_url)
     detail_id = detail_record_identity(detail_url)
     documents = [
         PayloadDocument(
@@ -139,7 +140,9 @@ def fetch_topic_detail_documents(
         script_url = urljoin(detail_url, script_src)
         if site is not None and not _allowed_script_reference(script_url, detail_url, site):
             continue
-        script = context.get_text(script_url, timeout)
+        script = (get_site_text(context, script_url, timeout, site) if site is not None
+                  else context.get_text(script_url, timeout))
+        script_url = getattr(script, "final_url", script_url)
         payload = decode_strdecode_blocks(script) or script
         documents.append(
             PayloadDocument(
@@ -151,6 +154,9 @@ def fetch_topic_detail_documents(
                 record_count=1,
                 parent_url=detail_url,
                 link_reference=script_src,
+                own_record_id=detail_record_identity(script_url),
+                parent_record_id=detail_id,
+                identity_inherited=not bool(detail_record_identity(script_url)),
             )
         )
     return documents
@@ -189,13 +195,18 @@ def _same_url(left: str, right: str) -> bool:
 def _allowed_reference(url: str, owner_url: str, site: Site) -> bool:
     if any(marker in url for marker in ("${", "{", "}", "[", "]")):
         return False
-    if _origin(url) == _origin(owner_url):
+    candidate_origin = _origin(url)
+    if candidate_origin is None:
+        return False
+    if candidate_origin == _origin(owner_url):
+        return True
+    if candidate_origin in {_origin(item) for item in site.allowed_document_origins}:
         return True
     if _same_url(url, site.api_url):
         return True
     return bool(
         site.linked_document_pattern
-        and re.search(site.linked_document_pattern, url, flags=re.I)
+        and re.match(site.linked_document_pattern, url, flags=re.I)
     )
 
 
@@ -204,14 +215,7 @@ def _allowed_script_reference(url: str, owner_url: str, site: Site) -> bool:
         return False
     if _allowed_reference(url, owner_url, site):
         return True
-    path = urlparse(url).path.lower()
-    return (
-        site.payload
-        in {"page_and_scripts", "curl_tls10_page_and_scripts", "scripts", "topic_list_detail"}
-        and _origin(url) is not None
-        and path.startswith("/upload/script/")
-        and path.endswith(".js")
-    )
+    return False
 
 
 def _reference_is_absent(exc: requests.RequestException) -> bool:
@@ -225,7 +229,7 @@ def _required_data_script(url: str, site: Site) -> bool:
         or (path.startswith("/upload/script/") and path.endswith(".js"))
         or bool(
             site.linked_document_pattern
-            and re.search(site.linked_document_pattern, url, flags=re.I)
+            and re.match(site.linked_document_pattern, url, flags=re.I)
         )
     )
 
@@ -237,9 +241,10 @@ def collect_page_and_scripts(
     context: FetchContext,
     target_probe: TargetProbe | None = None,
 ) -> DocumentBundle:
+    root_url = getattr(source, "final_url", site.url)
     documents: list[PayloadDocument] = []
     seen_documents: set[tuple[str, str, str]] = set()
-    visited_urls = {site.url}
+    visited_urls = {root_url}
     target_identity = source_boundary_id(site)
     scan_complete = True
 
@@ -271,6 +276,9 @@ def collect_page_and_scripts(
                 record_id=record_id,
                 parent_url=parent_url,
                 link_reference=link_reference,
+                own_record_id=detail_record_identity(url),
+                parent_record_id=record_id if parent_url else "",
+                identity_inherited=bool(parent_url and not detail_record_identity(url)),
             )
         )
 
@@ -298,7 +306,7 @@ def collect_page_and_scripts(
                 continue
             visited_urls.add(frame_url)
             try:
-                frame_source = context.get_text(frame_url, timeout)
+                frame_source = get_site_text(context, frame_url, timeout, site)
             except (requests.RequestException, UnicodeError) as exc:
                 if not isinstance(exc, requests.RequestException) or not _reference_is_absent(exc):
                     scan_complete = False
@@ -316,13 +324,13 @@ def collect_page_and_scripts(
             )
             add_iframes(frame_source, frame_url, frame_identity, depth + 1)
 
-    append_document("原始页面", site.url, source, target_identity)
-    append_document("原始页面解码", site.url, decode_strdecode_blocks(source), target_identity)
+    append_document("原始页面", root_url, source, target_identity)
+    append_document("原始页面解码", root_url, decode_strdecode_blocks(source), target_identity)
     script_sources = re.findall(r'''<script[^>]+src=["']([^"']+)["']''', source, flags=re.I)
     script_sources.sort(key=lambda value: "/upload/script/" not in value.lower())
     for script_src in script_sources:
-        script_url = urljoin(site.url, script_src)
-        if not _allowed_script_reference(script_url, site.url, site):
+        script_url = urljoin(root_url, script_src)
+        if not _allowed_script_reference(script_url, root_url, site):
             continue
         if script_url in visited_urls:
             continue
@@ -331,7 +339,7 @@ def collect_page_and_scripts(
             continue
         visited_urls.add(script_url)
         try:
-            script = context.get_text(script_url, timeout)
+            script = get_site_text(context, script_url, timeout, site)
         except (requests.RequestException, UnicodeError) as exc:
             if (
                 not isinstance(exc, requests.RequestException)
@@ -351,7 +359,7 @@ def collect_page_and_scripts(
             script_url,
             payload,
             target_identity,
-            parent_url=site.url,
+            parent_url=root_url,
             link_reference=script_src,
         )
         add_iframes(payload, script_url, target_identity)
@@ -372,7 +380,7 @@ def collect_page_and_scripts(
             preceding = link_text[previous_end : match.start()]
             configured_reference = bool(
                 site.linked_document_pattern
-                and re.search(site.linked_document_pattern, nested_url, flags=re.I)
+                and re.match(site.linked_document_pattern, nested_url, flags=re.I)
             )
             score = 0
             configured_title_link = bool(
@@ -407,7 +415,7 @@ def collect_page_and_scripts(
                 continue
             visited_urls.add(nested_url)
             try:
-                nested_source = context.get_text(nested_url, timeout)
+                nested_source = get_site_text(context, nested_url, timeout, site)
             except (requests.RequestException, UnicodeError):
                 scan_complete = False
                 continue
@@ -444,7 +452,7 @@ def collect_page_and_scripts(
                     continue
                 visited_urls.add(nested_script_url)
                 try:
-                    nested_script = context.get_text(nested_script_url, timeout)
+                    nested_script = get_site_text(context, nested_script_url, timeout, site)
                 except (requests.RequestException, UnicodeError) as exc:
                     if (
                         not isinstance(exc, requests.RequestException)
@@ -475,7 +483,7 @@ def collect_page_and_scripts(
                 )
                 add_iframes(nested_script, nested_script_url, nested_identity)
                 add_iframes(nested_script_decoded, nested_script_url, nested_identity)
-    add_iframes(source, site.url, target_identity)
+    add_iframes(source, root_url, target_identity)
     return DocumentBundle(tuple(documents), scan_complete=scan_complete)
 
 
@@ -492,27 +500,27 @@ def fetch_payload(
         boundary_id = source_boundary_id(site)
         raw_error: requests.RequestException | None = None
         try:
-            raw = context.get_text(site.url, timeout)
+            raw = get_site_text(context, site.url, timeout, site)
         except requests.RequestException as exc:
             raw_error = exc
         else:
             if target_probe(raw, site, period):
-                return DocumentBundle((PayloadDocument("原始页面", site.url, raw, record_id=boundary_id),))
+                return DocumentBundle((PayloadDocument("原始页面", getattr(raw, "final_url", site.url), raw, record_id=boundary_id),))
         try:
-            rendered = context.get_rendered(site.url, timeout)
+            rendered = get_site_rendered(context, site.url, timeout, site)
         except requests.RequestException as exc:
             if raw_error is not None:
                 raise requests.RequestException(f"原始页面与浏览器均抓取失败：{raw_error}；{exc}") from exc
             raise
         if not target_probe(rendered, site, period):
             raise ValueError("浏览器渲染后仍未找到指定期数或专属目标")
-        return DocumentBundle((PayloadDocument("浏览器渲染页面", site.url, rendered, record_id=boundary_id),))
+        return DocumentBundle((PayloadDocument("浏览器渲染页面", getattr(rendered, "final_url", site.url), rendered, record_id=boundary_id),))
     if site.payload == "admin_article_api":
         return fetch_admin_article_payload(site, period, timeout, context, target_probe)
     if site.payload == "tuku_user_forums":
         api_url = user_forums_api_url(site.url)
         expected_id = user_id(site.url)
-        items, item_count = filter_user_forums(context.get_text(api_url, timeout), expected_id)
+        items, item_count = filter_user_forums(get_site_text(context, api_url, timeout, site), expected_id)
         return DocumentBundle(
             (
                 PayloadDocument(
@@ -526,30 +534,31 @@ def fetch_payload(
             )
         )
     if site.payload == "curl_tls10_page_and_scripts":
-        source = fetch_curl_text(site.url, timeout)
+        source = fetch_curl_text(site.url, timeout, insecure=True, allowed_origins=site.allowed_redirect_origins)
         return collect_page_and_scripts(site, source, timeout, context, target_probe)
 
-    source = context.get_text(site.url, timeout)
+    source = get_site_text(context, site.url, timeout, site)
+    root_url = getattr(source, "final_url", site.url)
     boundary_id = source_boundary_id(site)
     if site.payload == "page":
-        return DocumentBundle((PayloadDocument("原始页面", site.url, source, record_id=boundary_id),))
+        return DocumentBundle((PayloadDocument("原始页面", root_url, source, record_id=boundary_id),))
     if site.payload == "page_and_scripts":
         return collect_page_and_scripts(site, source, timeout, context, target_probe)
     if site.payload == "scripts":
         documents: list[PayloadDocument] = [
-            PayloadDocument("原始页面", site.url, source, record_id=boundary_id)
+            PayloadDocument("原始页面", root_url, source, record_id=boundary_id)
         ]
         scan_complete = True
         script_sources = re.findall(r'''<script[^>]+src=["']([^"']+)["']''', source, flags=re.I)
         for src in script_sources:
-            script_url = urljoin(site.url, src)
-            if not _allowed_script_reference(script_url, site.url, site):
+            script_url = urljoin(root_url, src)
+            if not _allowed_script_reference(script_url, root_url, site):
                 continue
             if len(documents) >= MAX_PAYLOAD_DOCUMENTS:
                 scan_complete = False
                 break
             try:
-                script = context.get_text(script_url, timeout)
+                script = get_site_text(context, script_url, timeout, site)
             except (requests.RequestException, UnicodeError) as exc:
                 if (
                     not isinstance(exc, requests.RequestException)
@@ -567,8 +576,11 @@ def fetch_payload(
                     script_url,
                     script,
                     record_id=boundary_id,
-                    parent_url=site.url,
+                    parent_url=root_url,
                     link_reference=src,
+                    own_record_id=detail_record_identity(script_url),
+                    parent_record_id=boundary_id,
+                    identity_inherited=not bool(detail_record_identity(script_url)),
                 )
             )
             decoded = decode_strdecode_blocks(script)
@@ -582,8 +594,11 @@ def fetch_payload(
                         script_url,
                         decoded,
                         record_id=boundary_id,
-                        parent_url=site.url,
+                        parent_url=root_url,
                         link_reference=src,
+                        own_record_id=detail_record_identity(script_url),
+                        parent_record_id=boundary_id,
+                        identity_inherited=not bool(detail_record_identity(script_url)),
                     )
                 )
         bundle = make_document_bundle(documents, scan_complete=scan_complete)

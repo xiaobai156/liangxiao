@@ -263,41 +263,6 @@
       "fingerprint": "马狗牛鼠"
     },
     {
-      "name": "精忠报国",
-      "url": "https://993345.com/gsb1.aspx?id=3243",
-      "pick": "bottom",
-      "position_kind": "visible_text_offset_v1",
-      "values": {
-        "217": "猪蛇",
-        "216": "虎猪"
-      },
-      "positions": {
-        "217": 474,
-        "216": 450
-      },
-      "records": [
-        {
-          "period": 217,
-          "zodiac": "猪蛇",
-          "position": 474,
-          "source_positions": [
-            474
-          ],
-          "position_kind": "visible_text_offset_v1"
-        },
-        {
-          "period": 216,
-          "zodiac": "虎猪",
-          "position": 450,
-          "source_positions": [
-            450
-          ],
-          "position_kind": "visible_text_offset_v1"
-        }
-      ],
-      "fingerprint": "猪蛇虎猪"
-    },
-    {
       "name": "女娲补天",
       "url": "https://993345.com/gsb1.aspx?id=3238",
       "pick": "bottom",
@@ -821,17 +786,6 @@
         }
       ],
       "fingerprint": "鸡虎兔马"
-    },
-    {
-      "name": "全球预测",
-      "url": "https://bbs02.836280.cyou/bbs/topic.php?id=17887",
-      "pick": "bottom",
-      "position_kind": "visible_text_offset_v1",
-      "values": {},
-      "positions": {},
-      "records": [],
-      "fingerprint": "",
-      "error": "字段校验未通过：多文档内未能独立验证 216 期目标"
     },
     {
       "name": "探讨资料",
@@ -3495,38 +3449,15 @@
     },
     {
       "name": "旧街凉风",
-      "url": "https://vqxzuc.fggtp-huz0q-sbrraa.xyz:16677/topic/251180.html",
+      "url": "https://ygaazoi.80f2d-qi0ig-gkygze.work:17488/topic/251180.html",
       "pick": "top",
       "position_kind": "visible_text_offset_v1",
-      "values": {
-        "217": "羊兔",
-        "216": "龙虎"
-      },
-      "positions": {
-        "217": 44,
-        "216": 44
-      },
-      "records": [
-        {
-          "period": 217,
-          "zodiac": "羊兔",
-          "position": 44,
-          "source_positions": [
-            44
-          ],
-          "position_kind": "visible_text_offset_v1"
-        },
-        {
-          "period": 216,
-          "zodiac": "龙虎",
-          "position": 44,
-          "source_positions": [
-            44
-          ],
-          "position_kind": "visible_text_offset_v1"
-        }
-      ],
-      "fingerprint": "羊兔龙虎"
+      "values": {},
+      "positions": {},
+      "records": [],
+      "fingerprint": "",
+      "status": "failed",
+      "error": "缓存结构迁移：该站点尚无可复用的历史记录"
     },
     {
       "name": "奴颜媚骨",
@@ -4124,45 +4055,6 @@
       "fingerprint": "鼠马兔猪"
     },
     {
-      "name": "月老搭桥",
-      "url": "https://yzpbdkow.6m1ba-7p7u4-ppolcy.work:29433/article/admin/6a02c9bc8bad0a3579e9f72b?url=tdg",
-      "pick": "bottom",
-      "position_kind": "visible_text_offset_v1",
-      "values": {
-        "217": "猴牛",
-        "216": "狗蛇"
-      },
-      "positions": {
-        "217": 4148,
-        "216": 4113
-      },
-      "records": [
-        {
-          "period": 217,
-          "zodiac": "猴牛",
-          "position": 4148,
-          "source_positions": [
-            4148
-          ],
-          "position_kind": "visible_text_offset_v1"
-        },
-        {
-          "period": 216,
-          "zodiac": "狗蛇",
-          "position": 4113,
-          "source_positions": [
-            4113
-          ],
-          "position_kind": "visible_text_offset_v1"
-        }
-      ],
-      "fingerprint": "猴牛狗蛇",
-      "article_ids": {
-        "217": "6a02c9bc8bad0a3579e9f72b",
-        "216": "6a02c9bc8bad0a3579e9f72b"
-      }
-    },
-    {
       "name": "民间高手",
       "url": "https://88.62782d.com:1888/",
       "pick": "top",
@@ -4686,41 +4578,6 @@
         }
       ],
       "fingerprint": "鼠马狗龙"
-    },
-    {
-      "name": "同床异梦",
-      "url": "https://ofxhqgor.li0cj-4esgz-npswxa.xyz/view.php?id=521",
-      "pick": "bottom",
-      "position_kind": "visible_text_offset_v1",
-      "values": {
-        "217": "蛇羊",
-        "216": "猴蛇"
-      },
-      "positions": {
-        "217": 3202,
-        "216": 3165
-      },
-      "records": [
-        {
-          "period": 217,
-          "zodiac": "蛇羊",
-          "position": 3202,
-          "source_positions": [
-            3202
-          ],
-          "position_kind": "visible_text_offset_v1"
-        },
-        {
-          "period": 216,
-          "zodiac": "猴蛇",
-          "position": 3165,
-          "source_positions": [
-            3165
-          ],
-          "position_kind": "visible_text_offset_v1"
-        }
-      ],
-      "fingerprint": "蛇羊猴蛇"
     },
     {
       "name": "一言中的",
@@ -5750,45 +5607,6 @@
       }
     },
     {
-      "name": "霸王传奇",
-      "url": "https://nwrkkmv.rx287-rkrai-jsjccc.xyz:29499/article/manager/6a33d2d2dfa16552b923d0af?url=ggz",
-      "pick": "bottom",
-      "position_kind": "visible_text_offset_v1",
-      "values": {
-        "217": "鸡猪",
-        "216": "鸡猪"
-      },
-      "positions": {
-        "217": 2869,
-        "216": 2832
-      },
-      "records": [
-        {
-          "period": 217,
-          "zodiac": "鸡猪",
-          "position": 2869,
-          "source_positions": [
-            2869
-          ],
-          "position_kind": "visible_text_offset_v1"
-        },
-        {
-          "period": 216,
-          "zodiac": "鸡猪",
-          "position": 2832,
-          "source_positions": [
-            2832
-          ],
-          "position_kind": "visible_text_offset_v1"
-        }
-      ],
-      "fingerprint": "鸡猪鸡猪",
-      "article_ids": {
-        "217": "6a33d2d2dfa16552b923d0af",
-        "216": "6a33d2d2dfa16552b923d0af"
-      }
-    },
-    {
       "name": "粉色樱花",
       "url": "https://hcsuuoy.nimo7-9bgj4-fmspxt.xyz:29466/article/manager/6a31451a9f83cbadb83797d9?url=cww",
       "pick": "bottom",
@@ -6292,41 +6110,6 @@
       }
     },
     {
-      "name": "阳春彩虹",
-      "url": "https://8818.www19753a.com/read.php?tid=639",
-      "pick": "bottom",
-      "position_kind": "visible_text_offset_v1",
-      "values": {
-        "217": "狗猪",
-        "216": "蛇兔"
-      },
-      "positions": {
-        "217": 4793,
-        "216": 4758
-      },
-      "records": [
-        {
-          "period": 217,
-          "zodiac": "狗猪",
-          "position": 4793,
-          "source_positions": [
-            4793
-          ],
-          "position_kind": "visible_text_offset_v1"
-        },
-        {
-          "period": 216,
-          "zodiac": "蛇兔",
-          "position": 4758,
-          "source_positions": [
-            4758
-          ],
-          "position_kind": "visible_text_offset_v1"
-        }
-      ],
-      "fingerprint": "狗猪蛇兔"
-    },
-    {
       "name": "无所畏惧",
       "url": "https://8818.www73261a.com/read.php?tid=441",
       "pick": "bottom",
@@ -6398,45 +6181,6 @@
       "article_ids": {
         "217": "6a33d2c6dfa16552b923d0ad",
         "216": "6a33d2c6dfa16552b923d0ad"
-      }
-    },
-    {
-      "name": "六合中心",
-      "url": "https://utklnwvn.xt8d7-kd9kc-csprqr.work:29488/article/manager/6a0445354ea5c20141013e7c?url=qdz",
-      "pick": "bottom",
-      "position_kind": "visible_text_offset_v1",
-      "values": {
-        "217": "虎牛",
-        "216": "狗鸡"
-      },
-      "positions": {
-        "217": 3833,
-        "216": 3798
-      },
-      "records": [
-        {
-          "period": 217,
-          "zodiac": "虎牛",
-          "position": 3833,
-          "source_positions": [
-            3833
-          ],
-          "position_kind": "visible_text_offset_v1"
-        },
-        {
-          "period": 216,
-          "zodiac": "狗鸡",
-          "position": 3798,
-          "source_positions": [
-            3798
-          ],
-          "position_kind": "visible_text_offset_v1"
-        }
-      ],
-      "fingerprint": "虎牛狗鸡",
-      "article_ids": {
-        "217": "6a0445354ea5c20141013e7c",
-        "216": "6a0445354ea5c20141013e7c"
       }
     },
     {
@@ -6586,6 +6330,811 @@
         "217": "6a33d28bdfa16552b923d0a5",
         "216": "6a33d28bdfa16552b923d0a5"
       }
+    },
+    {
+      "name": "斗转星移",
+      "url": "https://a.ttss.vip/list.aspx?id=79&page=1",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {},
+      "positions": {},
+      "records": [],
+      "fingerprint": "",
+      "status": "failed",
+      "error": "缓存结构迁移：该站点尚无可复用的历史记录"
+    },
+    {
+      "name": "催人奋进",
+      "url": "https://dh-nwsm-0806.yqs01490156c.app/gst/20.htm",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {},
+      "positions": {},
+      "records": [],
+      "fingerprint": "",
+      "status": "failed",
+      "error": "缓存结构迁移：该站点尚无可复用的历史记录"
+    },
+    {
+      "name": "发奋图强",
+      "url": "https://dh-nwsm-0806.yqs01490156c.app/gsb/11.htm",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {},
+      "positions": {},
+      "records": [],
+      "fingerprint": "",
+      "status": "failed",
+      "error": "缓存结构迁移：该站点尚无可复用的历史记录"
+    },
+    {
+      "name": "志在四方",
+      "url": "https://dh-nwsm-0806.yqs01490156c.app/gst/58.htm",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {},
+      "positions": {},
+      "records": [],
+      "fingerprint": "",
+      "status": "failed",
+      "error": "缓存结构迁移：该站点尚无可复用的历史记录"
+    },
+    {
+      "name": "四季如春",
+      "url": "https://pgyzulb.iwnn7-gyyip-pnpfqv.work:29477/article/manager/6a153c328be59b17287c6ceb?url=bflc",
+      "pick": "bottom",
+      "position_kind": "visible_text_offset_v1",
+      "values": {},
+      "positions": {},
+      "records": [],
+      "fingerprint": "",
+      "status": "failed",
+      "error": "缓存结构迁移：该站点尚无可复用的历史记录"
+    },
+    {
+      "name": "原原本本",
+      "url": "https://pgyzulb.iwnn7-gyyip-pnpfqv.work:29477/article/manager/6a153eb8d9d9fc2cea52419b?url=bflc",
+      "pick": "bottom",
+      "position_kind": "visible_text_offset_v1",
+      "values": {},
+      "positions": {},
+      "records": [],
+      "fingerprint": "",
+      "status": "failed",
+      "error": "缓存结构迁移：该站点尚无可复用的历史记录"
+    },
+    {
+      "name": "会员福利",
+      "url": "https://sheuzjss.tgpcj-9w0vl-mwyhly.work:29422/article/manager/6a0458354ea5c20141013eb4?url=zfw",
+      "pick": "bottom",
+      "position_kind": "visible_text_offset_v1",
+      "values": {},
+      "positions": {},
+      "records": [],
+      "fingerprint": "",
+      "status": "failed",
+      "error": "缓存结构迁移：该站点尚无可复用的历史记录"
+    },
+    {
+      "name": "其乐融融",
+      "url": "https://sheuzjss.tgpcj-9w0vl-mwyhly.work:29422/article/manager/6a62b371b3f65fed7d61cb4b?url=zfw",
+      "pick": "bottom",
+      "position_kind": "visible_text_offset_v1",
+      "values": {},
+      "positions": {},
+      "records": [],
+      "fingerprint": "",
+      "status": "failed",
+      "error": "缓存结构迁移：该站点尚无可复用的历史记录"
+    },
+    {
+      "name": "极目远眺",
+      "url": "https://uqdccnri.oy2bh-swrfr-gvzxkk.work:29499/article/manager/6a03354dcd2fbc900f6db83a?url=lcz",
+      "pick": "bottom",
+      "position_kind": "visible_text_offset_v1",
+      "values": {},
+      "positions": {},
+      "records": [],
+      "fingerprint": "",
+      "status": "failed",
+      "error": "缓存结构迁移：该站点尚无可复用的历史记录"
+    },
+    {
+      "name": "再创六合",
+      "url": "https://uqdccnri.oy2bh-swrfr-gvzxkk.work:29499/article/manager/6a03230a56a1d26b7774455f?url=lcz",
+      "pick": "bottom",
+      "position_kind": "visible_text_offset_v1",
+      "values": {},
+      "positions": {},
+      "records": [],
+      "fingerprint": "",
+      "status": "failed",
+      "error": "缓存结构迁移：该站点尚无可复用的历史记录"
+    },
+    {
+      "name": "马会综合",
+      "url": "https://herymche.x6l2j-h6kfu-qdresg.work:29466/article/manager/6a0452024ea5c20141013e9a?url=txbb",
+      "pick": "bottom",
+      "position_kind": "visible_text_offset_v1",
+      "values": {},
+      "positions": {},
+      "records": [],
+      "fingerprint": "",
+      "status": "failed",
+      "error": "缓存结构迁移：该站点尚无可复用的历史记录"
+    },
+    {
+      "name": "百紫千红",
+      "url": "https://herymche.x6l2j-h6kfu-qdresg.work:29466/article/manager/6a043cad4ea5c20141013e55?url=txbb",
+      "pick": "bottom",
+      "position_kind": "visible_text_offset_v1",
+      "values": {},
+      "positions": {},
+      "records": [],
+      "fingerprint": "",
+      "status": "failed",
+      "error": "缓存结构迁移：该站点尚无可复用的历史记录"
+    },
+    {
+      "name": "心情愉悦",
+      "url": "https://asmfkb.dfkxu-0rwnp-wevqzo.work:29466/article/manager/6a106fb2e55f3de51a257209?url=fcw",
+      "pick": "bottom",
+      "position_kind": "visible_text_offset_v1",
+      "values": {},
+      "positions": {},
+      "records": [],
+      "fingerprint": "",
+      "status": "failed",
+      "error": "缓存结构迁移：该站点尚无可复用的历史记录"
+    },
+    {
+      "name": "神机妙算",
+      "url": "https://asmfkb.dfkxu-0rwnp-wevqzo.work:29466/article/manager/6a4b0f8f57dc857ae1c0289a?url=fcw",
+      "pick": "bottom",
+      "position_kind": "visible_text_offset_v1",
+      "values": {},
+      "positions": {},
+      "records": [],
+      "fingerprint": "",
+      "status": "failed",
+      "error": "缓存结构迁移：该站点尚无可复用的历史记录"
+    },
+    {
+      "name": "实力巨献",
+      "url": "https://asmfkb.dfkxu-0rwnp-wevqzo.work:29466/article/manager/6a09b3e6291caff3edcb90a7?url=fcw",
+      "pick": "bottom",
+      "position_kind": "visible_text_offset_v1",
+      "values": {},
+      "positions": {},
+      "records": [],
+      "fingerprint": "",
+      "status": "failed",
+      "error": "缓存结构迁移：该站点尚无可复用的历史记录"
+    },
+    {
+      "name": "一笔抹杀",
+      "url": "https://sndaygl.egjtc-sgs8w-taclan.work:29400/article/manager/6a140a07597e16d57eacb49b?url=nmw",
+      "pick": "bottom",
+      "position_kind": "visible_text_offset_v1",
+      "values": {},
+      "positions": {},
+      "records": [],
+      "fingerprint": "",
+      "status": "failed",
+      "error": "缓存结构迁移：该站点尚无可复用的历史记录"
+    },
+    {
+      "name": "起早摸黑",
+      "url": "https://sndaygl.egjtc-sgs8w-taclan.work:29400/article/manager/6a140d934346bc68aea4ef37?url=nmw",
+      "pick": "bottom",
+      "position_kind": "visible_text_offset_v1",
+      "values": {},
+      "positions": {},
+      "records": [],
+      "fingerprint": "",
+      "status": "failed",
+      "error": "缓存结构迁移：该站点尚无可复用的历史记录"
+    },
+    {
+      "name": "最猛夺彩",
+      "url": "https://ztpqrap.m8sbq-na911-wmojzb.work:29444/article/manager/6a1450cb597e16d57eacb699?url=gsw",
+      "pick": "bottom",
+      "position_kind": "visible_text_offset_v1",
+      "values": {},
+      "positions": {},
+      "records": [],
+      "fingerprint": "",
+      "status": "failed",
+      "error": "缓存结构迁移：该站点尚无可复用的历史记录"
+    },
+    {
+      "name": "飘香一剑",
+      "url": "https://ifnkblf.e4kce-krr7o-vuvqhd.work:29411/article/manager/6a145e517b484ee0e062924d?url=scyd",
+      "pick": "bottom",
+      "position_kind": "visible_text_offset_v1",
+      "values": {},
+      "positions": {},
+      "records": [],
+      "fingerprint": "",
+      "status": "failed",
+      "error": "缓存结构迁移：该站点尚无可复用的历史记录"
+    },
+    {
+      "name": "塞纳河畔",
+      "url": "https://plwyrcj.4ai8j-p62x5-pnsukp.work:29411/article/manager/6a1721a81d09553bfe753e03?url=gjp",
+      "pick": "bottom",
+      "position_kind": "visible_text_offset_v1",
+      "values": {},
+      "positions": {},
+      "records": [],
+      "fingerprint": "",
+      "status": "failed",
+      "error": "缓存结构迁移：该站点尚无可复用的历史记录"
+    },
+    {
+      "name": "神童网料",
+      "url": "https://fymxwnyg.ttmzc-muvns-udlfln.work:29455/article/manager/6a096b5f291caff3edcb8b9e?url=lhbd",
+      "pick": "bottom",
+      "position_kind": "visible_text_offset_v1",
+      "values": {},
+      "positions": {},
+      "records": [],
+      "fingerprint": "",
+      "status": "failed",
+      "error": "缓存结构迁移：该站点尚无可复用的历史记录"
+    },
+    {
+      "name": "曲尽其妙",
+      "url": "https://18118.73829.com/read.php?tid=473",
+      "pick": "bottom",
+      "position_kind": "visible_text_offset_v1",
+      "values": {},
+      "positions": {},
+      "records": [],
+      "fingerprint": "",
+      "status": "failed",
+      "error": "缓存结构迁移：该站点尚无可复用的历史记录"
+    },
+    {
+      "name": "官网透码",
+      "url": "https://aszmkf.c3z3l-qrlqm-mwgccr.work:29411/article/manager/6a0833cc08adb5ed7357ef83?url=lhw",
+      "pick": "bottom",
+      "position_kind": "visible_text_offset_v1",
+      "values": {},
+      "positions": {},
+      "records": [],
+      "fingerprint": "",
+      "status": "failed",
+      "error": "缓存结构迁移：该站点尚无可复用的历史记录"
+    },
+    {
+      "name": "马上有钱",
+      "url": "https://jkofyya.6sf58-wbz5a-thviwx.work:29477/article/manager/6a13e385741e3e91a04e5954?url=jbp",
+      "pick": "bottom",
+      "position_kind": "visible_text_offset_v1",
+      "values": {},
+      "positions": {},
+      "records": [],
+      "fingerprint": "",
+      "status": "failed",
+      "error": "缓存结构迁移：该站点尚无可复用的历史记录"
+    },
+    {
+      "name": "少女臆想",
+      "url": "https://jusbfyu.mkdwi-xa2ua-rsovan.work:29422/article/manager/6a322f04f21d7a093399eeac?url=hjc",
+      "pick": "bottom",
+      "position_kind": "visible_text_offset_v1",
+      "values": {},
+      "positions": {},
+      "records": [],
+      "fingerprint": "",
+      "status": "failed",
+      "error": "缓存结构迁移：该站点尚无可复用的历史记录"
+    },
+    {
+      "name": "风雨无阻",
+      "url": "https://dgjdlk.0hrwo-8qjsc-spwvba.xyz:29411/article/manager/6a12d7686cb8d34478078ae8?url=cf",
+      "pick": "bottom",
+      "position_kind": "visible_text_offset_v1",
+      "values": {},
+      "positions": {},
+      "records": [],
+      "fingerprint": "",
+      "status": "failed",
+      "error": "缓存结构迁移：该站点尚无可复用的历史记录"
+    },
+    {
+      "name": "黄大仙道",
+      "url": "https://hl.www25195a.com/read.php?tid=684",
+      "pick": "bottom",
+      "position_kind": "visible_text_offset_v1",
+      "values": {},
+      "positions": {},
+      "records": [],
+      "fingerprint": "",
+      "status": "failed",
+      "error": "缓存结构迁移：该站点尚无可复用的历史记录"
+    },
+    {
+      "name": "大有文章",
+      "url": "https://0130190808.880646.xyz/bbs/topic.php?id=20685",
+      "pick": "bottom",
+      "position_kind": "visible_text_offset_v1",
+      "values": {},
+      "positions": {},
+      "records": [],
+      "fingerprint": "",
+      "status": "failed",
+      "error": "缓存结构迁移：该站点尚无可复用的历史记录"
+    },
+    {
+      "name": "梦寐以求第二",
+      "url": "https://rzezcu.1d6n7-kqrjr-tliphw.xyz:29466/article/manager/6a12b692d5071f9d0b8b463c?url=hcf",
+      "pick": "bottom",
+      "position_kind": "visible_text_offset_v1",
+      "values": {},
+      "positions": {},
+      "records": [],
+      "fingerprint": "",
+      "status": "failed",
+      "error": "缓存结构迁移：该站点尚无可复用的历史记录"
+    },
+    {
+      "name": "紫苏经典",
+      "url": "https://4.48kk49.com:1888/Article/ar_content/id/1545/tid/82.html",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {},
+      "positions": {},
+      "records": [],
+      "fingerprint": "",
+      "status": "failed",
+      "error": "缓存结构迁移：该站点尚无可复用的历史记录"
+    },
+    {
+      "name": "天才小白",
+      "url": "https://4.48kk49.com:1888/Article/ar_content/id/1439/tid/82.html",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {},
+      "positions": {},
+      "records": [],
+      "fingerprint": "",
+      "status": "failed",
+      "error": "缓存结构迁移：该站点尚无可复用的历史记录"
+    },
+    {
+      "name": "鲲逆鳞",
+      "url": "https://88.48a55.com:1888/gszl/id/1521",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {},
+      "positions": {},
+      "records": [],
+      "fingerprint": "",
+      "status": "failed",
+      "error": "缓存结构迁移：该站点尚无可复用的历史记录"
+    },
+    {
+      "name": "倾不素颜",
+      "url": "https://88.jcwap.in/gsx.aspx?id=34",
+      "pick": "bottom",
+      "position_kind": "visible_text_offset_v1",
+      "values": {},
+      "positions": {},
+      "records": [],
+      "fingerprint": "",
+      "status": "failed",
+      "error": "缓存结构迁移：该站点尚无可复用的历史记录"
+    },
+    {
+      "name": "管家婆精准杀二肖",
+      "url": "https://4.48kk49.com:1888/Article/ar_content/id/172/tid/5.html",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {},
+      "positions": {},
+      "records": [],
+      "fingerprint": "",
+      "status": "failed",
+      "error": "缓存结构迁移：该站点尚无可复用的历史记录"
+    },
+    {
+      "name": "金多宝信息网",
+      "url": "https://4.48kk49.com:1888/Article/ar_content/id/156/tid/7.html",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {},
+      "positions": {},
+      "records": [],
+      "fingerprint": "",
+      "status": "failed",
+      "error": "缓存结构迁移：该站点尚无可复用的历史记录"
+    },
+    {
+      "name": "澳门彩票",
+      "url": "https://4.48kk49.com:1888/Article/ar_content/id/126/tid/9.html",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {},
+      "positions": {},
+      "records": [],
+      "fingerprint": "",
+      "status": "failed",
+      "error": "缓存结构迁移：该站点尚无可复用的历史记录"
+    },
+    {
+      "name": "大赢家",
+      "url": "https://4.48kk49.com:1888/Article/ar_content/id/283/tid/18.html",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {},
+      "positions": {},
+      "records": [],
+      "fingerprint": "",
+      "status": "failed",
+      "error": "缓存结构迁移：该站点尚无可复用的历史记录"
+    },
+    {
+      "name": "⑥合彩开奖资料",
+      "url": "https://4.48kk49.com:1888/Article/ar_content/id/351/tid/23.html",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {},
+      "positions": {},
+      "records": [],
+      "fingerprint": "",
+      "status": "failed",
+      "error": "缓存结构迁移：该站点尚无可复用的历史记录"
+    },
+    {
+      "name": "澳门赌圣",
+      "url": "https://4.48kk49.com:1888/Article/ar_content/id/399/tid/26.html",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {},
+      "positions": {},
+      "records": [],
+      "fingerprint": "",
+      "status": "failed",
+      "error": "缓存结构迁移：该站点尚无可复用的历史记录"
+    },
+    {
+      "name": "博发世家",
+      "url": "https://4.48kk49.com:1888/Article/ar_content/id/496/tid/33.html",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {},
+      "positions": {},
+      "records": [],
+      "fingerprint": "",
+      "status": "failed",
+      "error": "缓存结构迁移：该站点尚无可复用的历史记录"
+    },
+    {
+      "name": "米老头",
+      "url": "https://4.48kk49.com:1888/Article/ar_content/id/532/tid/35.html",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {},
+      "positions": {},
+      "records": [],
+      "fingerprint": "",
+      "status": "failed",
+      "error": "缓存结构迁移：该站点尚无可复用的历史记录"
+    },
+    {
+      "name": "凤凰马经",
+      "url": "https://4.48kk49.com:1888/Article/ar_content/id/559/tid/36.html",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {},
+      "positions": {},
+      "records": [],
+      "fingerprint": "",
+      "status": "failed",
+      "error": "缓存结构迁移：该站点尚无可复用的历史记录"
+    },
+    {
+      "name": "澳门好彩",
+      "url": "https://4.48kk49.com:1888/Article/ar_content/id/656/tid/44.html",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {},
+      "positions": {},
+      "records": [],
+      "fingerprint": "",
+      "status": "failed",
+      "error": "缓存结构迁移：该站点尚无可复用的历史记录"
+    },
+    {
+      "name": "东方心经",
+      "url": "https://4.48kk49.com:1888/Article/ar_content/id/746/tid/52.html",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {},
+      "positions": {},
+      "records": [],
+      "fingerprint": "",
+      "status": "failed",
+      "error": "缓存结构迁移：该站点尚无可复用的历史记录"
+    },
+    {
+      "name": "大刀皇",
+      "url": "https://4.48kk49.com:1888/Article/ar_content/id/765/tid/54.html",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {},
+      "positions": {},
+      "records": [],
+      "fingerprint": "",
+      "status": "failed",
+      "error": "缓存结构迁移：该站点尚无可复用的历史记录"
+    },
+    {
+      "name": "稳如泰山",
+      "url": "https://azjjosd.scyms-vek4g-yubibb.xyz:17455/topic/253481.html",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {},
+      "positions": {},
+      "records": [],
+      "fingerprint": "",
+      "status": "failed",
+      "error": "缓存结构迁移：该站点尚无可复用的历史记录"
+    },
+    {
+      "name": "梦想人生",
+      "url": "https://nwrkkmv.rx287-rkrai-jsjccc.xyz:29499/article/manager/6a55eceff447e21b02daa681?url=ggz",
+      "pick": "bottom",
+      "position_kind": "visible_text_offset_v1",
+      "values": {},
+      "positions": {},
+      "records": [],
+      "fingerprint": "",
+      "status": "failed",
+      "error": "缓存结构迁移：该站点尚无可复用的历史记录"
+    },
+    {
+      "name": "妆罢低声",
+      "url": "https://fansiggg.jc2q8-whfmg-vajjui.xyz:29433/article/manager/6a4e87bd57dc857ae1c13558?url=dyj",
+      "pick": "bottom",
+      "position_kind": "visible_text_offset_v1",
+      "values": {},
+      "positions": {},
+      "records": [],
+      "fingerprint": "",
+      "status": "failed",
+      "error": "缓存结构迁移：该站点尚无可复用的历史记录"
+    },
+    {
+      "name": "燕姬独擅",
+      "url": "https://fansiggg.jc2q8-whfmg-vajjui.xyz:29433/article/manager/6a64ec62b3f65fed7d6286e7?url=dyj",
+      "pick": "bottom",
+      "position_kind": "visible_text_offset_v1",
+      "values": {},
+      "positions": {},
+      "records": [],
+      "fingerprint": "",
+      "status": "failed",
+      "error": "缓存结构迁移：该站点尚无可复用的历史记录"
+    },
+    {
+      "name": "金码赌神",
+      "url": "https://vnxqseiu.ymm13-381iq-zcgmtu.xyz:29400/article/manager/6a081b9be0d076537e1df8a6?url=jdb",
+      "pick": "bottom",
+      "position_kind": "visible_text_offset_v1",
+      "values": {},
+      "positions": {},
+      "records": [],
+      "fingerprint": "",
+      "status": "failed",
+      "error": "缓存结构迁移：该站点尚无可复用的历史记录"
+    },
+    {
+      "name": "上官研之",
+      "url": "https://xxn08n.w2jqr-rbl71-ngvkmq.work/topic/479502.html",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {},
+      "positions": {},
+      "records": [],
+      "fingerprint": "",
+      "status": "failed",
+      "error": "缓存结构迁移：该站点尚无可复用的历史记录"
+    },
+    {
+      "name": "杯中之水",
+      "url": "https://xxn08n.w2jqr-rbl71-ngvkmq.work/topic/453967.html",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {},
+      "positions": {},
+      "records": [],
+      "fingerprint": "",
+      "status": "failed",
+      "error": "缓存结构迁移：该站点尚无可复用的历史记录"
+    },
+    {
+      "name": "林间语屑",
+      "url": "https://citsyvlm.5ujgl-2q1ig-bszkno.work:17466/topic/682028.html",
+      "pick": "bottom",
+      "position_kind": "visible_text_offset_v1",
+      "values": {},
+      "positions": {},
+      "records": [],
+      "fingerprint": "",
+      "status": "failed",
+      "error": "缓存结构迁移：该站点尚无可复用的历史记录"
+    },
+    {
+      "name": "恍然大悟",
+      "url": "https://cxmdjok.8wtwc-boven-glylvt.xyz:16677/topic/437767.html",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {},
+      "positions": {},
+      "records": [],
+      "fingerprint": "",
+      "status": "failed",
+      "error": "缓存结构迁移：该站点尚无可复用的历史记录"
+    },
+    {
+      "name": "粉骨糜身",
+      "url": "https://qhfsrngx.x9mcp-vrrqh-dzqfro.xyz:16677/topic/451425.html",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {},
+      "positions": {},
+      "records": [],
+      "fingerprint": "",
+      "status": "failed",
+      "error": "缓存结构迁移：该站点尚无可复用的历史记录"
+    },
+    {
+      "name": "安宅正路",
+      "url": "https://uhaxnrzx.q76gf-deec8-zqckeo.xyz:16677/topic/615690.html",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {},
+      "positions": {},
+      "records": [],
+      "fingerprint": "",
+      "status": "failed",
+      "error": "缓存结构迁移：该站点尚无可复用的历史记录"
+    },
+    {
+      "name": "坐怀不乱",
+      "url": "https://gabqzzz.ahv8c-6713g-otpeiy.xyz:16677/topic/530161.html",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {},
+      "positions": {},
+      "records": [],
+      "fingerprint": "",
+      "status": "failed",
+      "error": "缓存结构迁移：该站点尚无可复用的历史记录"
+    },
+    {
+      "name": "市区幸福",
+      "url": "https://yelsagvn.1iwwa-jwubd-szbnwd.work:17466/topic/551397.html",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {},
+      "positions": {},
+      "records": [],
+      "fingerprint": "",
+      "status": "failed",
+      "error": "缓存结构迁移：该站点尚无可复用的历史记录"
+    },
+    {
+      "name": "燃萁煎豆",
+      "url": "https://kjqba.ipvrs-9mw2c-wdnuvo.work/topic/213294.html",
+      "pick": "bottom",
+      "position_kind": "visible_text_offset_v1",
+      "values": {},
+      "positions": {},
+      "records": [],
+      "fingerprint": "",
+      "status": "failed",
+      "error": "缓存结构迁移：该站点尚无可复用的历史记录"
+    },
+    {
+      "name": "周公神算",
+      "url": "https://xxn08n.w2jqr-rbl71-ngvkmq.work/",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {},
+      "positions": {},
+      "records": [],
+      "fingerprint": "",
+      "status": "failed",
+      "error": "缓存结构迁移：该站点尚无可复用的历史记录"
+    },
+    {
+      "name": "托尼库尔莫妮卡",
+      "url": "https://zcphjs.ce83x-ms2rz-orwude.work:12277/#/users/230245",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {},
+      "positions": {},
+      "records": [],
+      "fingerprint": "",
+      "status": "failed",
+      "error": "缓存结构迁移：该站点尚无可复用的历史记录"
+    },
+    {
+      "name": "小算算",
+      "url": "https://zcphjs.ce83x-ms2rz-orwude.work:12277/#/users/214200",
+      "pick": "bottom",
+      "position_kind": "visible_text_offset_v1",
+      "values": {},
+      "positions": {},
+      "records": [],
+      "fingerprint": "",
+      "status": "failed",
+      "error": "缓存结构迁移：该站点尚无可复用的历史记录"
+    },
+    {
+      "name": "卢九稳杀",
+      "url": "https://xclpqth.4zsn8-rzqg9-ulwfyu.work:17477/topic/800282.html",
+      "pick": "bottom",
+      "position_kind": "visible_text_offset_v1",
+      "values": {},
+      "positions": {},
+      "records": [],
+      "fingerprint": "",
+      "status": "failed",
+      "error": "缓存结构迁移：该站点尚无可复用的历史记录"
+    },
+    {
+      "name": "卢九",
+      "url": "https://xclpqth.4zsn8-rzqg9-ulwfyu.work:17477/",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {},
+      "positions": {},
+      "records": [],
+      "fingerprint": "",
+      "status": "failed",
+      "error": "缓存结构迁移：该站点尚无可复用的历史记录"
+    },
+    {
+      "name": "月窟织绡",
+      "url": "https://jtrmhar.cwdc3-r5vqn-qzqasa.work:17455/topic/741219.html",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {},
+      "positions": {},
+      "records": [],
+      "fingerprint": "",
+      "status": "failed",
+      "error": "缓存结构迁移：该站点尚无可复用的历史记录"
+    },
+    {
+      "name": "步步高升",
+      "url": "https://azyqhiut.9kzow-3yq4j-hlwmev.work:17477/",
+      "pick": "top",
+      "position_kind": "visible_text_offset_v1",
+      "values": {},
+      "positions": {},
+      "records": [],
+      "fingerprint": "",
+      "status": "failed",
+      "error": "缓存结构迁移：该站点尚无可复用的历史记录"
+    },
+    {
+      "name": "天狼杀星",
+      "url": "https://etmchyhq.cee5t-w30bf-xgqspr.work:17477/topic/248728.html",
+      "pick": "bottom",
+      "position_kind": "visible_text_offset_v1",
+      "values": {},
+      "positions": {},
+      "records": [],
+      "fingerprint": "",
+      "status": "failed",
+      "error": "缓存结构迁移：该站点尚无可复用的历史记录"
     }
-  ]
+  ],
+  "config_fingerprint": "0451dc6a4758f5770a218f1a3e7f6c423f57269abc826201a2f523df43112d24"
 }
