@@ -1,0 +1,127 @@
+name: Test remaining 20 final candidate
+
+on:
+  push:
+    branches: ['test/remaining20-final-candidate']
+    paths:
+      - '.github/workflows/test-remaining20-final-candidate.yml'
+      - 'tools/remaining20-final-candidate.patch.xz.b64'
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: windows-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Apply candidate patch
+        shell: pwsh
+        run: |
+          $encoded = Get-Content -Raw tools/remaining20-final-candidate.patch.xz.b64
+          [IO.File]::WriteAllBytes("$env:RUNNER_TEMP\candidate.patch.xz", [Convert]::FromBase64String($encoded.Trim()))
+          $hash = (Get-FileHash "$env:RUNNER_TEMP\candidate.patch.xz" -Algorithm SHA256).Hash.ToLower()
+          if ($hash -ne '9828bd0740fb3534fe3f8d02e37f83b30d4ed0a4206a7858706a88d2e02687ec') { throw "patch checksum mismatch: $hash" }
+          xz -dc "$env:RUNNER_TEMP\candidate.patch.xz" | Set-Content -Encoding utf8 "$env:RUNNER_TEMP\candidate.patch"
+          git apply --check --whitespace=error-all "$env:RUNNER_TEMP\candidate.patch"
+          git apply --whitespace=error-all "$env:RUNNER_TEMP\candidate.patch"
+      - name: Sync cache fingerprint for candidate config
+        shell: pwsh
+        env:
+          PYTHONUTF8: '1'
+        run: |
+          @'
+          import json
+          from pathlib import Path
+          from cache.contracts import config_fingerprint
+          from config.loader import load_sites
+          from parsers.registry import ENGINE_REGISTRY
+          path = Path('recent_10_cache.json')
+          payload = json.loads(path.read_text(encoding='utf-8-sig'))
+          payload['config_fingerprint'] = config_fingerprint(
+              load_sites(Path('config/sites.json'), allowed_parsers=ENGINE_REGISTRY)
+          )
+          path.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+          '@ | Set-Content -Encoding UTF8 sync_fp.py
+          python sync_fp.py
+      - name: Install pinned test dependencies
+        run: python -m pip install -r requirements-dev.txt
+      - name: Run complete offline validation
+        shell: pwsh
+        run: |
+          python tools/run_offline_tests.py -q tests
+          python -m compileall -q cli.py domain config fetching parsers validation services cache output diagnostics
+          git diff --check
+      - name: Run only the remaining 20 sites for period 252
+        shell: pwsh
+        env:
+          PYTHONUTF8: '1'
+        run: |
+          @'
+          import json
+          from pathlib import Path
+          from config.loader import load_sites
+          from parsers.registry import ENGINE_REGISTRY, ParserRegistry
+          from services.single_period import scrape_sites
+
+          names = [
+              '曹国舅','只是有点帅','科方东文','大上海','九龙论坛','武林高手',
+              '澳姜太公','广东','乐不可支','民间高手','呻吟成瘾','枪打天下',
+              '人心如镜','繁忙棒球','寸草不生','会员福利','大有文章',
+              '梦寐以求第二','周公神算','托尼库尔莫妮卡'
+          ]
+          all_sites = load_sites(Path('config/sites.json'), allowed_parsers=ENGINE_REGISTRY)
+          by_name = {site.name: site for site in all_sites}
+          sites = [by_name[name] for name in names]
+          results = scrape_sites(
+              sites, 252, timeout=25, workers=6,
+              registry=ParserRegistry.bind_sites(sites), progress=None
+          )
+          rows = []
+          for result in results:
+              row = {
+                  'name': result.site.name,
+                  'ok': result.ok,
+                  'zodiac': result.record.zodiac if result.ok and result.record else '',
+                  'position': result.record.position if result.ok and result.record else None,
+                  'record_id': result.record.record_id if result.ok and result.record else '',
+                  'error': result.error,
+              }
+              rows.append(row)
+              print(row['name'], 'OK' if row['ok'] else 'FAIL', row['zodiac'], row['position'], row['error'])
+
+          expected = {
+              '曹国舅':'鸡猴', '只是有点帅':'马龙', '大上海':'牛猴',
+              '澳姜太公':'鸡猴', '广东':'蛇虎', '乐不可支':'牛兔',
+              '民间高手':'蛇猴', '呻吟成瘾':'鸡羊', '繁忙棒球':'猪鸡',
+              '寸草不生':'虎猪', '梦寐以求第二':'猴牛'
+          }
+          indexed = {row['name']: row for row in rows}
+          for name, zodiac in expected.items():
+              row = indexed[name]
+              if not row['ok'] or row['zodiac'] != zodiac:
+                  raise SystemExit(f'baseline mismatch for {name}: {row}')
+
+          payload = {
+              'period': 252,
+              'total': len(rows),
+              'success': sum(row['ok'] for row in rows),
+              'failed': sum(not row['ok'] for row in rows),
+              'results': rows,
+          }
+          Path('remaining20-final-results.json').write_text(
+              json.dumps(payload, ensure_ascii=False, indent=2), encoding='utf-8'
+          )
+          print('TOTAL', payload['total'], 'SUCCESS', payload['success'], 'FAILED', payload['failed'])
+          '@ | Set-Content -Encoding UTF8 live_remaining20.py
+          python live_remaining20.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: remaining20-final-results
+          path: remaining20-final-results.json
+          retention-days: 2
