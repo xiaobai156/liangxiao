@@ -1,0 +1,77 @@
+name: Diagnose remaining 20 round 2
+
+on:
+  push:
+    branches: ['test/remaining20-round2']
+    paths:
+      - '.github/workflows/diag-remaining20-round2.yml'
+      - 'tools/fix20-code.patch.xz.b64'
+
+permissions:
+  contents: read
+
+jobs:
+  diagnose:
+    runs-on: windows-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Apply candidate code patch
+        shell: pwsh
+        run: |
+          $encoded = Get-Content -Raw tools/fix20-code.patch.xz.b64
+          [IO.File]::WriteAllBytes("$env:RUNNER_TEMP\fix.patch.xz", [Convert]::FromBase64String($encoded.Trim()))
+          $hash = (Get-FileHash "$env:RUNNER_TEMP\fix.patch.xz" -Algorithm SHA256).Hash.ToLower()
+          if ($hash -ne 'b08516647f5f0d3cde6f602338a95f5e903a4d5872b23699066ba1fc07553790') { throw "patch checksum mismatch: $hash" }
+          xz -dc "$env:RUNNER_TEMP\fix.patch.xz" | Set-Content -Encoding utf8 "$env:RUNNER_TEMP\fix.patch"
+          git apply --check --whitespace=error-all "$env:RUNNER_TEMP\fix.patch"
+          git apply --whitespace=error-all "$env:RUNNER_TEMP\fix.patch"
+      - name: Install dependencies
+        shell: pwsh
+        run: |
+          python -m pip install -r requirements-dev.txt
+          python -m pip install playwright
+          python -m playwright install chromium
+      - name: Run full offline suite
+        run: python tools/run_offline_tests.py -q tests
+      - name: Run selected 252 live diagnostics
+        shell: pwsh
+        env:
+          PYTHONUTF8: '1'
+        run: |
+          @'
+          import json
+          from pathlib import Path
+          from config.loader import load_sites
+          from parsers.registry import ENGINE_REGISTRY, ParserRegistry
+          from services.single_period import scrape_sites
+
+          names = {
+              '大上海','澳姜太公','广东','繁忙棒球','寸草不生',
+              '只是有点帅','民间高手','枪打天下',
+              '呻吟成瘾','人心如镜','曹国舅','科方东文','乐不可支','梦寐以求第二'
+          }
+          sites = [s for s in load_sites(Path('config/sites.json'), allowed_parsers=ENGINE_REGISTRY) if s.name in names]
+          registry = ParserRegistry.bind_sites(sites)
+          results = scrape_sites(sites, 252, timeout=25, workers=6, registry=registry, progress=None)
+          rows=[]
+          for result in results:
+              rows.append({
+                  'name': result.site.name,
+                  'ok': result.ok,
+                  'zodiac': result.record.zodiac if result.ok and result.record else '',
+                  'position': result.record.position if result.ok and result.record else None,
+                  'error': result.error,
+              })
+              print(result.site.name, 'OK' if result.ok else 'FAIL', rows[-1]['zodiac'], rows[-1]['position'], rows[-1]['error'])
+          Path('remaining20-round2.json').write_text(json.dumps(rows, ensure_ascii=False, indent=2), encoding='utf-8')
+          '@ | Set-Content -Encoding UTF8 diag_round2.py
+          python diag_round2.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: remaining20-round2-results
+          path: remaining20-round2.json
+          retention-days: 2
