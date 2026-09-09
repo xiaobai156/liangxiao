@@ -1,0 +1,106 @@
+name: Live period 252 diagnostic
+
+on:
+  push:
+    branches: ['test/period-252-live-20260909']
+    paths: ['.github/workflows/live-period-252.yml']
+
+permissions:
+  contents: read
+
+jobs:
+  live-252:
+    runs-on: windows-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Install runtime dependencies
+        shell: pwsh
+        run: |
+          python -m pip install -r requirements.txt
+          python -m pip install playwright
+          python -m playwright install chromium
+      - name: Run 252 diagnostic without formal writes
+        shell: pwsh
+        run: |
+          @'
+          from __future__ import annotations
+
+          import json
+          from collections import Counter
+          from pathlib import Path
+
+          from config.loader import load_sites
+          from parsers.registry import ENGINE_REGISTRY, ParserRegistry
+          from services.single_period import scrape_sites
+
+          PERIOD = 252
+          ROOT = Path.cwd()
+          sites = load_sites(ROOT / "config" / "sites.json", allowed_parsers=ENGINE_REGISTRY)
+          registry = ParserRegistry.bind_sites(sites)
+          results = scrape_sites(
+              sites,
+              PERIOD,
+              timeout=25,
+              workers=10,
+              registry=registry,
+              progress=None,
+          )
+
+          rows = []
+          error_groups = Counter()
+          for result in results:
+              row = {
+                  "name": result.site.name,
+                  "pick": result.site.pick,
+                  "url": result.site.url,
+                  "ok": result.ok,
+                  "zodiac": result.record.zodiac if result.ok and result.record else "",
+                  "position": result.record.position if result.ok and result.record else None,
+                  "record_id": result.record.record_id if result.ok and result.record else "",
+                  "error": result.error,
+              }
+              rows.append(row)
+              if not result.ok:
+                  label = (result.error.split("：", 1)[0] if result.error else "未知失败").strip()
+                  error_groups[label] += 1
+
+          success = sum(row["ok"] for row in rows)
+          failed = len(rows) - success
+          payload = {
+              "period": PERIOD,
+              "total": len(rows),
+              "success": success,
+              "failed": failed,
+              "error_groups": dict(error_groups.most_common()),
+              "results": rows,
+          }
+          Path("period252-results.json").write_text(
+              json.dumps(payload, ensure_ascii=False, indent=2),
+              encoding="utf-8",
+          )
+
+          print(f"PERIOD252_TOTAL={len(rows)}")
+          print(f"PERIOD252_SUCCESS={success}")
+          print(f"PERIOD252_FAILED={failed}")
+          print("PERIOD252_ERROR_GROUPS=" + json.dumps(dict(error_groups.most_common()), ensure_ascii=False))
+          print("--- FAILED SITES ---")
+          for row in rows:
+              if not row["ok"]:
+                  print(f"{row['name']} | {row['pick']} | {row['error']}")
+          print("--- SUCCESS SITES ---")
+          for row in rows:
+              if row["ok"]:
+                  print(f"{row['name']} | {row['zodiac']} | position={row['position']} | record_id={row['record_id']}")
+          '@ | Set-Content -Encoding UTF8 live252.py
+          python live252.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: period-252-live-results
+          path: period252-results.json
+          if-no-files-found: warn
+          retention-days: 3
