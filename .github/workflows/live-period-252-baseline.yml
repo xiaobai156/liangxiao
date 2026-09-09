@@ -1,0 +1,61 @@
+name: Live period 252 baseline
+
+on:
+  push:
+    branches: ['test/period-252-baseline-20260909']
+    paths: ['.github/workflows/live-period-252-baseline.yml']
+
+permissions:
+  contents: read
+
+jobs:
+  live-252-baseline:
+    runs-on: windows-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Install runtime dependencies
+        shell: pwsh
+        run: |
+          python -m pip install requests
+          python -m pip install playwright
+          python -m playwright install chromium
+      - name: Run baseline diagnostic without formal writes
+        shell: pwsh
+        env:
+          PYTHONUTF8: '1'
+        run: |
+          @'
+          import json
+          from collections import Counter
+          from pathlib import Path
+          from config.loader import load_sites
+          from parsers.registry import ENGINE_REGISTRY, ParserRegistry
+          from services.single_period import scrape_sites
+
+          period = 252
+          sites = load_sites(Path('config/sites.json'), allowed_parsers=ENGINE_REGISTRY)
+          registry = ParserRegistry.bind_sites(sites)
+          results = scrape_sites(sites, period, timeout=25, workers=10, registry=registry, progress=None)
+          rows=[]
+          groups=Counter()
+          for result in results:
+              row={'name':result.site.name,'payload':result.site.payload,'parser':result.site.parser,'ok':result.ok,'zodiac':result.record.zodiac if result.ok and result.record else '', 'error':result.error}
+              rows.append(row)
+              if not result.ok:
+                  groups[(result.error.split('：',1)[0] if result.error else '未知失败').strip()] += 1
+          payload={'period':period,'total':len(rows),'success':sum(r['ok'] for r in rows),'failed':sum(not r['ok'] for r in rows),'error_groups':dict(groups),'results':rows}
+          Path('period252-baseline.json').write_text(json.dumps(payload,ensure_ascii=False,indent=2),encoding='utf-8')
+          print('TOTAL',payload['total'],'SUCCESS',payload['success'],'FAILED',payload['failed'])
+          '@ | Set-Content -Encoding UTF8 live252_baseline.py
+          python live252_baseline.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: period-252-baseline-results
+          path: period252-baseline.json
+          if-no-files-found: warn
+          retention-days: 2
