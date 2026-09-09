@@ -31,7 +31,7 @@ jobs:
           git apply --whitespace=error-all "$env:RUNNER_TEMP\fix.patch"
       - name: Install runtime dependencies
         run: python -m pip install -r requirements.txt
-      - name: Inspect target document tails
+      - name: Inspect 252 record transitions
         shell: pwsh
         env:
           PYTHONUTF8: '1'
@@ -45,7 +45,7 @@ jobs:
           from parsers.registry import ENGINE_REGISTRY, ParserRegistry
           from services.single_period import fetch_payload_for_period
 
-          names = ['呻吟成瘾','人心如镜','乐不可支','梦寐以求第二','科方东文','曹国舅']
+          names = ['乐不可支','呻吟成瘾','人心如镜']
           sites = [s for s in load_sites(Path('config/sites.json'), allowed_parsers=ENGINE_REGISTRY) if s.name in names]
           registry = ParserRegistry.bind_sites(sites)
           for site in sites:
@@ -55,15 +55,17 @@ jobs:
                   bundle = fetch_payload_for_period(site, 252, 25, context, registry)
                   for index, doc in enumerate(bundle.documents):
                       text = visible_source_text(doc.source)
-                      title_matches = list(re.finditer(site.title, text, flags=re.I)) if site.title else []
-                      name_matches = list(re.finditer(re.escape(site.name.replace('第二','')), text, flags=re.I))
-                      if not title_matches and not name_matches:
+                      if site.name not in text:
                           continue
-                      print('DOC', index, doc.label, doc.url, 'LEN', len(text), 'TITLE', len(title_matches), 'NAME', len(name_matches))
-                      print('TAIL', repr(text[-2600:]))
+                      matches = list(re.finditer(site.record, text, flags=re.I)) if site.record else []
+                      targets = [m for m in matches if int(m.group('period')) == 252]
+                      print('DOC', index, doc.url, 'TARGETS', len(targets), 'LEN', len(text))
+                      for m in targets[-3:]:
+                          lo=max(0,m.start()-240); hi=min(len(text),m.end()+900)
+                          print('AROUND252', repr(text[lo:hi]))
               except Exception as exc:
                   print('ERR', type(exc).__name__, str(exc))
               finally:
                   context.close()
-          '@ | Set-Content -Encoding UTF8 diag_tails.py
-          python diag_tails.py
+          '@ | Set-Content -Encoding UTF8 diag_transitions.py
+          python diag_transitions.py
