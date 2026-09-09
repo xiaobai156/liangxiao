@@ -1,0 +1,81 @@
+name: Diagnose 252 block mapping
+
+on:
+  push:
+    branches: ['test/period-252-third-candidate']
+    paths: ['.github/workflows/diag-252-block-mapping.yml']
+
+permissions:
+  contents: read
+
+jobs:
+  diagnose:
+    runs-on: windows-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Apply third candidate patch
+        shell: pwsh
+        run: |
+          $encoded = Get-Content -Raw tools/fix252-third.patch.xz.b64
+          [IO.File]::WriteAllBytes("$env:RUNNER_TEMP\fix.patch.xz", [Convert]::FromBase64String($encoded.Trim()))
+          xz -dc "$env:RUNNER_TEMP\fix.patch.xz" | Set-Content -Encoding utf8 "$env:RUNNER_TEMP\fix.patch"
+          git apply --whitespace=error-all "$env:RUNNER_TEMP\fix.patch"
+          python -m pip install -r requirements.txt
+      - name: Inspect mapping invariants
+        shell: pwsh
+        env:
+          PYTHONUTF8: '1'
+        run: |
+          @'
+          import re
+          from pathlib import Path
+          from config.loader import load_sites
+          from parsers.registry import ENGINE_REGISTRY
+          from parsers.helpers import html_to_text, visible_source_text, _line_spans, _line_index_at, _is_short_section_label
+          from fetching.client import FetchContext
+          from services.single_period import fetch_payload_for_period
+          from parsers.registry import ParserRegistry
+
+          names={'紫苏经典','天才小白','管家婆精准杀二肖','金多宝信息网','澳门彩票','大赢家','⑥合彩开奖资料','澳门赌圣','博发世家','米老头','凤凰马经','澳门好彩'}
+          sites=[s for s in load_sites(Path('config/sites.json'),allowed_parsers=ENGINE_REGISTRY) if s.name in names]
+          registry=ParserRegistry.bind_sites(sites)
+          for site in sites:
+              print('\n===',site.name,'===')
+              ctx=FetchContext()
+              try:
+                  bundle=fetch_payload_for_period(site,252,25,ctx,registry)
+                  print('docs',len(bundle.documents),'complete',bundle.scan_complete)
+                  for di,doc in enumerate(bundle.documents):
+                      st=visible_source_text(doc.source)
+                      ft=html_to_text(doc.source)
+                      fst=html_to_text(st)
+                      matches=list(re.finditer(site.title,st,flags=re.I)) if site.title else []
+                      record_matches=list(re.finditer(site.record,st,flags=re.I)) if site.record else []
+                      outside=[m for m in matches if not any(a<=m.start() and m.end()<=b for a,b in (rm.span() for rm in record_matches))]
+                      print('DOC',di,doc.label,doc.url,'len_st',len(st),'len_ft',len(ft),'flat_equal',fst==ft,'title',len(matches),'outside',len(outside),'records',len(record_matches))
+                      use=outside if outside else matches
+                      if not use: continue
+                      spans=_line_spans(st)
+                      for mi,m in enumerate(use[:3]):
+                          line=spans[_line_index_at(spans,m.start())][2]
+                          tail_start=m.end(); end=len(st)
+                          if site.stop:
+                              sm=re.search(site.stop,st[tail_start:],flags=re.I)
+                              print(' anchor',mi,'start',m.start(),'short',_is_short_section_label(line),'stop',bool(sm),'line',repr(line[:160]))
+                              if sm: end=tail_start+sm.start()
+                          block=html_to_text(st[m.start():end].strip())
+                          occ=[x.start() for x in re.finditer(re.escape(block),ft)] if block else []
+                          prefix=html_to_text(st[:m.start()])
+                          expected=len(prefix)+(1 if prefix and block else 0)
+                          nearest=min(occ,key=lambda x:abs(x-expected)) if occ else None
+                          print('  blocklen',len(block),'occ_n',len(occ),'occ',occ[:5],'expected',expected,'nearest',nearest,'delta',None if nearest is None else nearest-expected)
+              except Exception as exc:
+                  print('ERR',type(exc).__name__,str(exc))
+              finally:
+                  ctx.close()
+          '@ | Set-Content -Encoding UTF8 diagmap.py
+          python diagmap.py
