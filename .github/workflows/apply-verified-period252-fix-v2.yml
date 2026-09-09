@@ -1,0 +1,76 @@
+name: Apply verified period 252 fix v2
+
+on:
+  push:
+    branches: ['apply/period-252-verified-fix-v2']
+    paths:
+      - '.github/workflows/apply-verified-period252-fix-v2.yml'
+      - 'tools/verified-period252-fix.patch.xz.b64'
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    runs-on: windows-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Decode exact live-tested patch
+        shell: pwsh
+        run: |
+          $encoded = Get-Content -Raw tools/verified-period252-fix.patch.xz.b64
+          [IO.File]::WriteAllBytes("$env:RUNNER_TEMP\verified.patch.xz", [Convert]::FromBase64String($encoded.Trim()))
+          $hash = (Get-FileHash "$env:RUNNER_TEMP\verified.patch.xz" -Algorithm SHA256).Hash.ToLower()
+          if ($hash -ne '3857af0a821305d3dc79d03f47e4e65558e0104be455d3bb4ad40f7dfdf34918') { throw "patch checksum mismatch: $hash" }
+          xz -dc "$env:RUNNER_TEMP\verified.patch.xz" | Set-Content -Encoding utf8 "$env:RUNNER_TEMP\verified.patch"
+      - name: Require unchanged main and apply exact patch
+        shell: pwsh
+        run: |
+          git fetch origin main
+          $main = (git rev-parse origin/main).Trim()
+          if ($main -ne '3caa1cda570d368e2b2ad79ce2b8a7a0c20f09ee') { throw "main changed; refusing automatic push: $main" }
+          git apply --check --whitespace=error-all "$env:RUNNER_TEMP\verified.patch"
+          git apply --whitespace=error-all "$env:RUNNER_TEMP\verified.patch"
+          git rm -f -- .github/workflows/apply-verified-period252-fix-v2.yml tools/verified-period252-fix.patch.xz.b64
+          git add -A
+          git diff --cached --check
+      - name: Install pinned test dependencies
+        run: python -m pip install -r requirements-dev.txt
+      - name: Validate final worktree
+        shell: pwsh
+        run: |
+          python tools/run_offline_tests.py -q tests
+          python -m compileall -q cli.py domain config fetching parsers validation services cache output diagnostics
+          python -c "from pathlib import Path; from config.loader import load_sites; from parsers.registry import ENGINE_REGISTRY; from cache.contracts import config_fingerprint, validate_cache_position_contract; import json; sites=load_sites(Path('config/sites.json'), allowed_parsers=ENGINE_REGISTRY); cache=json.loads(Path('recent_10_cache.json').read_text(encoding='utf-8-sig')); validate_cache_position_contract(cache); assert cache['config_fingerprint']==config_fingerprint(sites)"
+      - name: Materialize verified tree and push main
+        shell: pwsh
+        run: |
+          git config user.name "xiaobai156"
+          git config user.email "20069100+xiaobai156@users.noreply.github.com"
+          git commit -m "temp: materialize verified period 252 tree"
+          $main = '3caa1cda570d368e2b2ad79ce2b8a7a0c20f09ee'
+          $expected = @(
+            'config/sites.json',
+            'fetching/page.py',
+            'parsers/helpers.py',
+            'recent_10_cache.json',
+            'tests/test_audit_position_and_parsers.py',
+            'tests/test_audit_repairs_transport.py',
+            'tests/test_cross_origin_data_scripts.py',
+            'validation/boundaries.py'
+          ) | Sort-Object
+          $changed = @(git diff --name-only $main HEAD | Sort-Object)
+          if ((Compare-Object $expected $changed)) { throw "final tree changed unexpected paths: $changed" }
+          $tree = (git rev-parse 'HEAD^{tree}').Trim()
+          $commit = ("fix: restore verified multi-document period extraction" | git commit-tree $tree -p $main).Trim()
+          git fetch origin main
+          $remote = (git rev-parse origin/main).Trim()
+          if ($remote -ne $main) { throw "main changed before push: $remote" }
+          git push origin "$commit`:refs/heads/main"
