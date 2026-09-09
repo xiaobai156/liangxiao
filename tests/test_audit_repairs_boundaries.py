@@ -10,7 +10,8 @@ import cli
 from cache.contracts import config_fingerprint
 from cache.serialization import serialize_cached_record
 from config.loader import ConfigError, load_sites, site_from_mapping
-from domain.models import DocumentBundle, HistoryResult, PayloadDocument, Record, Result, Site
+from domain.errors import ScrapeFailure
+from domain.models import DOCUMENT_BOUNDARY, DocumentBundle, HistoryResult, PayloadDocument, Record, Result, Site
 from domain.periods import next_period, previous_period
 from fetching.client import FetchContext
 from fetching.page import canonical_detail_url
@@ -137,6 +138,80 @@ def test_hydration_does_not_choose_first_of_ambiguous_exact_copies():
         _hydrate_records([candidate], '正文 210期虎兔 其他 210期虎兔', scoped_site(), None)
 
 
+def test_paired_hydration_uses_body_local_position_scope():
+    site = scoped_site(payload='page_and_scripts')
+    anchor = '<h2>测试站</h2><p>标题只负责证明目标</p>'
+    body = row(210) + row(209, '牛马')
+    source = anchor + DOCUMENT_BOUNDARY + body
+    document = PayloadDocument(
+        '标题+正文',
+        'https://example.test/body.js',
+        source,
+        body_source_start=len(anchor) + len(DOCUMENT_BOUNDARY),
+        parent_url='https://example.test/list',
+        link_reference='https://example.test/body.js',
+    )
+    raw = '210期绝杀二肖【虎兔】开:00准'
+    candidate = Record(210, '虎兔', '00', raw, position=500, anchor_text='测试站')
+
+    records = _hydrate_records([candidate], source, site, document)
+
+    assert len(records) == 1
+    assert records[0].position == html_to_text(body).index('210期')
+    assert records[0].source_positions == (records[0].position,)
+    assert records[0].anchor_text == '测试站'
+
+def test_user_forum_hydration_scopes_positions_to_primary_snapshot_content():
+    site = Site(
+        '繁忙棒球',
+        'bottom',
+        'https://example.test/#/users/3978',
+        parser='tuku_user_forums_two_zodiac',
+        payload='tuku_user_forums',
+        title='绝杀二肖',
+    )
+    content = (
+        '193期 绝杀二肖【虎兔】开:00准\n'
+        '194期 绝杀二肖【牛马】开:00准\n'
+        '195期 绝杀二肖【鸡狗】开:00准'
+    )
+    items = [
+        {'draw': 252, 'topic': '绝杀二肖', 'content': content},
+        {'draw': 252, 'topic': '绝杀二肖', 'content': content},
+    ]
+
+    records = ParserRegistry.bind_sites([site]).parse(json.dumps(items, ensure_ascii=False), site)
+
+    assert [record.period for record in records] == [193, 194, 195]
+    assert [record.position for record in records] == [
+        html_to_text(content).index('193期'),
+        html_to_text(content).index('194期'),
+        html_to_text(content).index('195期'),
+    ]
+    assert {record.record_path for record in records} == {'root[0].content'}
+
+
+def test_user_forum_snapshot_scope_preserves_duplicate_rows_as_distinct_positions():
+    site = Site(
+        '繁忙棒球',
+        'bottom',
+        'https://example.test/#/users/3978',
+        parser='tuku_user_forums_two_zodiac',
+        payload='tuku_user_forums',
+        title='绝杀二肖',
+    )
+    row_text = '193期 绝杀二肖【虎兔】开:00准'
+    content = row_text + '\n' + row_text
+    items = [{'draw': 252, 'topic': '绝杀二肖', 'content': content}]
+
+    records = ParserRegistry.bind_sites([site]).parse(json.dumps(items, ensure_ascii=False), site)
+
+    assert len(records) == 2
+    assert records[0].position != records[1].position
+    assert [record.position for record in records] == [
+        match.start() for match in __import__('re').finditer(__import__('re').escape(row_text), html_to_text(content))
+    ]
+
 def test_agreeing_documents_retain_all_provenance_and_stable_carrier():
     site = scoped_site(payload='page_and_scripts', url='https://example.test/page')
     docs = (PayloadDocument('B', 'https://example.test/b.js', '<h2>测试站</h2>' + row(210)),
@@ -152,6 +227,48 @@ def test_agreeing_documents_retain_all_provenance_and_stable_carrier():
     assert len({e.position for e in first.evidence}) == 2
     assert len(serialize_cached_record(site, first)['evidence']) == 2
 
+
+
+def test_paired_hydration_skips_anchor_only_candidates():
+    site = scoped_site(parser='named_block', payload='page_and_scripts', title='目标标题')
+    anchor = '目标标题\n252期 虎兔 开00'
+    body = '252期 龙蛇 开00\n251期 马羊 开01'
+    source = anchor + DOCUMENT_BOUNDARY + body
+    document = PayloadDocument(
+        '标题+正文', 'https://example.test/body.js', source,
+        body_source_start=len(anchor) + len(DOCUMENT_BOUNDARY),
+        parent_url='https://example.test/page', link_reference='body.js',
+    )
+    records = [
+        Record(252, '虎兔', '00', '252期 虎兔 开00', anchor.index('252期'), block_start=0, block_end=len(anchor)),
+        Record(252, '龙蛇', '00', '252期 龙蛇 开00', 500, block_start=0, block_end=len(body)),
+    ]
+    hydrated = _hydrate_records(records, source, site, document)
+    assert [(item.period, item.zodiac) for item in hydrated] == [(252, '龙蛇')]
+    assert hydrated[0].position == body.index('252期 龙蛇 开00')
+
+
+
+def test_paired_hydration_ignores_empty_helper_body():
+    site = scoped_site(parser='named_block', payload='page_and_scripts', title='目标标题')
+    anchor = '目标标题\n252期 虎兔 开00'
+    source = anchor + DOCUMENT_BOUNDARY + '<script></script>'
+    document = PayloadDocument(
+        '标题+空辅助', 'https://example.test/helper.js', source,
+        body_source_start=len(anchor) + len(DOCUMENT_BOUNDARY),
+        parent_url='https://example.test/page', link_reference='helper.js',
+    )
+    records = [Record(252, '虎兔', '00', '252期 虎兔 开00', anchor.index('252期'))]
+    assert _hydrate_records(records, source, site, document) == []
+
+def test_user_forum_hydration_fails_closed_on_invalid_snapshot_path():
+    site = scoped_site(payload='tuku_user_forums')
+    source = json.dumps([{'content': '252期杀虎兔'}], ensure_ascii=False)
+    with pytest.raises(ScrapeFailure, match='论坛快照正文边界无效'):
+        _hydrate_records(
+            [Record(252, '虎兔', '00', '252期杀虎兔', 0, record_path='root[9].content')],
+            source, site, PayloadDocument('接口', site.url, source),
+        )
 
 def test_url_id_cannot_be_hidden_by_assigned_parent_or_own_id():
     doc = PayloadDocument('错误文章', 'https://example.test/topic/wrong.html', '正文',
@@ -294,3 +411,80 @@ def test_period_helpers_wrap_without_changing_order(period):
     assert previous_period(next_period(period)) == period
     assert previous_period(1) == 365
     assert next_period(365) == 1
+
+
+def _configured_site(name: str) -> Site:
+    root = Path(__file__).resolve().parents[1]
+    return next(site for site in load_sites(root / 'config/sites.json') if site.name == name)
+
+
+@pytest.mark.parametrize(
+    ('name', 'source', 'target', 'outside'),
+    [
+        (
+            '呻吟成瘾',
+            '绝杀专区 253期:【呻吟成瘾 ☆ 绝杀二肖 ☆ 】\n'
+            '253期:〖绝杀二肖〗【鸡羊】开？00中\n'
+            '站长宣言: 独立区块到此结束\n253期:〖绝杀二肖〗【牛兔】开00中',
+            '【鸡羊】',
+            '【牛兔】',
+        ),
+        (
+            '人心如镜',
+            '高手帖子 253期: 人心如镜【绝杀二肖】天天有喜\n'
+            '人心如镜 发表于 09月10日\n253期：→绝杀二肖←【狗虎】开￥00准\n'
+            '七星娱乐\n鸿蒙娱乐城\n澳门永利\n253期：→绝杀二肖←【牛兔】开00准',
+            '【狗虎】',
+            '【牛兔】',
+        ),
+        (
+            '曹国舅',
+            '曹国舅\n『死杀二肖』\n253期死杀二肖 〖鸡-猴 〗 开:0000准\n'
+            '最具权 威 港 澳六合彩 58 倍967.cc\n曹国舅\n『平特一肖』\n'
+            '253期死杀二肖 〖牛-兔〗 开:0000准',
+            '〖鸡-猴 〗',
+            '〖牛-兔〗',
+        ),
+        (
+            '科方东文',
+            '网红帖 253期: 【绝杀二肖】\n作者:科方东文\n'
+            '252期：绝杀2肖 【虎牛】开：牛30错\n253期：绝杀2肖 【鼠猪】开：0000准',
+            '【鼠猪】',
+            '',
+        ),
+        (
+            '乐不可支',
+            '高手料 253期: 乐不可支【绝杀二肖】\n'
+            '252期:【绝杀二肖】【虎马】开牛30准\n253期:【绝杀二肖】【牛兔】开0000准\n'
+            '站长宣言: 独立区块到此结束\n253期:【绝杀二肖】【鸡羊】开0000准',
+            '【牛兔】',
+            '【鸡羊】',
+        ),
+        (
+            '梦寐以求第二',
+            '253期：【绝杀二肖】〓 更新中奖\n'
+            '252期: 《梦寐以求》 👈 绝杀二肖 👈【虎.羊】开:牛30准\n'
+            '253期: 《梦寐以求》 👈 绝杀二肖 👈【猴.牛】开:00准',
+            '【猴.牛】',
+            '',
+        ),
+    ],
+)
+def test_production_target_boundaries_are_identity_scoped_and_future_period_safe(
+    name, source, target, outside
+):
+    site = _configured_site(name)
+    selection = select_target_block(source, site)
+    assert selection is not None
+    assert target in selection.text
+    if outside:
+        assert outside not in selection.text
+
+
+def test_author_scoped_titles_do_not_treat_historical_rows_as_independent_headers():
+    for name, row_text in [
+        ('呻吟成瘾', '253期:〖绝杀二肖〗【鸡羊】开？00中'),
+        ('人心如镜', '253期：→绝杀二肖←【狗虎】开￥00准'),
+    ]:
+        site = _configured_site(name)
+        assert select_target_block(row_text, site) is None

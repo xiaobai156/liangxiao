@@ -267,14 +267,20 @@ def select_target_block(source: str, site: Site) -> TargetBlock | None:
     if not anchor_offsets:
         raise ValueError(f"目标区块无法唯一映射：{site.name}")
     expected_anchor = len(html_to_text(structured_text[: match.start()]))
-    distances = [abs(offset - expected_anchor) for offset in anchor_offsets]
-    best_distance = min(distances)
-    best_offsets = [
-        offset for offset, distance in zip(anchor_offsets, distances) if distance == best_distance
-    ]
-    if len(best_offsets) != 1 or best_distance > 128:
-        raise ValueError(f"目标区块无法唯一映射：{site.name}")
-    flat_anchor_offset = best_offsets[0]
+    if len(anchor_offsets) == 1:
+        # The exact anchor is unique in both the structured and canonical text.
+        # Hidden markup before it may create a large offset delta, but cannot
+        # make this unique occurrence refer to a different target block.
+        flat_anchor_offset = anchor_offsets[0]
+    else:
+        distances = [abs(offset - expected_anchor) for offset in anchor_offsets]
+        best_distance = min(distances)
+        best_offsets = [
+            offset for offset, distance in zip(anchor_offsets, distances) if distance == best_distance
+        ]
+        if len(best_offsets) != 1 or best_distance > 128:
+            raise ValueError(f"目标区块无法唯一映射：{site.name}")
+        flat_anchor_offset = best_offsets[0]
     flat_start = flat_anchor_offset
 
     if site.stop:

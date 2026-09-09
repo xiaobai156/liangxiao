@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import re
+from dataclasses import replace
 
 from domain.errors import CandidateConflict
 from domain.models import Record, Site
@@ -127,17 +128,17 @@ def records_from_forum_snapshots(
     matches_topic,
     pattern: re.Pattern[str],
 ) -> list[Record]:
-    snapshots: list[tuple[int | None, list[Record]]] = []
-    for item in items:
+    snapshots: list[tuple[int, int | None, list[Record]]] = []
+    for item_index, item in enumerate(items):
         if not isinstance(item, dict) or not matches_topic(item):
             continue
         records = records_from_pattern(html_to_text(str(item.get("content") or "")), pattern)
         if records:
-            snapshots.append((forum_snapshot_period(item), records))
+            snapshots.append((item_index, forum_snapshot_period(item), records))
     if not snapshots:
         return []
 
-    primary_period, primary_records = snapshots[0]
+    primary_index, primary_period, primary_records = snapshots[0]
     primary_values: dict[int, set[str]] = {}
     primary_by_period: dict[int, list[Record]] = {}
     for record in primary_records:
@@ -145,7 +146,7 @@ def records_from_forum_snapshots(
         primary_by_period.setdefault(record.period, []).append(record)
     conflicting_records: list[Record] = []
     conflicting_periods: set[int] = set()
-    for snapshot_period, records in snapshots[1:]:
+    for _snapshot_index, snapshot_period, records in snapshots[1:]:
         if snapshot_period != primary_period:
             continue
         for record in records:
@@ -178,7 +179,15 @@ def records_from_forum_snapshots(
                 unique_conflicts.append(record)
         remaining = [record for record in primary_records if record.period not in conflicting_periods]
         raise CandidateConflict(f"用户论坛同一快照结果不同：{details}", unique_conflicts + remaining)
-    return primary_records
+    return [
+        replace(
+            record,
+            record_path=f"root[{primary_index}].content",
+            record_count=1,
+            source_positions=(record.position,),
+        )
+        for record in primary_records
+    ]
 
 
 def parse_tuku_user_forums_two_zodiac_records(source: str, site: Site) -> list[Record]:

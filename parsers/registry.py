@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import hashlib
+import json
 import re
 from collections.abc import Callable, Iterable, Mapping
 from dataclasses import replace
@@ -216,29 +217,55 @@ def _record_offsets(text: str, record: Record) -> list[int]:
     return offsets
 
 
+def _forum_snapshot_visible(source: str, record_path: str) -> str | None:
+    match = re.fullmatch(r"root\[(\d+)\]\.content", record_path)
+    if not match:
+        return None
+    try:
+        items = json.loads(source)
+    except json.JSONDecodeError:
+        return None
+    if not isinstance(items, list):
+        return None
+    index = int(match.group(1))
+    if not 0 <= index < len(items) or not isinstance(items[index], dict):
+        return None
+    return html_to_text(str(items[index].get("content") or ""))
+
+
 def _hydrate_records(
     records: list[Record],
     source: str,
     site: Site,
     document: PayloadDocument | None,
 ) -> list[Record]:
-    visible = html_to_text(source)
+    full_visible = html_to_text(source)
+    scoped_visible = full_visible
+    body_scoped = False
+    if document is not None and document.body_source_start > 0:
+        scoped_visible = html_to_text(source[document.body_source_start :])
+        if not scoped_visible:
+            return []  # Empty paired helper documents cannot supply body candidates.
+        body_scoped = True
+    elif site.payload == "tuku_user_forums" and records:
+        record_paths = {record.record_path for record in records if record.record_path}
+        if len(record_paths) == 1:
+            record_path = next(iter(record_paths))
+            snapshot_visible = _forum_snapshot_visible(source, record_path)
+            if snapshot_visible is None:
+                raise ScrapeFailure(
+                    ErrorCategory.FIELD_VALIDATION,
+                    f"{site.name}论坛快照正文边界无效：{record_path}",
+                )
+            scoped_visible = snapshot_visible
+
     used: set[int] = set()
     hydrated: list[Record] = []
-    body_start = 0
-    if document is not None and document.body_source_start > 0:
-        body_text = html_to_text(source[document.body_source_start :])
-        located = visible.rfind(body_text) if body_text else -1
-        if located < 0:
-            raise ScrapeFailure(ErrorCategory.FIELD_VALIDATION, "标题正文无法定位独立正文边界")
-        body_start = located
     for record in records:
-        offsets = _record_offsets(visible, record)
-        if body_start:
-            if record.position in offsets and record.position < body_start:
-                continue  # Anchor records cannot supply the paired body's window.
-            offsets = [value for value in offsets if value >= body_start]
+        offsets = _record_offsets(scoped_visible, record)
         if not offsets:
+            if body_scoped and _record_offsets(full_visible, record):
+                continue  # Paired anchor evidence must not occupy the body window.
             raise ScrapeFailure(
                 ErrorCategory.FIELD_VALIDATION,
                 f"{site.name}候选无法定位真实可见正文位置：{record.period}期 {record.zodiac}",
@@ -250,26 +277,18 @@ def _hydrate_records(
                                 f"{site.name}候选原始位置不唯一：{record.period}期")
         position = preferred if preferred is not None else available[0]
         used.add(position)
-        adjusted_position = position - body_start if position >= body_start else position
-        source_positions = tuple(
-            sorted(
-                {
-                    value - body_start if value >= body_start else value
-                    for value in (position,)
-                    if value >= 0
-                }
-            )
-        )
-        anchor_match = re.search(site.title, visible, flags=re.I) if site.title else None
+        adjusted_position = position
+        source_positions = (position,)
+        anchor_match = re.search(site.title, full_visible, flags=re.I) if site.title else None
         anchor_text = record.anchor_text or (anchor_match.group(0) if anchor_match else "")
         anchor_offset = record.anchor_offset if record.anchor_offset >= 0 else (anchor_match.start() if anchor_match else -1)
         shift = position - record.position
         block_start = record.block_start + shift if record.block_start >= 0 else 0
-        block_end = record.block_end + shift if record.block_end >= 0 else len(visible)
-        if body_start:
-            block_start = max(0, block_start - body_start)
-            block_end = max(block_start, block_end - body_start)
-        block_id = (record.block_id if not shift and not body_start else "") or hashlib.sha256(
+        block_end = record.block_end + shift if record.block_end >= 0 else len(scoped_visible)
+        if body_scoped:
+            block_start = max(0, block_start)
+            block_end = max(block_start, min(len(scoped_visible), block_end))
+        block_id = (record.block_id if not shift and not body_scoped else "") or hashlib.sha256(
             f"{site.name}|{block_start}|{block_end}|{anchor_text}".encode("utf-8")
         ).hexdigest()[:16]
         hydrated.append(
