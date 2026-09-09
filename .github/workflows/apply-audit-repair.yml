@@ -57,8 +57,18 @@ jobs:
           allowed.update(filter(None, (bundle / 'removed_paths.txt').read_text().splitlines()))
           allowed.add('.github/workflows/apply-audit-repair.yml')
           allowed.update(
-              str(path).replace('\\', '/')
-              for path in Path('tools/audit_repair_payload').glob('part-*')
+              subprocess.check_output(
+                  [
+                      'git',
+                      'ls-tree',
+                      '-r',
+                      '--name-only',
+                      'HEAD',
+                      '--',
+                      'tools/audit_repair_payload',
+                  ],
+                  text=True,
+              ).splitlines()
           )
           raw = subprocess.check_output(['git', 'status', '--porcelain=v1', '-uall', '-z'])
           observed = {item.decode('utf-8')[3:] for item in raw.split(b'\0') if item}
