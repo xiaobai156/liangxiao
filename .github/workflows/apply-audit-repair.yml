@@ -1,0 +1,81 @@
+name: Apply audited repair
+
+on:
+  push:
+    branches: ['repair/20260909-audit']
+    paths:
+      - '.github/workflows/apply-audit-repair.yml'
+      - 'tools/audit_repair_payload/**'
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: repair/20260909-audit
+          fetch-depth: 2
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Decode verified repair payload
+        shell: bash
+        run: |
+          cat tools/audit_repair_payload/part-* | base64 --decode > "${RUNNER_TEMP}/repair_bundle.tar.xz"
+          echo "72375bbc9b7964a022ec3e7f483331ada61f258f2f204d7e7fe4a4e3c0e54b39  ${RUNNER_TEMP}/repair_bundle.tar.xz" | sha256sum --check
+          mkdir -p "${RUNNER_TEMP}/repair_bundle"
+          tar -xJf "${RUNNER_TEMP}/repair_bundle.tar.xz" -C "${RUNNER_TEMP}/repair_bundle"
+      - name: Apply audited patch and cleanup manifest
+        shell: bash
+        run: |
+          git apply --index --whitespace=error-all "${RUNNER_TEMP}/repair_bundle/repair.patch"
+          while IFS= read -r path; do
+            [ -n "$path" ] && git rm -f --ignore-unmatch -- "$path"
+          done < "${RUNNER_TEMP}/repair_bundle/removed_paths.txt"
+          git rm -r -f --ignore-unmatch -- .github/workflows/apply-audit-repair.yml tools/audit_repair_payload
+      - name: Install pinned test dependencies
+        run: python -m pip install -r requirements-dev.txt
+      - name: Run complete offline tests
+        run: python tools/run_offline_tests.py -q tests
+      - name: Compile source
+        run: python -m compileall -q cli.py domain config fetching parsers validation services cache output diagnostics
+      - name: Verify changed path allowlist
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import os
+          import subprocess
+
+          bundle = Path(os.environ['RUNNER_TEMP']) / 'repair_bundle'
+          allowed = set(filter(None, (bundle / 'changed_paths.txt').read_text().splitlines()))
+          allowed.update(filter(None, (bundle / 'removed_paths.txt').read_text().splitlines()))
+          allowed.add('.github/workflows/apply-audit-repair.yml')
+          allowed.update(
+              str(path).replace('\\', '/')
+              for path in Path('tools/audit_repair_payload').glob('part-*')
+          )
+          raw = subprocess.check_output(['git', 'status', '--porcelain=v1', '-uall', '-z'])
+          observed = {item.decode('utf-8')[3:] for item in raw.split(b'\0') if item}
+          unexpected = sorted(observed - allowed)
+          if unexpected:
+              raise SystemExit('unexpected changed paths: ' + ', '.join(unexpected))
+          PY
+      - name: Validate staged diff
+        shell: bash
+        run: |
+          git diff --check
+          git diff --cached --check
+          git status --short
+      - name: Commit and push repaired tree
+        shell: bash
+        run: |
+          git config user.name "xiaobai156"
+          git config user.email "20069100+xiaobai156@users.noreply.github.com"
+          git commit -m "fix: address audit findings in storage and source boundaries"
+          git push origin HEAD:repair/20260909-audit
