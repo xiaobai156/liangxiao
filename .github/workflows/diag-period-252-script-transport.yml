@@ -1,0 +1,67 @@
+name: Diagnose 252 script transport
+
+on:
+  push:
+    branches: ['test/period-252-direct-script-fix']
+    paths: ['.github/workflows/diag-period-252-script-transport.yml']
+
+permissions:
+  contents: read
+
+jobs:
+  diagnose:
+    runs-on: windows-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - shell: pwsh
+        run: |
+          git apply --whitespace=error-all tools/fix252-direct-script.patch
+          python -m pip install -r requirements.txt
+      - name: Trace representative sites
+        shell: pwsh
+        env:
+          PYTHONUTF8: '1'
+        run: |
+          @'
+          from pathlib import Path
+          from config.loader import load_sites
+          from parsers.registry import ENGINE_REGISTRY, ParserRegistry
+          from fetching.client import FetchContext
+          from services.single_period import fetch_payload_for_period, parse_bundle_for_period
+
+          names = {'自然而然','人不聊生','澳門男人味','白蛇'}
+          sites = [s for s in load_sites(Path('config/sites.json'), allowed_parsers=ENGINE_REGISTRY) if s.name in names]
+          registry = ParserRegistry.bind_sites(sites)
+          for site in sites:
+              print('\n===', site.name, site.payload, site.parser, site.url, '===')
+              context = FetchContext()
+              original = context.get_text
+              def traced(url, timeout, **kwargs):
+                  try:
+                      value = original(url, timeout, **kwargs)
+                      print('OK', url, '->', getattr(value,'final_url',url), 'len=', len(value), 'kwargs=', kwargs)
+                      return value
+                  except Exception as exc:
+                      print('ERR', url, type(exc).__name__, str(exc), 'kwargs=', kwargs)
+                      raise
+              context.get_text = traced
+              try:
+                  bundle = fetch_payload_for_period(site, 252, 25, context, registry)
+                  print('BUNDLE scan_complete=', bundle.scan_complete, 'docs=', len(bundle.documents))
+                  for doc in bundle.documents:
+                      print('DOC', doc.label, doc.url, 'parent=', doc.parent_url, 'ref=', doc.link_reference, 'len=', len(doc.source))
+                  try:
+                      _, selected = parse_bundle_for_period(bundle, site, 252, registry)
+                      print('SELECTED', selected.zodiac, selected.position, selected.record_id)
+                  except Exception as exc:
+                      print('PARSE_ERR', type(exc).__name__, str(exc))
+              except Exception as exc:
+                  print('FETCH_ERR', type(exc).__name__, str(exc))
+              finally:
+                  context.close()
+          '@ | Set-Content -Encoding UTF8 diag252.py
+          python diag252.py
