@@ -30,15 +30,17 @@ jobs:
           $hash = (Get-FileHash "$env:RUNNER_TEMP\verified.patch.xz" -Algorithm SHA256).Hash.ToLower()
           if ($hash -ne '3857af0a821305d3dc79d03f47e4e65558e0104be455d3bb4ad40f7dfdf34918') { throw "patch checksum mismatch: $hash" }
           xz -dc "$env:RUNNER_TEMP\verified.patch.xz" | Set-Content -Encoding utf8 "$env:RUNNER_TEMP\verified.patch"
-      - name: Require unchanged main and apply patch
+      - name: Require unchanged main and build exact staged tree
         shell: pwsh
         run: |
           git fetch origin main
           $main = (git rev-parse origin/main).Trim()
           if ($main -ne '6312e5800e164850e5f2590a8ab3a93ddd108cfc') { throw "main changed; refusing automatic push: $main" }
-          git checkout -B verified-period252-fix origin/main
+          $unexpected = git diff --name-only $main..HEAD | Where-Object { $_ -notin @('.github/workflows/apply-verified-period252-fix.yml','tools/verified-period252-fix.patch.xz.b64') }
+          if ($unexpected) { throw "apply branch contains unexpected files: $unexpected" }
           git apply --check --whitespace=error-all "$env:RUNNER_TEMP\verified.patch"
           git apply --index --whitespace=error-all "$env:RUNNER_TEMP\verified.patch"
+          git rm -f -- .github/workflows/apply-verified-period252-fix.yml tools/verified-period252-fix.patch.xz.b64
       - name: Install pinned test dependencies
         run: python -m pip install -r requirements-dev.txt
       - name: Validate exact staged tree
@@ -48,10 +50,12 @@ jobs:
           python -m compileall -q cli.py domain config fetching parsers validation services cache output diagnostics
           git diff --cached --check
           python -c "from pathlib import Path; from config.loader import load_sites; from parsers.registry import ENGINE_REGISTRY; from cache.contracts import config_fingerprint, validate_cache_position_contract; import json; sites=load_sites(Path('config/sites.json'), allowed_parsers=ENGINE_REGISTRY); cache=json.loads(Path('recent_10_cache.json').read_text(encoding='utf-8-sig')); validate_cache_position_contract(cache); assert cache['config_fingerprint']==config_fingerprint(sites)"
-      - name: Commit and push main without force
+      - name: Create single-parent commit and push main without force
         shell: pwsh
         run: |
           git config user.name "xiaobai156"
           git config user.email "20069100+xiaobai156@users.noreply.github.com"
-          git commit -m "fix: restore verified multi-document period extraction"
-          git push origin HEAD:main
+          $tree = (git write-tree).Trim()
+          $commit = ("fix: restore verified multi-document period extraction" | git commit-tree $tree -p 6312e5800e164850e5f2590a8ab3a93ddd108cfc).Trim()
+          git diff-tree --check 6312e5800e164850e5f2590a8ab3a93ddd108cfc $commit
+          git push origin "$commit`:refs/heads/main"
