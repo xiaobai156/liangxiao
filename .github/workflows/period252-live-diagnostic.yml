@@ -16,6 +16,7 @@ jobs:
     timeout-minutes: 35
     env:
       PYTHONUTF8: '1'
+      PYTHONPATH: ${{ github.workspace }}
       BASE_MAIN_SHA: '42b3e3e076bee0149d338fcdaac2f5adfe6e59d4'
     steps:
       - uses: actions/checkout@v4
