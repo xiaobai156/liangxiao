@@ -1,0 +1,92 @@
+name: Diagnose remaining 252 regressions
+
+on:
+  push:
+    branches: ['test/period-252-legacy-data-script-fallback']
+    paths: ['.github/workflows/diag-252-remaining.yml']
+
+permissions:
+  contents: read
+
+jobs:
+  diagnose:
+    runs-on: windows-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - shell: pwsh
+        run: |
+          git apply --whitespace=error-all tools/fix252-legacy-data-script-fallback.patch
+          python -m pip install -r requirements.txt
+      - name: Trace remaining representative sites
+        shell: pwsh
+        env:
+          PYTHONUTF8: '1'
+        run: |
+          @'
+          import re
+          from pathlib import Path
+          from config.loader import load_sites
+          from parsers.registry import ENGINE_REGISTRY, ParserRegistry
+          from fetching.client import FetchContext
+          import fetching.page as page
+          from parsers.helpers import visible_source_text
+          from services.single_period import fetch_payload_for_period, parse_bundle_for_period
+
+          names = {
+              '道士出山','火云邪神','人间改岁','超级稳定','徒手敬月','自然和谐','纷纷扬扬',
+              '武林高手','玄机阁','博闻茄子','白头偕老','白里透红','王者九点杀二肖图',
+              '口有同嗜','白手起家','安宅正路','卢九','月窟织绡'
+          }
+          sites = [s for s in load_sites(Path('config/sites.json'), allowed_parsers=ENGINE_REGISTRY) if s.name in names]
+          registry = ParserRegistry.bind_sites(sites)
+          original_curl = page.fetch_curl_text
+
+          for site in sites:
+              print('\n###SITE', site.name, site.payload, site.parser, site.url)
+              context = FetchContext()
+              original_get = context.get_text
+              def traced_get(url, timeout, **kwargs):
+                  try:
+                      value = original_get(url, timeout, **kwargs)
+                      print('GET_OK', url, '->', getattr(value,'final_url',url), 'len', len(value))
+                      return value
+                  except Exception as exc:
+                      print('GET_ERR', url, type(exc).__name__, str(exc))
+                      raise
+              def traced_curl(url, timeout=25, **kwargs):
+                  try:
+                      value = original_curl(url, timeout, **kwargs)
+                      print('CURL_OK', url, '->', getattr(value,'final_url',url), 'len', len(value), kwargs)
+                      return value
+                  except Exception as exc:
+                      print('CURL_ERR', url, type(exc).__name__, str(exc), kwargs)
+                      raise
+              context.get_text = traced_get
+              page.fetch_curl_text = traced_curl
+              try:
+                  bundle = fetch_payload_for_period(site, 252, 25, context, registry)
+                  print('BUNDLE', 'complete', bundle.scan_complete, 'docs', len(bundle.documents))
+                  for i, doc in enumerate(bundle.documents):
+                      text = visible_source_text(doc.source)
+                      matches = list(re.finditer(site.title, text, flags=re.I)) if site.title else []
+                      stops = list(re.finditer(site.stop, text, flags=re.I)) if site.stop else []
+                      print('DOC', i, doc.label, doc.url, 'parent', doc.parent_url, 'len', len(doc.source), 'title_matches', len(matches), 'stop_matches', len(stops))
+                      for m in matches[:3]:
+                          lo=max(0,m.start()-100); hi=min(len(text),m.end()+240)
+                          print('TITLE_SNIP', repr(text[lo:hi]))
+                  try:
+                      _, selected = parse_bundle_for_period(bundle, site, 252, registry)
+                      print('SELECTED', selected.zodiac, selected.position, selected.record_id)
+                  except Exception as exc:
+                      print('PARSE_ERR', type(exc).__name__, str(exc))
+              except Exception as exc:
+                  print('FETCH_ERR', type(exc).__name__, str(exc))
+              finally:
+                  page.fetch_curl_text = original_curl
+                  context.close()
+          '@ | Set-Content -Encoding UTF8 diag_remaining.py
+          python diag_remaining.py
