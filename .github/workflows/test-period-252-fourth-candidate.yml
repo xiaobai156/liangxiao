@@ -1,0 +1,96 @@
+name: Test period 252 fourth candidate
+
+on:
+  push:
+    branches: ['test/period-252-fourth-candidate']
+    paths:
+      - '.github/workflows/test-period-252-fourth-candidate.yml'
+      - 'tools/fix252-fourth.patch.xz.b64'
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: windows-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Apply fourth candidate patch
+        shell: pwsh
+        run: |
+          $encoded = Get-Content -Raw tools/fix252-fourth.patch.xz.b64
+          [IO.File]::WriteAllBytes("$env:RUNNER_TEMP\fix.patch.xz", [Convert]::FromBase64String($encoded.Trim()))
+          xz -dc "$env:RUNNER_TEMP\fix.patch.xz" | Set-Content -Encoding utf8 "$env:RUNNER_TEMP\fix.patch"
+          git apply --check --whitespace=error-all "$env:RUNNER_TEMP\fix.patch"
+          git apply --whitespace=error-all "$env:RUNNER_TEMP\fix.patch"
+      - name: Install dependencies
+        shell: pwsh
+        run: |
+          python -m pip install -r requirements-dev.txt
+          python -m pip install playwright
+          python -m playwright install chromium
+      - name: Run full offline suite
+        shell: pwsh
+        run: |
+          python tools/run_offline_tests.py -q tests
+          python -m compileall -q cli.py domain config fetching parsers validation services cache output diagnostics
+          git diff --check
+      - name: Run period 252 live diagnostic without formal writes
+        shell: pwsh
+        env:
+          PYTHONUTF8: '1'
+        run: |
+          @'
+          import json
+          from collections import Counter
+          from pathlib import Path
+          from config.loader import load_sites
+          from parsers.registry import ENGINE_REGISTRY, ParserRegistry
+          from services.single_period import scrape_sites
+
+          period = 252
+          sites = load_sites(Path('config/sites.json'), allowed_parsers=ENGINE_REGISTRY)
+          registry = ParserRegistry.bind_sites(sites)
+          results = scrape_sites(sites, period, timeout=25, workers=10, registry=registry, progress=None)
+          rows=[]
+          groups=Counter()
+          for result in results:
+              row={
+                  'name': result.site.name,
+                  'payload': result.site.payload,
+                  'parser': result.site.parser,
+                  'ok': result.ok,
+                  'zodiac': result.record.zodiac if result.ok and result.record else '',
+                  'position': result.record.position if result.ok and result.record else None,
+                  'record_id': result.record.record_id if result.ok and result.record else '',
+                  'error': result.error,
+              }
+              rows.append(row)
+              if not result.ok:
+                  groups[(result.error.split('：',1)[0] if result.error else '未知失败').strip()] += 1
+          payload={
+              'period': period,
+              'total': len(rows),
+              'success': sum(r['ok'] for r in rows),
+              'failed': sum(not r['ok'] for r in rows),
+              'error_groups': dict(groups),
+              'results': rows,
+          }
+          Path('period252-fourth-candidate.json').write_text(
+              json.dumps(payload, ensure_ascii=False, indent=2), encoding='utf-8'
+          )
+          print('TOTAL', payload['total'], 'SUCCESS', payload['success'], 'FAILED', payload['failed'])
+          print('GROUPS', json.dumps(payload['error_groups'], ensure_ascii=False))
+          '@ | Set-Content -Encoding UTF8 live252_fourth.py
+          python live252_fourth.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: period-252-fourth-candidate-results
+          path: period252-fourth-candidate.json
+          if-no-files-found: warn
+          retention-days: 2
