@@ -11,6 +11,7 @@ import requests
 
 import fetching.browser as browser
 import fetching.client as client
+import fetching.page as page
 from domain.models import Site
 from fetching.page import collect_page_and_scripts
 from fetching.urls import FetchedText, SourceBoundaryError, validate_redirect
@@ -179,13 +180,74 @@ def test_curl_refuses_missing_status_metadata(monkeypatch):
         client.fetch_curl_text("https://a.test/page", 2)
 
 
-def test_unconfigured_cross_origin_data_script_is_not_requested():
+def test_direct_cross_origin_data_script_is_requested_but_arbitrary_script_is_not():
     site = Site("站", "top", "https://a.test/page", payload="page_and_scripts")
-    fetch = Mock(side_effect=AssertionError("unauthorized network call"))
-    bundle = collect_page_and_scripts(site, '<script src="https://evil.test/upload/script/data.js"></script>',
-                                      2, client.FetchContext(text_fetcher=fetch))
-    assert fetch.call_count == 0
-    assert len(bundle.documents) == 1
+    data_url = "https://cdn.test/upload/script/data.js"
+    arbitrary_url = "https://evil.test/assets/data.js"
+    fetch = Mock(return_value="站 100期绝杀二肖【虎兔】开00")
+    bundle = collect_page_and_scripts(
+        site,
+        f'<script src="{data_url}"></script><script src="{arbitrary_url}"></script>',
+        2,
+        client.FetchContext(text_fetcher=fetch),
+    )
+    assert [call.args[0] for call in fetch.call_args_list] == [data_url]
+    assert data_url in [document.url for document in bundle.documents]
+    assert arbitrary_url not in [document.url for document in bundle.documents]
+
+
+def test_direct_cross_origin_data_script_ssl_error_uses_narrow_legacy_fallback(monkeypatch):
+    site = Site("站", "top", "https://a.test/page", payload="page_and_scripts")
+    data_url = "https://cdn.test/upload/script/data.js"
+    strict = Mock(side_effect=requests.exceptions.SSLError("incomplete chain"))
+    compat = Mock(return_value=FetchedText("payload", data_url, data_url))
+    monkeypatch.setattr(page, "get_site_text", strict)
+    monkeypatch.setattr(page, "fetch_curl_text", compat)
+
+    value = page._fetch_script_reference(data_url, site.url, 2, Mock(), site)
+
+    assert value == "payload"
+    assert strict.call_count == 1
+    assert strict.call_args.args[1] == data_url
+    assert strict.call_args.args[2] == 2
+    assert strict.call_args.args[3] is site
+    compat.assert_called_once_with(
+        data_url,
+        2,
+        insecure=True,
+        allowed_origins=site.allowed_redirect_origins,
+    )
+
+
+def test_script_tls_fallback_never_applies_to_same_origin_or_non_data_script(monkeypatch):
+    site = Site("站", "top", "https://a.test/page", payload="page_and_scripts")
+    strict = Mock(side_effect=requests.exceptions.SSLError("incomplete chain"))
+    compat = Mock(side_effect=AssertionError("must stay strict"))
+    monkeypatch.setattr(page, "get_site_text", strict)
+    monkeypatch.setattr(page, "fetch_curl_text", compat)
+
+    for url in (
+        "https://a.test/upload/script/data.js",
+        "https://cdn.test/assets/data.js",
+    ):
+        with pytest.raises(requests.exceptions.SSLError):
+            page._fetch_script_reference(url, site.url, 2, Mock(), site)
+
+    assert compat.call_count == 0
+
+
+def test_direct_cross_origin_data_script_timeout_never_downgrades_tls(monkeypatch):
+    site = Site("站", "top", "https://a.test/page", payload="page_and_scripts")
+    data_url = "https://cdn.test/upload/script/data.js"
+    strict = Mock(side_effect=requests.exceptions.Timeout("slow"))
+    compat = Mock(side_effect=AssertionError("timeout must not use insecure fallback"))
+    monkeypatch.setattr(page, "get_site_text", strict)
+    monkeypatch.setattr(page, "fetch_curl_text", compat)
+
+    with pytest.raises(requests.exceptions.Timeout):
+        page._fetch_script_reference(data_url, site.url, 2, Mock(), site)
+
+    assert compat.call_count == 0
 
 
 def test_allowed_document_origin_is_explicit():
@@ -271,3 +333,78 @@ def test_explicit_legacy_transport_is_scoped_to_its_site_and_separate_cache(monk
 def test_ambiguous_identity_query_parameters_are_rejected(target):
     with pytest.raises(SourceBoundaryError, match='身份参数不唯一'):
         validate_redirect('https://a.test/view.php?id=1', target)
+
+
+def test_legacy_data_script_same_origin_iframe_ssl_error_uses_narrow_fallback(monkeypatch):
+    site = Site("站", "top", "https://a.test/page", payload="page_and_scripts")
+    owner_url = "https://cdn.test/upload/script/data.js"
+    frame_url = "https://cdn.test/iframe/3/10.html"
+    strict = Mock(side_effect=requests.exceptions.SSLError("incomplete chain"))
+    compat = Mock(return_value=FetchedText("frame", frame_url, frame_url))
+    monkeypatch.setattr(page, "get_site_text", strict)
+    monkeypatch.setattr(page, "fetch_curl_text", compat)
+
+    value = page._fetch_linked_iframe_reference(frame_url, owner_url, 2, Mock(), site)
+
+    assert value == "frame"
+    compat.assert_called_once_with(
+        frame_url,
+        2,
+        insecure=True,
+        allowed_origins=site.allowed_redirect_origins,
+    )
+
+
+def test_legacy_iframe_tls_fallback_requires_data_script_owner_and_iframe_path(monkeypatch):
+    site = Site("站", "top", "https://a.test/page", payload="page_and_scripts")
+    strict = Mock(side_effect=requests.exceptions.SSLError("incomplete chain"))
+    compat = Mock(side_effect=AssertionError("must stay strict"))
+    monkeypatch.setattr(page, "get_site_text", strict)
+    monkeypatch.setattr(page, "fetch_curl_text", compat)
+
+    cases = (
+        ("https://cdn.test/iframe/3/10.html", "https://cdn.test/assets/data.js"),
+        ("https://cdn.test/assets/frame.html", "https://cdn.test/upload/script/data.js"),
+        ("https://other.test/iframe/3/10.html", "https://cdn.test/upload/script/data.js"),
+    )
+    for frame_url, owner_url in cases:
+        with pytest.raises(requests.exceptions.SSLError):
+            page._fetch_linked_iframe_reference(frame_url, owner_url, 2, Mock(), site)
+
+    assert compat.call_count == 0
+
+
+def test_legacy_iframe_timeout_never_downgrades_tls(monkeypatch):
+    site = Site("站", "top", "https://a.test/page", payload="page_and_scripts")
+    owner_url = "https://cdn.test/upload/script/data.js"
+    frame_url = "https://cdn.test/iframe/3/10.html"
+    strict = Mock(side_effect=requests.exceptions.Timeout("slow"))
+    compat = Mock(side_effect=AssertionError("timeout must not fallback"))
+    monkeypatch.setattr(page, "get_site_text", strict)
+    monkeypatch.setattr(page, "fetch_curl_text", compat)
+
+    with pytest.raises(requests.exceptions.Timeout):
+        page._fetch_linked_iframe_reference(frame_url, owner_url, 2, Mock(), site)
+
+    assert compat.call_count == 0
+
+
+def test_topic_detail_direct_data_script_uses_same_narrow_ssl_fallback(monkeypatch):
+    site = Site("站", "top", "https://a.test/list", payload="topic_list_detail")
+    detail_url = "https://a.test/topic/123.html"
+    script_url = "https://cdn.test/upload/script/09/data.js"
+    detail = FetchedText(f'<script src="{script_url}"></script>', detail_url, detail_url)
+    strict = Mock(side_effect=[detail, requests.exceptions.SSLError("incomplete chain")])
+    compat = Mock(return_value=FetchedText("252期 绝杀二肖【鼠龙】开:00", script_url, script_url))
+    monkeypatch.setattr(page, "get_site_text", strict)
+    monkeypatch.setattr(page, "fetch_curl_text", compat)
+
+    documents = page.fetch_topic_detail_documents(detail_url, 2, Mock(), site)
+
+    assert [document.url for document in documents] == [detail_url, script_url]
+    compat.assert_called_once_with(
+        script_url,
+        2,
+        insecure=True,
+        allowed_origins=site.allowed_redirect_origins,
+    )

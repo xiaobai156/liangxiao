@@ -131,4 +131,14 @@ def linked_document_is_authorized(site: Site, anchor: PayloadDocument, body: Pay
         body_url.netloc.lower(),
     )
     allowed_origin = origin(body.url) in {origin(value) for value in site.allowed_document_origins}
-    return same_origin or configured or allowed_origin
+    body_path = body_url.path.lower()
+    directly_referenced_data_script = (
+        site.payload
+        in {"page_and_scripts", "curl_tls10_page_and_scripts", "scripts", "topic_list_detail"}
+        and body_path.startswith("/upload/script/")
+        and body_path.endswith(".js")
+    )
+    # direct_link already proves that this exact URL came from the parent
+    # document.  Keep arbitrary cross-origin documents blocked, while allowing
+    # the site's established external data-script layout.
+    return same_origin or configured or allowed_origin or directly_referenced_data_script

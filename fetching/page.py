@@ -140,8 +140,11 @@ def fetch_topic_detail_documents(
         script_url = urljoin(detail_url, script_src)
         if site is not None and not _allowed_script_reference(script_url, detail_url, site):
             continue
-        script = (get_site_text(context, script_url, timeout, site) if site is not None
-                  else context.get_text(script_url, timeout))
+        script = (
+            _fetch_script_reference(script_url, detail_url, timeout, context, site)
+            if site is not None
+            else context.get_text(script_url, timeout)
+        )
         script_url = getattr(script, "final_url", script_url)
         payload = decode_strdecode_blocks(script) or script
         documents.append(
@@ -210,12 +213,84 @@ def _allowed_reference(url: str, owner_url: str, site: Site) -> bool:
     )
 
 
+def _is_direct_data_script(url: str, site: Site) -> bool:
+    path = urlparse(url).path.lower()
+    return (
+        site.payload
+        in {"page_and_scripts", "curl_tls10_page_and_scripts", "scripts", "topic_list_detail"}
+        and _origin(url) is not None
+        and path.startswith("/upload/script/")
+        and path.endswith(".js")
+    )
+
+
 def _allowed_script_reference(url: str, owner_url: str, site: Site) -> bool:
     if any(marker in url for marker in ("${", "{", "}", "[", "]")):
         return False
     if _allowed_reference(url, owner_url, site):
         return True
-    return False
+    # This helper is only called for literal <script src=...> references that
+    # were present in an already-authorized parent document.  A cross-origin
+    # data script is therefore allowed only for the site's known data-script
+    # path; arbitrary cross-origin JavaScript is still rejected.
+    return _is_direct_data_script(url, site)
+
+
+def _fetch_script_reference(
+    url: str,
+    owner_url: str,
+    timeout: int,
+    context: FetchContext,
+    site: Site,
+) -> str:
+    try:
+        return get_site_text(context, url, timeout, site)
+    except requests.exceptions.SSLError:
+        if not (_is_direct_data_script(url, site) and _origin(url) != _origin(owner_url)):
+            raise
+        # A few legacy data-CDN hosts present an incomplete certificate chain.
+        # The authenticated parent page supplies the exact script URL, so only
+        # that literal cross-origin data-script reference may use insecure TLS.
+        # Redirects remain checked and no other transport error is downgraded.
+        return fetch_curl_text(
+            url,
+            timeout,
+            insecure=True,
+            allowed_origins=site.allowed_redirect_origins,
+        )
+
+
+def _fetch_linked_iframe_reference(
+    url: str,
+    owner_url: str,
+    timeout: int,
+    context: FetchContext,
+    site: Site,
+) -> str:
+    try:
+        return get_site_text(context, url, timeout, site)
+    except requests.exceptions.SSLError:
+        frame_path = urlparse(url).path.lower()
+        legacy_data_owner = (
+            _is_direct_data_script(owner_url, site)
+            and _origin(owner_url) != _origin(site.url)
+        )
+        if not (
+            legacy_data_owner
+            and _origin(url) == _origin(owner_url)
+            and frame_path.startswith("/iframe/")
+            and not any(marker in url for marker in ("${", "{", "}", "[", "]"))
+        ):
+            raise
+        # Only an iframe literally embedded by an already-authorized legacy
+        # data script on the same CDN origin may inherit that script's narrow
+        # TLS compatibility.  Timeouts/HTTP failures never use this fallback.
+        return fetch_curl_text(
+            url,
+            timeout,
+            insecure=True,
+            allowed_origins=site.allowed_redirect_origins,
+        )
 
 
 def _reference_is_absent(exc: requests.RequestException) -> bool:
@@ -306,7 +381,9 @@ def collect_page_and_scripts(
                 continue
             visited_urls.add(frame_url)
             try:
-                frame_source = get_site_text(context, frame_url, timeout, site)
+                frame_source = _fetch_linked_iframe_reference(
+                    frame_url, base_url, timeout, context, site
+                )
             except (requests.RequestException, UnicodeError) as exc:
                 if not isinstance(exc, requests.RequestException) or not _reference_is_absent(exc):
                     scan_complete = False
@@ -339,7 +416,7 @@ def collect_page_and_scripts(
             continue
         visited_urls.add(script_url)
         try:
-            script = get_site_text(context, script_url, timeout, site)
+            script = _fetch_script_reference(script_url, root_url, timeout, context, site)
         except (requests.RequestException, UnicodeError) as exc:
             if (
                 not isinstance(exc, requests.RequestException)
@@ -452,7 +529,9 @@ def collect_page_and_scripts(
                     continue
                 visited_urls.add(nested_script_url)
                 try:
-                    nested_script = get_site_text(context, nested_script_url, timeout, site)
+                    nested_script = _fetch_script_reference(
+                        nested_script_url, nested_url, timeout, context, site
+                    )
                 except (requests.RequestException, UnicodeError) as exc:
                     if (
                         not isinstance(exc, requests.RequestException)
@@ -558,7 +637,7 @@ def fetch_payload(
                 scan_complete = False
                 break
             try:
-                script = get_site_text(context, script_url, timeout, site)
+                script = _fetch_script_reference(script_url, root_url, timeout, context, site)
             except (requests.RequestException, UnicodeError) as exc:
                 if (
                     not isinstance(exc, requests.RequestException)

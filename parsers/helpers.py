@@ -187,6 +187,26 @@ def select_target_block(source: str, site: Site) -> TargetBlock | None:
     matches = list(re.finditer(site.title, structured_text, flags=re.I))
     if not matches:
         return None
+    if site.record and len(matches) > 1:
+        # A named-block title is often repeated verbatim inside each historical
+        # record.  Those occurrences are data rows, not independent block
+        # anchors.  Prefer title matches outside an actual record span when at
+        # least one such anchor exists; genuinely separate headers remain
+        # ambiguous and still fail below.
+        record_spans = [
+            record_match.span()
+            for record_match in re.finditer(site.record, structured_text, flags=re.I)
+        ]
+        outside_records = [
+            title_match
+            for title_match in matches
+            if not any(
+                start <= title_match.start() and title_match.end() <= end
+                for start, end in record_spans
+            )
+        ]
+        if outside_records:
+            matches = outside_records
     spans = _line_spans(structured_text)
     structural_matches: list[re.Match[str]] = []
     for match in matches:
@@ -228,16 +248,58 @@ def select_target_block(source: str, site: Site) -> TargetBlock | None:
             if _contains_candidate_semantic(line):
                 data_seen = data_seen or bool(re.search(r"\d{3}\s*期", line))
                 continue
-    structured_block = structured_text[block_start:block_end].strip()
-    block_text = html_to_text(structured_block)
     full_text = html_to_text(source)
-    occurrences = [match.start() for match in re.finditer(re.escape(block_text), full_text)]
-    if len(occurrences) != 1:
-        raise ValueError(f"目标区块无法唯一映射：{site.name}")
-    flat_start = occurrences[0]
     flat_anchor = html_to_text(match.group(0))
-    anchor_in_block = block_text.find(flat_anchor)
-    flat_anchor_offset = flat_start + max(0, anchor_in_block)
+    if not flat_anchor:
+        raise ValueError(f"目标区块无法唯一映射：{site.name}")
+
+    # `visible_source_text()` deliberately preserves structural line breaks,
+    # while the position contract is based on `html_to_text()`.  On real
+    # article pages those two flattened representations can differ by hidden
+    # markup before the target block, so an exact whole-block substring lookup
+    # is too brittle.  The block anchor has already been proven unique above;
+    # map that anchor into the canonical flat text and then derive the block
+    # boundary from the configured stop (or the structured boundary delta).
+    anchor_offsets = [
+        anchor_match.start()
+        for anchor_match in re.finditer(re.escape(flat_anchor), full_text)
+    ]
+    if not anchor_offsets:
+        raise ValueError(f"目标区块无法唯一映射：{site.name}")
+    expected_anchor = len(html_to_text(structured_text[: match.start()]))
+    distances = [abs(offset - expected_anchor) for offset in anchor_offsets]
+    best_distance = min(distances)
+    best_offsets = [
+        offset for offset, distance in zip(anchor_offsets, distances) if distance == best_distance
+    ]
+    if len(best_offsets) != 1 or best_distance > 128:
+        raise ValueError(f"目标区块无法唯一映射：{site.name}")
+    flat_anchor_offset = best_offsets[0]
+    flat_start = flat_anchor_offset
+
+    if site.stop:
+        flat_tail_start = flat_anchor_offset + len(flat_anchor)
+        flat_stop = re.search(site.stop, full_text[flat_tail_start:], flags=re.I)
+        if not flat_stop:
+            raise ValueError(f"目标区块停止边界缺失：{site.name}")
+        flat_end = flat_tail_start + flat_stop.start()
+    else:
+        expected_end = len(html_to_text(structured_text[:block_end]))
+        delta = flat_anchor_offset - expected_anchor
+        flat_end = max(flat_start, min(len(full_text), expected_end + delta))
+
+    block_text = full_text[flat_start:flat_end].strip()
+    if not block_text:
+        raise ValueError(f"目标区块无法唯一映射：{site.name}")
+    # Stripping can move the start only by whitespace.  Preserve the canonical
+    # visible-text offset by locating the stripped text at the mapped boundary.
+    stripped_offset = full_text.find(block_text, flat_start, flat_end + 1)
+    if stripped_offset < 0:
+        raise ValueError(f"目标区块无法唯一映射：{site.name}")
+    flat_start = stripped_offset
+    flat_anchor_offset = full_text.find(flat_anchor, flat_start, flat_start + len(block_text))
+    if flat_anchor_offset < 0:
+        raise ValueError(f"目标区块无法唯一映射：{site.name}")
     return TargetBlock(
         block_text,
         flat_anchor,
@@ -270,7 +332,7 @@ def has_two_zodiac_semantic(raw: str) -> bool:
     return bool(TWO_ZODIAC_SEMANTIC_RE.search(raw))
 
 
-def site_scoped_text(text: str, site: Site) -> str:
+def site_scoped_region(text: str, site: Site) -> tuple[str, int]:
     aliases = [site.name]
     alias_map = {
         "白蛇": ["白蛇传"],
@@ -283,23 +345,37 @@ def site_scoped_text(text: str, site: Site) -> str:
     target_pattern = re.compile(r"(?:绝\s*杀|必\s*杀|禁\s*杀|死\s*杀|稳\s*杀|温\s*杀|杀|砍\s*杀)\s*(?:二|②|两|2|２)\s*肖")
     for match in target_pattern.finditer(text):
         starts.append(max(0, match.start() - 500))
-    best = text
-    best_count = -1
     for alias in aliases:
         for match in re.finditer(re.escape(alias), text):
             starts.append(match.start())
-    for start in starts:
-        tail = text[start:]
-        chunk = tail[:12000]
-        record_count = sum(1 for pattern in GENERIC_TWO_ZODIAC_PATTERNS for _ in pattern.finditer(chunk))
+    if not starts:
+        return text, 0
+
+    best = text
+    best_start = 0
+    best_count = -1
+    for region_start in dict.fromkeys(starts):
+        chunk = text[region_start : region_start + 12000]
+        record_count = sum(
+            1 for pattern in GENERIC_TWO_ZODIAC_PATTERNS for _ in pattern.finditer(chunk)
+        )
         count = record_count * 100 + len(re.findall(r"\d{3}\s*期", chunk))
         count += 20 if re.search(r"\d{3}\s*期[^期]{0,80}" + target_pattern.pattern, chunk) else 0
         count += 10 if any(alias in chunk[:1200] for alias in aliases) else 0
-        count += 1000 if record_count and any(alias in chunk[:300] for alias in aliases) and target_pattern.search(chunk[:1000]) else 0
+        count += 1000 if (
+            record_count
+            and any(alias in chunk[:300] for alias in aliases)
+            and target_pattern.search(chunk[:1000])
+        ) else 0
         if count > best_count:
             best_count = count
             best = chunk
-    return best
+            best_start = region_start
+    return best, best_start
+
+
+def site_scoped_text(text: str, site: Site) -> str:
+    return site_scoped_region(text, site)[0]
 
 
 def records_from_two_zodiac_text(
@@ -370,13 +446,40 @@ def parse_generic_two_zodiac_records(source: str, site: Site) -> list[Record]:
     return records
 
 
+def _site_scoped_fallback_records(source: str, site: Site) -> list[Record]:
+    visible = visible_source_text(source)
+    scoped, scoped_start = site_scoped_region(visible, site)
+    return records_from_two_zodiac_text(
+        scoped,
+        base_offset=scoped_start,
+        anchor_text=site.name,
+        anchor_offset=scoped_start,
+        block_start=scoped_start,
+        block_end=scoped_start + len(scoped),
+        block_id=f"site-scoped:{scoped_start}-{scoped_start + len(scoped)}",
+    )
+
+
 def parse_site_scoped_two_zodiac_records(source: str, site: Site) -> list[Record]:
     if not site.title:
         return []
-    selection = select_target_block(source, site)
+    try:
+        selection = select_target_block(source, site)
+    except ValueError as exc:
+        message = str(exc)
+        recoverable = (
+            (message.startswith("专属锚点不唯一：") and "非结构标题" in message)
+            or message.startswith("目标区块无法唯一映射：")
+        )
+        if not recoverable:
+            raise
+        records = _site_scoped_fallback_records(source, site)
+        if not records:
+            raise exc
+        return records
     if selection is None or not selection.text:
         return []
-    return records_from_two_zodiac_text(
+    records = records_from_two_zodiac_text(
         selection.text,
         base_offset=selection.block_start,
         anchor_text=selection.anchor_text,
@@ -385,6 +488,16 @@ def parse_site_scoped_two_zodiac_records(source: str, site: Site) -> list[Record
         block_end=selection.block_end,
         block_id=selection.block_id,
     )
+    if records:
+        return records
+
+    # A short navigation/index label can be the only structural title even
+    # when the real data header and historical rows contain the same title.
+    # This is specific to site_scoped_two_zodiac; named_block remains strict.
+    visible = visible_source_text(source)
+    if len(list(re.finditer(site.title, visible, flags=re.I))) <= 1:
+        return []
+    return _site_scoped_fallback_records(source, site)
 
 
 def records_from_pattern(text: str, pattern: re.Pattern[str], *, base_offset: int = 0) -> list[Record]:

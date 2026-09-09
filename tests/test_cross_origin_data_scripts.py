@@ -43,6 +43,38 @@ def test_configured_cross_origin_upload_script_is_collected() -> None:
     assert script_url in [document.url for document in bundle.documents]
 
 
+def test_direct_cross_origin_data_script_can_form_an_authorized_pair_without_global_whitelist() -> None:
+    parent_url = "https://example.test/page"
+    body_url = "https://cdn.test/upload/script/08/body.js"
+    site = Site("测试站", "top", parent_url, payload="page_and_scripts")
+    anchor = PayloadDocument("页面", parent_url, f'<script src="{body_url}"></script>')
+    body = PayloadDocument(
+        "脚本",
+        body_url,
+        "236期 龙虎",
+        parent_url=parent_url,
+        link_reference=body_url,
+    )
+
+    assert linked_document_is_authorized(site, anchor, body)
+
+
+def test_cross_origin_non_data_script_still_needs_explicit_authorization() -> None:
+    parent_url = "https://example.test/page"
+    body_url = "https://cdn.test/assets/body.js"
+    site = Site("测试站", "top", parent_url, payload="page_and_scripts")
+    anchor = PayloadDocument("页面", parent_url, f'<script src="{body_url}"></script>')
+    body = PayloadDocument(
+        "脚本",
+        body_url,
+        "236期 龙虎",
+        parent_url=parent_url,
+        link_reference=body_url,
+    )
+
+    assert not linked_document_is_authorized(site, anchor, body)
+
+
 def test_irrelevant_nested_links_do_not_make_scan_incomplete() -> None:
     site = Site(
         "测试站",

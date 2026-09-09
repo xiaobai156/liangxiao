@@ -368,3 +368,89 @@ def test_loader_preserves_same_url_sites_with_distinct_identities(tmp_path) -> N
         ("顶部站", "https://same.example.test", "top"),
         ("底部站", "https://same.example.test", "bottom"),
     ]
+
+
+def test_site_scoped_parser_tolerates_title_repeated_inside_historical_rows() -> None:
+    from parsers.helpers import parse_site_scoped_two_zodiac_records
+
+    scoped_site = Site(
+        "道士出山",
+        "top",
+        "https://example.test/page",
+        parser="site_scoped_two_zodiac",
+        payload="page_and_scripts",
+        title=r"道士出山[^\n]{0,40}绝杀二肖",
+    )
+    source = (
+        "252期：【道士出山】绝杀二肖\n"
+        "252期:【道士出山绝杀二肖】【鼠龙】开:00\n"
+        "251期:【道士出山绝杀二肖】【虎兔】开:00\n"
+        "250期:【道士出山绝杀二肖】【牛马】开:00\n"
+        "上一篇：其他栏目\n"
+        "目录 道士出山【绝杀二肖】"
+    )
+
+    records = parse_site_scoped_two_zodiac_records(source, scoped_site)
+
+    assert [(item.period, item.zodiac) for item in records[:3]] == [
+        (252, "鼠龙"),
+        (251, "虎兔"),
+        (250, "牛马"),
+    ]
+    assert [item.position for item in records[:3]] == sorted(item.position for item in records[:3])
+
+
+def test_named_block_parser_remains_strict_for_multiple_nonstructural_titles() -> None:
+    from parsers.helpers import parse_named_block_records
+
+    named_site = Site(
+        "测试站",
+        "top",
+        "https://example.test/page",
+        parser="named_block",
+        payload="page",
+        title=r"测试站绝杀二肖",
+        record=(
+            r"(?P<period>\d{3})期测试站绝杀二肖【(?P<zodiac>[牛马羊鸡狗猪鼠虎兔龙蛇猴]{2})】"
+            r"开:(?P<open>\S+)"
+        ),
+    )
+    source = (
+        "252期 测试站绝杀二肖 252期测试站绝杀二肖【鼠龙】开:00\n"
+        "251期 测试站绝杀二肖 251期测试站绝杀二肖【虎兔】开:00"
+    )
+
+    with pytest.raises(ValueError, match="专属锚点不唯一"):
+        parse_named_block_records(source, named_site)
+
+
+def test_named_block_ignores_title_repetition_inside_historical_records() -> None:
+    from parsers.helpers import parse_named_block_records
+
+    named_site = Site(
+        "大刀皇",
+        "top",
+        "https://example.test/page",
+        parser="named_block",
+        payload="page",
+        title=r"大刀皇[^\n]{0,30}稳杀二肖",
+        record=(
+            r"(?P<period>\d{3})期\s*大刀皇稳杀二肖【"
+            r"(?P<zodiac>[牛马羊鸡狗猪鼠虎兔龙蛇猴]{2})】开:(?P<open>\S+)"
+        ),
+    )
+    source = (
+        "大刀皇【稳杀二肖】\n"
+        "252期大刀皇稳杀二肖【鼠虎】开:00\n"
+        "251期大刀皇稳杀二肖【牛马】开:00\n"
+        "250期大刀皇稳杀二肖【羊鸡】开:00\n"
+        "上一篇：其他栏目"
+    )
+
+    records = parse_named_block_records(source, named_site)
+
+    assert [(item.period, item.zodiac) for item in records] == [
+        (252, "鼠虎"),
+        (251, "牛马"),
+        (250, "羊鸡"),
+    ]
