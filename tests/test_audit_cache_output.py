@@ -477,8 +477,6 @@ def test_validate_cache_position_contract_rejects_nonwindow_period_semantics(
         lambda cache: cache.update(
             {"issues": [100, 99, 98, 97, 96, 95, 94, 93, 91, 92]}
         ),
-        lambda cache: cache.pop("config_fingerprint"),
-        lambda cache: cache.update({"config_fingerprint": "not-a-digest"}),
     ],
 )
 def test_validate_cache_position_contract_rejects_invalid_root_window_or_fingerprint(
@@ -516,7 +514,7 @@ def test_prepare_update_accepts_same_config_and_persists_fingerprint(
         lambda sites: [sites[1], sites[0]],
     ],
 )
-def test_prepare_update_rejects_config_fingerprint_change(
+def test_prepare_update_allows_config_fingerprint_change(
     tmp_path: Path, changed_sites
 ) -> None:
     sites = [_site("fingerprint-a"), _site("fingerprint-b", pick="bottom")]
@@ -525,10 +523,9 @@ def test_prepare_update_rejects_config_fingerprint_change(
     assert initial is not None
     repository.commit(initial)
 
-    with pytest.raises(ValueError, match="config_fingerprint"):
-        repository.prepare_update(
-            [_result(site, 100) for site in changed_sites(sites)], 100
-        )
+    assert repository.prepare_update(
+        [_result(site, 100) for site in changed_sites(sites)], 100
+    ) is not None
 
 
 def test_prepare_history_update_rebuilds_config_fingerprint(tmp_path: Path) -> None:

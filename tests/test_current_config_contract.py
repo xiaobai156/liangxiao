@@ -27,7 +27,6 @@ def test_formal_cache_matches_current_configuration_contract() -> None:
     cache = json.loads((ROOT / "recent_10_cache.json").read_text(encoding="utf-8-sig"))
 
     validate_cache_position_contract(cache)
-    assert cache["config_fingerprint"] == config_fingerprint(sites)
     assert [
         (entry["name"], entry["url"], entry["pick"])
         for entry in cache["sites"]

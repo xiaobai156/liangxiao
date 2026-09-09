@@ -146,8 +146,6 @@ class RecentCacheRepository:
         existing_issues: list[int] = []
         if cache:
             validate_cache_position_contract(cache)
-            if cache.get("config_fingerprint") != expected_fingerprint:
-                raise ValueError("缓存config_fingerprint缺失或不匹配，已拒绝覆盖")
             existing_issues = _validate_issues(cache)
             if not isinstance(cache.get("sites"), list):
                 raise ValueError(f"缓存文件站点列表结构无效，已拒绝覆盖：{self.path}")

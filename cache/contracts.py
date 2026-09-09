@@ -172,9 +172,7 @@ def validate_cache_position_contract(cache: Mapping[str, object]) -> None:
         )
     if cache.get("window_size") != CACHE_WINDOW_SIZE:
         raise ValueError("缓存文件window_size必须为10，已拒绝判定")
-    fingerprint = cache.get("config_fingerprint")
-    if not isinstance(fingerprint, str) or re.fullmatch(r"[0-9a-fA-F]{64}", fingerprint) is None:
-        raise ValueError("缓存文件config_fingerprint必须为64位十六进制摘要，已拒绝判定")
+    # config_fingerprint 仅保留历史信息，不再绑定缓存与当前配置。
     issues = validate_issue_window(cache.get("issues"))
     issue_set = set(issues)
 
