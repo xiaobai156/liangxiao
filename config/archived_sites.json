@@ -131,5 +131,34 @@
     "parser": "feilong_qishi_bottom",
     "payload": "page_and_scripts",
     "archive_reason": "字段校验未通过：多文档内未能独立验证 248 期目标"
+  },
+  {
+    "name": "真龙活现",
+    "pick": "尾部",
+    "url": "https://mbsqhpk.8ivvt-u3cx5-enwlld.xyz:29400/article/manager/6a33d2c6dfa16552b923d0ad?url=lhzj",
+    "parser": "zhenlong_huoxian_admin_article",
+    "payload": "admin_article_api",
+    "api_url": "https://mbsqhpk.8ivvt-u3cx5-enwlld.xyz:29400/api/proxy/landing-page-data?url=lhzj",
+    "archive_reason": "未找到指定目标：未抓到有效候选"
+  },
+  {
+    "name": "会员福利",
+    "pick": "bottom",
+    "url": "https://sheuzjss.tgpcj-9w0vl-mwyhly.work:29422/article/manager/6a0458354ea5c20141013eb4?url=zfw",
+    "parser": "manager_article_two_zodiac",
+    "payload": "admin_article_api",
+    "api_url": "https://sheuzjss.tgpcj-9w0vl-mwyhly.work:29422/api/proxy/landing-page-data?url=zfw",
+    "archive_reason": "未找到指定目标：接口返回内容内未找到对应后台文章"
+  },
+  {
+    "name": "大有文章",
+    "pick": "bottom",
+    "url": "https://0130190808.880646.xyz/bbs/topic.php?id=20685",
+    "parser": "named_block",
+    "payload": "page",
+    "title": "大有文章",
+    "stop": "(?:上一篇|下一篇)\\s*[：:]",
+    "record": "(?P<period>[0-9]{3})期 *[:：]? *《大有文章》 *绝杀(?:二|两|2|２|②)肖 *【 *(?P<zodiac>[牛马羊鸡狗猪鼠虎兔龙蛇猴] *[.。·－、,，-]* *[牛马羊鸡狗猪鼠虎兔龙蛇猴]) *】 *开[:： ]*(?P<open>[^ 准中错赢对↑√]+)",
+    "archive_reason": "未找到指定目标：未抓到有效候选"
   }
 ]
