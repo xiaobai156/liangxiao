@@ -1,6 +1,8 @@
 from __future__ import annotations
 
+import hashlib
 import os
+import tempfile
 import time
 from contextlib import ExitStack, contextmanager
 from pathlib import Path
@@ -9,12 +11,24 @@ from threading import Lock, RLock
 
 _THREAD_LOCKS: dict[str, RLock] = {}
 _REGISTRY_LOCK = Lock()
+# Output locks must never live next to the formal success/failure files.  The
+# lock directory is derived from the output directory path, so two processes
+# writing the same output directory still share one lock.
+_LOCK_ROOT = Path(tempfile.gettempdir()) / "liangxiao-v2-output-locks"
+
+
+def _lock_path_for(directory: Path) -> Path:
+    key = hashlib.sha256(
+        os.path.normcase(str(directory.resolve())).encode("utf-8")
+    ).hexdigest()[:24]
+    return _LOCK_ROOT / f"{key}.lock"
 
 
 @contextmanager
 def _directory_lock(directory: Path, timeout: float):
     directory.mkdir(parents=True, exist_ok=True)
-    lock_path = directory / ".杀两肖输出.lock"
+    _LOCK_ROOT.mkdir(parents=True, exist_ok=True)
+    lock_path = _lock_path_for(directory)
     key = os.path.normcase(str(lock_path.resolve()))
     with _REGISTRY_LOCK:
         thread_lock = _THREAD_LOCKS.setdefault(key, RLock())

@@ -108,6 +108,15 @@ def test_outputs_create_new_directories(tmp_path):
     assert (tmp_path / "new" / "ok.txt").exists()
 
 
+def test_output_write_leaves_no_lock_file_beside_formal_outputs(tmp_path):
+    success = tmp_path / "success" / "ok.txt"
+    failure = tmp_path / "failure" / "fail.txt"
+    transaction.write_outputs([result(), Result(result("坏站").site, error="失败")],
+                              success, failure, include_url=False)
+    assert success.exists() and failure.exists()
+    assert not list(tmp_path.rglob("*.lock"))
+
+
 def test_output_lock_serializes_threads_and_has_bounded_wait(tmp_path):
     started, release = Event(), Event()
     failures = []
