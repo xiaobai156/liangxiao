@@ -1427,14 +1427,6 @@
     "payload": "page_and_scripts"
   },
   {
-    "name": "金宝码王",
-    "pick": "尾部",
-    "url": "https://yzpbdkow.6m1ba-7p7u4-ppolcy.work:29433/article/manager/6a695d022822d465035c94cf?url=tdg",
-    "parser": "jinbao_mawang_manager_article",
-    "payload": "admin_article_api",
-    "api_url": "https://yzpbdkow.6m1ba-7p7u4-ppolcy.work:29433/api/proxy/landing-page-data?url=tdg"
-  },
-  {
     "name": "如神探讨",
     "pick": "尾部",
     "url": "https://hl.90216a.com/read.php?tid=751",
@@ -2184,14 +2176,6 @@
     "url": "https://xxn08n.w2jqr-rbl71-ngvkmq.work/",
     "parser": "zhougong_shensuan_two_zodiac",
     "payload": "page_and_scripts",
-    "history_authorization": "本次允许不足10期"
-  },
-  {
-    "name": "托尼库尔莫妮卡",
-    "pick": "top",
-    "url": "https://zcphjs.ce83x-ms2rz-orwude.work:12277/#/users/230245",
-    "parser": "tuoni_kulmonika_snapshots",
-    "payload": "tuku_user_forums",
     "history_authorization": "本次允许不足10期"
   },
   {

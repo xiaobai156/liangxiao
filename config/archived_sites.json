@@ -161,4 +161,22 @@
     "record": "(?P<period>[0-9]{3})期 *[:：]? *《大有文章》 *绝杀(?:二|两|2|２|②)肖 *【 *(?P<zodiac>[牛马羊鸡狗猪鼠虎兔龙蛇猴] *[.。·－、,，-]* *[牛马羊鸡狗猪鼠虎兔龙蛇猴]) *】 *开[:： ]*(?P<open>[^ 准中错赢对↑√]+)",
     "archive_reason": "未找到指定目标：未抓到有效候选"
   }
+  ,{
+    "name": "金宝码王",
+    "pick": "尾部",
+    "url": "https://yzpbdkow.6m1ba-7p7u4-ppolcy.work:29433/article/manager/6a695d022822d465035c94cf?url=tdg",
+    "parser": "jinbao_mawang_manager_article",
+    "payload": "admin_article_api",
+    "api_url": "https://yzpbdkow.6m1ba-7p7u4-ppolcy.work:29433/api/proxy/landing-page-data?url=tdg",
+    "archive_reason": "未找到指定目标：未抓到有效候选"
+  },
+  {
+    "name": "托尼库尔莫妮卡",
+    "pick": "top",
+    "url": "https://zcphjs.ce83x-ms2rz-orwude.work:12277/#/users/230245",
+    "parser": "tuoni_kulmonika_snapshots",
+    "payload": "tuku_user_forums",
+    "history_authorization": "本次允许不足10期",
+    "archive_reason": "内容尚未发布：用户论坛接口：top候选内未找到255期"
+  }
 ]
