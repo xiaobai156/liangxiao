@@ -78,7 +78,7 @@
     "name": "专心致志",
     "pick": "顶部",
     "url": "https://xoxtpupt.bvptr-i3mv8-pbjxin.work:17455/topic/226532.html",
-    "parser": "site_scoped_two_zodiac",
+    "parser": "zhiduanqingchang_ten_zodiac_complement",
     "payload": "browser_rendered_page",
     "title": "专心致志"
   },
@@ -2229,5 +2229,25 @@
     "payload": "browser_rendered_page",
     "title": "【\\s*码友一夜春风\\s*】",
     "stop": "【\\s*码友书阳\\s*】"
+  }
+,
+  {
+    "name": "纸短情长",
+    "pick": "bottom",
+    "url": "https://www.353583.cc/18hk/1.html",
+    "payload": "page",
+    "parser": "zhiduanqingchang_ten_zodiac_complement",
+    "title": "纸短情长",
+    "record": "(?P<period>259)期[^\\n]{0,120}?十肖[^\\n]{0,80}?[（(](?P<zodiac>[牛马羊鸡狗猪鼠虎兔龙蛇猴 ]+)[）)]",
+    "stop": "站长宣言"
+  },
+  {
+    "name": "澳门铁粉",
+    "pick": "top",
+    "url": "https://49619.cc/gsb/050.html",
+    "payload": "page",
+    "parser": "generic_two_zodiac",
+    "title": "作者\\s*[:：]\\s*澳门铁粉",
+    "record": "(?P<period>258)期[^\\n]{0,80}?[【〖]\\s*(?P<zodiac>[牛马羊鸡狗猪鼠虎兔龙蛇猴]{2})\\s*[】〗][^\\n]{0,40}?(?P<open>[^\\s准中错赢对]+)"
   }
 ]

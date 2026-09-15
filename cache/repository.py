@@ -151,13 +151,8 @@ class RecentCacheRepository:
                 raise ValueError(f"缓存文件站点列表结构无效，已拒绝覆盖：{self.path}")
 
         if existing_issues:
-            next_period = 1 if existing_issues[0] == 365 else existing_issues[0] + 1
-            if current_period == next_period:
-                issues = recent_periods(current_period)
-            elif current_period in existing_issues:
-                issues = existing_issues
-            else:
-                return None
+            # 指定期数就是当前基准：新期滚动近10期，同期期数直接覆盖。
+            issues = recent_periods(current_period)
         else:
             issues = recent_periods(current_period)
 
@@ -261,7 +256,24 @@ class RecentCacheRepository:
         validate_cache_position_contract(payload)
         issues = validate_issue_window(payload.get("issues"))
         if period not in issues:
-            raise ValueError(f"当前期{period}不在缓存窗口，未同步")
+            issues = recent_periods(period)
+            allowed = {str(issue) for issue in issues}
+            for entry in payload["sites"]:
+                entry["values"] = {key: value for key, value in entry["values"].items() if key in allowed}
+                entry["positions"] = {key: value for key, value in entry["positions"].items() if key in allowed}
+                entry["records"] = [item for item in entry["records"] if str(item["period"]) in allowed]
+                if "article_ids" in entry:
+                    entry["article_ids"] = {
+                        key: value for key, value in entry["article_ids"].items() if key in allowed
+                    }
+                    if not entry["article_ids"]:
+                        entry.pop("article_ids")
+                entry["fingerprint"] = "".join(
+                    entry["values"][key] for key in issues if key in entry["values"]
+                )
+            updated_issues = issues
+        else:
+            updated_issues = issues
         if sites is not None and payload.get("config_fingerprint") != config_fingerprint(sites):
             raise ValueError("缓存config_fingerprint与当前配置不匹配，未同步")
         updated = deepcopy(payload)
@@ -296,9 +308,10 @@ class RecentCacheRepository:
             else:
                 entry.pop("article_ids", None)
             entry["fingerprint"] = "".join(entry["values"][str(issue)]
-                                           for issue in issues if str(issue) in entry["values"])
+                                           for issue in updated_issues if str(issue) in entry["values"])
             entry.pop("status", None)
             entry.pop("error", None)
+        updated["issues"] = updated_issues
         updated["updated_at"] = datetime.now().isoformat(timespec="seconds")
         validate_cache_position_contract(updated)
         return _PreparedCache(updated, source_hash)

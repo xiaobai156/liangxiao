@@ -347,6 +347,22 @@ def parse_suiyin_jiliang_ten_zodiac_complement_records(source: str, site: Site) 
         records.append(candidate)
     return records
 
+
+def parse_zhiduanqingchang_ten_zodiac_complement_records(source: str, site: Site) -> list[Record]:
+    text = html_to_text(source)
+    if "纸短情长" not in text:
+        return []
+    pattern = re.compile(rf"(?P<period>\d{{3}})\s*期\s*[:：]?\s*10\s*肖\s*[（(](?P<body>[{ZODIACS}\s]+)[）)]")
+    records: list[Record] = []
+    for match in pattern.finditer(text):
+        picked = ten_unique_zodiacs(match.group("body"))
+        if len(picked) != 10:
+            continue
+        missing = "".join(z for z in ZODIACS if z not in picked)
+        if len(missing) == 2:
+            records.append(Record(int(match.group("period")), missing, "", match.group(0), match.start()))
+    return records
+
 def parse_wangzhejiudian_forbidden_chart_records(source: str, site: Site) -> list[Record]:
     return parse_wangzhejiudian_stat_chart_records(source, "禁二肖图")
 
