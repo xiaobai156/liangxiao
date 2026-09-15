@@ -1045,7 +1045,7 @@
     "pick": "顶部",
     "url": "https://ntvjzt.gau41-qu6jy-sotyug.work:16677/",
     "parser": "taxue_wuhen_top",
-    "payload": "browser_rendered_page",
+    "payload": "page_and_scripts",
     "title": "澳门\\s*踏雪无痕\\s*『\\s*绝\\s*杀\\s*二\\s*肖\\s*』",
     "record": "(?P<period>\\d{3})\\s*期[^期]{0,90}?(?:绝\\s*杀|稳\\s*杀|精\\s*杀|无错\\s*杀|砍\\s*杀|杀)\\s*(?:二|两|2|２|②)\\s*肖[^期]{0,50}?[【〖\\[（(《『〈]\\s*(?P<zodiac>[牛马羊鸡狗猪鼠虎兔龙蛇猴]\\s*[-－、,，.。· ]?\\s*[牛马羊鸡狗猪鼠虎兔龙蛇猴])\\s*[】〗\\]）)》』〉]\\s*(?:←|[~～_\\-－—|]*)\\s*(?:开|開)\\s*[:：]?\\s*(?P<open>[^\\s准中错赢对↑√]+)"
   },
@@ -2220,5 +2220,14 @@
     "url": "https://etmchyhq.cee5t-w30bf-xgqspr.work:17477/topic/248728.html",
     "parser": "tianlang_shaxing_bottom",
     "payload": "page_and_scripts"
+  },
+  {
+    "name": "一夜春风",
+    "pick": "bottom",
+    "url": "https://62139c.com/62.html",
+    "parser": "yiyechunfeng_bottom",
+    "payload": "browser_rendered_page",
+    "title": "【\\s*码友一夜春风\\s*】",
+    "stop": "【\\s*码友书阳\\s*】"
   }
 ]

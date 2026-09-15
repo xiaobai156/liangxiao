@@ -105,6 +105,7 @@ from parsers.new_sites_241 import (
     parse_yueku_zhixiao_top_records,
 )
 from parsers.special import parse_yanyu_fusu_list_detail_records
+from parsers.yiyechunfeng import parse_yiyechunfeng_bottom_records
 
 ParserFunction = Callable[[str, Site], list[Record]]
 
@@ -192,6 +193,7 @@ ENGINE_REGISTRY: Mapping[str, ParserFunction] = MappingProxyType(
         "jiujie_liangfeng_top": parse_jiujie_liangfeng_top_records,
         "bubu_gaosheng_top": parse_bubu_gaosheng_top_records,
         "tianlang_shaxing_bottom": parse_tianlang_shaxing_bottom_records,
+        "yiyechunfeng_bottom": parse_yiyechunfeng_bottom_records,
     }
 )
 
