@@ -1,4 +1,4 @@
-[
+﻿[
   {
     "name": "赌神没睡醒",
     "pick": "尾部",
@@ -160,8 +160,8 @@
     "stop": "(?:上一篇|下一篇)\\s*[：:]",
     "record": "(?P<period>[0-9]{3})期 *[:：]? *《大有文章》 *绝杀(?:二|两|2|２|②)肖 *【 *(?P<zodiac>[牛马羊鸡狗猪鼠虎兔龙蛇猴] *[.。·－、,，-]* *[牛马羊鸡狗猪鼠虎兔龙蛇猴]) *】 *开[:： ]*(?P<open>[^ 准中错赢对↑√]+)",
     "archive_reason": "未找到指定目标：未抓到有效候选"
-  }
-  ,{
+  },
+  {
     "name": "金宝码王",
     "pick": "尾部",
     "url": "https://yzpbdkow.6m1ba-7p7u4-ppolcy.work:29433/article/manager/6a695d022822d465035c94cf?url=tdg",
@@ -178,5 +178,16 @@
     "payload": "tuku_user_forums",
     "history_authorization": "本次允许不足10期",
     "archive_reason": "内容尚未发布：用户论坛接口：top候选内未找到255期"
+  },
+  {
+    "name": "探讨资料",
+    "pick": "尾部",
+    "url": "https://bbs03.836386.cyou/bbs/topic.php?id=18258",
+    "parser": "named_block",
+    "payload": "page_and_scripts",
+    "title": "探讨资料",
+    "stop": "\\s*下一贴\\s*[：:]",
+    "record": "(?P<period>\\d{3})\\s*期\\s*[:：]?\\s*🤘\\s*『\\s*探讨资料\\s*』\\s*🤘\\s*绝杀②肖\\s*🤘\\s*[【\\[]\\s*(?P<zodiac>[牛马羊鸡狗猪鼠虎兔龙蛇猴]\\s*[-－、，,。.]?\\s*[牛马羊鸡狗猪鼠虎兔龙蛇猴])\\s*[】\\]]\\s*[开開]\\s*[:：]?\\s*(?P<open>[^\\s准中错赢对]+)",
+    "archive_reason": "用户明确封存：SSL连接失败（证书主机名不匹配，certificate is not valid for 'bbs03.836386.cyou'），不再抓取"
   }
 ]

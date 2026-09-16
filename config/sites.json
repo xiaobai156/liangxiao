@@ -1,4 +1,4 @@
-[
+﻿[
   {
     "name": "金多宝",
     "pick": "top",
@@ -186,16 +186,6 @@
     "parser": "site_scoped_two_zodiac",
     "payload": "page_and_scripts",
     "title": "金道"
-  },
-  {
-    "name": "探讨资料",
-    "pick": "尾部",
-    "url": "https://bbs03.836386.cyou/bbs/topic.php?id=18258",
-    "parser": "named_block",
-    "payload": "page_and_scripts",
-    "title": "探讨资料",
-    "stop": "\\s*下一贴\\s*[：:]",
-    "record": "(?P<period>\\d{3})\\s*期\\s*[:：]?\\s*🤘\\s*『\\s*探讨资料\\s*』\\s*🤘\\s*绝杀②肖\\s*🤘\\s*[【\\[]\\s*(?P<zodiac>[牛马羊鸡狗猪鼠虎兔龙蛇猴]\\s*[-－、，,。.]?\\s*[牛马羊鸡狗猪鼠虎兔龙蛇猴])\\s*[】\\]]\\s*[开開]\\s*[:：]?\\s*(?P<open>[^\\s准中错赢对]+)"
   },
   {
     "name": "互帮互助",
@@ -2229,8 +2219,7 @@
     "payload": "browser_rendered_page",
     "title": "【\\s*码友一夜春风\\s*】",
     "stop": "【\\s*码友书阳\\s*】"
-  }
-,
+  },
   {
     "name": "纸短情长",
     "pick": "bottom",
