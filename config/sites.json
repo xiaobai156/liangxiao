@@ -1444,9 +1444,11 @@
     "name": "催人奋进",
     "pick": "top",
     "url": "https://dh-nwsm-0806.yqs01490156c.app/gst/20.htm",
-    "parser": "site_scoped_two_zodiac",
+    "parser": "named_block",
     "payload": "page",
-    "title": "催人奋进"
+    "title": "永垂不朽",
+    "stop": "输\\s*让\\s*您\\s*东山再起",
+    "record": "(?P<period>\\d{3})\\s*期\\s*[:：]?\\s*★?\\s*绝杀二肖\\s*[【〖\\[]\\s*(?P<zodiac>[牛马羊鸡狗猪鼠虎兔龙蛇猴]\\s*[-－、，,。.]?\\s*[牛马羊鸡狗猪鼠虎兔龙蛇猴])\\s*[】〗\\]]\\s*[开開]\\s*[:：]?\\s*(?P<open>[^\\s准中错赢对]+)"
   },
   {
     "name": "发奋图强",
@@ -1460,9 +1462,11 @@
     "name": "志在四方",
     "pick": "top",
     "url": "https://dh-nwsm-0806.yqs01490156c.app/gst/58.htm",
-    "parser": "site_scoped_two_zodiac",
+    "parser": "named_block",
     "payload": "page",
-    "title": "志在四方"
+    "title": "不甘示弱",
+    "stop": "输\\s*让\\s*您\\s*东山再起",
+    "record": "(?P<period>\\d{3})\\s*期\\s*[:：]?\\s*★?\\s*绝杀二肖\\s*[【〖\\[]\\s*(?P<zodiac>[牛马羊鸡狗猪鼠虎兔龙蛇猴]\\s*[-－、，,。.]?\\s*[牛马羊鸡狗猪鼠虎兔龙蛇猴])\\s*[】〗\\]]\\s*[开開]\\s*[:：]?\\s*(?P<open>[^\\s准中错赢对]+)"
   },
   {
     "name": "四季如春",
