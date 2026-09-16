@@ -1,4 +1,4 @@
-﻿[
+[
   {
     "name": "金多宝",
     "pick": "top",
@@ -78,9 +78,9 @@
     "name": "专心致志",
     "pick": "顶部",
     "url": "https://xoxtpupt.bvptr-i3mv8-pbjxin.work:17455/topic/226532.html",
-    "parser": "zhiduanqingchang_ten_zodiac_complement",
+    "parser": "zhuanxin_zhizhi_top",
     "payload": "browser_rendered_page",
-    "title": "专心致志"
+    "title": "作者\\s*[:：]\\s*专心致志"
   },
   {
     "name": "心里有底",
