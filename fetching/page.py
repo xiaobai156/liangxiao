@@ -236,6 +236,13 @@ def _allowed_script_reference(url: str, owner_url: str, site: Site) -> bool:
     return _is_direct_data_script(url, site)
 
 
+def _is_linked_data_script(url: str, site: Site) -> bool:
+    return bool(
+        site.linked_document_pattern
+        and re.match(site.linked_document_pattern, url, flags=re.I)
+    )
+
+
 def _fetch_script_reference(
     url: str,
     owner_url: str,
@@ -246,12 +253,18 @@ def _fetch_script_reference(
     try:
         return get_site_text(context, url, timeout, site)
     except requests.exceptions.SSLError:
-        if not (_is_direct_data_script(url, site) and _origin(url) != _origin(owner_url)):
+        owner_is_data_script = _is_linked_data_script(owner_url, site)
+        cross_origin = _origin(url) != _origin(owner_url)
+        if not (cross_origin and (_is_direct_data_script(url, site) or owner_is_data_script)):
             raise
         # A few legacy data-CDN hosts present an incomplete certificate chain.
         # The authenticated parent page supplies the exact script URL, so only
         # that literal cross-origin data-script reference may use insecure TLS.
-        # Redirects remain checked and no other transport error is downgraded.
+        # A script already matched by the site's own linked_document_pattern is
+        # itself a data script, so the scripts it literally references inherit
+        # that same narrow compatibility; URLs are still taken from an already
+        # authorised document and redirects remain checked.  No other transport
+        # error and no same-origin reference is downgraded.
         return fetch_curl_text(
             url,
             timeout,

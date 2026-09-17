@@ -326,10 +326,10 @@
     "pick": "顶部",
     "url": "https://gymmgzx.ef7xd-dl2r4-dqxbyc.xyz:16633/",
     "parser": "wulin_gaoshou_linked_top",
-    "payload": "page_and_scripts",
+    "payload": "curl_tls10_page_and_scripts",
     "title": "武林高手\\s*\\d{3}\\s*期\\s*《\\s*绝杀两肖\\s*》",
-    "record": "(?P<period>\\d{3})\\s*期\\s*[:：]?\\s*绝杀两肖\\s*[【\\[]\\s*(?P<zodiac>[牛马羊鸡狗猪鼠虎兔龙蛇猴]\\s*[-－、，,。.]?\\s*[牛马羊鸡狗猪鼠虎兔龙蛇猴])\\s*[】\\]]\\s*[开開]\\s*[:：]?\\s*(?P<open>[^\\s准中错赢对]+)",
-    "linked_document_pattern": "https://xia\\d+\\.cosds\\.ahsccn\\.com/upload/script/09/"
+    "record": "(?P<period>\\d{3})\\s*期\\s*[:：]?\\s*绝杀两肖\\s*[【\\[]\\s*(?P<zodiac>[牛马羊鸡狗猪鼠虎兔龙蛇猴]\\s*[-－、，,。.]?\\s*[牛马羊鸡狗猪鼠虎兔龙蛇猴])\\s*[】\\]]\\s*[開开]\\s*[:：]?\\s*(?P<open>[^\\s准中错赢对]+)",
+    "linked_document_pattern": "https://xia\\d+\\.cosds\\.aohjifv\\.com/upload/script/09/"
   },
   {
     "name": "玄机阁",
