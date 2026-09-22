@@ -116,7 +116,15 @@ def test_request_failure_never_silently_falls_back_to_insecure_curl(monkeypatch,
     with pytest.raises(exception):
         client.fetch_text("https://a.test/page", 2)
     assert curl.call_count == 0
-    assert get.call_count == (1 if exception is requests.exceptions.SSLError else 3)
+    assert get.call_count == (2 if exception is requests.exceptions.SSLError else 3)
+
+
+def test_transient_ssl_error_retries_with_tls_verification(monkeypatch):
+    get = Mock(side_effect=[requests.exceptions.SSLError("temporary"), response("https://a.test/page")])
+    monkeypatch.setattr(client, "http_get", get)
+    monkeypatch.setattr(client.time, "sleep", lambda _: None)
+    assert client.fetch_text("https://a.test/page", 2) == "100期"
+    assert get.call_count == 2
 
 
 def test_fetch_context_separates_redirect_permission_cache_keys():

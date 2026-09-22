@@ -87,7 +87,7 @@ def classified_request_error(exc: requests.RequestException, url: str) -> reques
 
 
 def should_retry_request(exc: requests.RequestException) -> bool:
-    if isinstance(exc, (SourceBoundaryError, requests.exceptions.SSLError)):
+    if isinstance(exc, SourceBoundaryError):
         return False
     status = getattr(getattr(exc, "response", None), "status_code", None)
     return not (isinstance(exc, requests.exceptions.HTTPError) and status in {400, 401, 403, 404, 410})
