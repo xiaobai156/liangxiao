@@ -402,6 +402,26 @@ def test_single_period_uses_the_same_target_probe(monkeypatch: pytest.MonkeyPatc
     assert rendered_calls == [site.url]
 
 
+def test_single_period_retries_transient_structure_failure(monkeypatch: pytest.MonkeyPatch) -> None:
+    site = make_article_site(payload="page")
+    record = make_record(209)
+    calls = 0
+
+    def parse_once_then_pass(*_args):
+        nonlocal calls
+        calls += 1
+        if calls == 1:
+            raise ScrapeFailure(ErrorCategory.STRUCTURE_CHANGED, "文档扫描未完成")
+        return [record], record
+
+    monkeypatch.setattr(single_period, "fetch_payload_for_period", lambda *_args: DocumentBundle(()))
+    monkeypatch.setattr(single_period, "parse_bundle_for_period", parse_once_then_pass)
+    result = single_period.scrape_site(site, 209, 3, FetchContext(), StubRegistry({}))
+
+    assert result.ok
+    assert calls == 2
+
+
 def test_incomplete_document_bundle_is_rejected_by_boundary_validation() -> None:
     site = make_article_site()
     bundle = DocumentBundle(

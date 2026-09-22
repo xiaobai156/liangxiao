@@ -21,7 +21,7 @@ from domain.models import (
     Result,
     Site,
 )
-from fetching.client import FetchContext, get_site_text, get_site_rendered
+from fetching.client import FetchContext, get_site_text, get_site_rendered, should_retry_request
 from fetching.page import (
     fetch_payload,
     fetch_topic_detail_documents,
@@ -387,12 +387,24 @@ def scrape_site(
     context: FetchContext,
     registry: ParserRegistry,
 ) -> Result:
-    try:
-        bundle = fetch_payload_for_period(site, period, timeout, context, registry)
-        _records, selected = parse_bundle_for_period(bundle, site, period, registry)
-    except (requests.RequestException, ValueError, LookupError) as exc:
-        return Result(site, None, format_failure(exc))
-    return Result(site, selected)
+    for attempt in range(2):
+        try:
+            bundle = fetch_payload_for_period(site, period, timeout, context, registry)
+            _records, selected = parse_bundle_for_period(bundle, site, period, registry)
+            return Result(site, selected)
+        except (requests.RequestException, ValueError, LookupError) as exc:
+            retryable = (
+                (isinstance(exc, requests.RequestException) and should_retry_request(exc))
+                or (isinstance(exc, ScrapeFailure) and exc.category in {
+                    ErrorCategory.STRUCTURE_CHANGED,
+                    ErrorCategory.BROWSER_FAILURE,
+                })
+                or any(marker in str(exc) for marker in ("文档扫描未完成", "浏览器渲染后仍未找到"))
+            )
+            if attempt == 0 and retryable:
+                continue
+            return Result(site, None, format_failure(exc))
+    raise AssertionError("unreachable")
 
 
 def scrape_sites(
