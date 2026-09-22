@@ -42,7 +42,7 @@ def parse_fixed_named_material_records(
         rf"(?P<period>\d{{3}})\s*期\s*[:：]?\s*"
         rf"[『〖【]\s*{re.escape(site.name)}\s*[』〗】]\s*"
         rf"{re.escape(marker)}\s*{re.escape(semantic)}\s*{re.escape(marker)}\s*"
-        rf"[【〖\[]\s*(?P<zodiac>[{ZODIACS}]\s*[-－、,，.。· ]?\s*[{ZODIACS}])\s*[】〗\]]\s*"
+        rf"[【〖\[]\s*(?P<zodiac>[{ZODIACS}]\s*[-－、,，.。· ]{{0,3}}\s*[{ZODIACS}])\s*[】〗\]]\s*"
         rf"开\s*[:：]?\s*(?P<open>[^\s准中错赢对↑√]+)"
     )
     return records_from_pattern(text, pattern)
