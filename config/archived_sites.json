@@ -189,5 +189,14 @@
     "stop": "\\s*下一贴\\s*[：:]",
     "record": "(?P<period>\\d{3})\\s*期\\s*[:：]?\\s*🤘\\s*『\\s*探讨资料\\s*』\\s*🤘\\s*绝杀②肖\\s*🤘\\s*[【\\[]\\s*(?P<zodiac>[牛马羊鸡狗猪鼠虎兔龙蛇猴]\\s*[-－、，,。.]?\\s*[牛马羊鸡狗猪鼠虎兔龙蛇猴])\\s*[】\\]]\\s*[开開]\\s*[:：]?\\s*(?P<open>[^\\s准中错赢对]+)",
     "archive_reason": "用户明确封存：SSL连接失败（证书主机名不匹配，certificate is not valid for 'bbs03.836386.cyou'），不再抓取"
+  },
+  {
+    "name": "小算算",
+    "pick": "bottom",
+    "url": "https://zcphjs.ce83x-ms2rz-orwude.work:12277/#/users/214200",
+    "parser": "xiaosuan_bottom_two_zodiac",
+    "payload": "tuku_user_forums",
+    "history_authorization": "本次允许不足10期",
+    "archive_reason": "用户明确封存：内容尚未发布（用户论坛接口最新仅到 260 期，268 期未发布），不再抓取"
   }
 ]
