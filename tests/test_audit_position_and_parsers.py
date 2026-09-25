@@ -90,6 +90,31 @@ def test_document_conflicts_use_positions_locally_but_values_across_documents() 
     )
 
 
+def test_requested_period_stays_unique_when_an_older_window_period_repeats() -> None:
+    # A site may republish a corrected line for an older period.  266 repeats
+    # inside the bottom window, but the requested 268 remains unique.
+    records = [
+        record(265, "鸡马", 30),
+        record(266, "牛猪", 40),
+        record(266, "鸡狗", 50),
+        record(268, "兔鸡", 60),
+    ]
+
+    validate_document_windows(
+        [("脚本解码", records)], site(pick="bottom"), "多文档", period=268
+    )
+
+    assert select_record(records, 268, site(pick="bottom")).zodiac == "兔鸡"
+
+    with pytest.raises(ValueError, match="数据存在冲突"):
+        validate_document_windows(
+            [("脚本解码", [record(268, "兔鸡", 60), record(268, "马羊", 70)])],
+            site(pick="bottom"),
+            "多文档",
+            period=268,
+        )
+
+
 def test_chart_parser_preserves_same_value_at_distinct_positions() -> None:
     source = (
         "《王者九点网㊣杀禁统计》"

@@ -15,6 +15,11 @@ def validate_document_windows(
     for label, records in observed_documents:
         local: dict[int, set[tuple[str, int]]] = {}
         window = direction_window(records, site)
+        if period is not None:
+            # Only the requested period needs a unique, agreed value.  The rest of
+            # the direction window is historical context, and a site may republish
+            # a corrected line for an older period without making this one ambiguous.
+            window = [record for record in window if record.period == period]
         for record in window:
             signature = record_signature(record)
             local.setdefault(record.period, set()).add(signature)
