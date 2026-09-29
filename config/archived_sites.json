@@ -198,5 +198,23 @@
     "payload": "tuku_user_forums",
     "history_authorization": "本次允许不足10期",
     "archive_reason": "用户明确封存：内容尚未发布（用户论坛接口最新仅到 260 期，268 期未发布），不再抓取"
+  },
+  {
+    "name": "将杀两肖",
+    "pick": "尾部",
+    "url": "https://43666.886677a.app:2563/htm/bbs/top010.html",
+    "parser": "site_scoped_two_zodiac",
+    "payload": "page_and_scripts",
+    "title": "将杀两肖",
+    "archive_reason": "用户明确封存：栏目已下架（配置页已被换成其他栏目：88论坛 /main/bbs/010.html 现为「瞬杀二肖」、一本万利 /htm/tz/bbs/010.html 现为「杀琴棋书画」；两主机 001..200 全部栏目页均无原栏目名，按 271..263 历史窗口指纹反查 200 页零匹配），不再抓取"
+  },
+  {
+    "name": "一本万利死杀",
+    "pick": "尾部",
+    "url": "https://mflmcobome.26222hi.app:2569/htm/bbs/top010.html",
+    "parser": "yiben_wanli_sisha_bottom",
+    "payload": "page_and_scripts",
+    "title": "一本万利",
+    "archive_reason": "用户明确封存：栏目已下架（配置页已被换成其他栏目：88论坛 /main/bbs/010.html 现为「瞬杀二肖」、一本万利 /htm/tz/bbs/010.html 现为「杀琴棋书画」；两主机 001..200 全部栏目页均无原栏目名，按 271..263 历史窗口指纹反查 200 页零匹配），不再抓取"
   }
 ]
