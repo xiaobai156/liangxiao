@@ -2218,5 +2218,13 @@
     "parser": "generic_two_zodiac",
     "title": "作者\\s*[:：]\\s*澳门铁粉",
     "record": "(?P<period>258)期[^\\n]{0,80}?[【〖]\\s*(?P<zodiac>[牛马羊鸡狗猪鼠虎兔龙蛇猴]{2})\\s*[】〗][^\\n]{0,40}?(?P<open>[^\\s准中错赢对]+)"
+  },
+  {
+    "name": "瞬杀二肖",
+    "pick": "尾部",
+    "url": "https://43666.886677a.app:2563/htm/bbs/top010.html",
+    "parser": "site_scoped_two_zodiac",
+    "payload": "page_and_scripts",
+    "title": "瞬杀二肖"
   }
 ]
