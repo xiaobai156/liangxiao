@@ -1,5 +1,9 @@
 from __future__ import annotations
 
+import json
+import re
+from pathlib import Path
+
 import requests
 
 from domain.models import PayloadDocument, Site
@@ -8,6 +12,26 @@ from fetching.page import collect_page_and_scripts
 from parsers.registry import ParserRegistry
 from services.single_period import parse_bundle_for_period
 from validation.boundaries import linked_document_is_authorized
+
+
+def _wulin_entry() -> dict[str, object]:
+    root = Path(__file__).resolve().parents[1]
+    raw = json.loads((root / "config" / "sites.json").read_text(encoding="utf-8-sig"))
+    return next(item for item in raw if item["name"] == "武林高手")
+
+
+def _wulin_site() -> Site:
+    entry = _wulin_entry()
+    return Site(
+        entry["name"],
+        "top",
+        entry["url"],
+        parser=entry["parser"],
+        payload=entry["payload"],
+        title=entry["title"],
+        record=entry["record"],
+        linked_document_pattern=entry["linked_document_pattern"],
+    )
 
 
 def _context(sources: dict[str, str]) -> tuple[FetchContext, list[str]]:
@@ -356,3 +380,55 @@ def test_wulin_configured_title_link_selects_the_requested_top_period() -> None:
     assert selected.period == 236
     assert selected.zodiac == "蛇龙"
     assert selected.position >= 0
+
+
+def test_wulin_configured_pattern_tolerates_data_script_directory_rotation() -> None:
+    pattern = str(_wulin_entry()["linked_document_pattern"])
+
+    # 站点把数据脚本目录整体轮换（09 -> 10 -> ...）后，配置必须仍命中同一 CDN 的数据脚本。
+    for directory in ("09", "10", "11"):
+        url = f"https://xia06.cosds.aohjifv.com/upload/script/{directory}/body.js"
+        assert re.match(pattern, url, flags=re.I), url
+    # 只放宽目录号，域与路径形状仍然锁定。
+    assert not re.match(pattern, "https://evil.test/upload/script/10/body.js", flags=re.I)
+    assert not re.match(pattern, "https://xia06.cosds.aohjifv.com/other/10/body.js", flags=re.I)
+
+
+def test_wulin_rotated_directory_selects_the_requested_top_period() -> None:
+    site = _wulin_site()
+    index_url = "https://gymmgzx.ef7xd-dl2r4-dqxbyc.xyz:16633/index.js"
+    wrong_url = "https://xia06.cosds.aohjifv.com/upload/script/10/wrong.js"
+    body_url = "https://xia06.cosds.aohjifv.com/upload/script/10/body.js"
+    context, calls = _context(
+        {
+            index_url: (
+                f"武林高手 274期 《三肖发财》 {wrong_url} "
+                f"武林高手 274期 《绝杀两肖》 {body_url}"
+            ),
+            body_url: (
+                "274期:绝杀两肖【羊猴】开:00 "
+                "273期:绝杀两肖【虎鼠】开:虎05 "
+                "272期:绝杀两肖【羊猴】开:蛇02"
+            ),
+        }
+    )
+
+    bundle = collect_page_and_scripts(
+        site,
+        '<script src="/index.js"></script>',
+        3,
+        context,
+        lambda _source, _site, _period: False,
+    )
+    _records, selected = parse_bundle_for_period(
+        bundle,
+        site,
+        274,
+        ParserRegistry.bind_sites([site]),
+    )
+
+    assert calls == [index_url, body_url]
+    assert wrong_url not in [document.url for document in bundle.documents]
+    assert selected.period == 274
+    assert selected.zodiac == "羊猴"
+
