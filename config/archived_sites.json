@@ -216,5 +216,14 @@
     "payload": "page_and_scripts",
     "title": "一本万利",
     "archive_reason": "用户明确封存：栏目已下架（配置页已被换成其他栏目：88论坛 /main/bbs/010.html 现为「瞬杀二肖」、一本万利 /htm/tz/bbs/010.html 现为「杀琴棋书画」；两主机 001..200 全部栏目页均无原栏目名，按 271..263 历史窗口指纹反查 200 页零匹配），不再抓取"
+  },
+  {
+    "name": "塞纳河畔",
+    "pick": "bottom",
+    "url": "https://plwyrcj.4ai8j-p62x5-pnsukp.work:29411/article/manager/6a1721a81d09553bfe753e03?url=gjp",
+    "parser": "manager_article_two_zodiac",
+    "payload": "admin_article_api",
+    "api_url": "https://plwyrcj.4ai8j-p62x5-pnsukp.work:29411/api/proxy/landing-page-data?url=gjp",
+    "archive_reason": "用户明确封存：站方后台文章已下架（281 期核查：landing-page-data?url=gjp 连续 6 次均为 2,188,979 B，不再返回文章 id 6a1721a81d09553bfe753e03；响应内 15 篇在列文章的作者名中不存在「塞纳河畔」，明文/base64(utf8)/base64(gbk)/HTML 实体四种形式均无匹配；配置文章页在 requests 与真实浏览器渲染下均为空壳（可见 19/49 字，0 条期号行）；18:26 生成失败记录时文章尚在，约半小时内被下架或换帖），281 期无法取值，不再抓取"
   }
 ]
