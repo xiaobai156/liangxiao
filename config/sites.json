@@ -314,14 +314,6 @@
     "payload": "page_and_scripts"
   },
   {
-    "name": "手起刀落",
-    "pick": "顶部",
-    "url": "https://nxesrklm.a3ds1-gzs2r-jsppci.work:16677/#am",
-    "parser": "shouqi_daoluo_top",
-    "payload": "page_and_scripts",
-    "title": "手起刀落"
-  },
-  {
     "name": "武林高手",
     "pick": "顶部",
     "url": "https://gymmgzx.ef7xd-dl2r4-dqxbyc.xyz:16633/",
@@ -381,14 +373,6 @@
     "parser": "site_scoped_two_zodiac",
     "payload": "page_and_scripts",
     "title": "有喜有忧"
-  },
-  {
-    "name": "诸葛忘机",
-    "pick": "顶部",
-    "url": "https://msbqxti.zhx2n-7v5x3-ivdpud.xyz:16677/topic/682730.html",
-    "parser": "site_scoped_two_zodiac",
-    "payload": "page_and_scripts",
-    "title": "诸葛忘机"
   },
   {
     "name": "文房四宝",
@@ -1118,14 +1102,6 @@
     "url": "https://bouxeto.evrcg-2aasr-pflslr.xyz:16677/topic/328420.html",
     "payload": "page_and_scripts",
     "title": "绘声绘色",
-    "record": "(?P<period>\\d{3})\\s*期[^期]{0,90}?(?:绝\\s*杀|稳\\s*杀|精\\s*杀|无错\\s*杀|砍\\s*杀|杀)\\s*(?:二|两|2|２|②)\\s*肖[^期]{0,50}?[【〖\\[（(《『〈]\\s*(?P<zodiac>[牛马羊鸡狗猪鼠虎兔龙蛇猴]\\s*[-－、,，.。· ]?\\s*[牛马羊鸡狗猪鼠虎兔龙蛇猴])\\s*[】〗\\]）)》』〉]\\s*(?:←|[~～_\\-－—|]*)\\s*(?:开|開)\\s*[:：]?\\s*(?P<open>[^\\s准中错赢对↑√]+)"
-  },
-  {
-    "name": "绝对好料",
-    "pick": "顶部",
-    "url": "https://yioznkua.snfqn-48psf-vctwsw.xyz:16677/topic/246165.html",
-    "payload": "page_and_scripts",
-    "title": "绝对好料",
     "record": "(?P<period>\\d{3})\\s*期[^期]{0,90}?(?:绝\\s*杀|稳\\s*杀|精\\s*杀|无错\\s*杀|砍\\s*杀|杀)\\s*(?:二|两|2|２|②)\\s*肖[^期]{0,50}?[【〖\\[（(《『〈]\\s*(?P<zodiac>[牛马羊鸡狗猪鼠虎兔龙蛇猴]\\s*[-－、,，.。· ]?\\s*[牛马羊鸡狗猪鼠虎兔龙蛇猴])\\s*[】〗\\]）)》』〉]\\s*(?:←|[~～_\\-－—|]*)\\s*(?:开|開)\\s*[:：]?\\s*(?P<open>[^\\s准中错赢对↑√]+)"
   },
   {
@@ -2083,14 +2059,6 @@
     "parser": "new_topic_235_exact",
     "payload": "page_and_scripts",
     "title": "杯中之水"
-  },
-  {
-    "name": "林间语屑",
-    "pick": "bottom",
-    "url": "https://citsyvlm.5ujgl-2q1ig-bszkno.work:17466/topic/682028.html",
-    "parser": "new_topic_235_exact",
-    "payload": "page_and_scripts",
-    "title": "林间语屑"
   },
   {
     "name": "恍然大悟",
