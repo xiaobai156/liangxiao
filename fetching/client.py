@@ -210,8 +210,8 @@ class FetchContext:
         self._texts: dict[tuple[str, tuple[str, ...], bool], str] = {}
         self._errors: dict[tuple[str, tuple[str, ...], bool], requests.RequestException] = {}
         self._url_locks: dict[tuple[str, tuple[str, ...], bool], Lock] = {}
-        self._rendered_texts: dict[tuple[str, tuple[str, ...]], str] = {}
-        self._render_locks: dict[tuple[str, tuple[str, ...]], Lock] = {}
+        self._rendered_texts: dict[tuple[str, tuple[str, ...], bool], str] = {}
+        self._render_locks: dict[tuple[str, tuple[str, ...], bool], Lock] = {}
         self._closed = False
         self._lock = Lock()
 
@@ -250,8 +250,9 @@ class FetchContext:
                     self._texts[cache_key] = text
             return text
 
-    def get_rendered(self, url: str, timeout: int, *, allowed_origins: tuple[str, ...] = ()) -> str:
-        cache_key = (url, allowed_origins)
+    def get_rendered(self, url: str, timeout: int, *, allowed_origins: tuple[str, ...] = (),
+                     ignore_https_errors: bool = False) -> str:
+        cache_key = (url, allowed_origins, ignore_https_errors)
         with self._lock:
             if self._closed:
                 raise requests.RequestException("抓取上下文已关闭")
@@ -270,8 +271,9 @@ class FetchContext:
                 if self._closed:
                     raise requests.RequestException("抓取上下文已关闭")
             from fetching.browser import PlaywrightRenderer
-            if isinstance(renderer, PlaywrightRenderer) and allowed_origins:
-                source = renderer(url, timeout, allowed_origins=allowed_origins)
+            if isinstance(renderer, PlaywrightRenderer) and (allowed_origins or ignore_https_errors):
+                source = renderer(url, timeout, allowed_origins=allowed_origins,
+                                  ignore_https_errors=ignore_https_errors)
             else:
                 source = renderer(url, timeout)
             validate_redirect(url, getattr(source, "final_url", url), allowed_origins)
@@ -294,7 +296,9 @@ class FetchContext:
 
 
 def get_site_text(context: FetchContext, url: str, timeout: int, site) -> str:
-    if site.payload == "curl_tls10_page_and_scripts":
+    # 未校验 TLS 的传输只对显式声明的站点开放：payload 旧TLS 兼容站，或配置了
+    # allow_invalid_certificate 的站点（站方证书过期且短期内不修，需用户授权）。
+    if site.payload == "curl_tls10_page_and_scripts" or site.allow_invalid_certificate:
         return context.get_text(url, timeout, allowed_origins=site.allowed_redirect_origins,
                                 legacy_insecure=True)
     if site.allowed_redirect_origins:
@@ -303,6 +307,7 @@ def get_site_text(context: FetchContext, url: str, timeout: int, site) -> str:
 
 
 def get_site_rendered(context: FetchContext, url: str, timeout: int, site) -> str:
-    if site.allowed_redirect_origins:
-        return context.get_rendered(url, timeout, allowed_origins=site.allowed_redirect_origins)
+    if site.allowed_redirect_origins or site.allow_invalid_certificate:
+        return context.get_rendered(url, timeout, allowed_origins=site.allowed_redirect_origins,
+                                    ignore_https_errors=site.allow_invalid_certificate)
     return context.get_rendered(url, timeout)

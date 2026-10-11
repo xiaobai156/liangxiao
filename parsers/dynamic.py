@@ -36,11 +36,15 @@ def parse_fixed_named_material_records(
     site: Site,
     marker: str,
     semantic: str,
+    *,
+    authors: tuple[str, ...] = (),
 ) -> list[Record]:
     text = html_to_text(source)
+    names = authors or (site.name,)
+    author_pattern = "|".join(re.escape(name) for name in names)
     pattern = re.compile(
         rf"(?P<period>\d{{3}})\s*期\s*[:：]?\s*"
-        rf"[『〖【]\s*{re.escape(site.name)}\s*[』〗】]\s*"
+        rf"[『〖【]\s*(?:{author_pattern})\s*[』〗】]\s*"
         rf"{re.escape(marker)}\s*{re.escape(semantic)}\s*{re.escape(marker)}\s*"
         rf"[【〖\[]\s*(?P<zodiac>[{ZODIACS}]\s*[-－、,，.。· ]{{0,3}}\s*[{ZODIACS}])\s*[】〗\]]\s*"
         rf"开\s*[:：]?\s*(?P<open>[^\s准中错赢对↑√]+)"
@@ -89,8 +93,18 @@ def parse_rushen_tantao_read_page_records(source: str, site: Site) -> list[Recor
     return parse_fixed_named_material_records(source, site, "🚲", "绝杀②肖")
 
 
+# 该后台文章槽位（article id）的作者署名由站方轮换：花颜月貌 → 红云红河（284 期起）。
+# 身份锚点仍是同一 article id 上的「😜 绝杀②肖 😜」栏目格式；只接受已核实的署名，
+# 将来再换名时按解析失败暴露，而不是静默接受任意作者名。
+HUAYAN_YUEMAO_ROTATING_AUTHORS = ("花颜月貌", "红云红河")
+
+
 def parse_huayan_yuemao_admin_article_records(source: str, site: Site) -> list[Record]:
-    return parse_fixed_named_material_records(source, site, "😜", "绝杀②肖")
+    if site.name != "花颜月貌" or site.payload != "admin_article_api":
+        return []
+    return parse_fixed_named_material_records(
+        source, site, "😜", "绝杀②肖", authors=HUAYAN_YUEMAO_ROTATING_AUTHORS
+    )
 
 
 def parse_yeyeshengcai_admin_article_records(source: str, site: Site) -> list[Record]:

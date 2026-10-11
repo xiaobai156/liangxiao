@@ -45,7 +45,7 @@ ALLOWED_SITE_FIELDS = frozenset({
     "name", "pick", "url", "parser", "title", "record", "stop", "payload", "api_url",
     "keywords", "profile_id", "linked_document_pattern", "history_authorization",
     "history_missing_periods", "history_valid_periods", "allowed_redirect_origins",
-    "allowed_document_origins",
+    "allowed_document_origins", "allow_invalid_certificate",
 })
 
 
@@ -77,6 +77,13 @@ def _origin_options(item: Mapping[str, object], field: str, name: str) -> tuple[
             raise ConfigError(f"{name} {field}来源无效")
         normalized.append(f"{parsed.scheme}://{parsed.netloc.lower()}")
     return tuple(dict.fromkeys(normalized))
+
+
+def _bool_option(item: Mapping[str, object], field: str, name: str) -> bool:
+    value = item.get(field, False)
+    if not isinstance(value, bool):
+        raise ConfigError(f"{name} {field}必须为布尔值")
+    return value
 
 
 def site_from_mapping(
@@ -152,6 +159,7 @@ def site_from_mapping(
         linked_document_pattern=str(item.get("linked_document_pattern") or "").strip(),
         allowed_redirect_origins=_origin_options(item, "allowed_redirect_origins", name),
         allowed_document_origins=_origin_options(item, "allowed_document_origins", name),
+        allow_invalid_certificate=_bool_option(item, "allow_invalid_certificate", name),
     )
 
 

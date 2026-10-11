@@ -914,7 +914,8 @@
     "pick": "顶部",
     "url": "https://estsghu.t7gsm-xl1x8-uohlna.xyz:16677/",
     "parser": "zhuque_forbidden_material",
-    "payload": "browser_rendered_page"
+    "payload": "browser_rendered_page",
+    "allow_invalid_certificate": true
   },
   {
     "name": "民间高手",

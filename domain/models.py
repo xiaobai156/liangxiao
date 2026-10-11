@@ -24,6 +24,7 @@ class Site:
     linked_document_pattern: str = ""
     allowed_redirect_origins: tuple[str, ...] = ()
     allowed_document_origins: tuple[str, ...] = ()
+    allow_invalid_certificate: bool = False
 
     @property
     def identity(self) -> tuple[str, str, str]:

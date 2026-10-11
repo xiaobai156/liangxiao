@@ -17,7 +17,8 @@ except ImportError:  # pragma: no cover - the optional renderer is not installed
 
 RENDER_WAIT_GRACE_SECONDS = 5.0
 SHUTDOWN_TIMEOUT_SECONDS = 3.0
-RenderCommand = tuple[str, str, int, queue.Queue[tuple[bool, object]] | None, tuple[str, ...]]
+RenderCommand = tuple[str, str, int, queue.Queue[tuple[bool, object]] | None,
+                      tuple[str, ...], bool]
 
 
 def _render_page(browser_context: object, url: str, timeout: int,
@@ -90,7 +91,8 @@ class PlaywrightRenderer:
         self._thread = threading.Thread(target=self._run, name="playwright-renderer", daemon=True)
         self._thread.start()
 
-    def __call__(self, url: str, timeout: int, *, allowed_origins: tuple[str, ...] = ()) -> str:
+    def __call__(self, url: str, timeout: int, *, allowed_origins: tuple[str, ...] = (),
+                 ignore_https_errors: bool = False) -> str:
         result: queue.Queue[tuple[bool, object]] = queue.Queue(maxsize=1)
         with self._state_lock:
             if self._closed:
@@ -99,7 +101,8 @@ class PlaywrightRenderer:
                 raise self._failure
             if not self._thread.is_alive():
                 raise requests.RequestException("浏览器渲染器线程已退出")
-            self._commands.put(("render", url, timeout, result, allowed_origins))
+            self._commands.put(("render", url, timeout, result, allowed_origins,
+                                ignore_https_errors))
         try:
             ok, value = result.get(timeout=max(0, timeout) + RENDER_WAIT_GRACE_SECONDS)
         except queue.Empty as exc:
@@ -107,7 +110,7 @@ class PlaywrightRenderer:
             with self._state_lock:
                 self._failure = error
                 self._fail_pending(error)
-                self._commands.put(("close", "", 0, None, ()))
+                self._commands.put(("close", "", 0, None, (), False))
             raise error from exc
         if not ok:
             raise value
@@ -116,7 +119,7 @@ class PlaywrightRenderer:
     def _fail_pending(self, error: requests.RequestException) -> None:
         while True:
             try:
-                command, _url, _timeout, result, _origins = self._commands.get_nowait()
+                command, _url, _timeout, result, _origins, _insecure = self._commands.get_nowait()
             except queue.Empty:
                 return
             if command == "render":
@@ -128,16 +131,16 @@ class PlaywrightRenderer:
                 return
             self._closed = True
             if self._thread.is_alive():
-                self._commands.put(("close", "", 0, None, ()))
+                self._commands.put(("close", "", 0, None, (), False))
         if threading.current_thread() is not self._thread:
             self._thread.join(timeout=SHUTDOWN_TIMEOUT_SECONDS)
 
     def _run(self) -> None:
-        playwright = browser = browser_context = None
+        playwright = browser = browser_context = insecure_context = None
         active_result = None
         try:
             while True:
-                command, url, timeout, active_result, origins = self._commands.get()
+                command, url, timeout, active_result, origins, insecure = self._commands.get()
                 if command == "close":
                     break
                 if browser_context is None:
@@ -146,9 +149,16 @@ class PlaywrightRenderer:
                     playwright = sync_playwright().start()
                     browser = playwright.chromium.launch(headless=True)
                     browser_context = browser.new_context(user_agent="Mozilla/5.0")
+                active_context = browser_context
+                if insecure:
+                    # 站点级 TLS 豁免（站方证书过期）只影响显式声明的站点，且使用独立上下文。
+                    if insecure_context is None:
+                        insecure_context = browser.new_context(
+                            user_agent="Mozilla/5.0", ignore_https_errors=True)
+                    active_context = insecure_context
                 try:
-                    rendered = (_render_page(browser_context, url, timeout, origins)
-                                if origins else _render_page(browser_context, url, timeout))
+                    rendered = (_render_page(active_context, url, timeout, origins)
+                                if origins else _render_page(active_context, url, timeout))
                 except Exception as exc:
                     _deliver(active_result, False, _render_error(exc))
                 else:
@@ -163,7 +173,8 @@ class PlaywrightRenderer:
         finally:
             with self._state_lock:
                 self._fail_pending(self._failure or requests.RequestException("浏览器渲染器已退出"))
-            for resource, method in ((browser_context, "close"), (browser, "close"), (playwright, "stop")):
+            for resource, method in ((insecure_context, "close"), (browser_context, "close"),
+                                     (browser, "close"), (playwright, "stop")):
                 if resource is not None:
                     try:
                         getattr(resource, method)()
@@ -171,9 +182,10 @@ class PlaywrightRenderer:
                         pass
 
 
-def render_browser_text(url: str, timeout: int = 25) -> str:
+def render_browser_text(url: str, timeout: int = 25, *,
+                        ignore_https_errors: bool = False) -> str:
     renderer = PlaywrightRenderer()
     try:
-        return renderer(url, timeout)
+        return renderer(url, timeout, ignore_https_errors=ignore_https_errors)
     finally:
         renderer.close()
