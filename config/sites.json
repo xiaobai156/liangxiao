@@ -376,7 +376,7 @@
   },
   {
     "name": "文房四宝",
-    "pick": "尾部",
+    "pick": "顶部",
     "url": "https://xoxtpupt.bvptr-i3mv8-pbjxin.work:17455/topic/467525.html",
     "parser": "site_scoped_two_zodiac",
     "payload": "page_and_scripts",
