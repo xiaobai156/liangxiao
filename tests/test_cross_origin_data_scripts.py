@@ -432,3 +432,55 @@ def test_wulin_rotated_directory_selects_the_requested_top_period() -> None:
     assert selected.period == 274
     assert selected.zodiac == "羊猴"
 
+
+def test_wulin_configured_pattern_tolerates_data_script_domain_rotation() -> None:
+    pattern = str(_wulin_entry()["linked_document_pattern"])
+
+    # 站点把数据脚本 CDN 域整体轮换（cosds.aohjifv.com -> chypqpfc.dzjunk.com）后，配置必须仍命中数据脚本。
+    for host in ("xia03.cosds.aohjifv.com", "xia03.chypqpfc.dzjunk.com"):
+        url = f"https://{host}/upload/script/10/body.js"
+        assert re.match(pattern, url, flags=re.I), url
+    # 只放宽已核实的两个 CDN 域，域名形状、路径形状与脚本后缀仍然锁定。
+    assert not re.match(pattern, "https://evil.test/upload/script/10/body.js", flags=re.I)
+    assert not re.match(pattern, "https://xia03.cosds.example.com/upload/script/10/body.js", flags=re.I)
+    assert not re.match(pattern, "https://xia03.chypqpfc.dzjunk.com/other/10/body.js", flags=re.I)
+
+
+def test_wulin_rotated_domain_selects_the_requested_top_period() -> None:
+    site = _wulin_site()
+    index_url = "https://gymmgzx.ef7xd-dl2r4-dqxbyc.xyz:16633/index.js"
+    wrong_url = "https://xia03.cosds.example.com/upload/script/10/wrong.js"
+    body_url = "https://xia03.chypqpfc.dzjunk.com/upload/script/10/body.js"
+    context, calls = _context(
+        {
+            index_url: (
+                f"武林高手 289期 《三肖发财》 {wrong_url} "
+                f"武林高手 289期 《绝杀两肖》 {body_url}"
+            ),
+            body_url: (
+                "289期:绝杀两肖【羊马】开:00 "
+                "288期:绝杀两肖【猪狗】开:马25 "
+                "287期:绝杀两肖【马猴】开:猪08"
+            ),
+        }
+    )
+
+    bundle = collect_page_and_scripts(
+        site,
+        '<script src="/index.js"></script>',
+        3,
+        context,
+        lambda _source, _site, _period: False,
+    )
+    _records, selected = parse_bundle_for_period(
+        bundle,
+        site,
+        289,
+        ParserRegistry.bind_sites([site]),
+    )
+
+    assert calls == [index_url, body_url]
+    assert wrong_url not in [document.url for document in bundle.documents]
+    assert selected.period == 289
+    assert selected.zodiac == "羊马"
+
