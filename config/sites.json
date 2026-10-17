@@ -2187,5 +2187,29 @@
     "parser": "site_scoped_two_zodiac",
     "payload": "page_and_scripts",
     "title": "瞬杀二肖"
+  },
+  {
+    "name": "千羽制作",
+    "pick": "顶部",
+    "url": "https://zvnarl.zo7b8-cg55k-zautjw.work:17477/topic/219979.html",
+    "parser": "site_scoped_two_zodiac",
+    "payload": "page_and_scripts",
+    "title": "千羽制作"
+  },
+  {
+    "name": "同出一辙",
+    "pick": "顶部",
+    "url": "https://kplsux.v2ubt-ak9tc-ryjuwe.cyou:17477/topic/292706.html",
+    "parser": "site_scoped_two_zodiac",
+    "payload": "page_and_scripts",
+    "title": "同出一辙"
+  },
+  {
+    "name": "春暧花开",
+    "pick": "尾部",
+    "url": "https://dtnjpph.1p0w8-q5dks-oxbahg.xyz:16677/topic/450438.html",
+    "parser": "site_scoped_two_zodiac",
+    "payload": "page_and_scripts",
+    "title": "春暧花开"
   }
 ]
