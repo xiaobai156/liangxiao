@@ -37,6 +37,13 @@ EXPECTED = {
         "payload": "page_and_scripts",
         "title": "春暧花开",
     },
+    "笑容可掬": {
+        "pick": "bottom",
+        "url": "https://dtnjpph.1p0w8-q5dks-oxbahg.xyz:16677/topic/450411.html",
+        "parser": "site_scoped_two_zodiac",
+        "payload": "page_and_scripts",
+        "title": "笑容可掬",
+    },
 }
 
 QIANYU_SOURCE = (
@@ -66,6 +73,21 @@ CHUNNUAN_SOURCE = (
     "288期:【 绝杀二肖特 】【猪鸡】开：狗13准\n"
     "289期:【 绝杀二肖特 】【马虎】开：0000准\n"
     "290期:【 绝杀二肖特 】【牛兔】开：0000准\n"
+)
+XIAORONG_EARLY_TABLE = "".join(
+    f"{period}期:【杀二肖】【牛马】开：龙15准\n" for period in range(295, 290, -1)
+)
+XIAORONG_SOURCE = (
+    "笑容可掬\n"
+    + XIAORONG_EARLY_TABLE
+    + "".join(
+        f"{period}期:【杀二肖】【{zodiac}】开：{opened}准\n"
+        for period, zodiac, opened in (
+            (288, "牛鼠", "马25"),
+            (289, "虎鸡", "蛇38"),
+            (290, "蛇牛", "0000"),
+        )
+    )
 )
 
 
@@ -115,6 +137,9 @@ def test_new_sites_290_cache_seed_has_ten_periods_with_evidence() -> None:
         ("同出一辙", TONGCHU_SOURCE, 290, "羊马"),
         ("春暧花开", CHUNNUAN_SOURCE, 290, "牛兔"),
         ("春暧花开", CHUNNUAN_SOURCE, 288, "猪鸡"),
+        ("笑容可掬", XIAORONG_SOURCE, 290, "蛇牛"),
+        ("笑容可掬", XIAORONG_SOURCE, 289, "虎鸡"),
+        ("笑容可掬", XIAORONG_SOURCE, 288, "牛鼠"),
     ],
 )
 def test_new_sites_290_parser_selects_the_configured_direction(
@@ -146,9 +171,22 @@ def test_qianyu_second_dataset_must_not_displace_the_first_window() -> None:
         ("千羽制作", QIANYU_SOURCE),
         ("同出一辙", TONGCHU_SOURCE),
         ("春暧花开", CHUNNUAN_SOURCE),
+        ("笑容可掬", XIAORONG_SOURCE),
     ],
 )
 def test_new_sites_290_reject_an_unknown_column_title(name: str, source: str) -> None:
     site = _live_sites()[name]
 
     assert parse_site_scoped_two_zodiac_records(source, replace(site, title="错误栏目")) == []
+
+
+def test_xiaorong_keyi_early_duplicate_table_stays_out_of_the_bottom_window() -> None:
+    site = _live_sites()["笑容可掬"]
+
+    records = parse_site_scoped_two_zodiac_records(XIAORONG_SOURCE, site)
+    early = [record for record in records if record.period > 290]
+
+    assert [record.period for record in early] == [295, 294, 293, 292, 291]
+    assert select_record(records, 290, site).zodiac == "蛇牛"
+    with pytest.raises(ValueError, match="bottom 候选内未找到 291 期"):
+        select_record(records, 291, site)

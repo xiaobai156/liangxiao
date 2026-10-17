@@ -2211,5 +2211,13 @@
     "parser": "site_scoped_two_zodiac",
     "payload": "page_and_scripts",
     "title": "春暧花开"
+  },
+  {
+    "name": "笑容可掬",
+    "pick": "尾部",
+    "url": "https://dtnjpph.1p0w8-q5dks-oxbahg.xyz:16677/topic/450411.html",
+    "parser": "site_scoped_two_zodiac",
+    "payload": "page_and_scripts",
+    "title": "笑容可掬"
   }
 ]
