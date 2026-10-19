@@ -870,21 +870,21 @@
   {
     "name": "王者九点",
     "pick": "尾部",
-    "url": "https://iboatq.pjgpm-epbf7-lxpezb.work:16677/",
+    "url": "https://lmqnjcli.p17ck-0acq9-jyoimc.work:17477/",
     "parser": "wangzhejiudian_two_zodiac",
     "payload": "page_and_scripts"
   },
   {
     "name": "王者九点禁二肖图",
     "pick": "顶部",
-    "url": "https://iboatq.pjgpm-epbf7-lxpezb.work:16677/",
+    "url": "https://lmqnjcli.p17ck-0acq9-jyoimc.work:17477/",
     "parser": "wangzhejiudian_forbidden_chart",
     "payload": "page_and_scripts"
   },
   {
     "name": "王者九点杀二肖图",
     "pick": "顶部",
-    "url": "https://iboatq.pjgpm-epbf7-lxpezb.work:16677/",
+    "url": "https://lmqnjcli.p17ck-0acq9-jyoimc.work:17477/",
     "parser": "wangzhejiudian_kill_chart",
     "payload": "page_and_scripts"
   },
@@ -1002,7 +1002,7 @@
   {
     "name": "踏雪无痕",
     "pick": "顶部",
-    "url": "https://ntvjzt.gau41-qu6jy-sotyug.work:16677/",
+    "url": "https://lytpaiha.avvex-u2dbi-wnssuy.work:17488/",
     "parser": "taxue_wuhen_top",
     "payload": "page_and_scripts",
     "title": "澳门\\s*踏雪无痕\\s*『\\s*绝\\s*杀\\s*二\\s*肖\\s*』",
