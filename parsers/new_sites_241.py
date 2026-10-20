@@ -47,9 +47,11 @@ ABSOLUTE_KILL_PATTERN = re.compile(
 def parse_lujiu_wensha_bottom_records(source: str, site: Site) -> list[Record]:
     if site.name != "卢九稳杀" or site.pick != "bottom" or site.url != LUJIU_WENSHA_URL:
         return []
+    # 站方把标题前缀从「NNN期」改成固定文案「我期」（293 期实测），
+    # 标题只用于定位区块；期数与取值仍由 STEADY_KILL_PATTERN 从记录行内取得。
     return _records_after_heading(
         source,
-        r"\d{3}\s*期\s*[:：]\s*49卢九\s*[【〖]\s*稳杀二肖\s*[】〗]\s*优秀推荐",
+        r"(?:\d{3}\s*期|我期)\s*[:：]\s*49卢九\s*[【〖]\s*稳杀二肖\s*[】〗]\s*优秀推荐",
         STEADY_KILL_PATTERN,
     )
 
