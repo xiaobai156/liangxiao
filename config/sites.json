@@ -255,7 +255,7 @@
   {
     "name": "六合头条",
     "pick": "顶部",
-    "url": "https://yioznkua.snfqn-48psf-vctwsw.xyz:16677/topic/246165.html",
+    "url": "https://xspecfdk.d20m5-cjylt-royoyv.work:17455/topic/246165.html",
     "parser": "liuhe_toutiao_linked_top",
     "payload": "page_and_scripts",
     "title": "六合头条.*?精品帖\\s*\\d{3}\\s*期\\s*【\\s*绝杀两肖\\s*】\\s*绝对好料",
@@ -1108,7 +1108,7 @@
   {
     "name": "对好料",
     "pick": "顶部",
-    "url": "https://yioznkua.snfqn-48psf-vctwsw.xyz:16677/topic/246166.html",
+    "url": "https://xspecfdk.d20m5-cjylt-royoyv.work:17455/topic/246166.html",
     "payload": "page_and_scripts",
     "title": "精品帖\\s*\\d{3}\\s*期\\s*【\\s*绝杀二肖\\s*】\\s*绝对好料",
     "record": "(?P<period>\\d{3})\\s*期[^期]{0,90}?(?:绝\\s*杀|稳\\s*杀|精\\s*杀|无错\\s*杀|砍\\s*杀|杀)\\s*(?:二|两|2|２|②)\\s*肖[^期]{0,50}?[【〖\\[（(《『〈]\\s*(?P<zodiac>[牛马羊鸡狗猪鼠虎兔龙蛇猴]\\s*[-－、,，.。· ]?\\s*[牛马羊鸡狗猪鼠虎兔龙蛇猴])\\s*[】〗\\]）)》』〉]\\s*(?:←|[~～_\\-－—|]*)\\s*(?:开|開)\\s*[:：]?\\s*(?P<open>[^\\s准中错赢对↑√]+)"
