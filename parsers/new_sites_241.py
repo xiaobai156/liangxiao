@@ -15,10 +15,30 @@ TIANLANG_SHAXING_URL = (
 )
 
 
+def _truncate_at_direction_break(records: list[Record]) -> list[Record]:
+    """期数必须保持同一方向；出现反转即认为已跨到别的区块，从反转处截断。
+
+    允许缺期（相邻两条差值可以为 2、3 等），只拒绝方向反转：
+    这样既不会把后面别的块的记录并进来，也不会因历史缺期误删有效记录。
+    """
+    if len(records) < 3:
+        return records
+    step = 1 if records[1].period > records[0].period else -1
+    kept = [records[0], records[1]]
+    for record in records[2:]:
+        if (record.period - kept[-1].period) * step <= 0:
+            break
+        kept.append(record)
+    return kept
+
+
 def _records_after_heading(
     source: str,
     heading_pattern: str,
     record_pattern: re.Pattern[str],
+    *,
+    stop_pattern: str = "",
+    stop_at_direction_break: bool = False,
 ) -> list[Record]:
     if DOCUMENT_BOUNDARY in source:
         return []
@@ -27,9 +47,15 @@ def _records_after_heading(
     if len(headings) != 1:
         return []
     heading = headings[0]
-    return records_from_pattern(
-        text[heading.end() :], record_pattern, base_offset=heading.end()
-    )
+    tail = text[heading.end() :]
+    if stop_pattern:
+        stop = re.search(stop_pattern, tail)
+        if stop:
+            tail = tail[: stop.start()]
+    records = records_from_pattern(tail, record_pattern, base_offset=heading.end())
+    if stop_at_direction_break:
+        records = _truncate_at_direction_break(records)
+    return records
 
 
 STEADY_KILL_PATTERN = re.compile(
@@ -49,10 +75,14 @@ def parse_lujiu_wensha_bottom_records(source: str, site: Site) -> list[Record]:
         return []
     # 站方把标题前缀从「NNN期」改成固定文案「我期」（293 期实测），
     # 标题只用于定位区块；期数与取值仍由 STEADY_KILL_PATTERN 从记录行内取得。
+    # 结束边界：记录段之后紧跟「鸿蒙娱乐城APP 授权…」广告区；再加期数方向反转截断，
+    # 防止窗口滑到页面下方别的「稳杀二肖」块而取到跨块/跨期的值。
     return _records_after_heading(
         source,
         r"(?:\d{3}\s*期|我期)\s*[:：]\s*49卢九\s*[【〖]\s*稳杀二肖\s*[】〗]\s*优秀推荐",
         STEADY_KILL_PATTERN,
+        stop_pattern=r"鸿蒙娱乐城APP|授权\s*[:：]\s*免费软件",
+        stop_at_direction_break=True,
     )
 
 
@@ -63,6 +93,8 @@ def parse_lujiu_home_top_records(source: str, site: Site) -> list[Record]:
         source,
         r"49卢九\s*[【〖]\s*稳杀二肖\s*[】〗]",
         STEADY_KILL_PATTERN,
+        stop_pattern=r"鸿蒙娱乐城APP|授权\s*[:：]\s*免费软件",
+        stop_at_direction_break=True,
     )
 
 

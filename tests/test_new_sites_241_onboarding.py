@@ -132,3 +132,47 @@ def test_new_site_parsers_reject_wrong_field_and_duplicate_heading() -> None:
 
     assert parse_lujiu_home_top_records(wrong_field, site_config) == []
     assert parse_lujiu_home_top_records(duplicated, site_config) == []
+
+
+def _wensha_line(period: int, zodiac: str) -> str:
+    return f"{period}期: 稳杀二肖 【 {zodiac} 】开: 马25 准 "
+
+
+WENSHA_HEADING = "我期：49卢九【稳杀二肖】优秀推荐 "
+WENSHA_AD = " 鸿蒙娱乐城APP 授权：免费软件 大小：16.98MB "
+
+
+def test_lujiu_wensha_block_stops_at_ad_area() -> None:
+    """记录段之后的广告区不得并入；广告区里同格式的行必须被截掉。"""
+    site_config = site("卢九稳杀", "bottom", LUJIU_WENSHA_URL, "lujiu_wensha_bottom")
+    source = (WENSHA_HEADING + _wensha_line(293, "鼠马") + _wensha_line(294, "虎羊")
+              + _wensha_line(295, "兔狗") + WENSHA_AD + _wensha_line(999, "龙虎"))
+
+    records_ = parse_lujiu_wensha_bottom_records(source, site_config)
+
+    assert [r.period for r in records_] == [293, 294, 295]
+    assert [r.zodiac for r in records_] == ["鼠马", "虎羊", "兔狗"]
+
+
+def test_lujiu_wensha_block_rejects_cross_block_slide() -> None:
+    """块后出现另一段同格式记录时，方向反转即截断，不能滑到别的块取值。"""
+    site_config = site("卢九稳杀", "bottom", LUJIU_WENSHA_URL, "lujiu_wensha_bottom")
+    slide = (WENSHA_HEADING + _wensha_line(293, "鼠马") + _wensha_line(294, "虎羊")
+             + _wensha_line(295, "兔狗") + " 其他内容 "
+             + _wensha_line(80, "鸡狗") + _wensha_line(81, "猪鼠") + _wensha_line(82, "牛兔"))
+
+    records_ = parse_lujiu_wensha_bottom_records(slide, site_config)
+
+    assert [r.period for r in records_] == [293, 294, 295]
+    assert select_record(records_, 295, site_config).zodiac == "兔狗"
+
+
+def test_lujiu_wensha_block_keeps_historical_gaps() -> None:
+    """历史缺期但方向一致时必须保留，不能因缺期被误截断。"""
+    site_config = site("卢九稳杀", "bottom", LUJIU_WENSHA_URL, "lujiu_wensha_bottom")
+    gapped = (WENSHA_HEADING + _wensha_line(290, "猪牛") + _wensha_line(292, "羊虎")
+              + _wensha_line(295, "兔狗") + WENSHA_AD)
+
+    records_ = parse_lujiu_wensha_bottom_records(gapped, site_config)
+
+    assert [r.period for r in records_] == [290, 292, 295]
