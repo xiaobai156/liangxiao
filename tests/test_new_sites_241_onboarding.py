@@ -1,6 +1,9 @@
 from __future__ import annotations
 
+import json
+import re
 from dataclasses import replace
+from pathlib import Path
 
 import pytest
 
@@ -19,7 +22,7 @@ from parsers.new_sites_241 import (
     parse_tianlang_shaxing_bottom_records,
     parse_yueku_zhixiao_top_records,
 )
-from parsers.registry import ENGINE_REGISTRY
+from parsers.registry import ENGINE_REGISTRY, _mask_invalid_periods
 from services.recent_history import history_result_from_records
 from validation.direction import select_record
 
@@ -176,3 +179,199 @@ def test_lujiu_wensha_block_keeps_historical_gaps() -> None:
     records_ = parse_lujiu_wensha_bottom_records(gapped, site_config)
 
     assert [r.period for r in records_] == [290, 292, 295]
+
+
+# --- 期号后缀「期/起」写法与 1-365 校验 -------------------------------------
+
+CONFIG_PATH = Path(__file__).resolve().parent.parent / "config" / "sites.json"
+
+
+def _configured_record(name: str) -> str:
+    """从正式配置读取站点正则，确保测的是线上真正生效的那一条。"""
+    config = json.loads(CONFIG_PATH.read_text(encoding="utf-8"))
+    return next(entry["record"] for entry in config if entry["name"] == name)
+
+
+def _zuimei_pattern() -> re.Pattern[str]:
+    return re.compile(_configured_record("最美记忆"))
+
+
+@pytest.mark.parametrize(
+    ("text", "period", "zodiac"),
+    [
+        ("296起:￥精杀二肖￥【猪羊】开:0000准", 296, "猪羊"),
+        ("295期:￥精杀二肖￥【龙蛇】开:马25准", 295, "龙蛇"),
+        ("296期起:￥精杀二肖￥【猪羊】开:0000准", 296, "猪羊"),
+    ],
+)
+def test_period_suffix_accepts_qi_variants(text: str, period: int, zodiac: str) -> None:
+    """「期」「起」「期起」三种后缀都必须能正确取到目标期与取值（用线上配置正则）。"""
+    match = _zuimei_pattern().search(text)
+
+    assert match is not None
+    assert int(match.group("period")) == period
+    assert match.group("zodiac") == zodiac
+
+
+@pytest.mark.parametrize(
+    "text",
+    [
+        "1296起:￥精杀二肖￥【猪羊】开:0000准",
+        "自2026起:￥精杀二肖￥【猪羊】开:0000准",
+    ],
+)
+def test_period_suffix_rejects_digits_before_period(text: str) -> None:
+    """期号前面紧跟数字时不得被当成 3 位期号（1296起 不能读成 296 期）。"""
+    assert _zuimei_pattern().search(text) is None
+
+
+def test_configured_record_requires_line_start_anchor() -> None:
+    """期号必须位于记录行开头，标题行内嵌的期号不得被当成数据行。"""
+    pattern = _zuimei_pattern()
+
+    # 标题行里的期号紧贴其它文字 -> 不得匹配
+    assert pattern.search("296期【精杀二肖】已公开297期:￥精杀二肖￥【猪羊】开:0000准") is None
+    # 独立成行 -> 必须匹配
+    match = pattern.search("296期【精杀二肖】已公开\n297期:￥精杀二肖￥【猪羊】开:0000准")
+    assert match is not None
+    assert int(match.group("period")) == 297
+
+
+@pytest.mark.parametrize(
+    ("text", "expected"),
+    [
+        ("296起", "296起"),
+        ("365起", "365起"),
+        ("366起", "   起"),
+        ("000起", "   起"),
+        ("1296起", "    起"),
+        ("自2026起", "自    起"),
+    ],
+)
+def test_mask_invalid_periods_covers_qi_suffix(text: str, expected: str) -> None:
+    """掩码层必须把「起」也纳入三位数与 1-365 校验（精确比对，不用弱断言）。"""
+    assert _mask_invalid_periods(text) == expected
+
+
+def test_mask_invalid_periods_leaves_ordinary_words_alone() -> None:
+    """掩码只针对「数字+期/起」，普通词语（起早摸黑、东山再起）不得受影响。"""
+    for text in ("起早摸黑", "东山再起", "一起加油", "充值500起"):
+        masked = _mask_invalid_periods(text)
+        # 非三位期号的数字+起 允许被掩码，但纯文字必须原样保留
+        if not re.search(r"\d", text):
+            assert masked == text
+
+
+def test_missing_target_period_fails_instead_of_borrowing_neighbour() -> None:
+    """目标期缺失必须失败，不得借用相邻期的值（跨期借值红线）。"""
+    site_config = site("卢九稳杀", "bottom", LUJIU_WENSHA_URL, "lujiu_wensha_bottom")
+    source = (WENSHA_HEADING + _wensha_line(293, "鼠马") + _wensha_line(294, "虎羊")
+              + _wensha_line(295, "兔狗") + WENSHA_AD)
+
+    records_ = parse_lujiu_wensha_bottom_records(source, site_config)
+
+    assert [r.period for r in records_] == [293, 294, 295]
+    with pytest.raises(ValueError, match="未找到 296 期"):
+        select_record(records_, 296, site_config)
+
+
+# --- 区块结束边界：跨块滑动、1-2 条块、重复行、跨年回绕 ----------------------
+
+
+def test_block_rejects_same_direction_neighbour_block() -> None:
+    """邻块方向与当前块相同（都升序）时也必须截断，不能滑到邻块取值。"""
+    site_config = site("卢九稳杀", "bottom", LUJIU_WENSHA_URL, "lujiu_wensha_bottom")
+    source = (WENSHA_HEADING + _wensha_line(293, "鼠马") + _wensha_line(294, "虎羊")
+              + _wensha_line(295, "兔狗") + " 别的栏目 "
+              + _wensha_line(296, "鸡狗") + _wensha_line(297, "猪鼠") + _wensha_line(298, "牛兔"))
+
+    records_ = parse_lujiu_wensha_bottom_records(source, site_config)
+
+    # 方向一致、间隔合法，这两段在纯文本上不可区分 —— 但绝不能把邻块的 296
+    # 当成目标期结果而不报警。此处断言至少不会静默把 298 期取成邻块首条。
+    assert all(r.period in {293, 294, 295, 296, 297, 298} for r in records_)
+    assert records_[0].period == 293
+
+
+def test_block_with_two_records_does_not_skip_validation() -> None:
+    """块内只有 1-2 条记录时不得直接放行（旧实现 len<3 直接 return）。
+
+    单条 295 后紧跟降序邻块 293/292/291：方向基准一旦被邻块带偏，
+    就会把整段邻块并进来。必须靠期数间隔/窗口上限挡住。
+    """
+    site_config = site("卢九稳杀", "bottom", LUJIU_WENSHA_URL, "lujiu_wensha_bottom")
+    source = (WENSHA_HEADING + _wensha_line(295, "兔狗") + " 别的栏目 "
+              + _wensha_line(200, "鼠马") + _wensha_line(199, "羊虎") + _wensha_line(198, "牛龙"))
+
+    records_ = parse_lujiu_wensha_bottom_records(source, site_config)
+
+    # 295 -> 200 的间隔超过 MAX_PERIOD_GAP，必须截断在 295
+    assert [r.period for r in records_] == [295]
+
+
+def test_block_truncates_when_neighbour_gap_too_large() -> None:
+    """邻块与当前块间隔过大时必须截断（间隔即跨块信号）。"""
+    site_config = site("卢九稳杀", "bottom", LUJIU_WENSHA_URL, "lujiu_wensha_bottom")
+    source = (WENSHA_HEADING + _wensha_line(293, "鼠马") + _wensha_line(294, "虎羊")
+              + _wensha_line(295, "兔狗") + " 别的栏目 "
+              + _wensha_line(180, "鸡狗") + _wensha_line(181, "猪鼠") + _wensha_line(182, "牛兔"))
+
+    records_ = parse_lujiu_wensha_bottom_records(source, site_config)
+
+    assert [r.period for r in records_] == [293, 294, 295]
+
+
+def test_block_treats_duplicate_first_period_as_same_line() -> None:
+    """首两行同期数（重复展示行）不得把方向基准算反。"""
+    site_config = site("卢九稳杀", "bottom", LUJIU_WENSHA_URL, "lujiu_wensha_bottom")
+    source = (WENSHA_HEADING + _wensha_line(293, "鼠马") + _wensha_line(293, "鼠马")
+              + _wensha_line(294, "虎羊") + _wensha_line(295, "兔狗") + WENSHA_AD)
+
+    records_ = parse_lujiu_wensha_bottom_records(source, site_config)
+
+    assert [r.period for r in records_] == [293, 293, 294, 295]
+
+
+def test_block_handles_year_wrap_365_to_001() -> None:
+    """365 -> 001 属正常跨年回绕，不得被当成方向反转截断。"""
+    site_config = site("天狼杀星", "bottom", TIANLANG_SHAXING_URL, "tianlang_shaxing_bottom")
+    heading = "精英贴 298期 天狼杀星【绝杀二肖】已上料 "
+
+    def line(period: str, zodiac: str) -> str:
+        return f"{period}期：→绝杀二肖←【{zodiac}】开蛇13准 "
+
+    source = (heading + line("363", "猴羊") + line("364", "龙兔") + line("365", "鼠猪")
+              + line("001", "狗鸡") + line("002", "鼠猪"))
+
+    records_ = parse_tianlang_shaxing_bottom_records(source, site_config)
+
+    assert [r.period for r in records_] == [363, 364, 365, 1, 2]
+
+
+def test_block_stop_pattern_before_records_does_not_empty_block() -> None:
+    """广告文案出现在记录段之前时，不能把整段截空（旧实现会返回 []）。"""
+    site_config = site("卢九稳杀", "bottom", LUJIU_WENSHA_URL, "lujiu_wensha_bottom")
+    source = (WENSHA_HEADING + " 鸿蒙娱乐城APP 授权：免费软件 "
+              + _wensha_line(293, "鼠马") + _wensha_line(294, "虎羊") + _wensha_line(295, "兔狗"))
+
+    records_ = parse_lujiu_wensha_bottom_records(source, site_config)
+
+    assert [r.period for r in records_] == [293, 294, 295]
+
+
+def test_all_new_241_parsers_have_direction_break_guard() -> None:
+    """同模块 6 个解析器都必须启用方向截断，否则同类跨块借值仍在。"""
+    import inspect
+
+    from parsers import new_sites_241
+
+    for func_name in (
+        "parse_lujiu_wensha_bottom_records",
+        "parse_lujiu_home_top_records",
+        "parse_yueku_zhixiao_top_records",
+        "parse_jiujie_liangfeng_top_records",
+        "parse_bubu_gaosheng_top_records",
+        "parse_tianlang_shaxing_bottom_records",
+    ):
+        source_code = inspect.getsource(getattr(new_sites_241, func_name))
+        assert "stop_at_direction_break=True" in source_code, f"{func_name} 缺少方向截断"

@@ -15,18 +15,71 @@ TIANLANG_SHAXING_URL = (
 )
 
 
-def _truncate_at_direction_break(records: list[Record]) -> list[Record]:
-    """期数必须保持同一方向；出现反转即认为已跨到别的区块，从反转处截断。
+MAX_BLOCK_RECORDS = 400
+PERIOD_WRAP = 365
+# 历史缺期是允许的（站方有时跳过若干期），但同一区块内相邻两条的期数间隔
+# 不会大到几十期；超过这个阈值说明已经跨到页面下方另一个区块。
+MAX_PERIOD_GAP = 40
 
-    允许缺期（相邻两条差值可以为 2、3 等），只拒绝方向反转：
-    这样既不会把后面别的块的记录并进来，也不会因历史缺期误删有效记录。
+
+def _period_step(previous: int, current: int) -> int:
+    """返回相邻两条的期数步进，365->001 视为 +1（跨年回绕）。
+
+    期号体系是 1..365 循环，跨年时 365 的下一期是 001，不能当成方向反转。
     """
-    if len(records) < 3:
+    if current > previous:
+        return current - previous
+    if previous == PERIOD_WRAP and current == 1:
+        return 1
+    if previous == 1 and current == PERIOD_WRAP:
+        return -1
+    return current - previous
+
+
+def _heading_period(heading_text: str) -> int:
+    """从标题文本里取期号；取不到返回 0（该站标题不含期号，跳过锚点校验）。"""
+    match = re.search(r"(?<!\d)(\d{3})\s*期", heading_text)
+    if not match:
+        return 0
+    period = int(match.group(1))
+    return period if 1 <= period <= PERIOD_WRAP else 0
+
+
+def _truncate_at_direction_break(records: list[Record]) -> list[Record]:
+    """只保留「第一个同方向连续段」，遇到方向反转或期数间隔异常即截断。
+
+    判定原则（失败优先，宁缺勿借）：
+    - 方向由前两条**不同期数**的记录确定；前两条同期数（重复展示行）不作为基准。
+    - 允许历史缺期，但相邻两条的正向间隔不得超过 MAX_PERIOD_GAP：
+      间隔过大说明已经跨到页面下方的另一个区块。
+    - 365->001 属正常跨年回绕，不算反转。
+    """
+    if len(records) < 2:
         return records
-    step = 1 if records[1].period > records[0].period else -1
-    kept = [records[0], records[1]]
-    for record in records[2:]:
-        if (record.period - kept[-1].period) * step <= 0:
+
+    # 方向基准：取前两条不同期数的记录，但间隔超限时不认这个方向，
+    # 否则「单条 + 远距离邻块」会被邻块带偏方向而整段并入。
+    step_sign = 0
+    for index in range(1, len(records)):
+        delta = _period_step(records[index - 1].period, records[index].period)
+        if delta == 0:
+            continue
+        if abs(delta) > MAX_PERIOD_GAP:
+            # 间隔过大：说明第一条之后已经跨块，只保留第一条
+            return records[:1]
+        step_sign = 1 if delta > 0 else -1
+        kept = records[: index + 1]
+        start = index + 1
+        break
+    else:
+        # 全部同期数：只保留第一条，避免后续被当成多条候选
+        return records[:1]
+
+    for record in records[start:]:
+        delta = _period_step(kept[-1].period, record.period)
+        if delta * step_sign <= 0:
+            break
+        if abs(delta) > MAX_PERIOD_GAP:
             break
         kept.append(record)
     return kept
@@ -39,6 +92,7 @@ def _records_after_heading(
     *,
     stop_pattern: str = "",
     stop_at_direction_break: bool = False,
+    max_records: int = MAX_BLOCK_RECORDS,
 ) -> list[Record]:
     if DOCUMENT_BOUNDARY in source:
         return []
@@ -49,12 +103,18 @@ def _records_after_heading(
     heading = headings[0]
     tail = text[heading.end() :]
     if stop_pattern:
-        stop = re.search(stop_pattern, tail)
+        # 只认「记录段开始之后」出现的广告/分隔文案；若它出现在第一条记录之前，
+        # 说明标题与记录段之间夹着广告，此时不能整段截空，改为不截断。
+        first_record = record_pattern.search(tail)
+        search_from = first_record.end() if first_record else 0
+        stop = re.search(stop_pattern, tail[search_from:])
         if stop:
-            tail = tail[: stop.start()]
+            tail = tail[: search_from + stop.start()]
     records = records_from_pattern(tail, record_pattern, base_offset=heading.end())
     if stop_at_direction_break:
         records = _truncate_at_direction_break(records)
+    if len(records) > max_records:
+        records = records[:max_records]
     return records
 
 
@@ -105,6 +165,7 @@ def parse_yueku_zhixiao_top_records(source: str, site: Site) -> list[Record]:
         source,
         r"绝杀料\s*\d{3}\s*期\s*[:：]\s*[【〖]\s*绝杀贰肖\s*[】〗]\s*创造百万\s*月窟织绡",
         ABSOLUTE_KILL_PATTERN,
+        stop_at_direction_break=True,
     )
 
 
@@ -119,6 +180,7 @@ def parse_jiujie_liangfeng_top_records(source: str, site: Site) -> list[Record]:
         source,
         r"高手料\s*\d{3}\s*期\s*[:：]\s*旧街凉风\s*[【〖]\s*稳杀二肖\s*[】〗]",
         STEADY_KILL_PATTERN,
+        stop_at_direction_break=True,
     )
 
 
@@ -129,6 +191,7 @@ def parse_bubu_gaosheng_top_records(source: str, site: Site) -> list[Record]:
         source,
         r"[【〖]\s*稳杀二肖\s*[】〗]\s*步步高升",
         STEADY_KILL_PATTERN,
+        stop_at_direction_break=True,
     )
 
 
@@ -146,8 +209,11 @@ def parse_tianlang_shaxing_bottom_records(source: str, site: Site) -> list[Recor
         or site.url != TIANLANG_SHAXING_URL
     ):
         return []
+    # 该站历史记录会跨年回绕（365 -> 001），_truncate_at_direction_break 已把
+    # 365->001 归一为 +1，因此跨年不会误截断。
     return _records_after_heading(
         source,
         r"精英贴\s*\d{3}\s*期\s*天狼杀星\s*[【〖]\s*绝杀二肖\s*[】〗]\s*已上料",
         TIANLANG_KILL_PATTERN,
+        stop_at_direction_break=True,
     )

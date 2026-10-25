@@ -207,7 +207,9 @@ def _mask_invalid_periods(source: str) -> str:
         token = match.group(0)
         return token if len(token) == 3 and 1 <= int(token) <= 365 else " " * len(token)
 
-    return re.sub(r"(?<!\d)\d{3,}(?=\s*期)", replace_invalid, source)
+    # 期号后缀既可能是「期」也可能是「起」（部分站方当期写成「296起」），
+    # 两者都必须受 1-365 与三位数校验，否则 1296起 / 自2026起 会被当成合法期号。
+    return re.sub(r"(?<!\d)\d{3,}(?=\s*(?:期|起))", replace_invalid, source)
 
 
 def _flexible_raw_pattern(raw: str) -> re.Pattern[str] | None:
