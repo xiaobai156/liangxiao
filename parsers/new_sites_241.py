@@ -23,12 +23,12 @@ MAX_PERIOD_GAP = 40
 
 
 def _period_step(previous: int, current: int) -> int:
-    """返回相邻两条的期数步进，365->001 视为 +1（跨年回绕）。
+    """返回相邻两条的期数步进，365<->001 按跨年回绕处理。
 
-    期号体系是 1..365 循环，跨年时 365 的下一期是 001，不能当成方向反转。
+    期号体系是 1..365 循环：365 的下一期是 001（升序 +1），
+    001 的上一期是 365（降序 -1）。必须**先**判回绕再比大小，
+    否则 1->365 会因 current > previous 被算成 +364。
     """
-    if current > previous:
-        return current - previous
     if previous == PERIOD_WRAP and current == 1:
         return 1
     if previous == 1 and current == PERIOD_WRAP:
@@ -49,10 +49,11 @@ def _truncate_at_direction_break(records: list[Record]) -> list[Record]:
     """只保留「第一个同方向连续段」，遇到方向反转或期数间隔异常即截断。
 
     判定原则（失败优先，宁缺勿借）：
-    - 方向由前两条**不同期数**的记录确定；前两条同期数（重复展示行）不作为基准。
+    - 方向由前两条**不同期数**的记录确定；同期数（重复展示行）不作为基准。
     - 允许历史缺期，但相邻两条的正向间隔不得超过 MAX_PERIOD_GAP：
       间隔过大说明已经跨到页面下方的另一个区块。
-    - 365->001 属正常跨年回绕，不算反转。
+    - 365<->001 属正常跨年回绕，不算反转。
+    - 块内重复行（delta == 0）跳过而非截断，避免丢掉后续有效记录。
     """
     if len(records) < 2:
         return records
@@ -77,12 +78,34 @@ def _truncate_at_direction_break(records: list[Record]) -> list[Record]:
 
     for record in records[start:]:
         delta = _period_step(kept[-1].period, record.period)
-        if delta * step_sign <= 0:
+        if delta == 0:
+            # 同一期的重复展示行：跳过，既不算反转也不截断
+            continue
+        if delta * step_sign < 0:
             break
         if abs(delta) > MAX_PERIOD_GAP:
             break
         kept.append(record)
     return kept
+
+
+def _trim_trailing_non_window_gap(records: list[Record]) -> list[Record]:
+    """从尾部回溯，只保留与尾部连续的那一段记录。
+
+    同向邻块在纯文本上与当前块不可区分（方向一致、间隔合法），但邻块会引入
+    一次「起点跳变」：某条记录的期号与它下一条之间出现反向或超限间隔。
+    这里从尾部向前回溯，遇到第一个断点即停止，只保留尾部连续段。
+    """
+    if len(records) < 2:
+        return records
+    tail_kept = [records[-1]]
+    for record in reversed(records[:-1]):
+        delta = _period_step(record.period, tail_kept[-1].period)
+        if delta <= 0 or delta > MAX_PERIOD_GAP:
+            break
+        tail_kept.append(record)
+    tail_kept.reverse()
+    return tail_kept
 
 
 def _records_after_heading(
@@ -93,6 +116,7 @@ def _records_after_heading(
     stop_pattern: str = "",
     stop_at_direction_break: bool = False,
     max_records: int = MAX_BLOCK_RECORDS,
+    keep_tail: bool = False,
 ) -> list[Record]:
     if DOCUMENT_BOUNDARY in source:
         return []
@@ -114,7 +138,14 @@ def _records_after_heading(
     if stop_at_direction_break:
         records = _truncate_at_direction_break(records)
     if len(records) > max_records:
-        records = records[:max_records]
+        # bottom 站取尾部最新期，必须从尾部截断；从头截会砍掉最新期。
+        records = records[-max_records:] if keep_tail else records[:max_records]
+    # 标题期号锚定：标题写的就是当前期，数据块里必须含该期。
+    # 同向邻块在纯文本上与当前块不可区分，唯一可靠信号就是标题期号 ——
+    # 若截断后块内不含标题期号，说明锁到了别的区块，一律判失败（返回空）。
+    anchor = _heading_period(heading.group(0))
+    if anchor and records and all(record.period != anchor for record in records):
+        return []
     return records
 
 

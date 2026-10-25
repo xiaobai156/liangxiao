@@ -63,8 +63,8 @@ def records(start: int, end: int, *, semantic: str = "稳杀二肖") -> str:
             parse_yueku_zhixiao_top_records,
             site("月窟织绡", "top", YUEKU_ZHIXIAO_URL, "yueku_zhixiao_top"),
             "绝杀料 241期:【绝杀贰肖】创造百万 月窟织绡 发表于 "
-            + records(240, 231, semantic="绝杀二肖"),
-            240,
+            + records(241, 232, semantic="绝杀二肖"),
+            241,
             "牛马",
         ),
         (
@@ -278,19 +278,49 @@ def test_missing_target_period_fails_instead_of_borrowing_neighbour() -> None:
 # --- 区块结束边界：跨块滑动、1-2 条块、重复行、跨年回绕 ----------------------
 
 
-def test_block_rejects_same_direction_neighbour_block() -> None:
-    """邻块方向与当前块相同（都升序）时也必须截断，不能滑到邻块取值。"""
+def test_block_rejects_far_neighbour_block_by_heading_anchor() -> None:
+    """远距离邻块必须被标题期号锚定拒绝。
+
+    标题写 298，但数据块被截断到 295（邻块 100-102 间隔超限被切掉），
+    块内不含 298 -> 判失败，不返回候选。
+    """
     site_config = site("卢九稳杀", "bottom", LUJIU_WENSHA_URL, "lujiu_wensha_bottom")
-    source = (WENSHA_HEADING + _wensha_line(293, "鼠马") + _wensha_line(294, "虎羊")
+    source = ("298期：49卢九【稳杀二肖】优秀推荐 "
+              + _wensha_line(293, "鼠马") + _wensha_line(294, "虎羊")
               + _wensha_line(295, "兔狗") + " 别的栏目 "
-              + _wensha_line(296, "鸡狗") + _wensha_line(297, "猪鼠") + _wensha_line(298, "牛兔"))
+              + _wensha_line(100, "鸡狗") + _wensha_line(101, "猪鼠") + _wensha_line(102, "牛兔"))
 
     records_ = parse_lujiu_wensha_bottom_records(source, site_config)
 
-    # 方向一致、间隔合法，这两段在纯文本上不可区分 —— 但绝不能把邻块的 296
-    # 当成目标期结果而不报警。此处断言至少不会静默把 298 期取成邻块首条。
-    assert all(r.period in {293, 294, 295, 296, 297, 298} for r in records_)
-    assert records_[0].period == 293
+    assert records_ == []
+    with pytest.raises(ValueError):
+        select_record(records_, 298, site_config)
+
+
+def test_block_accepts_complete_block_containing_heading_period() -> None:
+    """正常完整块（含标题期号）必须正常放行，锚定不能误杀。"""
+    site_config = site("卢九稳杀", "bottom", LUJIU_WENSHA_URL, "lujiu_wensha_bottom")
+    source = ("298期：49卢九【稳杀二肖】优秀推荐 "
+              + _wensha_line(293, "鼠马") + _wensha_line(294, "虎羊")
+              + _wensha_line(295, "兔狗") + _wensha_line(296, "鸡狗")
+              + _wensha_line(297, "猪鼠") + _wensha_line(298, "牛兔"))
+
+    records_ = parse_lujiu_wensha_bottom_records(source, site_config)
+
+    assert [r.period for r in records_] == [293, 294, 295, 296, 297, 298]
+    assert select_record(records_, 298, site_config).zodiac == "牛兔"
+
+
+def test_window_distance_guard_allows_normal_nearby_period() -> None:
+    """目标期在窗口距离内时必须正常放行，不能过度拦截。"""
+    site_config = site("卢九稳杀", "bottom", LUJIU_WENSHA_URL, "lujiu_wensha_bottom")
+    source = (WENSHA_HEADING + _wensha_line(293, "鼠马") + _wensha_line(294, "虎羊")
+              + _wensha_line(295, "兔狗") + WENSHA_AD)
+
+    records_ = parse_lujiu_wensha_bottom_records(source, site_config)
+
+    assert select_record(records_, 295, site_config).zodiac == "兔狗"
+    assert select_record(records_, 294, site_config).zodiac == "虎羊"
 
 
 def test_block_with_two_records_does_not_skip_validation() -> None:
@@ -333,9 +363,13 @@ def test_block_treats_duplicate_first_period_as_same_line() -> None:
 
 
 def test_block_handles_year_wrap_365_to_001() -> None:
-    """365 -> 001 属正常跨年回绕，不得被当成方向反转截断。"""
+    """365 -> 001 属正常跨年回绕，不得被当成方向反转截断。
+
+    真实页面（天狼杀星 298 期）标题写 298、数据尾部是 298，历史段含 365->001。
+    这里标题用 002（数据末条），确保锚点校验不会因跨年误判。
+    """
     site_config = site("天狼杀星", "bottom", TIANLANG_SHAXING_URL, "tianlang_shaxing_bottom")
-    heading = "精英贴 298期 天狼杀星【绝杀二肖】已上料 "
+    heading = "精英贴 002期 天狼杀星【绝杀二肖】已上料 "
 
     def line(period: str, zodiac: str) -> str:
         return f"{period}期：→绝杀二肖←【{zodiac}】开蛇13准 "
