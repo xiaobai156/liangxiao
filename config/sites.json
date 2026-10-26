@@ -311,7 +311,7 @@
     "pick": "顶部",
     "url": "https://aq14f.2gdkh-2qrjm-hxaxji.xyz/",
     "parser": "liuhebadian_tail",
-    "payload": "page_and_scripts"
+    "payload": "browser_rendered_page"
   },
   {
     "name": "武林高手",
