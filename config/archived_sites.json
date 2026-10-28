@@ -261,5 +261,14 @@
     "payload": "page_and_scripts",
     "title": "林间语屑",
     "archive_reason": "用户明确封存：272–281 缓存窗口内与「白手起家」逐期完全一致（同源重复，序列 281→272：牛猴 猴蛇 狗鸡 蛇猪 鸡狗 猪猴 狗鸡 牛蛇 鸡狗 猴狗），按用户指示封存，不再抓取"
+  },
+  {
+    "name": "金禅彩票",
+    "pick": "尾部",
+    "url": "https://xjsjbkv.b3e4x-wxhjo-lbdbjg.xyz:29477/article/manager/6a324276f21d7a093399ef17?url=jbx",
+    "parser": "manager_article_two_zodiac",
+    "payload": "admin_article_api",
+    "api_url": "https://xjsjbkv.b3e4x-wxhjo-lbdbjg.xyz:29477/api/proxy/landing-page-data?url=jbx",
+    "archive_reason": "用户点名封存（301 期）：站方后台文章已下架 —— /api/proxy/admin-articles/6a324276f21d7a093399ef17 与 /api/proxy/manager-articles/6a324276f21d7a093399ef17 均 404；landing-page-data?url=jbx（9,799,257 B、261 篇文章、86 个站点）全文搜「金禅」「禅」均 0 次；浏览器打开文章页仅 45 字并显示「Failed to fetch」；301 期两篇【绝杀二肖】文章正文站名仅《一笔抹杀》《富贵可得》，非换 ID 重发。该站 300 期仍正常（缓存 300=狗蛇），300->301 之间被删帖，301 期无法取值，不再抓取"
   }
 ]
