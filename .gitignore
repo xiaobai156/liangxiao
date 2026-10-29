@@ -12,3 +12,5 @@ htmlcov/
 # Existing tracked business data is deliberately preserved; do not add new copies.
 /recent_10_cache.json
 /site_structure_profiles.json
+# 登录态（浏览器 Cookie）绝不入库，只保存在本地。
+/login_state/*.json

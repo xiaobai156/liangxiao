@@ -10,6 +10,7 @@ from types import MappingProxyType
 from domain.errors import ConfigurationError, ErrorCategory, ScrapeFailure
 from domain.models import POSITION_KIND_VISIBLE_TEXT, PayloadDocument, Record, Site
 from parsers.chart import (
+    parse_hongfuhuiyang_two_zodiac_records,
     parse_laodazhu_ten_zodiac_complement_records,
     parse_shuqhbq_macau_gallery_forbidden_records,
     parse_shuqhbq_macau_kill_chart_records,
@@ -165,6 +166,7 @@ ENGINE_REGISTRY: Mapping[str, ParserFunction] = MappingProxyType(
         "suiyin_jiliang_ten_zodiac_complement": parse_suiyin_jiliang_ten_zodiac_complement_records,
         "zhiduanqingchang_ten_zodiac_complement": parse_zhiduanqingchang_ten_zodiac_complement_records,
         "shiquanshimei_ten_zodiac_complement": parse_shiquanshimei_ten_zodiac_complement_records,
+        "hongfuhuiyang_two_zodiac": parse_hongfuhuiyang_two_zodiac_records,
         "bufeng_zhuoying_topic": parse_bufeng_zhuoying_topic_records,
         "zhenlong_fankui_topic": parse_zhenlong_fankui_topic_records,
         "gaohuo_zhifei_topic": parse_gaohuo_zhifei_topic_records,

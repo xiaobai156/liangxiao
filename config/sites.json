@@ -2250,4 +2250,13 @@
     "stop": "港澳六合彩投注站|授权\\s*[:：]\\s*免费软件",
     "record": "(?P<period>\\d{3})\\s*期\\s*稳杀二肖\\s*[（(]\\s*(?P<zodiac>[牛马羊鸡狗猪鼠虎兔龙蛇猴]\\s*[牛马羊鸡狗猪鼠虎兔龙蛇猴])\\s*[）)]\\s*开\\s*[:：]?\\s*(?P<open>[^\\s准中错赢对]+)"
   }
+  ,
+  {
+    "name": "洪福惠阳两肖",
+    "pick": "bottom",
+    "url": "https://wwlhc.com/thread-96129-1-1.html",
+    "parser": "hongfuhuiyang_two_zodiac",
+    "payload": "browser_rendered_page",
+    "profile_id": "login_state/wwlhc.json"
+  }
 ]

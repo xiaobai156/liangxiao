@@ -6,6 +6,7 @@ from urllib.parse import urljoin
 import subprocess
 import time
 from collections.abc import Callable
+from pathlib import Path
 from threading import Lock, current_thread, local, main_thread
 
 import requests
@@ -210,8 +211,8 @@ class FetchContext:
         self._texts: dict[tuple[str, tuple[str, ...], bool], str] = {}
         self._errors: dict[tuple[str, tuple[str, ...], bool], requests.RequestException] = {}
         self._url_locks: dict[tuple[str, tuple[str, ...], bool], Lock] = {}
-        self._rendered_texts: dict[tuple[str, tuple[str, ...], bool], str] = {}
-        self._render_locks: dict[tuple[str, tuple[str, ...], bool], Lock] = {}
+        self._rendered_texts: dict[tuple[str, tuple[str, ...], bool, str], str] = {}
+        self._render_locks: dict[tuple[str, tuple[str, ...], bool, str], Lock] = {}
         self._closed = False
         self._lock = Lock()
 
@@ -251,8 +252,8 @@ class FetchContext:
             return text
 
     def get_rendered(self, url: str, timeout: int, *, allowed_origins: tuple[str, ...] = (),
-                     ignore_https_errors: bool = False) -> str:
-        cache_key = (url, allowed_origins, ignore_https_errors)
+                     ignore_https_errors: bool = False, login_state: str = "") -> str:
+        cache_key = (url, allowed_origins, ignore_https_errors, login_state)
         with self._lock:
             if self._closed:
                 raise requests.RequestException("抓取上下文已关闭")
@@ -271,9 +272,11 @@ class FetchContext:
                 if self._closed:
                     raise requests.RequestException("抓取上下文已关闭")
             from fetching.browser import PlaywrightRenderer
-            if isinstance(renderer, PlaywrightRenderer) and (allowed_origins or ignore_https_errors):
+            if isinstance(renderer, PlaywrightRenderer) and (
+                    allowed_origins or ignore_https_errors or login_state):
                 source = renderer(url, timeout, allowed_origins=allowed_origins,
-                                  ignore_https_errors=ignore_https_errors)
+                                  ignore_https_errors=ignore_https_errors,
+                                  login_state=login_state)
             else:
                 source = renderer(url, timeout)
             validate_redirect(url, getattr(source, "final_url", url), allowed_origins)
@@ -307,7 +310,19 @@ def get_site_text(context: FetchContext, url: str, timeout: int, site) -> str:
 
 
 def get_site_rendered(context: FetchContext, url: str, timeout: int, site) -> str:
-    if site.allowed_redirect_origins or site.allow_invalid_certificate:
+    login_state = _resolve_login_state(getattr(site, "profile_id", ""))
+    if site.allowed_redirect_origins or site.allow_invalid_certificate or login_state:
         return context.get_rendered(url, timeout, allowed_origins=site.allowed_redirect_origins,
-                                    ignore_https_errors=site.allow_invalid_certificate)
+                                    ignore_https_errors=site.allow_invalid_certificate,
+                                    login_state=login_state)
     return context.get_rendered(url, timeout)
+
+
+def _resolve_login_state(profile_id: str) -> str:
+    """把站点配置里的登录态（storage_state 文件或持久化 profile 目录）解析成绝对路径。"""
+    if not profile_id:
+        return ""
+    path = Path(profile_id).expanduser()
+    if not path.is_absolute():
+        path = Path(__file__).resolve().parents[1] / path
+    return str(path)

@@ -398,6 +398,35 @@ def parse_shiquanshimei_ten_zodiac_complement_records(source: str, site: Site) -
     return records
 
 
+def parse_hongfuhuiyang_two_zodiac_records(source: str, site: Site) -> list[Record]:
+    """洪福惠阳两肖（Discuz 论坛）：只取楼主帖内升序清单 `255期 猪狗杀 ✓`。"""
+    page_text = html_to_text(source)
+    if "惠阳" not in page_text or "杀两肖" not in page_text:
+        return []
+    first_post = re.search(r'id="postmessage_\d+"[^>]*>([\s\S]*?)</td>', source)
+    if not first_post:
+        return []
+    body = html_to_text(first_post.group(1))
+    pattern = re.compile(
+        rf"(?P<period>\d{{3}})\s*期\s*(?P<zodiac>[{ZODIACS}][{ZODIACS}])\s*杀\s*(?P<mark>[✓❌√×]?)"
+    )
+    records: list[Record] = []
+    seen: dict[tuple[int, str, int], int] = {}
+    for match in pattern.finditer(body):
+        period = int(match.group("period"))
+        zodiac = "".join(ch for ch in match.group("zodiac") if ch in ZODIAC_SET)
+        if len(zodiac) != 2 or zodiac[0] == zodiac[1]:
+            continue
+        candidate = Record(period, zodiac, match.group("mark"), match.group(0),
+                           first_post.start() + match.start())
+        signature = (period, zodiac, candidate.position)
+        if signature in seen:
+            continue
+        seen[signature] = len(records)
+        records.append(candidate)
+    return records
+
+
 def parse_wangzhejiudian_forbidden_chart_records(source: str, site: Site) -> list[Record]:
     return parse_wangzhejiudian_stat_chart_records(source, "禁二肖图")
 
