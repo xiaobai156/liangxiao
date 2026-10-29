@@ -2231,5 +2231,12 @@
     "title": "星光闪闪\\s*【绝杀二肖】\\s*共享好料",
     "stop": "上一篇|下一篇",
     "record": "(?P<period>\\d{3})\\s*期\\s*[:：]?\\s*绝杀二肖\\s*[【\\[]\\s*(?P<zodiac>[牛马羊鸡狗猪鼠虎兔龙蛇猴]\\s*[-－、，,。.]?\\s*[牛马羊鸡狗猪鼠虎兔龙蛇猴])\\s*[】\\]]\\s*特\\s*(?P<open>[^\\s准中错赢对]+)"
+  },
+  {
+    "name": "十全十美",
+    "pick": "top",
+    "url": "https://xtzqmncf.3gf9y-o7doy-rkxcyo.work:17488/topic/677785.html",
+    "parser": "shiquanshimei_ten_zodiac_complement",
+    "payload": "browser_rendered_page"
   }
 ]

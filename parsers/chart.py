@@ -363,6 +363,41 @@ def parse_zhiduanqingchang_ten_zodiac_complement_records(source: str, site: Site
             records.append(Record(int(match.group("period")), missing, "", match.group(0), match.start()))
     return records
 
+def parse_shiquanshimei_ten_zodiac_complement_records(source: str, site: Site) -> list[Record]:
+    text = html_to_text(source)
+    start = re.search(
+        r"\d{3}\s*期\s*[:：]\s*高手榜\s*[【〖]\s*必中十肖\s*[】〗][\s\S]{0,60}?十全十美\s*发表于",
+        text,
+    )
+    if not start:
+        return []
+    tail = text[start.start() :]
+    stop = re.search(r"(?:上一篇|下一篇|Copyright|免责声明|返回首页)", tail)
+    if stop:
+        tail = tail[: stop.start()]
+    pattern = re.compile(
+        rf"(?P<period>\d{{3}})\s*期\s*必中十肖\s*[【〖\[]\s*(?P<body>[{ZODIACS}\s]+)\s*[】〗\]]\s*"
+        rf"[开開]\s*[:：]?\s*(?P<open>[^\s准中错赢对↑√]+)"
+    )
+    records: list[Record] = []
+    seen: dict[tuple[int, str, int], int] = {}
+    for match in pattern.finditer(tail):
+        period = int(match.group("period"))
+        picked = ten_unique_zodiacs(match.group("body"))
+        if len(picked) != 10:
+            continue
+        missing = "".join(zodiac for zodiac in ZODIACS if zodiac not in picked)
+        if len(missing) != 2:
+            continue
+        candidate = Record(period, missing, match.group("open"), match.group(0), start.start() + match.start())
+        signature = (period, missing, candidate.position)
+        if signature in seen:
+            continue
+        seen[signature] = len(records)
+        records.append(candidate)
+    return records
+
+
 def parse_wangzhejiudian_forbidden_chart_records(source: str, site: Site) -> list[Record]:
     return parse_wangzhejiudian_stat_chart_records(source, "禁二肖图")
 
