@@ -2221,5 +2221,15 @@
     "title": "【高情远韵】",
     "stop": "七\\s*星\\s*娱\\s*乐|授权\\s*[:：]\\s*免费软件",
     "record": "(?P<period>\\d{3})\\s*期\\s*[:：]\\s*【正版猜特输尽光】\\s*开\\s*(?P<open>[^\\s准中错赢对]{0,8}?)\\s*(?:准|中|错|赢|对)?\\s*今\\s*期\\s*(?P<zodiac>[牛马羊鸡狗猪鼠虎兔龙蛇猴]\\s*[牛马羊鸡狗猪鼠虎兔龙蛇猴])\\s*输\\s*尽\\s*光"
+  },
+  {
+    "name": "星光闪闪",
+    "pick": "top",
+    "url": "https://ylcoqkwq.o6t3z-mgwt1-tetvse.work:17488/topic/813061.html",
+    "parser": "named_block",
+    "payload": "browser_rendered_page",
+    "title": "星光闪闪\\s*【绝杀二肖】\\s*共享好料",
+    "stop": "上一篇|下一篇",
+    "record": "(?P<period>\\d{3})\\s*期\\s*[:：]?\\s*绝杀二肖\\s*[【\\[]\\s*(?P<zodiac>[牛马羊鸡狗猪鼠虎兔龙蛇猴]\\s*[-－、，,。.]?\\s*[牛马羊鸡狗猪鼠虎兔龙蛇猴])\\s*[】\\]]\\s*特\\s*(?P<open>[^\\s准中错赢对]+)"
   }
 ]
