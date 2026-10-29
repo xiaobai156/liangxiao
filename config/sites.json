@@ -275,7 +275,7 @@
     "pick": "顶部",
     "url": "https://rmrcjqk.6ln2t-46k8t-kuthoe.xyz:16677/",
     "parser": "named_block",
-    "payload": "page_and_scripts",
+    "payload": "browser_rendered_page",
     "title": "澳[門门]男人味【稳杀②肖】实力证明",
     "record": "(?P<period>\\d{3})\\s*期\\s*[:：]?\\s*稳杀②肖\\s*『\\s*(?P<zodiac>[牛马羊鸡狗猪鼠虎兔龙蛇猴]\\s*[-－、，,。.]?\\s*[牛马羊鸡狗猪鼠虎兔龙蛇猴])\\s*』\\s*[开開]\\s*[:：]?\\s*(?P<open>[^\\s准中错赢对]+)"
   },
