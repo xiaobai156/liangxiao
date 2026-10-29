@@ -14,3 +14,4 @@ htmlcov/
 /site_structure_profiles.json
 # 登录态（浏览器 Cookie）绝不入库，只保存在本地。
 /login_state/*.json
+/browser-profile/

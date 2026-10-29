@@ -2257,6 +2257,6 @@
     "url": "https://wwlhc.com/thread-96129-1-1.html",
     "parser": "hongfuhuiyang_two_zodiac",
     "payload": "browser_rendered_page",
-    "profile_id": "login_state/wwlhc.json"
+    "profile_id": "browser-profile"
   }
 ]
