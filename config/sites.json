@@ -2239,4 +2239,15 @@
     "parser": "shiquanshimei_ten_zodiac_complement",
     "payload": "browser_rendered_page"
   }
+,
+  {
+    "name": "繁花似锦",
+    "pick": "top",
+    "url": "https://jkkpiagq.xhxad-58h5q-yoqcam.work:17477/topic/246432.html",
+    "parser": "named_block",
+    "payload": "browser_rendered_page",
+    "title": "繁花似锦投资理念-稳杀二肖",
+    "stop": "港澳六合彩投注站|授权\\s*[:：]\\s*免费软件",
+    "record": "(?P<period>\\d{3})\\s*期\\s*稳杀二肖\\s*[（(]\\s*(?P<zodiac>[牛马羊鸡狗猪鼠虎兔龙蛇猴]\\s*[牛马羊鸡狗猪鼠虎兔龙蛇猴])\\s*[）)]\\s*开\\s*[:：]?\\s*(?P<open>[^\\s准中错赢对]+)"
+  }
 ]
