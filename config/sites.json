@@ -2211,5 +2211,15 @@
     "parser": "site_scoped_two_zodiac",
     "payload": "page_and_scripts",
     "title": "笑容可掬"
+  },
+  {
+    "name": "高情远韵",
+    "pick": "top",
+    "url": "https://erasel.5nsui-oluq4-qsrxws.work/topic/231513.html",
+    "parser": "named_block",
+    "payload": "browser_rendered_page",
+    "title": "【高情远韵】",
+    "stop": "七\\s*星\\s*娱\\s*乐|授权\\s*[:：]\\s*免费软件",
+    "record": "(?P<period>\\d{3})\\s*期\\s*[:：]\\s*【正版猜特输尽光】\\s*开\\s*(?P<open>[^\\s准中错赢对]{0,8}?)\\s*(?:准|中|错|赢|对)?\\s*今\\s*期\\s*(?P<zodiac>[牛马羊鸡狗猪鼠虎兔龙蛇猴]\\s*[牛马羊鸡狗猪鼠虎兔龙蛇猴])\\s*输\\s*尽\\s*光"
   }
 ]
