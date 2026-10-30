@@ -270,5 +270,36 @@
     "payload": "admin_article_api",
     "api_url": "https://xjsjbkv.b3e4x-wxhjo-lbdbjg.xyz:29477/api/proxy/landing-page-data?url=jbx",
     "archive_reason": "用户点名封存（301 期）：站方后台文章已下架 —— /api/proxy/admin-articles/6a324276f21d7a093399ef17 与 /api/proxy/manager-articles/6a324276f21d7a093399ef17 均 404；landing-page-data?url=jbx（9,799,257 B、261 篇文章、86 个站点）全文搜「金禅」「禅」均 0 次；浏览器打开文章页仅 45 字并显示「Failed to fetch」；301 期两篇【绝杀二肖】文章正文站名仅《一笔抹杀》《富贵可得》，非换 ID 重发。该站 300 期仍正常（缓存 300=狗蛇），300->301 之间被删帖，301 期无法取值，不再抓取"
+  },
+  {
+    "name": "催人奋进",
+    "pick": "top",
+    "url": "https://dh-nwsm-0806.yqs01490156c.app/gst/20.htm",
+    "parser": "named_block",
+    "payload": "page",
+    "title": "永垂不朽",
+    "stop": "输\\s*让\\s*您\\s*东山再起",
+    "record": "(?P<period>\\d{3})\\s*期\\s*[:：]?\\s*★?\\s*绝杀二肖\\s*[【〖\\[]\\s*(?P<zodiac>[牛马羊鸡狗猪鼠虎兔龙蛇猴]\\s*[-－、，,。.]?\\s*[牛马羊鸡狗猪鼠虎兔龙蛇猴])\\s*[】〗\\]]\\s*[开開]\\s*[:：]?\\s*(?P<open>[^\\s准中错赢对]+)",
+    "archive_reason": "用户点名封存（303 期）：主机 dh-nwsm-0806.yqs01490156c.app 整机不可达 —— requests 报 SSLError(SSLEOFError(8, 'EOF occurred in violation of protocol (_ssl.c:1007)'))，忽略证书后报 ConnectionError('Connection aborted.', FileNotFoundError(2))，Playwright 报 net::ERR_CONNECTION_CLOSED；302 期已扫过同族 444 个子域（yqs01490156c.app / cmw01490353c.app 的 dh-nwsm-0601~1231 及 www/m/wap），全部解析到同一 IP 20.120.208.73 且同样不通，换子域无法修复；303 期与 302 期均无任何可用入口，不再抓取"
+  },
+  {
+    "name": "发奋图强",
+    "pick": "top",
+    "url": "https://dh-nwsm-0806.yqs01490156c.app/gsb/11.htm",
+    "parser": "site_scoped_two_zodiac",
+    "payload": "page",
+    "title": "发奋图强",
+    "archive_reason": "用户点名封存（303 期）：主机 dh-nwsm-0806.yqs01490156c.app 整机不可达 —— requests 报 SSLError(SSLEOFError(8, 'EOF occurred in violation of protocol (_ssl.c:1007)'))，忽略证书后报 ConnectionError('Connection aborted.', FileNotFoundError(2))，Playwright 报 net::ERR_CONNECTION_CLOSED；302 期已扫过同族 444 个子域（yqs01490156c.app / cmw01490353c.app 的 dh-nwsm-0601~1231 及 www/m/wap），全部解析到同一 IP 20.120.208.73 且同样不通，换子域无法修复；303 期与 302 期均无任何可用入口，不再抓取"
+  },
+  {
+    "name": "志在四方",
+    "pick": "top",
+    "url": "https://dh-nwsm-0806.yqs01490156c.app/gst/58.htm",
+    "parser": "named_block",
+    "payload": "page",
+    "title": "不甘示弱",
+    "stop": "输\\s*让\\s*您\\s*东山再起",
+    "record": "(?P<period>\\d{3})\\s*期\\s*[:：]?\\s*★?\\s*绝杀二肖\\s*[【〖\\[]\\s*(?P<zodiac>[牛马羊鸡狗猪鼠虎兔龙蛇猴]\\s*[-－、，,。.]?\\s*[牛马羊鸡狗猪鼠虎兔龙蛇猴])\\s*[】〗\\]]\\s*[开開]\\s*[:：]?\\s*(?P<open>[^\\s准中错赢对]+)",
+    "archive_reason": "用户点名封存（303 期）：主机 dh-nwsm-0806.yqs01490156c.app 整机不可达 —— requests 报 SSLError(SSLEOFError(8, 'EOF occurred in violation of protocol (_ssl.c:1007)'))，忽略证书后报 ConnectionError('Connection aborted.', FileNotFoundError(2))，Playwright 报 net::ERR_CONNECTION_CLOSED；302 期已扫过同族 444 个子域（yqs01490156c.app / cmw01490353c.app 的 dh-nwsm-0601~1231 及 www/m/wap），全部解析到同一 IP 20.120.208.73 且同样不通，换子域无法修复；303 期与 302 期均无任何可用入口，不再抓取"
   }
 ]
