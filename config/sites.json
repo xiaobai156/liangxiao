@@ -2147,10 +2147,10 @@
   {
     "name": "瞬杀二肖",
     "pick": "尾部",
-    "url": "https://43666.886677a.app:2563/htm/bbs/top010.html",
-    "parser": "site_scoped_two_zodiac",
-    "payload": "page_and_scripts",
-    "title": "瞬杀二肖"
+    "url": "https://43666.886677a.app:2563/main/bbs/010.html",
+    "parser": "miesha_erxiao_two_zodiac",
+    "payload": "page",
+    "title": "灭杀二肖"
   },
   {
     "name": "千羽制作",

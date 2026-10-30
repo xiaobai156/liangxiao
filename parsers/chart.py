@@ -427,6 +427,35 @@ def parse_hongfuhuiyang_two_zodiac_records(source: str, site: Site) -> list[Reco
     return records
 
 
+def parse_miesha_erxiao_two_zodiac_records(source: str, site: Site) -> list[Record]:
+    """瞬杀二肖（88论坛）：站方已把栏目改名为「灭杀二肖」，按新锚点取升序清单。
+
+    行样式：`303期:🌾灭杀二肖🌾开:00准` + 换行 + `【蛇 猪】`（开奖号在生肖前面）。
+    """
+    page_text = html_to_text(source)
+    if "88论坛" not in page_text or site.title not in page_text:
+        return []
+    pattern = re.compile(
+        rf"(?P<period>\d{{3}})\s*期\s*[:：]?\s*[^\s]{{0,12}}\s*{re.escape(site.title)}\s*[^\s]{{0,12}}\s*"
+        rf"[开開]\s*[:：]?\s*(?P<open>[^\s准中错赢对【]+)\s*(?:准|中|错|赢|对)?\s*"
+        rf"[【〖\[]\s*(?P<zodiac>[{ZODIACS}])\s*(?P<zodiac2>[{ZODIACS}])\s*[】〗\]]"
+    )
+    records: list[Record] = []
+    seen: set[tuple[int, str, int]] = set()
+    for match in pattern.finditer(page_text):
+        period = int(match.group("period"))
+        zodiac = clean_zodiac(match.group("zodiac") + match.group("zodiac2"))
+        if len(zodiac) != 2 or zodiac[0] == zodiac[1]:
+            continue
+        position = match.start()
+        signature = (period, zodiac, position)
+        if signature in seen:
+            continue
+        seen.add(signature)
+        records.append(Record(period, zodiac, match.group("open"), match.group(0), position))
+    return records
+
+
 def parse_wangzhejiudian_forbidden_chart_records(source: str, site: Site) -> list[Record]:
     return parse_wangzhejiudian_stat_chart_records(source, "禁二肖图")
 
