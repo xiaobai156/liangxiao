@@ -15,3 +15,28 @@ htmlcov/
 # 登录态（浏览器 Cookie）绝不入库，只保存在本地。
 /login_state/*.json
 /browser-profile/
+
+# --- 生成物与本地临时文件（统一清理时补充） ---
+# Python / runtime artifacts
+.coverage.*
+.ruff_cache/
+.mypy_cache/
+# Local locks, temp files, logs and backups
+*.lock
+*.log
+*.before
+*.before_*
+*.orig
+*.rej
+nul
+# Browser profiles and build outputs
+browser-profile/
+build/
+dist/
+dist_*/
+.paddleocr-cpu-venv/
+
+# --- 生成物与本地临时文件（统一清理时补充） ---
+diagnostics/
+audit/
+_test_version_*/
