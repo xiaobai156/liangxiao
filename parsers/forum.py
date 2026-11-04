@@ -257,7 +257,7 @@ def parse_taxue_wuhen_top_records(source: str, site: Site) -> list[Record]:
 
 
 def parse_zhuangyuan_red_top_records(source: str, site: Site) -> list[Record]:
-    if site.name != "狀元紅" or site.pick != "top":
+    if site.name != "狀元紅" or site.pick not in {"top", "bottom"}:
         return []
     text = html_to_text(source)
     headings = list(

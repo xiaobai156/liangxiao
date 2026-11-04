@@ -860,7 +860,7 @@
   },
   {
     "name": "狀元紅",
-    "pick": "顶部",
+    "pick": "尾部",
     "url": "https://otwuomdb.882244a.app:2026/gengxin/20.html",
     "parser": "zhuangyuan_red_top",
     "payload": "page_and_scripts",
