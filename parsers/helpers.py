@@ -338,24 +338,35 @@ def has_two_zodiac_semantic(raw: str) -> bool:
     return bool(TWO_ZODIAC_SEMANTIC_RE.search(raw))
 
 
-def site_scoped_region(text: str, site: Site) -> tuple[str, int]:
-    aliases = [site.name]
-    alias_map = {
-        "白蛇": ["白蛇传"],
-        "蓝月亮": ["澳门蓝月亮", "藍月亮"],
-        "码票": ["澳门马票"],
-        "澳門男人味": ["澳门男人味"],
-    }
-    aliases.extend(alias_map.get(site.name, []))
+SITE_SCOPED_ALIASES = {
+    "白蛇": ("白蛇传",),
+    "蓝月亮": ("澳门蓝月亮", "藍月亮"),
+    "码票": ("澳门马票",),
+    "澳門男人味": ("澳门男人味",),
+}
+
+
+def site_scoped_aliases(site: Site) -> tuple[str, ...]:
+    return tuple(dict.fromkeys((site.name, *SITE_SCOPED_ALIASES.get(site.name, ()))))
+
+
+def site_scoped_region(text: str, site: Site, *, anchored_only: bool = False) -> tuple[str, int]:
+    """按站名/语义在长页里挑一块区域。
+
+    anchored_only=True 时只允许以站名（含别名）为起点，供静默回退路径使用：
+    站点区块必须由本站锚点开始，不能仅凭页面上任意一处「绝杀二肖」字样起算。
+    """
+    aliases = site_scoped_aliases(site)
     starts: list[int] = []
     target_pattern = re.compile(r"(?:绝\s*杀|必\s*杀|禁\s*杀|死\s*杀|稳\s*杀|温\s*杀|杀|砍\s*杀)\s*(?:二|②|两|2|２)\s*肖")
-    for match in target_pattern.finditer(text):
-        starts.append(max(0, match.start() - 500))
+    if not anchored_only:
+        for match in target_pattern.finditer(text):
+            starts.append(max(0, match.start() - 500))
     for alias in aliases:
         for match in re.finditer(re.escape(alias), text):
             starts.append(match.start())
     if not starts:
-        return text, 0
+        return ("", 0) if anchored_only else (text, 0)
 
     best = text
     best_start = 0
@@ -452,9 +463,51 @@ def parse_generic_two_zodiac_records(source: str, site: Site) -> list[Record]:
     return records
 
 
+ANCHOR_SIGNATURE_RE = re.compile(r"(?:作者\s*[：:]|发\s*表\s*于|楼主|只看该作者)")
+
+
+def _anchored_section_end(text: str, site: Site, start: int) -> int:
+    """站点锚点之后的可见分节终点；与 select_target_block 的无 stop 启发式同源。
+
+    与严格路径保持同一套跳过逻辑：未发布占位行要跳过而不是当成边界，
+    否则回退站会凭空少一截数据（失败方向的回归）。
+    """
+    if site.stop:
+        stop = re.search(site.stop, text[start:], flags=re.I)
+        if stop:
+            return start + stop.start()
+    data_seen = False
+    unpublished_seen = False
+    for line_start, _line_end, line in _line_spans(text):
+        if line_start <= start:
+            continue
+        if re.fullmatch(r"#{64,}", line):
+            return line_start
+        if KNOWN_BOUNDARY_RE.search(line):
+            return line_start
+        if UNPUBLISHED_RE.search(line):
+            unpublished_seen = True
+            continue
+        if ANCHOR_SIGNATURE_RE.search(line) and data_seen:
+            # 别的作者的署名行（常带日期/浏览数，超过 40 字，短标签判据抓不到）。
+            return line_start
+        if _is_short_section_label(line) and (data_seen or unpublished_seen):
+            return line_start
+        if re.search(r"\d{3}\s*期", line):
+            data_seen = True
+    return len(text)
+
+
 def _site_scoped_fallback_records(source: str, site: Site) -> list[Record]:
     visible = visible_source_text(source)
-    scoped, scoped_start = site_scoped_region(visible, site)
+    scoped, scoped_start = site_scoped_region(visible, site, anchored_only=True)
+    if not scoped:
+        return []
+    # 回退区间不得超出打分窗口：原实现的上限是 12000 字，截断只能更小。
+    limit = scoped_start + len(scoped)
+    section_end = _anchored_section_end(visible, site, scoped_start)
+    section_end = max(scoped_start, min(limit, section_end))
+    scoped = visible[scoped_start:section_end]
     return records_from_two_zodiac_text(
         scoped,
         base_offset=scoped_start,
@@ -477,7 +530,7 @@ def parse_site_scoped_two_zodiac_records(source: str, site: Site) -> list[Record
             (message.startswith("专属锚点不唯一：") and "非结构标题" in message)
             or message.startswith("目标区块无法唯一映射：")
         )
-        if not recoverable:
+        if not recoverable or site.strict_block:
             raise
         records = _site_scoped_fallback_records(source, site)
         if not records:
@@ -500,6 +553,11 @@ def parse_site_scoped_two_zodiac_records(source: str, site: Site) -> list[Record
     # A short navigation/index label can be the only structural title even
     # when the real data header and historical rows contain the same title.
     # This is specific to site_scoped_two_zodiac; named_block remains strict.
+    if site.strict_block:
+        # 区块已经唯一解析出来、只是区块里没有记录：这份文档就是没有数据。
+        # 返回空集让其它文档继续；这里报错会把「脚本里提到了站名但没有数据」
+        # 的站点整站打死。
+        return []
     visible = visible_source_text(source)
     if len(list(re.finditer(site.title, visible, flags=re.I))) <= 1:
         return []

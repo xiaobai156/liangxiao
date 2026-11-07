@@ -86,49 +86,57 @@
     "name": "心里有底",
     "pick": "顶部",
     "url": "https://myvvqq.4cgus-6vlme-hcuthd.work/topic/216270.html",
-    "parser": "site_scoped_two_zodiac",
     "payload": "browser_rendered_page",
-    "title": "心里有底"
+    "parser": "site_scoped_two_zodiac",
+    "title": "作者:心里有底",
+    "stop": "绝密资料",
+    "strict_block": true
   },
   {
     "name": "人不聊生",
     "pick": "尾部",
     "url": "https://pykzjitu.mvtre-w938p-xmiuyz.xyz:16677/topic/451627.html",
-    "parser": "site_scoped_two_zodiac",
     "payload": "page_and_scripts",
-    "title": "人不聊生"
+    "parser": "site_scoped_two_zodiac",
+    "title": "作者:人不聊生",
+    "strict_block": true
   },
   {
     "name": "一丘之貉",
     "pick": "顶部",
     "url": "https://kxhnibht.49x6o-xyonh-swqkpv.xyz:16677/topic/263561.html",
-    "parser": "site_scoped_two_zodiac",
     "payload": "page_and_scripts",
-    "title": "一丘之貉"
+    "parser": "site_scoped_two_zodiac",
+    "title": "一丘之貉",
+    "stop": "上一篇：",
+    "strict_block": true
   },
   {
     "name": "染泪丹青",
     "pick": "尾部",
     "url": "https://fbgbfg.www27521c.com:8443/gsb/am73.html",
-    "parser": "site_scoped_two_zodiac",
     "payload": "page_and_scripts",
-    "title": "染泪丹青"
+    "parser": "site_scoped_two_zodiac",
+    "title": "染泪丹青\\[绝杀二肖\\]",
+    "strict_block": true
   },
   {
     "name": "离岸观潮",
     "pick": "尾部",
     "url": "https://fbgbfg.www27521c.com:8443/gsb/am15.html",
-    "parser": "site_scoped_two_zodiac",
     "payload": "page_and_scripts",
-    "title": "离岸观潮"
+    "parser": "site_scoped_two_zodiac",
+    "title": "离岸观潮【绝杀二肖】",
+    "strict_block": true
   },
   {
     "name": "道士出山",
     "pick": "尾部",
     "url": "https://111.246004.com:9066/Article.Aspx?ListId=247&id=53523",
-    "parser": "site_scoped_two_zodiac",
     "payload": "page_and_scripts",
-    "title": "道士出山"
+    "parser": "site_scoped_two_zodiac",
+    "title": "\\d{3}期：【道士出山】绝杀二肖",
+    "strict_block": true
   },
   {
     "name": "百彩通第二",
@@ -143,66 +151,79 @@
     "name": "火云邪神",
     "pick": "顶部",
     "url": "https://www.336868.com/art_zhuanqu/217.html",
-    "parser": "site_scoped_two_zodiac",
     "payload": "page_and_scripts",
-    "title": "火云邪神"
+    "parser": "site_scoped_two_zodiac",
+    "title": "\\d{3}期：【稳杀二肖】火云邪神",
+    "stop": "Copyright\\s+©澳门报码论坛\\s+Reserved",
+    "strict_block": true
   },
   {
     "name": "菁华浮梦",
     "pick": "顶部",
     "url": "https://www.336868.com/art_zhuanqu/183.html",
-    "parser": "site_scoped_two_zodiac",
     "payload": "page_and_scripts",
-    "title": "菁华浮梦"
+    "parser": "site_scoped_two_zodiac",
+    "title": "\\d{3}期：【绝杀二肖】菁华浮梦",
+    "stop": "Copyright\\s+©澳门报码论坛\\s+Reserved",
+    "strict_block": true
   },
   {
     "name": "陪你入睡",
     "pick": "顶部",
     "url": "https://www.336868.com/art_zhuanqu/180.html",
-    "parser": "site_scoped_two_zodiac",
     "payload": "page_and_scripts",
-    "title": "陪你入睡"
+    "parser": "site_scoped_two_zodiac",
+    "title": "\\d{3}期：【绝杀二肖】陪你入睡",
+    "stop": "Copyright\\s+©澳门报码论坛\\s+Reserved",
+    "strict_block": true
   },
   {
     "name": "小鹿乱撞",
     "pick": "顶部",
     "url": "https://www.336868.com/art_zhuanqu/172.html",
-    "parser": "site_scoped_two_zodiac",
     "payload": "page_and_scripts",
-    "title": "小鹿乱撞"
+    "parser": "site_scoped_two_zodiac",
+    "title": "\\d{3}期：【绝杀二肖】小鹿乱撞",
+    "stop": "Copyright\\s+©澳门报码论坛\\s+Reserved",
+    "strict_block": true
   },
   {
     "name": "惟于莽莽",
     "pick": "顶部",
     "url": "https://www.336868.com/art_zhuanqu/198.html",
-    "parser": "site_scoped_two_zodiac",
     "payload": "page_and_scripts",
-    "title": "惟于莽莽"
+    "parser": "site_scoped_two_zodiac",
+    "title": "\\d{3}期：【绝杀两肖】惟于莽莽",
+    "stop": "Copyright\\s+©澳门报码论坛\\s+Reserved",
+    "strict_block": true
   },
   {
     "name": "金道",
     "pick": "顶部",
     "url": "https://www.336868.com/art_zhuanqu/8026.html",
-    "parser": "site_scoped_two_zodiac",
     "payload": "page_and_scripts",
-    "title": "金道"
+    "parser": "site_scoped_two_zodiac",
+    "title": "\\d{3}期:【绝杀两肖】愿彩民都走上金道",
+    "stop": "Copyright\\s+©澳门报码论坛\\s+Reserved",
+    "strict_block": true
   },
   {
     "name": "互帮互助",
     "pick": "顶部",
     "url": "https://hbwtl.ydiu6-pom20-zexnea.xyz/topic/430709.html",
-    "parser": "site_scoped_two_zodiac",
     "payload": "page_and_scripts",
-    "title": "互帮互助"
+    "parser": "site_scoped_two_zodiac",
+    "title": "作者:互帮互助",
+    "strict_block": true
   },
   {
     "name": "科方东文",
     "pick": "尾部",
     "url": "https://jnf52f.a3ds1-gzs2r-jsppci.work/topic/206635.html",
-    "parser": "site_scoped_two_zodiac",
     "payload": "page_and_scripts",
-    "title": "网红帖\\s*\\d{3}\\s*期\\s*:\\s*【\\s*绝杀二肖\\s*】\\s*作者\\s*:\\s*科方东文",
-    "stop": "\\Z"
+    "parser": "site_scoped_two_zodiac",
+    "title": "作者:科方东文",
+    "strict_block": true
   },
   {
     "name": "狙击杀手",
@@ -216,41 +237,49 @@
     "name": "人间改岁",
     "pick": "顶部",
     "url": "https://mm.676626m.com:1888/bbs/8026",
-    "parser": "site_scoped_two_zodiac",
     "payload": "page_and_scripts",
-    "title": "人间改岁"
+    "parser": "site_scoped_two_zodiac",
+    "title": "作者：人间改岁",
+    "stop": "论坛免责声明：以上所有广告内容均为赞助商提供，本",
+    "strict_block": true
   },
   {
     "name": "欢聚一堂",
     "pick": "顶部",
     "url": "https://qdufkx.sjb5z-pi4k6-jlhnig.xyz:16677/topic/798463.html",
-    "parser": "site_scoped_two_zodiac",
     "payload": "page_and_scripts",
-    "title": "欢聚一堂"
+    "parser": "site_scoped_two_zodiac",
+    "title": "作者:欢聚一堂",
+    "strict_block": true
   },
   {
     "name": "安居乐业",
     "pick": "顶部",
     "url": "https://qdufkx.sjb5z-pi4k6-jlhnig.xyz:16677/topic/798167.html",
-    "parser": "site_scoped_two_zodiac",
     "payload": "page_and_scripts",
-    "title": "安居乐业"
+    "parser": "site_scoped_two_zodiac",
+    "title": "作者:安居乐业",
+    "strict_block": true
   },
   {
     "name": "锐不可当",
     "pick": "尾部",
     "url": "https://xuknerw.fu5qv-a7f7o-nxmebt.work:16633/topic/466129.html",
-    "parser": "site_scoped_two_zodiac",
     "payload": "page_and_scripts",
-    "title": "锐不可当"
+    "parser": "site_scoped_two_zodiac",
+    "title": "作者:锐不可当",
+    "stop": "上一篇：",
+    "strict_block": true
   },
   {
     "name": "积少成多第二",
     "pick": "尾部",
     "url": "https://huqtzej.vvlq2-j4i8n-lisghq.xyz:16677/topic/281517.html",
-    "parser": "site_scoped_two_zodiac",
     "payload": "page_and_scripts",
-    "title": "积少成多\\s*发表于"
+    "parser": "site_scoped_two_zodiac",
+    "title": "积少成多\\s*发表于",
+    "stop": "鸿蒙娱乐城APP",
+    "strict_block": true
   },
   {
     "name": "六合头条",
@@ -266,9 +295,11 @@
     "name": "超级稳定",
     "pick": "顶部",
     "url": "https://xmdrbud.eqpr2-6tpvi-pjqztv.xyz:16677/topic/320715.html",
-    "parser": "site_scoped_two_zodiac",
     "payload": "page_and_scripts",
-    "title": "超级稳定"
+    "parser": "site_scoped_two_zodiac",
+    "title": "杀料区\\s+\\d{3}期:\\s+【绝杀二肖】\\s+超级稳定",
+    "stop": "上一篇：",
+    "strict_block": true
   },
   {
     "name": "澳門男人味",
@@ -345,9 +376,11 @@
     "name": "来情去意",
     "pick": "顶部",
     "url": "https://ykkpjdgv.d1ju4-kbfjr-zexdzd.xyz:16677/topic/681954.html",
-    "parser": "site_scoped_two_zodiac",
     "payload": "page_and_scripts",
-    "title": "来情去意"
+    "parser": "site_scoped_two_zodiac",
+    "title": "来情去意",
+    "stop": "上一篇：",
+    "strict_block": true
   },
   {
     "name": "金多宝第二",
@@ -370,49 +403,58 @@
     "name": "有喜有忧",
     "pick": "尾部",
     "url": "https://kcyeko.bzx7a-tl1us-cfcaei.xyz:16677/topic/610833.html",
-    "parser": "site_scoped_two_zodiac",
     "payload": "page_and_scripts",
-    "title": "有喜有忧"
+    "parser": "site_scoped_two_zodiac",
+    "title": "作者:有喜有忧",
+    "strict_block": true
   },
   {
     "name": "文房四宝",
     "pick": "顶部",
     "url": "https://xoxtpupt.bvptr-i3mv8-pbjxin.work:17455/topic/467525.html",
-    "parser": "site_scoped_two_zodiac",
     "payload": "page_and_scripts",
-    "title": "文房四宝"
+    "parser": "site_scoped_two_zodiac",
+    "title": "作者:文房四宝",
+    "strict_block": true
   },
   {
     "name": "破除迷信",
     "pick": "顶部",
     "url": "https://1w4ip.78j1a-o16m1-wopsco.xyz/topic/215953.html",
-    "parser": "site_scoped_two_zodiac",
     "payload": "page_and_scripts",
-    "title": "破除迷信"
+    "parser": "site_scoped_two_zodiac",
+    "title": "作者:破除迷信",
+    "strict_block": true
   },
   {
     "name": "前合后仰",
     "pick": "顶部",
     "url": "https://gboqrz.8hq17-fdt9o-uujeae.work/topic/225333.html",
-    "parser": "site_scoped_two_zodiac",
     "payload": "page_and_scripts",
-    "title": "前合后仰"
+    "parser": "site_scoped_two_zodiac",
+    "title": "作者:前合后仰",
+    "stop": "@所有彩民[:：]\\s*用您快人一步头脑记住",
+    "strict_block": true
   },
   {
     "name": "七嘴八舌",
     "pick": "顶部",
     "url": "https://eebysckd.2go6k-y0pfv-fqbdsm.xyz:16677/topic/552348.html",
-    "parser": "site_scoped_two_zodiac",
     "payload": "page_and_scripts",
-    "title": "七嘴八舌"
+    "parser": "site_scoped_two_zodiac",
+    "title": "七嘴八舌",
+    "stop": "苦难是化了妆的祝福，只待你亲手揭开面具。",
+    "strict_block": true
   },
   {
     "name": "恍然自失",
     "pick": "顶部",
     "url": "https://eebysckd.2go6k-y0pfv-fqbdsm.xyz:16677/topic/625516.html",
-    "parser": "site_scoped_two_zodiac",
     "payload": "page_and_scripts",
-    "title": "恍然自失"
+    "parser": "site_scoped_two_zodiac",
+    "title": "恍然自失",
+    "stop": "上一篇：",
+    "strict_block": true
   },
   {
     "name": "一筹莫展",
@@ -426,25 +468,31 @@
     "name": "一言一句",
     "pick": "顶部",
     "url": "https://eebysckd.2go6k-y0pfv-fqbdsm.xyz:16677/topic/625852.html",
-    "parser": "site_scoped_two_zodiac",
     "payload": "browser_rendered_page",
-    "title": "一言一句"
+    "parser": "site_scoped_two_zodiac",
+    "title": "一言一句",
+    "stop": "上一篇：",
+    "strict_block": true
   },
   {
     "name": "博闻茄子",
     "pick": "顶部",
     "url": "https://akqasqa.drr11-soh5x-jcaafg.xyz:16677/topic/543283.html",
-    "parser": "site_scoped_two_zodiac",
     "payload": "page_and_scripts",
-    "title": "博闻茄子"
+    "parser": "site_scoped_two_zodiac",
+    "title": "博闻茄子",
+    "stop": "共享域名[:：]\\s*\\d{6}",
+    "strict_block": true
   },
   {
     "name": "冰封绝恋",
     "pick": "尾部",
     "url": "https://2.www39169b.com:888/gsbl/s14.html",
-    "parser": "site_scoped_two_zodiac",
     "payload": "page_and_scripts",
-    "title": "冰封绝恋"
+    "parser": "site_scoped_two_zodiac",
+    "title": "冰封绝恋【稳杀二肖】",
+    "stop": "论坛免责声明：以上所有广告内容均为赞助商提供，本",
+    "strict_block": true
   },
   {
     "name": "白姐輸盡光",
@@ -462,9 +510,11 @@
     "name": "熬出头儿",
     "pick": "尾部",
     "url": "https://111.246004.com:9066/Article.Aspx?ListId=247&id=53502",
-    "parser": "site_scoped_two_zodiac",
     "payload": "page_and_scripts",
-    "title": "熬出头儿"
+    "parser": "site_scoped_two_zodiac",
+    "title": "\\d{3}期：【熬出头儿】绝杀两肖",
+    "stop": "更新时间：\\d{4}\\-\\d{2}\\-\\d{2}",
+    "strict_block": true
   },
   {
     "name": "八二佳人",
@@ -497,17 +547,21 @@
     "name": "旧人不覆",
     "pick": "顶部",
     "url": "https://sadoleu.rznla-fgwyr-nzqalp.xyz:16677/topic/287632.html",
-    "parser": "site_scoped_two_zodiac",
     "payload": "page_and_scripts",
-    "title": "旧人不覆"
+    "parser": "site_scoped_two_zodiac",
+    "title": "旧人不覆",
+    "stop": "七星娱乐",
+    "strict_block": true
   },
   {
     "name": "侭多侭少",
     "pick": "顶部",
     "url": "https://trqwcply.1czoc-olfpv-msmdql.cyou:17466/topic/305417.html",
-    "parser": "site_scoped_two_zodiac",
     "payload": "page_and_scripts",
-    "title": "侭多侭少"
+    "parser": "site_scoped_two_zodiac",
+    "title": "侭多侭少",
+    "stop": "上一篇：",
+    "strict_block": true
   },
   {
     "name": "智能",
@@ -522,9 +576,11 @@
     "name": "琼府金穴",
     "pick": "顶部",
     "url": "https://iezrqhps.5don6-02xeq-rrhbps.xyz:16677/topic/559106.html",
-    "parser": "site_scoped_two_zodiac",
     "payload": "page_and_scripts",
-    "title": "琼府金穴"
+    "parser": "site_scoped_two_zodiac",
+    "title": "琼府金穴",
+    "stop": "上一篇：",
+    "strict_block": true
   },
   {
     "name": "流合",
@@ -546,17 +602,19 @@
     "name": "不由自主",
     "pick": "顶部",
     "url": "https://gxixcfq.4hxms-k65ek-jsvqzm.xyz:16677/topic/314318.html",
-    "parser": "site_scoped_two_zodiac",
     "payload": "page_and_scripts",
-    "title": "不由自主"
+    "parser": "site_scoped_two_zodiac",
+    "title": "不由自主",
+    "strict_block": true
   },
   {
     "name": "热火朝天",
     "pick": "顶部",
     "url": "https://gxixcfq.4hxms-k65ek-jsvqzm.xyz:16677/topic/314312.html",
-    "parser": "site_scoped_two_zodiac",
     "payload": "page_and_scripts",
-    "title": "热火朝天"
+    "parser": "site_scoped_two_zodiac",
+    "title": "热火朝天",
+    "strict_block": true
   },
   {
     "name": "俯拾地芥",
@@ -570,17 +628,21 @@
     "name": "不伏烧埋",
     "pick": "顶部",
     "url": "https://trqwcply.1czoc-olfpv-msmdql.cyou:17466/topic/455536.html",
-    "parser": "site_scoped_two_zodiac",
     "payload": "page_and_scripts",
-    "title": "不伏烧埋"
+    "parser": "site_scoped_two_zodiac",
+    "title": "不伏烧埋",
+    "stop": "上一篇：",
+    "strict_block": true
   },
   {
     "name": "老老实实",
     "pick": "顶部",
     "url": "https://kulipur.l5paz-a0o8v-uozmmd.xyz:16677/topic/435502.html",
-    "parser": "site_scoped_two_zodiac",
     "payload": "page_and_scripts",
-    "title": "老老实实"
+    "parser": "site_scoped_two_zodiac",
+    "title": "老老实实",
+    "stop": "上一篇：",
+    "strict_block": true
   },
   {
     "name": "相辅而成",
@@ -594,9 +656,11 @@
     "name": "火急火燎",
     "pick": "顶部",
     "url": "https://cxmdjok.8wtwc-boven-glylvt.xyz:16677/topic/437750.html",
-    "parser": "site_scoped_two_zodiac",
     "payload": "page_and_scripts",
-    "title": "火急火燎"
+    "parser": "site_scoped_two_zodiac",
+    "title": "作者:火急火燎",
+    "stop": "澳门马票\\s+【资料大全】\\s+899916a\\.com",
+    "strict_block": true
   },
   {
     "name": "莲叶满池",
@@ -610,33 +674,41 @@
     "name": "争权夺利",
     "pick": "顶部",
     "url": "https://zwhzkjo.fc4fh-otded-nvhceu.xyz:16677/topic/342737.html",
-    "parser": "site_scoped_two_zodiac",
     "payload": "page_and_scripts",
-    "title": "争权夺利"
+    "parser": "site_scoped_two_zodiac",
+    "title": "争权夺利",
+    "stop": "上一篇：",
+    "strict_block": true
   },
   {
     "name": "徒手敬月",
     "pick": "尾部",
     "url": "https://trqwcply.1czoc-olfpv-msmdql.cyou:17466/topic/250670.html",
-    "parser": "site_scoped_two_zodiac",
     "payload": "page_and_scripts",
-    "title": "徒手敬月"
+    "parser": "site_scoped_two_zodiac",
+    "title": "高手贴\\s+\\d{3}期徒手敬月【绝杀二肖\\s*】",
+    "stop": "五行对照",
+    "strict_block": true
   },
   {
     "name": "自然和谐",
     "pick": "顶部",
     "url": "https://trqwcply.1czoc-olfpv-msmdql.cyou:17466/topic/458972.html",
-    "parser": "site_scoped_two_zodiac",
     "payload": "page_and_scripts",
-    "title": "自然和谐"
+    "parser": "site_scoped_two_zodiac",
+    "title": "精华帖\\s+\\d{3}期\\s+自然和谐\\s+【二肖不要】",
+    "stop": "五行对照",
+    "strict_block": true
   },
   {
     "name": "徒手敬月第二",
     "pick": "尾部",
     "url": "https://trqwcply.1czoc-olfpv-msmdql.cyou:17466/topic/250854.html",
-    "parser": "site_scoped_two_zodiac",
     "payload": "page_and_scripts",
-    "title": "徒手敬月精准杀料【绝杀②肖】"
+    "parser": "site_scoped_two_zodiac",
+    "title": "徒手敬月精准杀料【绝杀②肖】",
+    "stop": "五行对照",
+    "strict_block": true
   },
   {
     "name": "魔刹石尊",
@@ -659,49 +731,59 @@
     "name": "纷纷扬扬",
     "pick": "顶部",
     "url": "https://trqwcply.1czoc-olfpv-msmdql.cyou:17466/topic/454916.html",
-    "parser": "site_scoped_two_zodiac",
     "payload": "page_and_scripts",
-    "title": "纷纷扬扬"
+    "parser": "site_scoped_two_zodiac",
+    "title": "杀料区\\s+\\d{3}期:\\s+【绝杀二肖】\\s+纷纷扬扬",
+    "stop": "苍缘夜如【八码中行】←已公开",
+    "strict_block": true
   },
   {
     "name": "唯利是趋",
     "pick": "尾部",
     "url": "https://myvvqq.30dok-2s9fd-bibfmg.work/topic/226889.html",
-    "parser": "site_scoped_two_zodiac",
     "payload": "page_and_scripts",
-    "title": "唯利是趋"
+    "parser": "site_scoped_two_zodiac",
+    "title": "作者:唯利是趋",
+    "strict_block": true
   },
   {
     "name": "不吃的猫",
     "pick": "尾部",
     "url": "https://lx11.www87127b.com:8443/bbs/38.html",
-    "parser": "site_scoped_two_zodiac",
     "payload": "page_and_scripts",
-    "title": "不吃的猫"
+    "parser": "site_scoped_two_zodiac",
+    "title": "作者：不吃的猫",
+    "stop": "澳门六玄网\\s+87127c\\.com\\s+资料期期稳定，",
+    "strict_block": true
   },
   {
     "name": "白头偕老",
     "pick": "顶部",
     "url": "https://uhaxnrzx.q76gf-deec8-zqckeo.xyz:16677/topic/610280.html",
-    "parser": "site_scoped_two_zodiac",
     "payload": "page_and_scripts",
-    "title": "白头偕老"
+    "parser": "site_scoped_two_zodiac",
+    "title": "白头偕老",
+    "stop": "上一篇：",
+    "strict_block": true
   },
   {
     "name": "春华秋实",
     "pick": "顶部",
     "url": "https://qdufkx.sjb5z-pi4k6-jlhnig.xyz:16677/topic/798062.html",
-    "parser": "site_scoped_two_zodiac",
     "payload": "page_and_scripts",
-    "title": "春华秋实"
+    "parser": "site_scoped_two_zodiac",
+    "title": "作者:春华秋实",
+    "strict_block": true
   },
   {
     "name": "头破血流",
     "pick": "顶部",
     "url": "https://ozfksr.8gd3h-8yo27-ttlqhq.xyz:16677/topic/447839.html",
-    "parser": "site_scoped_two_zodiac",
     "payload": "page_and_scripts",
-    "title": "头破血流"
+    "parser": "site_scoped_two_zodiac",
+    "title": "头破血流",
+    "stop": "01马\\-02蛇\\-03龙\\-04兔\\-05虎\\-06牛",
+    "strict_block": true
   },
   {
     "name": "广东",
@@ -716,41 +798,47 @@
     "name": "欧阳澜纯",
     "pick": "顶部",
     "url": "https://gybqxgn.wtnxq-tlmew-ozgscb.xyz:16677/topic/279287.html",
-    "parser": "site_scoped_two_zodiac",
     "payload": "page_and_scripts",
-    "title": "欧阳澜纯"
+    "parser": "site_scoped_two_zodiac",
+    "title": "欧阳澜纯",
+    "strict_block": true
   },
   {
     "name": "白里透红",
     "pick": "顶部",
     "url": "https://flivjhz.4vrvi-8tdry-vrzzwk.xyz:16677/topic/540581.html",
-    "parser": "site_scoped_two_zodiac",
     "payload": "page_and_scripts",
-    "title": "白里透红"
+    "parser": "site_scoped_two_zodiac",
+    "title": "白里透红",
+    "stop": "01马\\-02蛇\\-03龙\\-04兔\\-05虎\\-06牛",
+    "strict_block": true
   },
   {
     "name": "老金绝杀",
     "pick": "顶部",
     "url": "https://jjpifrbj.1m74k-kckgn-enmoqe.xyz:16677/topic/265079.html",
-    "parser": "site_scoped_two_zodiac",
     "payload": "page_and_scripts",
-    "title": "老金绝杀"
+    "parser": "site_scoped_two_zodiac",
+    "title": "老金绝杀",
+    "strict_block": true
   },
   {
     "name": "争强好胜",
     "pick": "顶部",
     "url": "https://kjqba.ipvrs-9mw2c-wdnuvo.work/topic/230597.html",
-    "parser": "site_scoped_two_zodiac",
     "payload": "page_and_scripts",
-    "title": "争强好胜"
+    "parser": "site_scoped_two_zodiac",
+    "title": "作者:争强好胜",
+    "strict_block": true
   },
   {
     "name": "陈言老套",
     "pick": "顶部",
     "url": "https://rh2fgz.qy6di-x0q62-zwazrw.work/topic/253958.html",
-    "parser": "site_scoped_two_zodiac",
     "payload": "page_and_scripts",
-    "title": "陈言老套"
+    "parser": "site_scoped_two_zodiac",
+    "title": "作者:陈言老套",
+    "strict_block": true
   },
   {
     "name": "振聋发聩",
@@ -763,9 +851,11 @@
     "name": "完美世界",
     "pick": "顶部",
     "url": "https://vqxzuc.fggtp-huz0q-sbrraa.xyz:16677/topic/251181.html",
-    "parser": "site_scoped_two_zodiac",
     "payload": "page_and_scripts",
-    "title": "完美世界"
+    "parser": "site_scoped_two_zodiac",
+    "title": "高手料\\s+\\d{3}期:\\s+完美世界【绝杀二肖】",
+    "stop": "★★\\s+博彩必备★★",
+    "strict_block": true
   },
   {
     "name": "乐不可支",
@@ -796,33 +886,38 @@
     "name": "笑话奇谈",
     "pick": "顶部",
     "url": "https://ryfbdty.p4a53-f1hew-diwcrg.xyz:16677/topic/209407.html",
-    "parser": "site_scoped_two_zodiac",
     "payload": "page_and_scripts",
-    "title": "笑话奇谈"
+    "parser": "site_scoped_two_zodiac",
+    "title": "作者:笑话奇谈",
+    "strict_block": true
   },
   {
     "name": "太史常不",
     "pick": "顶部",
     "url": "https://e7rzi6.xnlf8-6i5rn-vabarz.work/topic/240870.html",
-    "parser": "site_scoped_two_zodiac",
     "payload": "page_and_scripts",
-    "title": "太史常不"
+    "parser": "site_scoped_two_zodiac",
+    "title": "作者:太史常不",
+    "strict_block": true
   },
   {
     "name": "惘然若失",
     "pick": "顶部",
     "url": "https://t3zvj.mvtre-w938p-xmiuyz.xyz/topic/207242.html",
-    "parser": "site_scoped_two_zodiac",
     "payload": "page_and_scripts",
-    "title": "惘然若失"
+    "parser": "site_scoped_two_zodiac",
+    "title": "作者:惘然若失",
+    "strict_block": true
   },
   {
     "name": "与虎谋皮",
     "pick": "顶部",
     "url": "https://wmdhoki.6su07-7lpw6-gudkzl.xyz:16677/topic/727530.html",
-    "parser": "site_scoped_two_zodiac",
     "payload": "page_and_scripts",
-    "title": "与虎谋皮"
+    "parser": "site_scoped_two_zodiac",
+    "title": "与虎谋皮",
+    "stop": "上一篇：",
+    "strict_block": true
   },
   {
     "name": "王者无心",
@@ -837,17 +932,19 @@
     "name": "同心叶力",
     "pick": "顶部",
     "url": "https://fdybdcq.b9mav-ho5x7-zwckje.xyz:16677/topic/211571.html",
-    "parser": "site_scoped_two_zodiac",
     "payload": "page_and_scripts",
-    "title": "同心叶力"
+    "parser": "site_scoped_two_zodiac",
+    "title": "作者:同心叶力",
+    "strict_block": true
   },
   {
     "name": "自我作古",
     "pick": "尾部",
     "url": "https://uonjrs.w3nth-qq7qx-yiubza.xyz:16677/topic/232154.html",
-    "parser": "site_scoped_two_zodiac",
     "payload": "page_and_scripts",
-    "title": "自我作古"
+    "parser": "site_scoped_two_zodiac",
+    "title": "作者:自我作古",
+    "strict_block": true
   },
   {
     "name": "一点红",
@@ -1517,10 +1614,11 @@
     "name": "曲尽其妙",
     "pick": "bottom",
     "url": "https://18118.73829.com/read.php?tid=473",
-    "parser": "site_scoped_two_zodiac",
     "payload": "page",
+    "parser": "site_scoped_two_zodiac",
     "title": "(?:^|\\n)曲尽其妙(?:\\n|$)",
-    "stop": "重要通知"
+    "stop": "重要通知：点击在线客服进行充值",
+    "strict_block": true
   },
   {
     "name": "官网透码",
@@ -1558,10 +1656,11 @@
     "name": "黄大仙道",
     "pick": "bottom",
     "url": "https://hl.www25195a.com/read.php?tid=684",
-    "parser": "site_scoped_two_zodiac",
     "payload": "page",
+    "parser": "site_scoped_two_zodiac",
     "title": "(?:^|\\n)黄大仙道(?:\\n|$)",
-    "stop": "重要通知"
+    "stop": "重要通知：点击在线客服进行充值",
+    "strict_block": true
   },
   {
     "name": "梦寐以求第二",
@@ -2013,65 +2112,77 @@
     "name": "上官研之",
     "pick": "top",
     "url": "https://xxn08n.w2jqr-rbl71-ngvkmq.work/topic/479502.html",
-    "parser": "new_topic_235_exact",
     "payload": "page_and_scripts",
-    "title": "上官研之"
+    "parser": "new_topic_235_exact",
+    "title": "上官研之",
+    "strict_block": true
   },
   {
     "name": "杯中之水",
     "pick": "top",
     "url": "https://xxn08n.w2jqr-rbl71-ngvkmq.work/topic/453967.html",
-    "parser": "new_topic_235_exact",
     "payload": "page_and_scripts",
-    "title": "杯中之水"
+    "parser": "new_topic_235_exact",
+    "title": "杯中之水",
+    "strict_block": true
   },
   {
     "name": "恍然大悟",
     "pick": "top",
     "url": "https://cxmdjok.8wtwc-boven-glylvt.xyz:16677/topic/437767.html",
-    "parser": "new_topic_235_exact",
     "payload": "page_and_scripts",
-    "title": "恍然大悟"
+    "parser": "new_topic_235_exact",
+    "title": "作者:恍然大悟",
+    "stop": "澳门马票\\s+【资料大全】\\s+899916a\\.com",
+    "strict_block": true
   },
   {
     "name": "粉骨糜身",
     "pick": "top",
     "url": "https://qhfsrngx.x9mcp-vrrqh-dzqfro.xyz:16677/topic/451425.html",
-    "parser": "new_topic_235_exact",
     "payload": "page_and_scripts",
-    "title": "粉骨糜身"
+    "parser": "new_topic_235_exact",
+    "title": "\\d{3}期:提供\\s+【绝杀二肖】\\s+作者：\\s+粉骨糜身",
+    "stop": "鸿蒙娱乐城APP",
+    "strict_block": true
   },
   {
     "name": "安宅正路",
     "pick": "top",
     "url": "https://uhaxnrzx.q76gf-deec8-zqckeo.xyz:16677/topic/615690.html",
-    "parser": "new_topic_235_exact",
     "payload": "page_and_scripts",
-    "title": "安宅正路"
+    "parser": "new_topic_235_exact",
+    "title": "安宅正路",
+    "stop": "上一篇：",
+    "strict_block": true
   },
   {
     "name": "坐怀不乱",
     "pick": "top",
     "url": "https://gabqzzz.ahv8c-6713g-otpeiy.xyz:16677/topic/530161.html",
-    "parser": "new_topic_235_exact",
     "payload": "page_and_scripts",
-    "title": "坐怀不乱"
+    "parser": "new_topic_235_exact",
+    "title": "\\d{3}期：坐怀不乱\\s+《绝杀二肖》\\s+准准准",
+    "strict_block": true
   },
   {
     "name": "市区幸福",
     "pick": "top",
     "url": "https://yelsagvn.1iwwa-jwubd-szbnwd.work:17466/topic/551397.html",
-    "parser": "new_topic_235_exact",
     "payload": "page_and_scripts",
-    "title": "市区幸福"
+    "parser": "new_topic_235_exact",
+    "title": "市区幸福",
+    "stop": "上一篇：",
+    "strict_block": true
   },
   {
     "name": "燃萁煎豆",
     "pick": "bottom",
     "url": "https://kjqba.ipvrs-9mw2c-wdnuvo.work/topic/213294.html",
-    "parser": "new_topic_235_exact",
     "payload": "page_and_scripts",
-    "title": "燃萁煎豆"
+    "parser": "new_topic_235_exact",
+    "title": "\\d{3}期:\\s+彩\\s+霸\\s+王\\s+【绝杀二肖】\\s+燃萁煎豆\\s+！",
+    "strict_block": true
   },
   {
     "name": "周公神算",
@@ -2140,9 +2251,11 @@
     "pick": "top",
     "url": "https://49619.cc/gsb/050.html",
     "payload": "page",
-    "parser": "generic_two_zodiac",
+    "parser": "site_scoped_two_zodiac",
     "title": "作者\\s*[:：]\\s*澳门铁粉",
-    "record": "(?P<period>258)期[^\\n]{0,80}?[【〖]\\s*(?P<zodiac>[牛马羊鸡狗猪鼠虎兔龙蛇猴]{2})\\s*[】〗][^\\n]{0,40}?(?P<open>[^\\s准中错赢对]+)"
+    "record": "(?P<period>\\d{3})期\\s*[:：]?\\s*[➹★☆✺_\\-\\s]*[【〖\\[]?\\s*(?:绝\\s*杀|稳\\s*杀|温\\s*杀)\\s*(?:二|②|两|2|２)\\s*肖[^【〖\\[]{0,12}[【〖\\[]\\s*(?P<zodiac>[牛马羊鸡狗猪鼠虎兔龙蛇猴]{2})\\s*[】〗\\]]",
+    "stop": "澳门六合彩网",
+    "strict_block": true
   },
   {
     "name": "瞬杀二肖",
@@ -2156,33 +2269,39 @@
     "name": "千羽制作",
     "pick": "顶部",
     "url": "https://zvnarl.zo7b8-cg55k-zautjw.work:17477/topic/219979.html",
-    "parser": "site_scoped_two_zodiac",
     "payload": "page_and_scripts",
-    "title": "千羽制作"
+    "parser": "site_scoped_two_zodiac",
+    "title": "作者:千羽制作",
+    "strict_block": true
   },
   {
     "name": "同出一辙",
     "pick": "顶部",
     "url": "https://kplsux.v2ubt-ak9tc-ryjuwe.cyou:17477/topic/292706.html",
-    "parser": "site_scoped_two_zodiac",
     "payload": "page_and_scripts",
-    "title": "同出一辙"
+    "parser": "site_scoped_two_zodiac",
+    "title": "作者:同出一辙",
+    "strict_block": true
   },
   {
     "name": "春暧花开",
     "pick": "尾部",
     "url": "https://dtnjpph.1p0w8-q5dks-oxbahg.xyz:16677/topic/450438.html",
-    "parser": "site_scoped_two_zodiac",
     "payload": "page_and_scripts",
-    "title": "春暧花开"
+    "parser": "site_scoped_two_zodiac",
+    "title": "春暧花开",
+    "stop": "上一篇：",
+    "strict_block": true
   },
   {
     "name": "笑容可掬",
     "pick": "尾部",
     "url": "https://dtnjpph.1p0w8-q5dks-oxbahg.xyz:16677/topic/450411.html",
-    "parser": "site_scoped_two_zodiac",
     "payload": "page_and_scripts",
-    "title": "笑容可掬"
+    "parser": "site_scoped_two_zodiac",
+    "title": "笑容可掬",
+    "stop": "上一篇：",
+    "strict_block": true
   },
   {
     "name": "高情远韵",

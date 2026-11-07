@@ -310,7 +310,11 @@ def test_http_period_outside_direction_window_reaches_renderer(
     assert bundle.documents[0].label == "浏览器渲染页面"
 
 
-def test_http_same_period_conflict_reaches_renderer() -> None:
+def test_http_same_period_conflict_does_not_reach_renderer() -> None:
+    """同期多候选就算冲突：换源会把渲染页的值无条件采信，等于偷换结果。
+
+    冲突留在原始来源上，由 parse_bundle_for_period / select_record 报出来。
+    """
     site = make_article_site(payload="browser_rendered_page")
     raw = "raw-conflict"
     rendered = "rendered-conflict-target"
@@ -326,9 +330,10 @@ def test_http_same_period_conflict_reaches_renderer() -> None:
         renderer=lambda url, _timeout: rendered_calls.append(url) or rendered,
     )
 
-    single_period.fetch_payload_for_period(site, 209, 3, context, registry)
+    bundle = single_period.fetch_payload_for_period(site, 209, 3, context, registry)
 
-    assert rendered_calls == [site.url]
+    assert rendered_calls == []
+    assert bundle.documents[0].label == "原始页面"
 
 
 def test_http_correctly_selected_period_does_not_start_renderer() -> None:

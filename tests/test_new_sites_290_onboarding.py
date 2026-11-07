@@ -21,14 +21,14 @@ EXPECTED = {
         "url": "https://zvnarl.zo7b8-cg55k-zautjw.work:17477/topic/219979.html",
         "parser": "site_scoped_two_zodiac",
         "payload": "page_and_scripts",
-        "title": "千羽制作",
+        "title": "作者:千羽制作",
     },
     "同出一辙": {
         "pick": "top",
         "url": "https://kplsux.v2ubt-ak9tc-ryjuwe.cyou:17477/topic/292706.html",
         "parser": "site_scoped_two_zodiac",
         "payload": "page_and_scripts",
-        "title": "同出一辙",
+        "title": "作者:同出一辙",
     },
     "春暧花开": {
         "pick": "bottom",
@@ -46,13 +46,16 @@ EXPECTED = {
     },
 }
 
+PAGE_END = "\n" + "#" * 512 + "\n"  # 真实 payload 中页面与脚本文档之间的分界
+
 QIANYU_SOURCE = (
-    "千羽制作\n"
+    "作者:千羽制作\n"
     "290期:【千羽制作】 【绝杀二肖】 作者:千羽制作\n"
     "290期:【千羽制作】【绝杀二肖】【马羊】开:00\n"
     "289期:【千羽制作】【绝杀二肖】【鸡狗】开:鼠38\n"
     "288期:【千羽制作】【绝杀二肖】【马兔】开:猴24\n"
     "287期:【千羽制作】【绝杀二肖】【猪鸡】开:狗17\n"
+    + PAGE_END
 )
 QIANYU_SECOND_DATASET = (
     "365期:【千羽制作】 【绝杀二肖】 作者:千羽制作\n"
@@ -61,11 +64,13 @@ QIANYU_SECOND_DATASET = (
     "290期:【千羽制作】【绝杀二肖】【龙兔】开:00\n"
 )
 TONGCHU_SOURCE = (
+    "作者:同出一辙\n"
     "高手贴 290期 【绝杀二肖】 已公开 作者:同出一辙\n"
     "290期:绝杀二肖【羊马】开00对\n"
     "289期:绝杀二肖【猴羊】开蛇38对\n"
     "288期:绝杀二肖【猪狗】开鼠25对\n"
     "287期:绝杀二肖【猪牛】开虎11对\n"
+    + PAGE_END
 )
 CHUNNUAN_SOURCE = (
     "主题内容--722259d.com\n"
@@ -73,6 +78,7 @@ CHUNNUAN_SOURCE = (
     "288期:【 绝杀二肖特 】【猪鸡】开：狗13准\n"
     "289期:【 绝杀二肖特 】【马虎】开：0000准\n"
     "290期:【 绝杀二肖特 】【牛兔】开：0000准\n"
+    "上一篇：285期：【绝杀二肖】\n"
 )
 XIAORONG_EARLY_TABLE = "".join(
     f"{period}期:【杀二肖】【牛马】开：龙15准\n" for period in range(295, 290, -1)
@@ -88,6 +94,7 @@ XIAORONG_SOURCE = (
             (290, "蛇牛", "0000"),
         )
     )
+    + "上一篇：285期：【杀二肖】\n"
 )
 
 
@@ -159,9 +166,11 @@ def test_qianyu_second_dataset_must_not_displace_the_first_window() -> None:
     )
 
     records = parse_site_scoped_two_zodiac_records(source, site)
-    periods = [(record.period, record.zodiac) for record in records if record.period == 290]
 
-    assert periods[:2] == [(290, "马羊"), (290, "龙兔")]
+    # 配了 stop 之后，页面分界之外的第二份数据集整体落在区块外：
+    # 既顶不掉第一条窗口，也不会把 365 期带进来。
+    assert [record.period for record in records if record.period == 290] == [290]
+    assert all(record.period != 365 for record in records)
     assert select_record(records, 290, site).zodiac == "马羊"
 
 

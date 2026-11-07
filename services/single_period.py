@@ -43,6 +43,13 @@ from validation.records import normalize_zodiac, record_value_signature, validat
 ProgressSink = Callable[[str], None]
 
 
+def _is_target_conflict(exc: BaseException) -> bool:
+    """目标期自身出现多个候选（取值冲突或同值多位置）。"""
+    if isinstance(exc, ScrapeFailure) and exc.category is ErrorCategory.DATA_CONFLICT:
+        return True
+    return "数据存在冲突" in str(exc)
+
+
 def source_has_target(
     registry: ParserRegistry,
     source: str,
@@ -55,7 +62,13 @@ def source_has_target(
             return bool(candidates)
         selected = select_record(candidates, period, site)
         return validate_selected_record(selected, period)
-    except (ValueError, LookupError):
+    except (ValueError, LookupError) as exc:
+        if period is not None and _is_target_conflict(exc):
+            # 冲突一律算「这份来源里就是有目标」，绝不换成渲染页：
+            # 换源会把不同的值洗成同一个值（同值多位置时也一样，渲染页给什么就采信什么）。
+            # 保留原始来源，冲突交给 parse_bundle_for_period 报出来。
+            # period=None 是嵌套链接评分，必须保持原来的 False，否则会多跟进一份文档。
+            return True
         return False
 
 

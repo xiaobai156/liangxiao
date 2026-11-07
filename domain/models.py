@@ -25,6 +25,7 @@ class Site:
     allowed_redirect_origins: tuple[str, ...] = ()
     allowed_document_origins: tuple[str, ...] = ()
     allow_invalid_certificate: bool = False
+    strict_block: bool = False
 
     @property
     def identity(self) -> tuple[str, str, str]:

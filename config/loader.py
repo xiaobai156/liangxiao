@@ -13,6 +13,10 @@ from domain.models import Site
 
 ConfigError = ConfigurationError
 
+# 只有这两族的解析器真正读取 strict_block；其余 parser 写这个字段会静默无效，
+# 因此直接报错，避免「以为加固了」。
+STRICT_BLOCK_PARSERS = frozenset({"site_scoped_two_zodiac", "new_topic_235_exact"})
+
 PICK_ALIASES = {
     "top": "top",
     "顶部": "top",
@@ -45,7 +49,7 @@ ALLOWED_SITE_FIELDS = frozenset({
     "name", "pick", "url", "parser", "title", "record", "stop", "payload", "api_url",
     "keywords", "profile_id", "linked_document_pattern", "history_authorization",
     "history_missing_periods", "history_valid_periods", "allowed_redirect_origins",
-    "allowed_document_origins", "allow_invalid_certificate",
+    "allowed_document_origins", "allow_invalid_certificate", "strict_block",
 })
 
 
@@ -137,6 +141,12 @@ def site_from_mapping(
         if (parsed_api_url.scheme.lower() not in {"http", "https"} or not api_hostname
                 or parsed_api_url.username is not None or parsed_api_url.password is not None):
             raise ConfigError(f"{name} api_url 必须使用 http/https 且包含主机：{api_url}")
+    strict_block = _bool_option(item, "strict_block", name)
+    if strict_block and parser not in STRICT_BLOCK_PARSERS:
+        raise ConfigError(
+            f"{name} strict_block 只支持 {','.join(sorted(STRICT_BLOCK_PARSERS))}，"
+            f"当前 parser={parser} 不读取该字段"
+        )
     raw_keywords = item.get("keywords") or ()
     if isinstance(raw_keywords, str):
         keywords = (raw_keywords,) if raw_keywords else ()
@@ -160,6 +170,7 @@ def site_from_mapping(
         allowed_redirect_origins=_origin_options(item, "allowed_redirect_origins", name),
         allowed_document_origins=_origin_options(item, "allowed_document_origins", name),
         allow_invalid_certificate=_bool_option(item, "allow_invalid_certificate", name),
+        strict_block=strict_block,
     )
 
 
