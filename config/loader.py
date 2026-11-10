@@ -50,6 +50,7 @@ ALLOWED_SITE_FIELDS = frozenset({
     "keywords", "profile_id", "linked_document_pattern", "history_authorization",
     "history_missing_periods", "history_valid_periods", "allowed_redirect_origins",
     "allowed_document_origins", "allow_invalid_certificate", "strict_block",
+    "detail_enrich",
 })
 
 
@@ -147,6 +148,9 @@ def site_from_mapping(
             f"{name} strict_block 只支持 {','.join(sorted(STRICT_BLOCK_PARSERS))}，"
             f"当前 parser={parser} 不读取该字段"
         )
+    detail_enrich = _bool_option(item, "detail_enrich", name)
+    if detail_enrich and payload != "tuku_user_forums":
+        raise ConfigError(f"{name} detail_enrich 只支持 tuku_user_forums，当前 payload={payload}")
     raw_keywords = item.get("keywords") or ()
     if isinstance(raw_keywords, str):
         keywords = (raw_keywords,) if raw_keywords else ()
@@ -171,6 +175,7 @@ def site_from_mapping(
         allowed_document_origins=_origin_options(item, "allowed_document_origins", name),
         allow_invalid_certificate=_bool_option(item, "allow_invalid_certificate", name),
         strict_block=strict_block,
+        detail_enrich=detail_enrich,
     )
 
 

@@ -659,7 +659,7 @@
     "payload": "page_and_scripts",
     "parser": "site_scoped_two_zodiac",
     "title": "作者:火急火燎",
-    "stop": "澳门马票\\s+【资料大全】\\s+899916a\\.com",
+    "stop": "澳门马票\\s*【\\s*资料大全\\s*】",
     "strict_block": true
   },
   {
@@ -734,7 +734,7 @@
     "payload": "page_and_scripts",
     "parser": "site_scoped_two_zodiac",
     "title": "杀料区\\s+\\d{3}期:\\s+【绝杀二肖】\\s+纷纷扬扬",
-    "stop": "苍缘夜如【八码中行】←已公开",
+    "stop": "站\\s*长\\s*宣\\s*言",
     "strict_block": true
   },
   {
@@ -1093,7 +1093,7 @@
     "pick": "顶部",
     "url": "https://cxmdjok.8wtwc-boven-glylvt.xyz:16677/",
     "payload": "page_and_scripts",
-    "title": "澳门马票\\s*【\\s*稳杀二肖\\s*】\\s*899916a\\.com",
+    "title": "澳门马票\\s*【\\s*稳杀二肖\\s*】",
     "record": "(?P<period>\\d{3})\\s*期\\s*绝杀二肖\\s*[:：]\\s*[【〖]\\s*(?P<zodiac>[牛马羊鸡狗猪鼠虎兔龙蛇猴]\\s*[-－、,，.。· ]?\\s*[牛马羊鸡狗猪鼠虎兔龙蛇猴])\\s*[】〗]\\s*开\\s*[:：]?\\s*(?P<open>[^\\s准中错赢对↑√]+)"
   },
   {
@@ -1289,7 +1289,8 @@
     "url": "https://qvuuqqs.8imf7-hteuh-ylwuqv.xyz/#/users/3978",
     "parser": "tuku_user_forums_two_zodiac",
     "payload": "tuku_user_forums",
-    "title": "绝杀二肖"
+    "title": "绝杀二肖",
+    "detail_enrich": true
   },
   {
     "name": "寸草不生",
@@ -2133,7 +2134,7 @@
     "payload": "page_and_scripts",
     "parser": "new_topic_235_exact",
     "title": "作者:恍然大悟",
-    "stop": "澳门马票\\s+【资料大全】\\s+899916a\\.com",
+    "stop": "澳门马票\\s*【\\s*资料大全\\s*】",
     "strict_block": true
   },
   {
@@ -2310,7 +2311,7 @@
     "parser": "named_block",
     "payload": "browser_rendered_page",
     "title": "【高情远韵】",
-    "stop": "七\\s*星\\s*娱\\s*乐|授权\\s*[:：]\\s*免费软件",
+    "stop": "本论坛所提供的内容",
     "record": "(?P<period>\\d{3})\\s*期\\s*[:：]\\s*【正版猜特输尽光】\\s*开\\s*(?P<open>[^\\s准中错赢对]{0,8}?)\\s*(?:准|中|错|赢|对)?\\s*今\\s*期\\s*(?P<zodiac>[牛马羊鸡狗猪鼠虎兔龙蛇猴]\\s*[牛马羊鸡狗猪鼠虎兔龙蛇猴])\\s*输\\s*尽\\s*光"
   },
   {

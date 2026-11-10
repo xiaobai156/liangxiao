@@ -14,7 +14,12 @@ from domain.identity import detail_record_identity
 from domain.models import DocumentBundle, PayloadDocument, Site
 from fetching.client import FetchContext, fetch_curl_text, get_site_text, get_site_rendered
 from fetching.dynamic_article import TargetProbe, admin_article_id, fetch_admin_article_payload
-from fetching.user_forum import filter_user_forums, user_forums_api_url, user_id
+from fetching.user_forum import (
+    enrich_user_forums,
+    filter_user_forums,
+    user_forums_api_url,
+    user_id,
+)
 
 
 MAX_PAYLOAD_DOCUMENTS = 96
@@ -613,6 +618,12 @@ def fetch_payload(
         api_url = user_forums_api_url(site.url)
         expected_id = user_id(site.url)
         items, item_count = filter_user_forums(get_site_text(context, api_url, timeout, site), expected_id)
+        items, detail_link = enrich_user_forums(
+            items,
+            site.url,
+            lambda target: get_site_text(context, target, timeout, site),
+            limit=1 if site.detail_enrich else 0,
+        )
         return DocumentBundle(
             (
                 PayloadDocument(
@@ -622,6 +633,7 @@ def fetch_payload(
                     record_id=f"user:{expected_id}",
                     record_path="root.items[*]",
                     record_count=item_count,
+                    link_reference=detail_link,
                 ),
             )
         )
