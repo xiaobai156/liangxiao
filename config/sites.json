@@ -859,7 +859,7 @@
   },
   {
     "name": "乐不可支",
-    "pick": "尾部",
+    "pick": "顶部",
     "url": "https://vqxzuc.fggtp-huz0q-sbrraa.xyz:16677/topic/251178.html",
     "payload": "page_and_scripts",
     "title": "乐不可支【\\s*绝杀二肖\\s*】",
@@ -1628,14 +1628,6 @@
     "parser": "guanwang_touma_manager_article",
     "payload": "admin_article_api",
     "api_url": "https://aszmkf.c3z3l-qrlqm-mwgccr.work:29411/api/proxy/landing-page-data?url=lhw"
-  },
-  {
-    "name": "马上有钱",
-    "pick": "bottom",
-    "url": "https://jkofyya.6sf58-wbz5a-thviwx.work:29477/article/manager/6a13e385741e3e91a04e5954?url=jbp",
-    "parser": "manager_article_two_zodiac",
-    "payload": "admin_article_api",
-    "api_url": "https://jkofyya.6sf58-wbz5a-thviwx.work:29477/api/proxy/landing-page-data?url=jbp"
   },
   {
     "name": "少女臆想",

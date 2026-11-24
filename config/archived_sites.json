@@ -301,5 +301,14 @@
     "stop": "输\\s*让\\s*您\\s*东山再起",
     "record": "(?P<period>\\d{3})\\s*期\\s*[:：]?\\s*★?\\s*绝杀二肖\\s*[【〖\\[]\\s*(?P<zodiac>[牛马羊鸡狗猪鼠虎兔龙蛇猴]\\s*[-－、，,。.]?\\s*[牛马羊鸡狗猪鼠虎兔龙蛇猴])\\s*[】〗\\]]\\s*[开開]\\s*[:：]?\\s*(?P<open>[^\\s准中错赢对]+)",
     "archive_reason": "用户点名封存（303 期）：主机 dh-nwsm-0806.yqs01490156c.app 整机不可达 —— requests 报 SSLError(SSLEOFError(8, 'EOF occurred in violation of protocol (_ssl.c:1007)'))，忽略证书后报 ConnectionError('Connection aborted.', FileNotFoundError(2))，Playwright 报 net::ERR_CONNECTION_CLOSED；302 期已扫过同族 444 个子域（yqs01490156c.app / cmw01490353c.app 的 dh-nwsm-0601~1231 及 www/m/wap），全部解析到同一 IP 20.120.208.73 且同样不通，换子域无法修复；303 期与 302 期均无任何可用入口，不再抓取"
+  },
+  {
+    "name": "马上有钱",
+    "pick": "bottom",
+    "url": "https://jkofyya.6sf58-wbz5a-thviwx.work:29477/article/manager/6a13e385741e3e91a04e5954?url=jbp",
+    "parser": "manager_article_two_zodiac",
+    "payload": "admin_article_api",
+    "api_url": "https://jkofyya.6sf58-wbz5a-thviwx.work:29477/api/proxy/landing-page-data?url=jbp",
+    "archive_reason": "用户点名封存（324 期）：文章已被站方删除 —— 详情接口 /api/proxy/manager-articles/6a13e385741e3e91a04e5954 返回 404 {\"message\":\"AdminArticle 不存在\",\"error\":\"Not Found\",\"statusCode\":404}；jbp 落地页 89 篇文章内已无该文章（按 id、按作者名「马上有钱」、遍历 86 个 ?url=slug、23 个 admin_article_api 主机均找不到），页面只余 Next.js 骨架与 404 提示；唯一同名文章位于 jqb 站，其 315-323 取值与本站缓存 0/9 一致，属另一实例不能顶替；324 期起不再抓取"
   }
 ]
